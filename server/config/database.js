@@ -1,4 +1,4 @@
 module.exports = {
-    database : 'mongodb://localhost:27017/fair-future',
+    database : 'mongodb://admin:Getaway1@ds249942.mlab.com:49942/getaway',
     secret : 'asuhoidashnkhsdalijdalkhl'
 }
