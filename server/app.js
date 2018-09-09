@@ -49,7 +49,7 @@ app.use('/users', users);
 app.use('/*', index);
 
 // Localhost setup
-const PORT = 3000;
+const PORT = 3001;
 app.set('port', (process.env.PORT || PORT));
 
 app.listen(PORT, function(){
