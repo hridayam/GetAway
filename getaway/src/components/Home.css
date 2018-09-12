@@ -1,0 +1,101 @@
+
+
+.navbar-default {
+	background-color:transparent !important;
+	border-color:transparent;
+	background-image:none;
+	box-shadow:none;	
+}
+/* Link on navbar */
+.navbar-dark .nav-link {
+    font-family: 'Allura', sans-serif;
+    font-size: 2.5em;
+    text-align: center;
+    color: white;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  /*Top-margin from navbar*/
+.navbar-dark .navbar-nav { 
+    margin:40px 0;
+ }
+
+ /*Change css for brand*/
+ .navbar-dark .navbar-brand{
+    font-family: 'Allura';
+    font-size: 4.5em;
+    text-align: center;
+    color: white;
+    margin-left: 30px;
+    margin-right: 30px;
+ }
+
+ /*image in the background homepage*/
+.background-image {
+    height:100vh;
+    min-height:400px;
+    background-size:cover;
+    background-image:url('../picture/slide/1.jpg');
+  }
+
+/* Form Field */
+.text-block {
+    position: relative;
+    background-color: rgba(0,0,0,0.2);
+    text-align: center;
+
+}
+/* For the slogan */
+  .title{
+    font-family: 'Sofia';
+    font-size: 5em;
+    text-align: center;
+    color: white;
+    margin: 30px;
+  }
+
+/* Search field */
+  .search-place{
+    font-family: 'Sofia';
+    text-align: center;
+    display: inline-block;
+    width: 600px;
+    height: 3.4em;
+    color: white;
+    
+  }
+  .search-date{
+    font-family: 'Sofia';
+    font-size: 1.4em;
+    color: white;
+    text-align: center;
+    margin-top: 20px; 
+   
+  }
+
+  .search-button{
+    font-family: 'Sofia';
+    font-size: 1.2em;
+    color: white;
+    text-align: center;
+    margin-top: 10px; 
+    margin-bottom: 10px;
+   
+  }
+
+  /* Suggestion  */
+
+.suggestion{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.suggestion-title{
+    font-family: 'Sofia';
+    font-size: 3em;
+    text-align: center;
+    color: black;
+    margin-bottom: 30px;
+   
+}
