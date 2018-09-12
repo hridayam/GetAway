@@ -3,3 +3,7 @@
 
 # uploaded files
 /public
+
+# lock files
+yarn.lock
+package-lock.json
