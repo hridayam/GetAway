@@ -1,10 +1,9 @@
-
 import React, { Component } from 'react';
 import NavBar from './NavBar';
 import SearchForm from './SearchForm';
 import Suggestion from './Suggestion';
 
-import '../picture/slide/1.jpg';
+import './picture/slide/1.jpg';
 import './css/Home.css';
 
 export default class Home extends Component{
