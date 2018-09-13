@@ -2,8 +2,6 @@
   text-align: center;
 }
 
-
-
 /*Footer*/
 .App-footer {
   width: 100%;
@@ -14,4 +12,10 @@
   font-family: 'Open Sans', sans-serif;
   text-align: center;
   position: absolute;
+}
+
+.shadow {
+  -moz-box-shadow: 0 0 30px 5px #999;
+  -webkit-box-shadow: 0 0 30px 5px #999;
+  box-shadow: 0 0 30px 5px #999;
 }

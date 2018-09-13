@@ -18,8 +18,19 @@ import {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      navbarStyle: styles.topStyle,
+      navbarClass: 'fixed-top'
     };
+  }
+
+  componentDidMount() {
+    document.addEventListener('scroll', () => {
+      if (window.scrollY < 100)
+        this.setState({ navbarStyle : styles.topStyle, navbarClass: 'fixed-top' });
+      else
+        this.setState({ navbarStyle : styles.notTopStyle, navbarClass: 'fixed-top shadow' });
+    });
   }
 
   toggle() {
@@ -31,7 +42,7 @@ import {
   render() {
     return (
       <div >
-        <Navbar className="fixed-top" dark expand="md" style={{ height: '100px' }} >
+        <Navbar className={ this.state.navbarClass } dark expand="md" style={ this.state.navbarStyle } >
           <NavbarBrand href="/">GetAway</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -63,5 +74,16 @@ import {
         </Navbar>
       </div>
     );
+  }
+}
+
+const styles = {
+  topStyle: {
+    height: '100px',
+    backgroundColor: 'transparent'
+  },
+  notTopStyle: {
+    height: '100px',
+    backgroundColor: 'rgba(0,0,0,0.9)'
   }
 }
