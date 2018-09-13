@@ -21,15 +21,17 @@ import {
       isOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }darkdarkdark
+  }
+
   render() {
     return (
       <div >
-        <Navbar className="fixed-top" dark expand="md">
+        <Navbar className="fixed-top" dark expand="md" style={{ height: '100px' }} >
           <NavbarBrand href="/">GetAway</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

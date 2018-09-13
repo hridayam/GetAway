@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route} from 'react-router-dom';
 
-import Home from './components/Home';
+import NavBar from './components/NavBar';
+import Home from './components/Home/Home';
 import Footer from './components/Footer';
 
 //import logo from './logo.svg';
@@ -11,10 +12,10 @@ class App extends Component {
   render() {
     return (
       <div >
+        <NavBar />
         <BrowserRouter>
-            <div id='routes'>
+            <div id='routes' style={ styles.routeStyle }>
               <Route exact path='/' component={Home} />
-              
             </div>
         </BrowserRouter>
        
@@ -24,6 +25,9 @@ class App extends Component {
       </div>
     );
   }
+}
+
+const styles = {
 }
 
 export default App;

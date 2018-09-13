@@ -9,7 +9,7 @@ export default class SearchForm extends Component {
             <h1 className="title"> Take a break </h1>
             <Form>
                 <Row>
-                    <Col sm="12" md={{ size: 8, offset: 2 }}>
+                    <Col sm="12">
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                             <Input className="search-place" bsSize="lg" placeholder="Where do you want to go?" />
                         </FormGroup>
