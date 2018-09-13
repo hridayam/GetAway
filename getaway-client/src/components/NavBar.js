@@ -19,35 +19,46 @@ import {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      navbarStyle: styles.topStyle,
-      navbarClass: 'fixed-top'
+      navbarStyle: styles.transparentStyle,
+      navStyle: { backgroundColor: 'transparent' }
     };
   }
 
   componentDidMount() {
     document.addEventListener('scroll', () => {
       if (window.scrollY < 100)
-        this.setState({ navbarStyle : styles.topStyle, navbarClass: 'fixed-top' });
+        this.setState({ 
+          navbarStyle : styles.transparentStyle
+        });
       else
-        this.setState({ navbarStyle : styles.notTopStyle, navbarClass: 'fixed-top shadow' });
+        this.setState({ 
+          navbarStyle : styles.blackStyle,
+      });
     });
   }
 
   toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+    if (this.state.isOpen)
+      this.setState({
+        isOpen: !this.state.isOpen,
+        navStyle: { backgroundColor: 'transparent' }
+      });
+    else
+      this.setState({
+        isOpen: !this.state.isOpen,
+        navStyle: { backgroundColor: 'rgba(0,0,0,0.9)' }
+      });
   }
 
   render() {
     return (
       <div >
-        <Navbar className={ this.state.navbarClass } dark expand="md" style={ this.state.navbarStyle } >
+        <Navbar className="fixed-top" dark expand="md" style={ this.state.navbarStyle } >
           <NavbarBrand href="/">GetAway</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             
-            <Nav className="ml-auto" navbar>
+            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
               <NavItem>
                 <NavLink href="/reservation/">My Reservation</NavLink>
               </NavItem>
@@ -78,12 +89,13 @@ import {
 }
 
 const styles = {
-  topStyle: {
+  transparentStyle: {
     height: '100px',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    paddingTop: '0px'
   },
-  notTopStyle: {
+  blackStyle: {
     height: '100px',
-    backgroundColor: 'rgba(0,0,0,0.9)'
+    backgroundColor: 'rgba(0,0,0,0.9)',
   }
 }
