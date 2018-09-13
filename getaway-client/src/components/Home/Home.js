@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NavBar from '../NavBar';
 import SearchForm from './SearchForm';
 import Suggestion from './Suggestion';
 
