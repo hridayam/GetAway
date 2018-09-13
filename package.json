@@ -14,11 +14,6 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.1.3",
-    "concurrently": "*",
-    "react": "^16.5.0",
-    "react-bootstrap": "^0.32.4",
-    "react-dom": "^16.5.0",
-    "reactstrap": "^6.4.0"
+    "concurrently": "*"
   }
 }

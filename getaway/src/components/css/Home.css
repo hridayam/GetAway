@@ -36,7 +36,7 @@
     height:100vh;
     min-height:400px;
     background-size:cover;
-    background-image:url('../picture/slide/1.jpg');
+    background-image:url('../../picture/slide/1.jpg');
   }
 
 /* Form Field */

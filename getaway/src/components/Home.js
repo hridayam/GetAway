@@ -5,7 +5,7 @@ import SearchForm from './SearchForm';
 import Suggestion from './Suggestion';
 
 import '../picture/slide/1.jpg';
-import './Home.css';
+import './css/Home.css';
 
 export default class Home extends Component{
   constructor(props){
