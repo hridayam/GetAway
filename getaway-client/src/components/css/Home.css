@@ -1,5 +1,3 @@
-
-
 .navbar-default {
 	background-color:transparent !important;
 	border-color:transparent;
@@ -15,10 +13,21 @@
     margin-left: 30px;
     margin-right: 30px;
   }
+.navbar-dark .navbar-nav .nav-link{
+    color: white;
+}
 
   /*Top-margin from navbar*/
 .navbar-dark .navbar-nav { 
     margin:40px 0;
+ }
+
+ /* Navbar icon */
+ @media (max-width: 427px){
+ .navbar-toggler{
+    display: block;
+    margin: 0 auto;
+ }
  }
 
  /*Change css for brand*/

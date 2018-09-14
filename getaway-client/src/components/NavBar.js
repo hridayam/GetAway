@@ -53,14 +53,14 @@ import {
   render() {
     return (
       <div >
-        <Navbar className="fixed-top" dark expand="md" style={ this.state.navbarStyle } >
+        <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
           <NavbarBrand href="/">GetAway</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             
             <Nav className="ml-auto" navbar style={ this.state.navStyle }>
               <NavItem>
-                <NavLink href="/reservation/">My Reservation</NavLink>
+                <NavLink href="/reservation/">Reservation</NavLink>
               </NavItem>
               
               <NavItem>
