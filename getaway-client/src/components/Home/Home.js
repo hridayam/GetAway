@@ -29,6 +29,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '-30px',
-    paddingTop: '200px'
+    paddingTop: '200px',
   }
 }

@@ -98,13 +98,43 @@
 .suggestion{
    margin-top: 30px;
    margin-bottom: 30px;
+   text-align: center;
 }
 
-.suggestion-title{
-   font-family: 'Sofia';
+.suggestion-rewards{
+   font-family: "Sofia", Georgia,serif;
    font-size: 3em;
    text-align: center;
    color: black;
    margin-bottom: 30px;
   
+}
+
+.card-title{
+  font-family: "Sofia",Georgia,serif;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.3vw;
+  font-weight: 800;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #000;
+}
+
+.card-text{
+  font-family: "Open Sans",Arial,sans-serif;
+  text-align: center;
+  font-size: 1.1vw;
+  padding-bottom: 20px;
+}
+
+.button-suggestion{
+  background-color: transparent;
+  display: inline-block;
+  font-family: BellhopIcons;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2vw;
+  line-height: 1;
+  color: #407bae;
+  border: 0px;
 }
