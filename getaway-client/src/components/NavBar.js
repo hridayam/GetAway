@@ -6,11 +6,8 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  NavLink} from 'reactstrap';
+import Login from './Login'
 
   export default class NavBar extends Component {
     constructor(props) {
@@ -67,19 +64,11 @@ import {
                 <NavLink href="/events/">Event</NavLink>
               </NavItem>
               
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Account
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Log In
-                  </DropdownItem>
-                  <DropdownItem>
-                    Sign Up
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                <Login/>
+              </NavItem>
+
+
             </Nav>
           </Collapse>
         </Navbar>
