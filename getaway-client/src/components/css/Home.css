@@ -161,3 +161,11 @@
   font-size: 30px;
   text-align: center;
 }
+
+.signup-background{
+  background-image: url('../picture/breath.jpg');
+  height: 100vh;
+  min-height: 720px;
+  background-size: cover;
+  overflow: hidden;
+}

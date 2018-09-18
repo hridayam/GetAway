@@ -11,7 +11,7 @@ export default class SignUp extends Component{
   render(){
     return(
       <div>
-        <div className= 'background-image ' style={ styles.homeStyle }>
+        <div className = 'signup-background' style={ styles.homeStyle }>
         <Container style={ styles.signUp }>
             <h1> Registration </h1>
             <Form>
@@ -98,24 +98,14 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '-30px',
-    paddingTop: '200px',
-
-    
-    backgroundColor:'#897689',
-    height: '100vh',
-    minHeight: '720px',
-    backgroundSize: 'cover',
-    overflow: 'hidden'
+    paddingTop: '200px'
   },
 
   signUp: {
     position: 'relative',
     backgroundColor: 'white',
-    
     padding: '20px',
     fontFamily: 'Sofia',
-    fontSize: '20px',
-
-
+    fontSize: '20px'
   }
 }
