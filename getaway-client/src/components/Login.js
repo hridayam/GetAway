@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
-
+import { NavLink } from 'reactstrap';
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +20,7 @@ export default class Login extends Component {
   render() {
     return (
       <div >
-        <Button className = 'login-button' color="link" onClick={this.toggle}>Log In</Button>
+        <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle}>Log In</NavLink>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           
           <ModalHeader className="login-header" toggle={this.toggle}>Welcome Back! </ModalHeader>

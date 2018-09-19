@@ -17,7 +17,8 @@ import Login from './Login'
     this.state = {
       isOpen: false,
       navbarStyle: styles.transparentStyle,
-      navStyle: { backgroundColor: 'transparent' }
+      navStyle: { backgroundColor: 'transparent' },
+      loginClicked: false
     };
   }
 
@@ -53,22 +54,18 @@ import Login from './Login'
         <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
           <NavbarBrand href="/">GetAway</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
+          <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>
             
             <Nav className="ml-auto" navbar style={ this.state.navStyle }>
               <NavItem>
                 <NavLink href="/reservation/">Reservation</NavLink>
               </NavItem>
-              
               <NavItem>
                 <NavLink href="/events/">Event</NavLink>
               </NavItem>
-              
               <NavItem>
-                <Login/>
+                <Login />
               </NavItem>
-
-
             </Nav>
           </Collapse>
         </Navbar>
@@ -85,6 +82,6 @@ const styles = {
   },
   blackStyle: {
     height: '100px',
-    backgroundColor: 'rgba(0,0,0,0.9)',
+    backgroundColor: 'rgba(0,0,0,0.9)'
   }
 }
