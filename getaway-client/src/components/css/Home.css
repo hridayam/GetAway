@@ -2,7 +2,7 @@
 	background-color:transparent !important;
 	border-color:transparent;
 	background-image:none;
-	box-shadow:none;	
+	box-shadow:none;
 }
 /* Link on navbar */
 .navbar-dark .nav-link {
@@ -18,7 +18,7 @@
 }
 
   /*Top-margin from navbar*/
-.navbar-dark .navbar-nav { 
+.navbar-dark .navbar-nav {
     margin:40px 0;
  }
 
@@ -48,14 +48,37 @@
   overflow: hidden;
  }
 
+/*profile page background*/
+ .background-image2 {
+  background-image: url('../picture/slide/2.jpg');
+  height: 100vh;
+  min-height: 720px;
+  background-size: cover;
+  overflow: hidden;
+ }
+
+
+
 /* Form Field */
 .text-block {
    position: relative;
    background-color: rgba(0,0,0,0.2);
    text-align: center;
    padding: 20px;
-  
+
 }
+
+/* Form Field */
+.text-block2 {
+   position: relative;
+   background-color: rgba(0,0,0,.7);
+   text-align: center;
+   padding: 20px;
+
+}
+
+
+
 /* For the slogan */
  .title{
    font-family: 'Sofia';
@@ -72,15 +95,15 @@
    width: 100%;
    height: 3.4em;
    color: white;
-   
+
  }
  .search-date{
    font-family: 'Sofia';
    font-size: 1.4em;
    color: white;
    text-align: left;
-   margin-top: 20px; 
-  
+   margin-top: 20px;
+
  }
 
  .search-button{
@@ -88,9 +111,9 @@
    font-size: 1.2em;
    color: white;
    text-align: center;
-   margin-top: 10px; 
+   margin-top: 10px;
    margin-bottom: 10px;
-  
+
  }
 
  /* Suggestion  */
@@ -107,7 +130,7 @@
    text-align: center;
    color: black;
    margin-bottom: 30px;
-  
+
 }
 
 .card-title{
