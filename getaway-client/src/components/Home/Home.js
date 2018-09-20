@@ -30,5 +30,6 @@ const styles = {
     justifyContent: 'center',
     marginTop: '-30px',
     paddingTop: '200px',
+    overflowY: 'hidden'
   }
 }
