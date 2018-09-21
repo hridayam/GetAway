@@ -1,9 +1,7 @@
-.navbar-default {
-	background-color:transparent !important;
-	border-color:transparent;
-	background-image:none;
-	box-shadow:none;
+.fixed-top{
+  position: absolute;
 }
+
 /* Link on navbar */
 .navbar-dark .nav-link {
     font-family: 'Allura', sans-serif;
@@ -40,12 +38,15 @@
     margin-right: 30px;
  }
 
+/*home page background*/
  .background-image {
   background-image: url('../picture/slide/1.jpg');
-  height: 100vh;
-  min-height: 720px;
   background-size: cover;
-  overflow: hidden;
+ }
+ @media(min-width: 490px){
+  .background-image{
+    height: 100vh;
+  }
  }
 
 /*profile page background*/
@@ -64,20 +65,7 @@
    position: relative;
    background-color: rgba(0,0,0,0.2);
    text-align: center;
-   padding: 20px;
-
 }
-
-/* Form Field */
-.text-block2 {
-   position: relative;
-   background-color: rgba(0,0,0,.7);
-   text-align: center;
-   padding: 20px;
-
-}
-
-
 
 /* For the slogan */
  .title{
@@ -124,7 +112,7 @@
    text-align: center;
 }
 
-.suggestion-rewards{
+.suggestion-title{
    font-family: "Sofia", Georgia,serif;
    font-size: 3em;
    text-align: center;
@@ -133,11 +121,15 @@
 
 }
 
+.suggestion-card{
+  padding-bottom: 30px;
+}
+
 .card-title{
   font-family: "Sofia",Georgia,serif;
   text-align: center;
   font-style: italic;
-  font-size: 1.3vw;
+  font-size: auto;
   font-weight: 800;
   padding-bottom: 20px;
   border-bottom: 2px solid #000;
@@ -146,17 +138,18 @@
 .card-text{
   font-family: "Open Sans",Arial,sans-serif;
   text-align: center;
-  font-size: 1.1vw;
+  font-size: auto;
   padding-bottom: 20px;
 }
 
 .button-suggestion{
+  white-space: normal;
   background-color: transparent;
   display: inline-block;
   font-family: BellhopIcons;
   font-style: normal;
   font-weight: 400;
-  font-size: 1.2vw;
+  font-size: auto;
   line-height: 1;
   color: #407bae;
   border: 0px;
@@ -184,11 +177,12 @@
   font-size: 30px;
   text-align: center;
 }
-
-.signup-background{
-  background-image: url('../picture/breath.jpg');
-  height: 100vh;
-  min-height: 720px;
-  background-size: cover;
-  overflow: hidden;
+.term-condition{
+  font-size: 0.8em;
+  padding-top: 50px;
+}
+.term-condition-button{
+  background-color: transparent;
+  border: unset;
+  color: blue;
 }

@@ -7,7 +7,7 @@ export default class SearchForm extends Component {
     return (
         <Container className="text-block">
             <h1 className="title"> Take a break </h1>
-            <Form>
+            <Form className="form-wrapper">
                 <Row>
                     <Col sm="12">
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
