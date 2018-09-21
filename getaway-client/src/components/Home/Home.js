@@ -7,7 +7,7 @@ import Up from '../picture/arrow.png';
 import '../css/Home.css';
 
 export default class Home extends Component{
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state={};
   }

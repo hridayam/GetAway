@@ -3,15 +3,15 @@ const router = express.Router();
 
 const Reservation = require('../models/reservation');
 
-router.get('/api/get/reservations/:user_id', async (req,res) => {
+router.get('/reservations/all/:user_id', async (req,res) => {
     try {
         let { user_id } = req.params;
 
         Reservation.find({ user_id }, (err, data) => {
-            if (err) 
+            if (err.name === "CastError") 
                 res.status(400).json({
                     success: false,
-                    msg: err
+                    msg: `${err.value} is an invalid user ID. Try again.`
                 });
             else if (data)
                 res.status(200).json({
@@ -20,7 +20,7 @@ router.get('/api/get/reservations/:user_id', async (req,res) => {
                 });
         });
     }
-    catch {
+    catch(err) {
         res.status(500).json({
             success: false,
             err: 'Error occured! Please try again.' 
@@ -28,7 +28,8 @@ router.get('/api/get/reservations/:user_id', async (req,res) => {
     }
 });
 
-router.post('/api/post/reservations/delete/:user_id', async (req,res) => {
+// jkgki
+router.post('reservations/delete/:user_id', async (req,res) => {
     try {
         let { user_id } = req.params;
         let { time_created } = req.body;
@@ -40,7 +41,7 @@ router.post('/api/post/reservations/delete/:user_id', async (req,res) => {
             msg: 'Successfully deleted the reservation.'
         });
     }
-    catch {
+    catch(err) {
         res.status(500).json({
             success: false,
             err: 'Error occured! Please try again.' 
@@ -48,5 +49,7 @@ router.post('/api/post/reservations/delete/:user_id', async (req,res) => {
     }
 });
 
+// update reservation/ delete and create new one
+// 24 hrs for free, full fee after that until a week before,
 
 module.exports = router;
