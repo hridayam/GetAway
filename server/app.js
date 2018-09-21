@@ -48,7 +48,7 @@ app.use(cors());
 app.use('/', index);
 app.use('/users', users);
 app.use('/payments', payments);
-app.use('/reservations'. reservations);
+app.use('/reservations', reservations);
 app.use('/*', index);
 
 // Localhost setup
