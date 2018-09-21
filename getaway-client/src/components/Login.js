@@ -57,7 +57,7 @@ export default class Login extends Component {
             </Form>
 
             <Button className="sign-up" onClick={this.toggleNested}>Not a member yet? Sign Up</Button>
-            <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.closeAll ? this.toggle : undefined}>
+            <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.closeAll ? this.toggle : undefined} className={this.props.className}>
               <ModalBody className = "login-body">
                 <Form>
                 <Row>
@@ -125,14 +125,13 @@ export default class Login extends Component {
                 <FormGroup check>
                     <Label check className="term-condition">
                          <Input type="checkbox"/>{'  '} 
-                         By create this account, you agree to our <Button className="term-condition-button">Term & Condintion</Button>
+                         By create this account, you agree to our <Button className="term-condition-button">Terms & Condintions</Button>
                     </Label>
                 </FormGroup>
-                <Button className='search-button' >Submit</Button>
                 </Form>
               </ModalBody>
               <ModalFooter>
-                <Button color="info" onClick={this.toggle}>Log In</Button>{' '}
+                <Button color="info" onClick={this.toggle}>Submit</Button>{' '}
                 <Button color="secondary" onClick={this.toggle}>Cancel</Button>
               </ModalFooter>
             </Modal>
