@@ -1,6 +1,7 @@
 .fixed-top{
   position: absolute;
 }
+
 /* Link on navbar */
 .navbar-dark .nav-link {
     font-family: 'Allura', sans-serif;
@@ -176,11 +177,12 @@
   font-size: 30px;
   text-align: center;
 }
-
-.signup-background{
-  background-image: url('../picture/breath.jpg');
-  height: 100vh;
-  min-height: 720px;
-  background-size: cover;
-  overflow: hidden;
+.term-condition{
+  font-size: 0.8em;
+  padding-top: 50px;
+}
+.term-condition-button{
+  background-color: transparent;
+  border: unset;
+  color: blue;
 }

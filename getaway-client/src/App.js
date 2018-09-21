@@ -5,7 +5,7 @@ import NavBar from './components/NavBar';
 import Home from './components/Home/Home';
 import Footer from './components/Footer';
 import Profile from './components/Profile/Profile';
-import Signup from './components/Signup';
+
 
 //import logo from './logo.svg';
 import './App.css';
@@ -19,7 +19,6 @@ class App extends Component {
             <div id='routes' style={ styles.routeStyle }>
               <Route exact path='/' component={Home} />
               <Route exact path='/profile' component={Profile}/>
-              <Route exact path='/signup' component={Signup} />
             </div>
         </BrowserRouter>
 
