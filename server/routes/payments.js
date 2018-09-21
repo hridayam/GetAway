@@ -18,14 +18,17 @@ router.post('/pay', function(req, res) {
         source,
         description: ''
     }, (err, charge) => {
-        if (err) res.status(400).json({ success: false, msg: err });
-        
+        if (err) 
+            return res.status(400).json({ success: false, msg: err });
+
         charge.user_id = user_id;
         Payment.create(charge, (err,response) => {
-            if (err) res.status(400).json({ success: false, msg: err });
-            else res.status(200).json({ success: true, msg: 'Successfully charged the customer' });
+            if (err) 
+                return res.status(400).json({ success: false, msg: err });
+            else 
+                return res.status(200).json({ success: true, msg: 'Successfully charged the customer' });
         });
     });
-})
+});
 
 module.exports = router;
