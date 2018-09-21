@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const PaymentSchema = new mongoose.Schema({
     id: String,
+    user_id: String,
     amount: Number,
     amount_refunded: Number,
     application: null,

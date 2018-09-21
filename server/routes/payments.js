@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const Payment = require('../models/payment');
+
 const uuid = require('uuid/')
 var keys = require('../config/stripe');
 var stripe = require('stripe')(keys.secret_key);
@@ -16,7 +18,13 @@ router.post('/pay', function(req, res) {
         source,
         description: ''
     }, (err, charge) => {
+        if (err) res.status(400).json({ success: false, msg: err });
         
+        charge.user_id = user_id;
+        Payment.create(charge, (err,response) => {
+            if (err) res.status(400).json({ success: false, msg: err });
+            else res.status(200).json({ success: true, msg: 'Successfully charged the customer' });
+        });
     });
 })
 
