@@ -33,10 +33,10 @@ import Login from './Login'
     };
 
     this.resizeListener = () => {
-      if (window.outerWidth < this.initialWindowWidth * 0.68 && !this.state.isOpen) 
+      if (window.outerWidth < this.initialWindowWidth * 0.69 && !this.state.isOpen) 
         this.setState({ navStyle: { backgroundColor: 'transparent' }});
-      else if (window.outerWidth > this.initialWindowWidth * 0.68 && this.state.isOpen)
-        this.setState({ navStyle: { backgroundColor: 'transparent' }});
+      else if (window.outerWidth > this.initialWindowWidth * 0.69 && this.state.isOpen)
+        this.setState({ navStyle: { backgroundColor: 'transparent', isOpen: false }});
     }
   }
 
@@ -61,7 +61,6 @@ import Login from './Login'
         navStyle: { backgroundColor: 'rgba(0,0,0,0.9)' }
       });
   }
-  
 
   render() {
     return (
