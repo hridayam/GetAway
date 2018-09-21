@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-const Hotel = require('./hotel');
-
 const ReservationSchema = new mongoose.Schema({
     _id: mongoose.SchemaTypes.ObjectId,
     user_id: mongoose.SchemaTypes.ObjectId,

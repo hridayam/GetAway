@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink} from 'reactstrap';
+  Collapse, Navbar, NavbarToggler,
+  NavbarBrand, Nav, NavItem,
+  NavLink
+} from 'reactstrap';
 import Login from './Login'
 
   export default class NavBar extends Component {
@@ -20,10 +17,10 @@ import Login from './Login'
       navStyle: { backgroundColor: 'transparent' },
       loginClicked: false
     };
-  }
 
-  componentDidMount() {
-    document.addEventListener('scroll', () => {
+    this.initialWindowWidth = window.outerWidth;
+
+    this.scrollListener = () => {
       if (window.scrollY < 100)
         this.setState({ 
           navbarStyle : styles.transparentStyle
@@ -32,7 +29,24 @@ import Login from './Login'
         this.setState({ 
           navbarStyle : styles.blackStyle,
       });
-    });
+    };
+
+    this.resizeListener = () => {
+      if (window.outerWidth < this.initialWindowWidth * 0.68 && !this.state.isOpen) 
+        this.setState({ navStyle: { backgroundColor: 'transparent' }});
+      else if (window.outerWidth > this.initialWindowWidth * 0.68 && this.state.isOpen)
+        this.setState({ navStyle: { backgroundColor: 'transparent' }});
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener('scroll', this.scrollListener);
+    window.addEventListener('resize', this.resizeListener);
+  }
+  
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.scrollListener);
+    document.removeEventListener('resize', this.resizeListener);
   }
 
   toggle() {

@@ -6,7 +6,7 @@ import '../picture/slide/1.jpg';
 import '../css/Home.css';
 
 export default class Home extends Component{
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state={};
   }
