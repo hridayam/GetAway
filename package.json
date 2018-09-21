@@ -14,6 +14,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "concurrently": "*"
+    "concurrently": "*",
+    "react-scroll-up": "^1.3.3"
   }
 }

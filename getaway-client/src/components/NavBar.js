@@ -12,8 +12,7 @@ import Login from './Login'
   export default class NavBar extends Component {
     constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
+    
     this.state = {
       isOpen: false,
       navbarStyle: styles.transparentStyle,
@@ -22,31 +21,7 @@ import Login from './Login'
     };
   }
 
-  componentDidMount() {
-    document.addEventListener('scroll', () => {
-      if (window.scrollY < 100)
-        this.setState({ 
-          navbarStyle : styles.transparentStyle
-        });
-      else
-        this.setState({ 
-          navbarStyle : styles.blackStyle,
-      });
-    });
-  }
-
-  toggle() {
-    if (this.state.isOpen)
-      this.setState({
-        isOpen: !this.state.isOpen,
-        navStyle: { backgroundColor: 'transparent' }
-      });
-    else
-      this.setState({
-        isOpen: !this.state.isOpen,
-        navStyle: { backgroundColor: 'rgba(0,0,0,0.9)' }
-      });
-  }
+  
 
   render() {
     return (
@@ -78,7 +53,7 @@ const styles = {
   transparentStyle: {
     height: '100px',
     backgroundColor: 'transparent',
-    paddingTop: '0px'
+    paddingTop: '0px',
   },
   blackStyle: {
     height: '100px',
