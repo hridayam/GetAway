@@ -13,7 +13,8 @@ const config  = require ('./config/database');
 mongoose.connect(config.database);
 
 const index = require('./routes/index');
-//const posts = require('./routes/posts');
+const payments = require('./routes/payments');
+const reservations = require('./routes/reservations');
 const users = require('./routes/users');
 
 const app = express();
@@ -46,6 +47,8 @@ app.use(cors());
 // Routes
 app.use('/', index);
 app.use('/users', users);
+app.use('/payments', payments);
+app.use('/reservations'. reservations);
 app.use('/*', index);
 
 // Localhost setup
