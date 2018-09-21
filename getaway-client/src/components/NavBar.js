@@ -11,6 +11,7 @@ import Login from './Login'
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    
     this.state = {
       isOpen: false,
       navbarStyle: styles.transparentStyle,
@@ -48,8 +49,7 @@ import Login from './Login'
     document.removeEventListener('scroll', this.scrollListener);
     document.removeEventListener('resize', this.resizeListener);
   }
-
-  toggle() {
+   toggle() {
     if (this.state.isOpen)
       this.setState({
         isOpen: !this.state.isOpen,
@@ -61,6 +61,7 @@ import Login from './Login'
         navStyle: { backgroundColor: 'rgba(0,0,0,0.9)' }
       });
   }
+  
 
   render() {
     return (
@@ -92,7 +93,7 @@ const styles = {
   transparentStyle: {
     height: '100px',
     backgroundColor: 'transparent',
-    paddingTop: '0px'
+    paddingTop: '0px',
   },
   blackStyle: {
     height: '100px',
