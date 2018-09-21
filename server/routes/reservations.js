@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Reservation = require('../models/reservation');
 
-router.get('/reservations/all/:user_id', async (req,res) => {
+router.get('/all/:user_id', async (req,res) => {
     try {
         let { user_id } = req.params;
 
@@ -29,7 +29,7 @@ router.get('/reservations/all/:user_id', async (req,res) => {
 });
 
 // jkgki
-router.post('reservations/delete/:user_id', async (req,res) => {
+router.post('/delete/:user_id', async (req,res) => {
     try {
         let { user_id } = req.params;
         let { time_created } = req.body;
