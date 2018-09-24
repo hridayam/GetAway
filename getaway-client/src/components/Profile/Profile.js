@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap'
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText,Collapse, CardBody} from 'reactstrap';
+import {TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText,Collapse, CardBody} from 'reactstrap';
 import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import '../picture/slide/2.jpg';
 import '../css/Home.css';
-import Suggestion from '../Home/Suggestion';
 
 export default class Profile extends Component{
 
@@ -13,12 +13,25 @@ export default class Profile extends Component{
       super(props);
 
       this.toggle = this.toggle.bind(this);
+      this.toggle1 = this.toggle1.bind(this);
+      this.toggle2 = this.toggle2.bind(this);
       this.state = {
         activeTab: '1',
-
+        rewardPoint:29,
+        modal1: false,
+        modal2: false
       };
     }
-
+    toggle1() {
+      this.setState({
+        modal1: !this.state.modal1
+      });
+    }
+    toggle2() {
+      this.setState({
+        modal2: !this.state.modal2
+      });
+    }
     toggle(tab) {
       if (this.state.activeTab !== tab) {
         this.setState({
@@ -30,7 +43,6 @@ export default class Profile extends Component{
 
   render(){
     return(
-    <div>
     <div className="background-image2">
     <div class="row" style= {styles.profileStyle}>
    </div>
@@ -45,7 +57,7 @@ export default class Profile extends Component{
 <Row>
 <Col sm={{ size: 3,offset:2}}>
 <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
-<label for="files" class="btn" style= {styles.uploadpic}>Change Picture</label>
+<label for="files" class="btn">Change Picture</label>
 <input style={styles.uploadStyle} type="file" class="text-center center-block file-upload"/>
 
 <Table size="sm" style={styles.tableborder}>
@@ -59,37 +71,22 @@ export default class Profile extends Component{
          <td style={styles.tableStyle}>Email: johnshotel@gmail.com</td>
        </tr>
        <tr>
-         <td style={styles.tableStyle}>Mobile: 408-555-5555</td>
+         <td style={styles.tableStyle} >Phone Number: 408-555-5555</td>
        </tr>
        <tr>
          <td style={styles.tableStyle}>Address: 837 Disney Road, San Jose, CA, 95128</td>
        </tr>
      </tbody>
    </Table>
-
-   <Table size="sm" style={styles.tableborder}>
-        <thead>
-          <tr>
-            <th style= {styles.headerStyle}>Rewards</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td  style= {styles.tableStyle}>29 points</td>
-          </tr>
-
-        </tbody>
-      </Table>
-
 </Col>
 
 
 
 
 
-<Col sm={{ size: 30, offset: 0}}>
+<Col sm={{ size: 30}}>
 
-<Nav tabs style={{borderBottomColor: "transparent", marginLeft: '23px'}} >
+<Nav tabs style={{borderBottomColor: "transparent"}} >
          <NavItem style= {styles.tabStyle}>
            <NavLink
              onClick={() => { this.toggle('1'); }}
@@ -112,12 +109,19 @@ export default class Profile extends Component{
              Edit Profile
            </NavLink>
          </NavItem>
+         <NavItem style= {styles.tabStyle}>
+           <NavLink
+             onClick={() => { this.toggle('4'); }}
+           >
+             Rewards
+           </NavLink>
+         </NavItem>
 
        </Nav>
-       <TabContent activeTab={this.state.activeTab}>
+       <TabContent activeTab={this.state.activeTab} style={{marginLeft: "23px"}}>
          <TabPane tabId="1">
            <Row>
-             <Col sm={{ size: 40, offset: 1}}>
+             <Col sm={{ size: 40}}>
                <Table style={styles.tableStyle}>
         <thead>
           <tr>
@@ -204,6 +208,59 @@ export default class Profile extends Component{
            </Col>
            </Row>
          </TabPane>
+         <TabPane tabId="4">
+         <h4 style={styles.headerStyle}>Your Rewards Point: {this.state.rewardPoint}</h4>
+         <Table size="sm" style={styles.tableStyle}>
+         <thead>
+          <tr>
+          <th style={styles.tableStyle}>Point</th>
+          <th style={styles.tableStyle}>Rewards</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style={styles.tableStyle}>10</td>
+            <td style={styles.tableStyle}>10% Discount</td>
+            <td style={styles.tableStyle}>
+            {this.state.rewardPoint >= 10?
+            <Button color="primary"
+            onClick={this.toggle1}
+            >Redeem</Button>:
+            <Button color="secondary"
+            onClick={this.toggle2}
+            >Redeem</Button>}
+            </td>
+        </tr>
+        <tr>
+            <td style={styles.tableStyle}>25</td>
+            <td style={styles.tableStyle}>25% Discount</td>
+            <td style={styles.tableStyle}>
+            {this.state.rewardPoint >= 25?
+            <Button color="primary"
+            onClick={this.toggle1}
+            >Redeem</Button>:
+            <Button color="secondary"
+            onClick={this.toggle2}
+            >Redeem</Button>}
+            </td>
+        </tr>
+        <tr>
+            <td style={styles.tableStyle}>50</td>
+            <td style={styles.tableStyle}>50% Discount</td>
+            <td style={styles.tableStyle}>
+            {this.state.rewardPoint >= 50?
+            <Button color="primary"
+            onClick={this.toggle1}
+            >Redeem</Button>:
+            <Button color="secondary"
+            onClick={this.toggle2}
+            >Redeem</Button>}
+            </td>
+        </tr>
+     </tbody>
+      </Table>
+
+         </TabPane>
        </TabContent>
        </Col>
 
@@ -213,9 +270,16 @@ export default class Profile extends Component{
 
 
   </Container>
-
-    </div>
-
+  <Modal isOpen={this.state.modal1} toggle={this.toggle1} className={this.props.className}>
+          <ModalBody>
+           Redeem Success
+          </ModalBody>
+        </Modal>
+        <Modal isOpen={this.state.modal2} toggle={this.toggle2} className={this.props.className}>
+          <ModalBody>
+           Not Enough Point
+          </ModalBody>
+        </Modal>
     </div>
     );
   }
@@ -233,6 +297,7 @@ const styles = {
     marginBottom: '10px'
   },
   headerStyle:{
+    marginTop:10,
     backgroundColor: '#4682b4',
     color: 'white',
     fontWeight: 'normal',
@@ -240,9 +305,7 @@ const styles = {
   },
   tableStyle:{
     backgroundColor: '#f5f5f5',
-    marginTop: '10px',
-    textAlign: 'left'
-
+    marginTop: '10px'
   },
   tabStyle:{
     backgroundColor: '#4682b4',
@@ -262,8 +325,5 @@ const styles = {
   tableborder: {
     border: "2px solid black",
     borderRadius: "10px"
-  },
-  uploadpic :{
-    color: '#f5f5f5'
   }
 }
