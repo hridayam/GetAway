@@ -43,23 +43,23 @@ export default class Login extends Component {
           
           <ModalHeader className="login-header" toggle={this.toggle}>Welcome Back! </ModalHeader>
           
-          <ModalBody className = "login-body">
-            <Form>
+          <ModalBody>
+            <Form className = "login-body">
                 <FormGroup>
-                    <Label for="exampleEmail">Email</Label>
+                    <Label for="exampleEmail">Email:</Label>
                     <Input type="email" name="email" id="exampleEmail" placeholder="Enter Your Email" />
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="examplePassword">Password</Label>
+                    <Label for="examplePassword">Password:</Label>
                     <Input type="password" name="password" id="examplePassword" placeholder="Enter Your Password" />
                 </FormGroup>
             </Form>
 
-            <Button className="sign-up" onClick={this.toggleNested}>Not a member yet? Sign Up</Button>
+            <Button onClick={this.toggleNested}>Not a member yet? Sign Up</Button>
             <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.closeAll ? this.toggle : undefined} className={this.props.className}>
-              <ModalBody className = "login-body">
-                <Form>
+              <ModalBody>
+                <Form className = "login-body">
                 <Row>
                      <Col >
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
