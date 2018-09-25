@@ -271,12 +271,12 @@ export default class Profile extends Component{
 
   </Container>
   <Modal isOpen={this.state.modal1} toggle={this.toggle1} className={this.props.className}>
-          <ModalBody>
+          <ModalBody style={styles.redeemSuccess}>
            Redeem Success
           </ModalBody>
         </Modal>
         <Modal isOpen={this.state.modal2} toggle={this.toggle2} className={this.props.className}>
-          <ModalBody>
+          <ModalBody style={styles.redeemFail}>
            Not Enough Point
           </ModalBody>
         </Modal>
@@ -286,6 +286,12 @@ export default class Profile extends Component{
 }
 
 const styles = {
+  redeemFail: {
+    color: 'red'
+  },
+  redeemSuccess: {
+    color: 'green'
+  },
   profileStyle: {
     flex: 1,
     marginTop: '-30px',
