@@ -195,3 +195,11 @@ label{
   margin-bottom: unset;
   margin-top: 30px;
 }
+
+.reservation-img{
+  background-image: url('../picture/slide/3.jpg');
+  height: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

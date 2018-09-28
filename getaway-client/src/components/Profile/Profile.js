@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap'
-import {TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText,Collapse, CardBody} from 'reactstrap';
-import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import {Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {TabContent, TabPane, Nav, NavItem, NavLink, Button} from 'reactstrap';
+import {Form, FormGroup, Label, Input} from 'reactstrap';
+import {Modal,ModalBody} from 'reactstrap';
 import '../picture/slide/2.jpg';
 import '../css/Home.css';
 
@@ -56,7 +56,7 @@ export default class Profile extends Component{
 </Row>
 <Row>
 <Col sm={{ size: 3,offset:2}}>
-<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
+<img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
 <label for="files" class="btn">Change Picture</label>
 <input style={styles.uploadStyle} type="file" class="text-center center-block file-upload"/>
 
