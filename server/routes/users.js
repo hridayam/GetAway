@@ -17,40 +17,41 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), function(
     res.status(200).json({user: {
         id:                 req.user._id,
         email:              req.user.email,
-        firstName:          req.user.firstName,
-        lastName:           req.user.lastName,
-        role:               req.user.role,
+        name:               req.user.name,
+        phoneNumber:        req.user.phoneNumber,
+        address:            req.user.address,
+        rewardsPoints:      req.user.rewardsPoints,
+        profilePic:         req.user.profilePic
     }});
 });
 
 router.post('/register', function(req, res) {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    //const organizationName = req.body.organizationName;
+    const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
-    const role = req.body.role;
+    const address = req.body.address;
+    const phoneNumber = req.body.phoneNumber;
 
     // Validation
-    req.checkBody('firstName', 'First Name is Required').notEmpty();
-    req.checkBody('lastName', 'Last Name is Required').notEmpty();
+    req.checkBody('name', 'First Name is Required').notEmpty();
     req.checkBody('email', 'email is Required').notEmpty();
     req.checkBody('email', 'email is not valid').isEmail();
     req.checkBody('password', 'password is Required').notEmpty();
     req.checkBody('confirmPassword', 'passwords do not match').equals(req.body.password);
-    req.checkBody('role', 'role is Required').notEmpty();
+    req.checkBody('address', 'address is Required').notEmpty();
+    req.checkBody('phoneNumber', 'phone number is Required').notEmpty();
 
     const errors = req.validationErrors();
     if(errors) {
         console.log(errors);
     } else {
         const newUser = new User({
-            firstName: firstName,
-            lastName: lastName,
+            name: name,
             email: email,
             password: password,
-            role: role
+            address: address,
+            phoneNumber: phoneNumber
         });
 
         User.createUser(newUser, function(err, user){
@@ -94,9 +95,11 @@ router.post('/login', (req, res, next) => {
                     user: {
                         id: user._id,
                         email: user.email,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        role: user.role
+                        name: user.name,
+                        address: user.address,
+                        phoneNumber: user.phoneNumber,
+                        rewardsPoints: user.rewardsPoints,
+                        profilePic: user.profilePic
                     }
                 })
             } else {
@@ -106,6 +109,7 @@ router.post('/login', (req, res, next) => {
     });
 });
 
+//no need
 router.put('/connect', passport.authenticate('jwt', {session: false}), function(req, res, next){
     if (req.user.role.toLowerCase() == 'applicant') {
         return res.status(401).json({
@@ -133,6 +137,7 @@ router.put('/connect', passport.authenticate('jwt', {session: false}), function(
     });
 });
 
+// no need
 router.get('/connections', passport.authenticate('jwt', {session: false}), function(req, res, next){
     var users = [];
     User.getConnections(req.user._id, function(users) {

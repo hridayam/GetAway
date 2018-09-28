@@ -9,11 +9,7 @@ const validateEmail = function(email) {
 };
 
 const userSchema = new Schema({
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
+    name: {
         type: String,
         required: true
     },
@@ -26,15 +22,27 @@ const userSchema = new Schema({
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
+    phoneNumber: {
+        type: Number,
+        required: true
+    },
     password: {
         type: String,
         required: true
     },
-    role: {
+    address: {
         type: String,
         required: true
     },
-    connections: [{
+    rewardsPoints: {
+        type: Number,
+        default: 0
+    },
+    profilePic: {
+        type: String,
+        default: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"
+    },
+    pastReservations: [{
         type: String
     }]
 });
@@ -67,6 +75,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
     });
 }
 
+// maybe not needed
 module.exports.addConnection = function(id, applicantID, exists, callback) {
     User.findById(id, function(err, user) {
         if (err) throw err;
@@ -90,16 +99,17 @@ module.exports.addConnection = function(id, applicantID, exists, callback) {
     });
 }
 
-module.exports.getConnections = function(id, callBack) {
-    var users = []
-    User.findById(id, function(err, user) {
+// maybe not needed
+module.exports.getReservations = function(id, callBack) {
+    var reservations = []
+    Reservation.findById(id, function(err, reservation) {
         if (err) throw err;
-        var cursor = User.find({ _id : { $in : user.connections } }).cursor();
-        cursor.on('data', function (user) {
-            users.push(user)
+        var cursor = Reservations.find({ _id : { $in : reservation._id } }).cursor();
+        cursor.on('data', function (reservation) {
+            reservations.push(reservation)
         });
         cursor.on('close', function() {
-            callBack(users);
+            callBack(reservations);
           });
     });
 }
