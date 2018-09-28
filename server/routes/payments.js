@@ -25,7 +25,7 @@ router.post('/pay', function(req, res) {
         Payment.create(charge, (err,response) => {
             if (err) 
                 return res.status(400).json({ success: false, msg: err });
-            else 
+            else
                 return res.status(200).json({ success: true, msg: 'Successfully charged the customer' });
         });
     });
