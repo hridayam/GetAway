@@ -3,6 +3,8 @@ const bcrypt = require ('bcryptjs');
 
 const Schema = mongoose.Schema;
 
+// validate the user's email
+// returns a boolean if the user email is in valid format or not
 const validateEmail = function(email) {
     const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
@@ -49,6 +51,8 @@ const userSchema = new Schema({
 
 const User = module.exports = mongoose.model('User', userSchema);
 
+// create a user function
+// user will be created if the bcrypt.genSalt and bcrypt.hash functions are successful
 module.exports.createUser = function(newUser, callBack){
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(newUser.password, salt, function(err, hash) {
@@ -59,14 +63,17 @@ module.exports.createUser = function(newUser, callBack){
     });
 }
 
+// get a user query with an email
 module.exports.getUserByEmail = function(email, callback) {
-    const query = {email: email};
+    const query = { email };
     User.findOne(query, callback);
 }
 
+// get the user with an id
 module.exports.getUserById = function(id, callback) {
     User.findById(id, callback);
 }
+
 
 module.exports.comparePassword = function(candidatePassword, hash, callback) {
     bcrypt.compare(candidatePassword, hash, function(err, isMatch) {

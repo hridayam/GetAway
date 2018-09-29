@@ -20,14 +20,15 @@ router.post('/pay', function(req, res) {
     }, (err, charge) => {
         if (err) 
             return res.status(400).json({ success: false, msg: err });
+        if (charge)
+            return res.status(200).json({ success: true, msg: charge });
 
-        charge.user_id = user_id;
-        Payment.create(charge, (err,response) => {
-            if (err) 
-                return res.status(400).json({ success: false, msg: err });
-            else
-                return res.status(200).json({ success: true, msg: 'Successfully charged the customer' });
-        });
+        // Payment.create(charge, (err,response) => {
+        //     if (err) 
+        //         return res.status(400).json({ success: false, msg: err });
+        //     else
+        //         return res.status(200).json({ success: true, msg: 'Successfully charged the customer' });
+        // });
     });
 });
 
