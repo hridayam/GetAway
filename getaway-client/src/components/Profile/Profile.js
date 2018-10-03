@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'reactstrap'
 import {TabContent, TabPane, Nav, NavItem, NavLink, Button} from 'reactstrap';
 import {Form, FormGroup, Label, Input} from 'reactstrap';
 import {Modal,ModalBody} from 'reactstrap';
+import {connect} from 'react-redux';
 import '../picture/slide/2.jpg';
 import '../css/Home.css';
 
