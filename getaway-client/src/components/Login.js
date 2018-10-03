@@ -33,7 +33,10 @@ class Login extends Component {
 
   userLogin (e) {
     e.preventDefault();
-       this.props.login(this.state.email, this.state.password);
+       this.props.login({
+         email: this.state.email,
+         password: this.state.password
+       });
        this.setState({
          modal: !this.state.modal
        });

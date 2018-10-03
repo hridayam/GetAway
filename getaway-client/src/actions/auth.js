@@ -4,10 +4,11 @@ import setAuthToken from '../setAuthToken';
 
 import { LOGIN_USER } from './types';
 
-export const login = (email, password) => {
+export const login = (data) => {
   return dispatch => {
-    axios.post('http://localhost:3001/users/login')
+    axios.post('http://localhost:3001/users/login', data)
       .then(res => {
+        console.log(res)
         dispatch({
           type: LOGIN_USER,
           payload: res.data.user
