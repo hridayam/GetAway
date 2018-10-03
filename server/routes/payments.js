@@ -7,7 +7,7 @@ var keys = require('../config/stripe');
 var stripe = require('stripe')(keys.secret_key);
 
 router.post('/pay', function(req, res) {
-    let { amount, currency, source, user_id } = req.body;
+    let { amount, currency, source, user_id, customer } = req.body;
     const destination = {
         account: "acct_1DCutGGZF8qeVOU9"
     };
@@ -16,7 +16,8 @@ router.post('/pay', function(req, res) {
         amount,
         currency,
         source,
-        description: ''
+        description: '',
+        customer
     }, (err, charge) => {
         if (err) 
             return res.status(400).json({ success: false, msg: err });
