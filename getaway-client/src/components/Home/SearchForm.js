@@ -1,12 +1,36 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
 
-
 export default class SearchForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            changingText: 'life.'
+        };
+
+        this.textArray = ['life.', 'work.', 'stress.'];
+        this.interval = null;
+    }
+    
+    componentDidMount() {
+        var i = 0;
+        this.interval = setInterval(() => {
+            this.setState({ changingText: this.textArray[i++] });
+            if (i === this.textArray.length)
+                i = 0;
+        }, 1500)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+    
   render() {
     return (
         <Container className="text-block">
-            <h1 className="title"> Take a break </h1>
+            <br/>
+            <h2 className="title"> Take a break from {this.state.changingText}</h2>
+            <br/>
             <Form className="form-wrapper">
                 <Row>
                     <Col sm="12">

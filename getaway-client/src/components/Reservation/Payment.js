@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Label, Input, Form, FormGroup, Col, Row} from 'reactstrap';
 import {CardElement, injectStripe} from 'react-stripe-elements';
 import axios from 'axios';
-
 
 class Payment extends Component{
     constructor(props) {
