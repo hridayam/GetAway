@@ -69,7 +69,7 @@ export default class SearchForm extends Component {
                     </Col>
                 </Row>
 
-                <Button className="search-button">Search</Button>
+                <Button className="search-button" href="/reservation">Search</Button>
             </Form>
         </Container>
     );
