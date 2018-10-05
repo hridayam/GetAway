@@ -72,10 +72,10 @@ import Login from './Login'
             
             <Nav className="ml-auto" navbar style={ this.state.navStyle }>
               <NavItem>
-                <NavLink href="/reservation/">Reservation</NavLink>
+              <NavLink href="/events/">Event</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/events/">Event</NavLink>
+                <NavLink href="/aboutus/">About Us</NavLink>
               </NavItem>
               <NavItem>
                 <Login />
