@@ -203,3 +203,11 @@ label{
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.reservation-search-edit{
+  position: relative;
+  background-color: rgba(0,0,0,0.2);
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 10px;
+}
