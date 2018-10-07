@@ -162,7 +162,7 @@ class Login extends Component {
               </ModalBody>
               <ModalFooter>
                 <Button color="info" onClick={this.toggle.bind(this)}>Submit</Button>{' '}
-                <Button color="secondary" onClick={this.toggle.bind(this)}>Cancel</Button>
+                <Button color="secondary" onClick={this.toggleAll.bind(this)}>Cancel</Button>
               </ModalFooter>
             </Modal>
           </ModalBody>
