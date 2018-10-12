@@ -54,7 +54,7 @@ module.exports.createUser = function(newUser, callBack){
         bcrypt.hash(newUser.password, salt, function(err, hash) {
             if (err) throw err;
             newUser.password = hash;
-            newUser.save(callBack); 
+            newUser.save(callBack);
         });
     });
 }
@@ -76,6 +76,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
 }
 
 // maybe not needed
+
 module.exports.addConnection = function(id, applicantID, exists, callback) {
     User.findById(id, function(err, user) {
         if (err) throw err;
@@ -99,6 +100,7 @@ module.exports.addConnection = function(id, applicantID, exists, callback) {
     });
 }
 
+module.exports = { validateEmail };
 // maybe not needed
 module.exports.getReservations = function(id, callBack) {
     var reservations = []
