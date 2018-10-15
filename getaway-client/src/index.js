@@ -4,6 +4,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter, Route } from 'react-router-dom';
+import {Elements, StripeProvider} from 'react-stripe-elements';
+
 
 import reducer from './reducers';
 
@@ -17,12 +19,16 @@ const store = createStore(
         applyMiddleware(thunk),
         window.__REDUX_DEVTOOLS_EXTENSION__? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
     )
-);
+);    
 
 ReactDOM.render(
     <BrowserRouter>
         <Provider store={store}>
-            <Route component={App} />
+            <StripeProvider apiKey="pk_test_BXlLrCAozvQjBtsCuboLjwGn">
+                <Elements>
+                    <Route component={App} />
+                </Elements>
+            </StripeProvider>
         </Provider>
     </BrowserRouter>
     , document.getElementById('root'));

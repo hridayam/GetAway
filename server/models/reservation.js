@@ -20,7 +20,8 @@ const ReservationSchema = new mongoose.Schema({
     guest_services_tax: Array,
     guest_services_tax_included: Boolean,
     start_time: Number,
-    end_time: Number
+    end_time: Number,
+    charge: Object
 });
 
 const Reservation = mongoose.model('Reservation', ReservationSchema);

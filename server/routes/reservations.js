@@ -3,9 +3,13 @@ const router = express.Router();
 
 const Reservation = require('../models/reservation');
 
-router.get('/all/:user_id', async (req,res) => {
+// gets all the reservations made by user
+// front end makes request with user id
+// back end sends back array of reservations
+
+router.get('/all', async (req,res) => {
     try {
-        let { user_id } = req.params;
+        let { user_id } = req.body;
 
         Reservation.find({ user_id }, (err, data) => {
             if (err.name === "CastError") 
@@ -28,13 +32,14 @@ router.get('/all/:user_id', async (req,res) => {
     }
 });
 
-// jkgki
-router.post('/delete/:user_id', async (req,res) => {
+// delete a reservation made by the user
+// front end makes a request with the user id and reservation id
+// back end responds with 200 for successful deletion, and 500 for unsuccessful deletion
+router.post('/delete', async (req,res) => {
     try {
-        let { user_id } = req.params;
-        let { time_created } = req.body;
+        let { _id, user_id } = req.body;
 
-        await Reservation.findOneAndRemove({ user_id, time_created }).exec();
+        await Reservation.findOneAndRemove({ user_id, _id }).exec();
 
         res.status(200).json({
             success: true,
@@ -49,13 +54,12 @@ router.post('/delete/:user_id', async (req,res) => {
     }
 });
 
-// update reservation/ delete and create new one
-
-
-router.post('/update/:user_id', async (req,res) => {
+// update a reservation made by the user
+// front end makes a request with the user id in the parameter and put reservation object inside the request
+// backend responds with 200 for successful update or 400 for unsuccessful update
+router.post('/update', async (req,res) => {
     try {
-        let { user_id } = req.params;
-        let { reservation } = req.body;
+        let { reservation, user_id } = req.body;
 
         await Reservation.findOneAndUpdate({ _id: reservation._id }, { $set: { ...reservation }});
 
@@ -72,10 +76,11 @@ router.post('/update/:user_id', async (req,res) => {
     }
 });
 
+// cancel a reservation made by the user identified by the user_id
+// front end makes a request 
 // 24 hrs for free, full fee after that until a week before
-router.post('/cancel/:user_id', async (req,res) => {
-    let { user_id } = req.params;
-    let { _id } = req.body;
+router.post('/cancel', async (req,res) => {
+    let { _id, user_id } = req.body;
 
     try {
         let reservation = await Reservation.findOne({ _id }).exec();
@@ -107,5 +112,44 @@ router.post('/cancel/:user_id', async (req,res) => {
             err
         });
     }
-})
+});
+
+router.post('/create', async (req,res) => {
+    let { 
+        user_id,
+        hotel_name, address, city,
+        price
+    } = req.body;
+
+    try {
+        let reservation = new Reservation({
+            user_id,
+            hotel_name,
+            city,
+            address,
+            price
+        })
+
+        reservation.save((err, reservation, numAffected) => {
+            if (err)
+                res.status(400).json({
+                    success: false,
+                    msg: err
+                });
+            else if (reservation)
+                res.status(200).json({
+                    success: true,
+                    reservation,
+                    msg: 'Successfully created the reservation.'
+                });
+        });
+    }
+    catch(err) {
+        res.status(400).json({
+            success: false,
+            msg: err
+        });
+    }
+});
+
 module.exports = router;
