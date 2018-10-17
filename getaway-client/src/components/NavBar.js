@@ -1,31 +1,27 @@
 import React, { Component } from 'react';
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  Collapse, Navbar, NavbarToggler,
+  NavbarBrand, Nav, NavItem,
+  NavLink
+} from 'reactstrap';
+import Login from './Login'
 
   export default class NavBar extends Component {
     constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    
     this.state = {
       isOpen: false,
       navbarStyle: styles.transparentStyle,
-      navStyle: { backgroundColor: 'transparent' }
+      navStyle: { backgroundColor: 'transparent' },
+      loginClicked: false
     };
-  }
 
-  componentDidMount() {
-    document.addEventListener('scroll', () => {
+    this.initialWindowWidth = window.outerWidth;
+
+    this.scrollListener = () => {
       if (window.scrollY < 100)
         this.setState({ 
           navbarStyle : styles.transparentStyle
@@ -34,10 +30,26 @@ import {
         this.setState({ 
           navbarStyle : styles.blackStyle,
       });
-    });
+    };
+
+    this.resizeListener = () => {
+      if (window.outerWidth < this.initialWindowWidth * 0.69 && !this.state.isOpen) 
+        this.setState({ navStyle: { backgroundColor: 'transparent' }});
+      else if (window.outerWidth > this.initialWindowWidth * 0.69 && this.state.isOpen)
+        this.setState({ navStyle: { backgroundColor: 'transparent', isOpen: false }});
+    }
   }
 
-  toggle() {
+  componentDidMount() {
+    document.addEventListener('scroll', this.scrollListener);
+    window.addEventListener('resize', this.resizeListener);
+  }
+  
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.scrollListener);
+    document.removeEventListener('resize', this.resizeListener);
+  }
+   toggle() {
     if (this.state.isOpen)
       this.setState({
         isOpen: !this.state.isOpen,
@@ -56,30 +68,18 @@ import {
         <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
           <NavbarBrand href="/">GetAway</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
+          <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>
             
             <Nav className="ml-auto" navbar style={ this.state.navStyle }>
               <NavItem>
-                <NavLink href="/reservation/">Reservation</NavLink>
+              <NavLink href="/events/">Event</NavLink>
               </NavItem>
-              
               <NavItem>
-                <NavLink href="/events/">Event</NavLink>
+                <NavLink href="/aboutus/">About Us</NavLink>
               </NavItem>
-              
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Account
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Log In
-                  </DropdownItem>
-                  <DropdownItem>
-                    Sign Up
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                <Login />
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
@@ -92,10 +92,10 @@ const styles = {
   transparentStyle: {
     height: '100px',
     backgroundColor: 'transparent',
-    paddingTop: '0px'
+    paddingTop: '0px',
   },
   blackStyle: {
     height: '100px',
-    backgroundColor: 'rgba(0,0,0,0.9)',
+    backgroundColor: 'rgba(0,0,0,0.9)'
   }
 }
