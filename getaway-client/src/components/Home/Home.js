@@ -40,7 +40,6 @@ const styles = {
     overflowY: 'hidden'
   },
   upstyle: {
-    zIndex: '999',
-    paddingBottom: '50px',
+    zIndex: '999'
   }
 }

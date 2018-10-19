@@ -15,7 +15,8 @@
     "react-stripe-elements": "^2.0.1",
     "reactstrap": "^6.4.0",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "react-scroll-up": "*"
   },
   "scripts": {
     "start": "react-scripts start",
