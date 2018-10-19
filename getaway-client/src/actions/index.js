@@ -4,9 +4,11 @@
 import { login } from './auth';
 
 export { login };
+
 import { register } from './reg';
 
 export { register};
+
 
 // export function loginRequired(request){
 //   return{

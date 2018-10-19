@@ -19,7 +19,15 @@ export default class Home extends Component{
           <SearchForm/>
         </div>
         <ScrollToTop style={ styles.upstyle} showUnder={160}>
+
           <img src={Up} alt={"Up"}/>
+
+          <div class="text-center">
+            <i class="far fa-hand-point-up" style={{ fontSize: 50 }}></i>
+            <br/>
+            <b>Back To Top</b>
+          </div>
+
         </ScrollToTop>
         <Suggestion/>
       </div>
@@ -39,5 +47,6 @@ const styles = {
   upstyle: {
     zIndex: '999',
     paddingBottom: '50px'
+
   }
 }

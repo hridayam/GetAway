@@ -3,6 +3,9 @@ import { GET_ERRORS } from './types';
 import setAuthToken from '../setAuthToken';
 
 import { LOGIN_USER } from './types';
+
+
+
 export const login = (data) => {
   return dispatch => {
     axios.post('http://localhost:3001/users/login', data)

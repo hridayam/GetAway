@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 import { NavLink } from 'reactstrap';
 import { login } from '../actions/auth';
+
 import { register } from '../actions/reg';
+
 import { connect } from 'react-redux';
 class Login extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class Login extends Component {
       closeAll: false,
       email: '',
       password: '',
+
       confirmPassword:'',
       registerEmail: '',
       registerPassword: '',
@@ -27,6 +30,7 @@ class Login extends Component {
     };
   }
 
+
   static getDerivedStateFromProps(props, state) {
     if (props.user !== state.user){
       return {
@@ -34,6 +38,16 @@ class Login extends Component {
       };
     }
     return null;
+
+
+  static getDerivedStateFromProps(prevState, nextProps) {
+    if (nextProps.user !== prevState.user){
+      return {
+        user: nextProps.user
+      };
+    }
+    return prevState;
+
   }
 
   toggle() {
@@ -52,6 +66,7 @@ class Login extends Component {
          modal: !this.state.modal
        });
   }
+
   userRegister (e) {
     e.preventDefault();
        this.props.register({
@@ -71,13 +86,13 @@ class Login extends Component {
   }
 
 
+
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
 
   }
-   
 
   toggleNested() {
     this.setState({
@@ -120,6 +135,7 @@ class Login extends Component {
               <ModalBody>
                 <Form className = "login-body">
                 <Row>
+
                      <Col s={12}>
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="exampleRegEmail">Email:</Label>
@@ -140,31 +156,43 @@ class Login extends Component {
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="exampleRegPassword">Confirm Password:</Label>
                         <Input type="password" name="confirmPassword" value={this.state.confirmPassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="password" />   
+
+                  
                         </FormGroup>
                     </Col>
                 </Row>
 
                 <Row>
                      <Col >
+
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleFirstName"> First Name:  </Label>
                             <Input type="text" name="firstName" value={this.state.firstName}  onChange={this.handleChange.bind(this)} id='exampleFirstName' placeholder="Elizabeth" />
+
+                        
+
                         </FormGroup>
                     </Col>
 
                     <Col >
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+
                             <Label for="exampleLastName"> Last Name:  </Label>
                             <Input type="text" name="lastName" value={this.state.lastName}  onChange={this.handleChange.bind(this)} id='exampleLastName' placeholder="Swann"/>
-                        </FormGroup>
+
+                           
+                      </FormGroup>
                     </Col>
                 </Row>
 
                 <Row>
                     <Col>
+
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleAddress"> Address:  </Label>
                             <Input type="text" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} id='exampleAddress' placeholder="1 Washington Square"/>
+
+                       
                         </FormGroup>
                     </Col>
                 </Row>
@@ -172,19 +200,26 @@ class Login extends Component {
                 <Row>
                     <Col xs="6" sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+
                             <Label for="exampleCity"> City:  </Label>
                             <Input type="text" name="city" value={this.state.city}  onChange={this.handleChange.bind(this)} id='exampleCity' placeholder="San Jose"/>
+
+                          
+
                         </FormGroup>
                     </Col>
                     <Col xs="6" sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+
                             <Label for="exampleState"> State:  </Label>
                             <Input type="text" name="state" value={this.state.state}  onChange={this.handleChange.bind(this)} id='exampleState' placeholder="CA"/>
+
                         </FormGroup>
                     </Col>
 
                     <Col sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+
                             <Label for="exampleCity"> Zip Code:  </Label>
                             <Input type="text" name="zipcode" value={this.state.zipcode}  onChange={this.handleChange.bind(this)} id='exampleZipCode' placeholder="95112"/>
                         </FormGroup>
@@ -195,20 +230,27 @@ class Login extends Component {
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleState"> Phone Number:  </Label>
                             <Input type="text" name="phoneNumber" value={this.state.phoneNumber}  onChange={this.handleChange.bind(this)} id='examplePhoneNumber' placeholder="408-123-4553"/>
+
+                         
+
                         </FormGroup>
                     </Col>
                 </Row>
                 <FormGroup check>
                     <Label check className="term-condition">
                          <Input type="checkbox"/>{'  '}
+
                          By creating this account, you agree to our <Button className="term-condition-button">Terms & Condintions</Button>
+
                     </Label>
                 </FormGroup>
                 </Form>
               </ModalBody>
               <ModalFooter>
+
                 <Button color="info" onClick={this.userRegister.bind(this)}>Submit</Button>{' '}
                 <Button color="secondary" onClick={this.toggle.bind(this)}>Cancel</Button>
+
               </ModalFooter>
             </Modal>
           </ModalBody>
@@ -229,4 +271,6 @@ const mapStateToProps = (state) => {
     };
 }
 
+
 export  default connect(mapStateToProps, { login,register})(Login)
+
