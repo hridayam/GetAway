@@ -58,7 +58,7 @@ class Login extends Component {
          email: this.state.registerEmail,
          password: this.state.registerPassword,
          name: this.state.firstName + ' ' + this.state.lastName,
-         address:this.state.address,
+         address:this.state.address + ' ' + this.state.city + ' ' + this.state.state + ' ' + this.state.zipcode,
          city:this.state.city,
          state:this.state.state,
          zipcode:this.state.zipcode,
