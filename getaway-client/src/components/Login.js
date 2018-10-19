@@ -13,6 +13,7 @@ class Login extends Component {
       closeAll: false,
       email: '',
       password: '',
+      confirmpassword:'',
       registerEmail: '',
       registerPassword: '',
       firstName:'',
@@ -21,6 +22,7 @@ class Login extends Component {
       city:'',
       state:'',
       zipcode:'',
+      phoneNumber:'',
       user: {}
     };
   }
@@ -74,7 +76,7 @@ class Login extends Component {
     });
 
   }
-
+   
 
   toggleNested() {
     this.setState({
@@ -120,14 +122,20 @@ class Login extends Component {
                      <Col >
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="exampleRegEmail">Email:</Label>
-                        <Input type="email" name="regEmail" value={this.state.registerEmail} onChange={this.handleChange.bind(this)} id='exampleRegEmail' placeholder="Enter Your Email" /> 
+                        <Input type="email" name="registerEmail" value={this.state.registerEmail} onChange={this.handleChange.bind(this)} id='exampleRegEmail' placeholder="Enter Your Email" /> 
                         </FormGroup>
                     </Col>
 
                     <Col >
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="exampleRegPassword">Password:</Label>
-                        <Input type="password" name="regPassword" value={this.state.registerPassword}  onChange={this.handleChange.bind(this)} id='exampleRegPassword' placeholder="Enter Your Password" />   
+                        <Input type="password" name="registerPassword" value={this.state.registerPassword}  onChange={this.handleChange.bind(this)} id='exampleRegPassword' placeholder="Enter Your Password" />   
+                        </FormGroup>
+                    </Col>
+                    <Col >
+                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                        <Label for="exampleRegPassword">Confirm Password:</Label>
+                        <Input type="password" name="registerPassword" value={this.state.confirmpassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="Enter Your Password" />   
                         </FormGroup>
                     </Col>
                 </Row>
@@ -175,6 +183,13 @@ class Login extends Component {
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleCity"> Zip Code:  </Label>
                             <Input type="text" name="zipcode" value={this.state.zipcode}  onChange={this.handleChange.bind(this)} id='exampleZipCode' placeholder="Zip Code"/>
+                        </FormGroup>
+                    </Col>
+
+                    <Col xs="6" sm="4">
+                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                            <Label for="exampleState"> Phone Number:  </Label>
+                            <Input type="text" name="phoneNumber" value={this.state.phoneNumber}  onChange={this.handleChange.bind(this)} id='examplePhoneNumber' placeholder="PhoneNumber"/>
                         </FormGroup>
                     </Col>
                 </Row>
