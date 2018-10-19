@@ -13,7 +13,7 @@ class Login extends Component {
       closeAll: false,
       email: '',
       password: '',
-      confirmpassword:'',
+      confirmPassword:'',
       registerEmail: '',
       registerPassword: '',
       firstName:'',
@@ -27,13 +27,13 @@ class Login extends Component {
     };
   }
 
-  static getDerivedStateFromProps(prevState, nextProps) {
-    if (nextProps.user !== prevState.user){
+  static getDerivedStateFromProps(props, state) {
+    if (props.user !== state.user){
       return {
-        user: nextProps.user
+        user: props.user
       };
     }
-    return prevState;
+    return null;
   }
 
   toggle() {
@@ -57,12 +57,13 @@ class Login extends Component {
        this.props.register({
          email: this.state.registerEmail,
          password: this.state.registerPassword,
-         firstName:this.state.firstName,
-         lastName:this.state.lastName,
+         name: this.state.name,
          address:this.state.address,
          city:this.state.city,
          state:this.state.state,
-         zipcode:this.state.zipcode
+         zipcode:this.state.zipcode,
+         confirmPassword: this.state.confirmPassword,
+         phoneNumber: this.state.phoneNumber
        });
        this.setState({
          modal: !this.state.modal
@@ -119,23 +120,26 @@ class Login extends Component {
               <ModalBody>
                 <Form className = "login-body">
                 <Row>
-                     <Col >
+                     <Col s={12}>
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="exampleRegEmail">Email:</Label>
-                        <Input type="email" name="registerEmail" value={this.state.registerEmail} onChange={this.handleChange.bind(this)} id='exampleRegEmail' placeholder="Enter Your Email" /> 
+                        <Input type="email" name="registerEmail" value={this.state.registerEmail} onChange={this.handleChange.bind(this)} id='exampleRegEmail' placeholder="name@gmail.com" /> 
                         </FormGroup>
                     </Col>
-
-                    <Col >
+                </Row>
+                <Row>
+                    <Col s={12}>
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="exampleRegPassword">Password:</Label>
-                        <Input type="password" name="registerPassword" value={this.state.registerPassword}  onChange={this.handleChange.bind(this)} id='exampleRegPassword' placeholder="Enter Your Password" />   
+                        <Input type="password" name="registerPassword" value={this.state.registerPassword}  onChange={this.handleChange.bind(this)} id='exampleRegPassword' placeholder="password" />   
                         </FormGroup>
                     </Col>
-                    <Col >
+                  </Row>
+                  <Row>
+                    <Col s={12}>
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="exampleRegPassword">Confirm Password:</Label>
-                        <Input type="password" name="registerPassword" value={this.state.confirmpassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="Enter Your Password" />   
+                        <Input type="password" name="confirmPassword" value={this.state.confirmPassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="password" />   
                         </FormGroup>
                     </Col>
                 </Row>
@@ -144,14 +148,14 @@ class Login extends Component {
                      <Col >
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleFirstName"> First Name:  </Label>
-                            <Input type="text" name="firstName" value={this.state.firstName}  onChange={this.handleChange.bind(this)} id='exampleFirstName' placeholder="Enter your first name" />
+                            <Input type="text" name="firstName" value={this.state.firstName}  onChange={this.handleChange.bind(this)} id='exampleFirstName' placeholder="Elizabeth" />
                         </FormGroup>
                     </Col>
 
                     <Col >
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleLastName"> Last Name:  </Label>
-                            <Input type="text" name="lastName" value={this.state.lastName}  onChange={this.handleChange.bind(this)} id='exampleLastName' placeholder="Enter your last name"/>
+                            <Input type="text" name="lastName" value={this.state.lastName}  onChange={this.handleChange.bind(this)} id='exampleLastName' placeholder="Swann"/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -160,7 +164,7 @@ class Login extends Component {
                     <Col>
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleAddress"> Address:  </Label>
-                            <Input type="text" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} id='exampleAddress' placeholder="Address"/>
+                            <Input type="text" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} id='exampleAddress' placeholder="1 Washington Square"/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -169,34 +173,35 @@ class Login extends Component {
                     <Col xs="6" sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleCity"> City:  </Label>
-                            <Input type="text" name="city" value={this.state.city}  onChange={this.handleChange.bind(this)} id='exampleCity' placeholder="City"/>
+                            <Input type="text" name="city" value={this.state.city}  onChange={this.handleChange.bind(this)} id='exampleCity' placeholder="San Jose"/>
                         </FormGroup>
                     </Col>
                     <Col xs="6" sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleState"> State:  </Label>
-                            <Input type="text" name="state" value={this.state.state}  onChange={this.handleChange.bind(this)} id='exampleState' placeholder="State"/>
+                            <Input type="text" name="state" value={this.state.state}  onChange={this.handleChange.bind(this)} id='exampleState' placeholder="CA"/>
                         </FormGroup>
                     </Col>
 
                     <Col sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleCity"> Zip Code:  </Label>
-                            <Input type="text" name="zipcode" value={this.state.zipcode}  onChange={this.handleChange.bind(this)} id='exampleZipCode' placeholder="Zip Code"/>
+                            <Input type="text" name="zipcode" value={this.state.zipcode}  onChange={this.handleChange.bind(this)} id='exampleZipCode' placeholder="95112"/>
                         </FormGroup>
                     </Col>
-
-                    <Col xs="6" sm="4">
+                </Row>
+                <Row>
+                    <Col s={12}>
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleState"> Phone Number:  </Label>
-                            <Input type="text" name="phoneNumber" value={this.state.phoneNumber}  onChange={this.handleChange.bind(this)} id='examplePhoneNumber' placeholder="PhoneNumber"/>
+                            <Input type="text" name="phoneNumber" value={this.state.phoneNumber}  onChange={this.handleChange.bind(this)} id='examplePhoneNumber' placeholder="408-123-4553"/>
                         </FormGroup>
                     </Col>
                 </Row>
                 <FormGroup check>
                     <Label check className="term-condition">
                          <Input type="checkbox"/>{'  '}
-                         By create this account, you agree to our <Button className="term-condition-button">Terms & Condintions</Button>
+                         By creating this account, you agree to our <Button className="term-condition-button">Terms & Condintions</Button>
                     </Label>
                 </FormGroup>
                 </Form>
