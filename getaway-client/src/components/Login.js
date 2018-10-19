@@ -57,7 +57,7 @@ class Login extends Component {
        this.props.register({
          email: this.state.registerEmail,
          password: this.state.registerPassword,
-         name: this.state.name,
+         name: this.state.firstName + ' ' + this.state.lastName,
          address:this.state.address,
          city:this.state.city,
          state:this.state.state,
