@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Stepper from './Stepper';
 import '../css/Home.css';
-import { Button, Form, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Container, Input, Row, Col } from 'reactstrap';
 
 
 export default class Reservation extends Component{
@@ -9,34 +9,20 @@ export default class Reservation extends Component{
         return(
             <div>
             <div className = 'reservation-img' style={ styles.homeStyle}></div>
-            <Container className="reservation-search-edit">
+            <div className="reservation-search-edit">
+            <Container>
             <Form className="form-wrapper">
-                <Row>
-                    <Col sm="12">
-                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Input className="search-place" bsSize="lg" placeholder="Where do you want to go?" />
+                <Row className="search-date reservation">
+                    <Col xs="6" sm="6" lg="2">
+                        <FormGroup>
+                            <Label className="edit-label" for="exampleDate"> Location:  </Label>
+                            <Input className="location" placeholder="Location"/> 
+                            {/* replace placeholder = "Location" with the current city that was chosen*/}
                         </FormGroup>
                     </Col>
-                </Row>
-                
-                <Row className="search-date">
-                    <Col xs="6" sm="4">
-                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleDate"> Depart:  </Label>
-                            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
-                        </FormGroup>
-                    </Col>
-
-                    <Col xs="6" sm="4">
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleDate"> Arrival:  </Label>
-                            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
-                        </FormGroup>
-                    </Col>
-                    
-                    <Col sm="4">
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleDate"> Guests:  </Label>
+                    <Col xs="6" sm="6" lg="2">
+                        <FormGroup >
+                            <Label className="edit-label" for="exampleDate"> Guests:  </Label>
                             <Input type="select" name="select" id="exampleSelect" placeholder="sm">
                                 <option>1</option>
                                 <option>2</option>
@@ -46,11 +32,25 @@ export default class Reservation extends Component{
                             </Input>
                         </FormGroup>
                     </Col>
+                    <Col xs="6" sm="6" lg="3">
+                        <FormGroup>
+                            <Label className="edit-label" for="exampleDate"> Check In:</Label>
+                            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                        </FormGroup>
+                    </Col>
+                    <Col xs="6" sm="6" lg="3">
+                        <FormGroup>
+                            <Label className="edit-label" for="exampleDate"> Check Out:</Label>
+                            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                        </FormGroup>
+                    </Col>
+                    <Col style={styles.updateButton} xs="12" sm="12" lg="2">
+                        <Button href="/reservation">Update Search</Button>
+                    </Col>
                 </Row>
-
-                <Button className="search-button" href="/reservation">Update Search</Button>
             </Form>
-        </Container>
+            </Container>
+        </div>
             <Stepper/>
           </div>
         );
@@ -64,5 +64,14 @@ const styles = {
       justifyContent: 'center',
       paddingTop: '200px',
     },
-
+    updateButton: {
+      fontFamily: 'Lato',
+      color: 'white',
+      textAlign: 'center',
+      marginTop: '33.6px',
+      height: '40px',
+      alignItems: 'center',
+      display: 'block'
+    }
+    
   }
