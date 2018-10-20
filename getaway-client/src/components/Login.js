@@ -12,18 +12,17 @@ class Login extends Component {
       closeAll: false,
       email: '',
       password: '',
-      user: {},
-      isLoggedIn: false
+      user: {}
     };
   }
 
-  static getDerivedStateFromProps(prevState, nextProps) {
-    if (nextProps.user !== prevState.user){
+  static getDerivedStateFromProps(props, state) {
+    if (state.user !== props.user){
       return {
-        user: nextProps.user
+        user: props.user
       };
     }
-    return prevState;
+    return null;
   }
 
   toggle() {
@@ -40,16 +39,12 @@ class Login extends Component {
        });
        this.setState({
          modal: !this.state.modal,
-         isLoggedIn: true
        });
   }
 
   userLogout(e){
     e.preventDefault();
     this.props.logout();
-    this.setState({
-      isLoggedIn:false
-    })
   }
 
 
@@ -77,7 +72,8 @@ class Login extends Component {
 
 
   render() {
-    if(this.state.isLoggedIn){
+    const { user } = this.props;
+    if(user && user.name){
       return(
         <div>  <NavLink style={{ cursor: 'pointer' }} onClick={this.userLogout.bind(this)}>Log Out</NavLink></div>
       );

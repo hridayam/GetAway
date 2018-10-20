@@ -41,14 +41,15 @@ class Profile extends Component{
       }
     }
 
-    static getDerivedStateFromProps(prevState, nextProps){
-      if(nextProps.user !== prevState.user){
-        return{
-          user: nextProps.user
-        };
+
+      static getDerivedStateFromProps(props, state) {
+        if (state.user !== props.user){
+          return {
+            user: props.user
+          };
+        }
+        return null;
       }
-      return prevState;
-    }
 
 
   render(){
