@@ -2,12 +2,15 @@ import axios from 'axios';
 import { GET_ERRORS } from './types';
 import setAuthToken from '../setAuthToken';
 
-import { LOGIN_USER } from './types';
+import { LOGIN_USER, LOGOUT_USER } from './types';
 
 export const login = (data) => {
   return dispatch => {
     axios.post('http://localhost:3001/users/login', data)
       .then(res => {
+        // const { token } = res.data;
+        // localStorage.setItem('jwtToken', token);
+        // setAuthToken(token);
         console.log(res)
         dispatch({
           type: LOGIN_USER,
@@ -20,6 +23,17 @@ export const login = (data) => {
       })
     }
 }
+
+export const logout =() => {
+    return dispatch =>{
+      // localStorage.removeItem('jwtToken');
+      // setAuthToken(false);
+      dispatch({
+        type: LOGOUT_USER,
+      })
+    }
+}
+
 
 // export const login = (email, password) => {
 //     return {
