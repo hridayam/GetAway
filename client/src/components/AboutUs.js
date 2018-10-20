@@ -137,7 +137,10 @@ export default class aboutUs extends Component {
 
 const styles = {
     rootDiv: {
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        flex: 1,
+        height: '100%',
+        width: '100%'
     },
     background: {
         backgroundColor: 'red',
