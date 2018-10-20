@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 import { NavLink } from 'reactstrap';
-import { login } from '../actions/auth';
+import { login, logout } from '../actions/auth';
 import { connect } from 'react-redux';
 class Login extends Component {
   constructor(props) {
@@ -12,7 +12,8 @@ class Login extends Component {
       closeAll: false,
       email: '',
       password: '',
-      user: {}
+      user: {},
+      isLoggedIn: false
     };
   }
 
@@ -38,9 +39,19 @@ class Login extends Component {
          password: this.state.password
        });
        this.setState({
-         modal: !this.state.modal
+         modal: !this.state.modal,
+         isLoggedIn: true
        });
   }
+
+  userLogout(e){
+    e.preventDefault();
+    this.props.logout();
+    this.setState({
+      isLoggedIn:false
+    })
+  }
+
 
   handleChange = event => {
     this.setState({
@@ -66,6 +77,12 @@ class Login extends Component {
 
 
   render() {
+    if(this.state.isLoggedIn){
+      return(
+        <div>  <NavLink style={{ cursor: 'pointer' }} onClick={this.userLogout.bind(this)}>Log Out</NavLink></div>
+      );
+    }
+    else{
     return (
       <div >
         <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle.bind(this)}>Log In</NavLink>
@@ -175,12 +192,14 @@ class Login extends Component {
       </div>
     );
   }
+  }
 }
 
 const mapStateToProps = (state) => {
     return {
+        isLoggedIn: !!state.auth.user,
         user: state.auth.user
     };
 }
 
-export  default connect(mapStateToProps, { login })(Login)
+export  default connect(mapStateToProps, { login, logout })(Login)
