@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import './css/Home.css';
 
 export default class Footer extends Component{
   render(){
     return(
       <footer style={styles.footerStyle}>
-        <p>&reg; 2018 GetAway</p>
+        <p className="navbar-brand">&reg; 2018 GetAway</p>
       </footer>
     );
   }

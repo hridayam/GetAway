@@ -136,7 +136,7 @@ export default class AboutUs extends Component {
 
 const styles = {
     background:{
-        backgroundColor: '#8e8e8e',
+        backgroundColor: 'black',
     },
 
     aboutus: {
