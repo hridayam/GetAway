@@ -40,7 +40,7 @@
 
 /*home page background*/
  .background-image {
-  background-image: url('../picture/slide/1.jpg');
+  background: fixed url('../picture/slide/1.jpg');
   background-size: cover;
  }
  @media(min-width: 490px){

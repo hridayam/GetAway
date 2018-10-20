@@ -14,7 +14,6 @@ const styles = {
   footerStyle: {
     backgroundColor: 'white',
     color: 'black',
-    flex: 1,
-
+    flex: 1
   }
 }

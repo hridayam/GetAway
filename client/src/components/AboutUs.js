@@ -143,7 +143,7 @@ const styles = {
         width: '100%'
     },
     background: {
-        background: 'center right no-repeat fixed url(https://hiverhq.com/blog/wp-content/uploads/2015/12/EE1.jpg)'
+        background: ' right no-repeat fixed url(https://hiverhq.com/blog/wp-content/uploads/2015/12/EE1.jpg)'
     },
     overlay: {
         flex: 1,
