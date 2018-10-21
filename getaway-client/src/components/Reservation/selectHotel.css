@@ -1,0 +1,48 @@
+.control-dots{
+    padding: 0;
+}
+.thumbs.animated{
+    padding: 0;
+}
+.card:hover{
+    box-shadow: 0 0 5px #d6d6d6;
+}
+.card-text{
+    text-align: left;
+}
+.card-title{
+    text-align: left;
+    border: none;
+    color: #444;
+}
+.card{
+    margin-top: 40px;
+    border: 1px solid #d6cece;
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    background-color: #d1d1d125;
+    margin-bottom: 2rem;
+    padding: .5rem;
+    position: relative;
+    z-index: 1;
+    height: auto;
+    border-radius: 5px;
+}
+.row{
+    margin: 0
+}
+@media(min-width: 768px){
+    .col-md-3.price{
+        border-left: 3px solid rgba(158, 155, 155, 0.637);
+    }
+}
+@media(max-width: 767px){
+    .col-md-3.price{
+        border-top: 3px solid rgba(158, 155, 155, 0.637);
+    }
+}
+.reservation-price{
+    padding-bottom: 50px;
+    padding-top: 20px;
+}
+

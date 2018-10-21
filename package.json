@@ -14,6 +14,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "concurrently": "*"
+    "concurrently": "*",
+    "react-responsive-carousel": "^3.1.43"
   }
 }

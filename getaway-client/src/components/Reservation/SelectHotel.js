@@ -1,58 +1,55 @@
 import React, {Component} from 'react';
-import {Container } from 'reactstrap';
-
+import {Container, Button} from 'reactstrap';
+import {Carousel} from 'react-responsive-carousel';
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+import './selectHotel.css'
 
 export default class ChooseRoom extends Component{
   render(){
     return(
         <div>
             <Container>
-            <div class="card" style={ styles.card}>
+            <div class="card">
                 <div class="row ">
                     <div class="col-md-4">
-                        <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                        <Carousel autoPlay infiniteLoop>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                            </div>
+                        </Carousel>
                     </div>
-                    <div class="col-md-8 px-3">
+                    <div class="col-md-5 px-3">
                         <div class="card-block px-3">
-                            <h4 class="card-title">Lorem ipsum dolor sit amet</h4>
-                            <p class="card-text">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                            <p class="card-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            <a href="#" class="btn btn-info">Read More</a>
+                            <h3 class="card-title">GetAway(Name of Hotels)</h3> 
+                            <p class="card-text">description</p>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="card" style={ styles.card}>
-                <div class="row ">
-                    <div class="col-md-4">
-                        <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                    <div class="col-md-3 price">
+                        <h1 class="reservation-price">$400</h1>
+                        <Button style={cssStyles.buttonRoom} bsStyle="primary">Choose Room</Button>
                     </div>
-                    <div class="col-md-8 px-3">
-                        <div class="card-block px-3">
-                            <h4 class="card-title">Lorem ipsum dolor sit amet</h4>
-                            <p class="card-text">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                            <p class="card-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            <a href="#" class="btn btn-info">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style={ styles.card}>
-                <div class="row ">
-                    <div class="col-md-4">
-                        <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                    </div>
-                    <div class="col-md-8 px-3">
-                        <div class="card-block px-3">
-                            <h4 class="card-title">Lorem ipsum dolor sit amet</h4>
-                            <p class="card-text">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                            <p class="card-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            <a href="#" class="btn btn-info">Read More</a>
-                        </div>
-                    </div>
-                </div>
+                </div>  
             </div>
             <br></br>
             </Container>
@@ -61,9 +58,14 @@ export default class ChooseRoom extends Component{
   }
 }
 
-const styles = {
-    card: {
-      marginTop: '40px'
-    },
-
+const cssStyles = {
+    buttonRoom:{
+        backgroundColor: '#156bc1',
+        border: '1px solid #156bc1',
+        alignItems: 'left',
+        boxShadow: 'inset 0 -2px 0 #063665',
+        paddingLeft: '2rem',
+        paddingRight: '2rem',
+        fontSize: '0.8rem'
+    }
   }
