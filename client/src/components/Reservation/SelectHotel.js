@@ -1,14 +1,48 @@
 import React, {Component} from 'react';
-import {Container, Button} from 'reactstrap';
+import {Container, Button, DropdownMenu, DropdownItem, Dropdown, DropdownToggle} from 'reactstrap';
 import {Carousel} from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
 
 export default class ChooseRoom extends Component{
+  constructor(props){
+      super(props);
+  
+      this.state={
+          dropdownOpen: false
+      };
+      this.toggleDropdown = this.toggleDropdown.bind(this);
+  }
+
+  toggleDropdown() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
+  
   render(){
     return(
         <div>
             <Container>
+            <div>
+            <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+              <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
+                  Sort By:
+              </DropdownToggle>
+
+              <DropdownMenu>
+                <DropdownItem onClick={()=>{this.setSort("low");}}>
+                  Price: Low to High
+                </DropdownItem>
+
+                <DropdownItem divider />
+
+                <DropdownItem onClick={()=>{this.setSort("high");}}>
+                  Price: High to Low
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            </div>
             <div class="card">
                 <div class="row ">
                     <div class="col-md-4">
