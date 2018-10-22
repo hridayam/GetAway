@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 import { NavLink } from 'reactstrap';
-import { login } from '../actions/auth';
 
 import { register } from '../actions/reg';
 
+import { login, logout } from '../actions/auth';
 import { connect } from 'react-redux';
 class Login extends Component {
   constructor(props) {
@@ -26,7 +26,8 @@ class Login extends Component {
       state:'',
       zipcode:'',
       phoneNumber:'',
-      user: {}
+      user: {},
+      isLoggedIn: false
     };
   }
 
@@ -63,7 +64,8 @@ class Login extends Component {
          password: this.state.password
        });
        this.setState({
-         modal: !this.state.modal
+         modal: !this.state.modal,
+         isLoggedIn: true
        });
   }
 
@@ -84,7 +86,14 @@ class Login extends Component {
          modal: !this.state.modal
        });
   }
-
+  
+  userLogout(e){
+    e.preventDefault();
+    this.props.logout();
+    this.setState({
+      isLoggedIn:false
+    })
+  }
 
 
   handleChange = event => {
@@ -110,6 +119,12 @@ class Login extends Component {
 
 
   render() {
+    if(this.state.isLoggedIn){
+      return(
+        <div>  <NavLink style={{ cursor: 'pointer' }} onClick={this.userLogout.bind(this)}>Log Out</NavLink></div>
+      );
+    }
+    else{
     return (
       <div >
         <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle.bind(this)}>Log In</NavLink>
@@ -263,14 +278,20 @@ class Login extends Component {
       </div>
     );
   }
+  }
 }
 
 const mapStateToProps = (state) => {
     return {
+        isLoggedIn: !!state.auth.user,
         user: state.auth.user
     };
 }
 
+<<<<<<< HEAD:getaway-client/src/components/Login.js
 
 export  default connect(mapStateToProps, { login,register})(Login)
 
+=======
+export  default connect(mapStateToProps, { login, logout })(Login)
+>>>>>>> 75102fc019227791a431f0e7e88989aedaca8eb2:client/src/components/Login.js

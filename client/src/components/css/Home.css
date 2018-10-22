@@ -87,6 +87,7 @@
  }
  .search-date{
    font-family: 'Lato';
+   white-space: nowrap;
    font-size: 1.4em;
    color: white;
    text-align: left;
@@ -206,10 +207,22 @@ label{
 }
 
 .reservation-search-edit{
+  border: 1px solid #e2e2e2;
   position: relative;
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.027);
   text-align: center;
   margin-top: 50px;
   padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+}
 
+.edit-label{
+  margin: 0 !important;
+  color: #444;
+}
+
+.search-date.reservation.row{
+  margin-top:5px;
 }

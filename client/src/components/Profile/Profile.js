@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import '../picture/slide/2.jpg';
 import '../css/Home.css';
 
-export default class Profile extends Component{
+class Profile extends Component{
 
   constructor(props) {
       super(props);
@@ -41,6 +41,15 @@ export default class Profile extends Component{
       }
     }
 
+    static getDerivedStateFromProps(prevState, nextProps){
+      if(nextProps.user !== prevState.user){
+        return{
+          user: nextProps.user
+        };
+      }
+      return prevState;
+    }
+
 
   render(){
     return(
@@ -52,7 +61,7 @@ export default class Profile extends Component{
 <Container className='text-block2'>
 <Row>
 <Col sm={{ size: 3, offset:2}} >
-<h1 style={styles.nameStyle}>Hello! John Tran</h1>
+<h1 style={styles.nameStyle}>Hello! {this.props.user.name}</h1>
 </Col>
 </Row>
 <Row>
@@ -69,13 +78,13 @@ export default class Profile extends Component{
      </thead>
      <tbody>
        <tr>
-         <td style={styles.tableStyle}>Email: johnshotel@gmail.com</td>
+         <td style={styles.tableStyle}>Email: {this.props.user.email}</td>
        </tr>
        <tr>
-         <td style={styles.tableStyle} >Phone Number: 408-555-5555</td>
+         <td style={styles.tableStyle} >Phone Number: {this.props.user.phoneNumber}</td>
        </tr>
        <tr>
-         <td style={styles.tableStyle}>Address: 837 Disney Road, San Jose, CA, 95128</td>
+         <td style={styles.tableStyle}>Address: {this.props.user.address}</td>
        </tr>
      </tbody>
    </Table>
@@ -334,3 +343,12 @@ const styles = {
     borderRadius: "10px"
   }
 }
+
+
+const mapStateToProps = (state) =>{
+  return{
+    user: state.auth.user
+  };
+}
+
+export default connect (mapStateToProps)(Profile);

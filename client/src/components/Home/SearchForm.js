@@ -43,14 +43,14 @@ export default class SearchForm extends Component {
                 <Row className="search-date">
                     <Col xs="6" sm="4">
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleDate"> Depart:  </Label>
+                            <Label for="exampleDate"> Check In:  </Label>
                             <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
 
                     <Col xs="6" sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleDate"> Arrival:  </Label>
+                            <Label for="exampleDate"> Check Out:  </Label>
                             <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
