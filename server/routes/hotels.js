@@ -4,12 +4,24 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/find_all', async(req,res) => {
-    let { address } = req.body;
+    let { city } = req.body;
 
     try {
-        let hotels = await Hotels.find({
-            
-        })
+        let hotels = await Hotels.find({ city }, (err,res) => {
+            if (err) {
+                res.status(500).json({
+                    success: false,
+                    msg: err
+                });
+            }
+            else if (res) {
+                res.status(200).json({
+                    success: true,
+                    msg: 'Found the hotels!',
+                    hotels: res
+                })
+            }
+        });
     }
     catch(err) {
         res.status(400).json({
