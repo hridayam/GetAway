@@ -5,12 +5,13 @@
 /*Footer*/
 .App-footer {
   width: 100%;
-  background-color: #cccccc;
-  padding: 32px;
+  background-color: #ffffff;
+  padding: 16px;
   font-size: 1em;
-  color: white;
+  color: black;
   text-align: center;
   position: absolute;
+  font-family: 'Lato'
 }
 
 .shadow {

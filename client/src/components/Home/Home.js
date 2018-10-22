@@ -40,8 +40,8 @@ const styles = {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '-30px',
-    paddingTop: '200px',
+    marginTop: '0px',
+    paddingTop: '30vh',
     overflowY: 'hidden'
   },
   upstyle: {
