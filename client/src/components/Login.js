@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 import { NavLink } from 'reactstrap';
 
-import { register } from '../actions/reg';
-
-import { login, logout } from '../actions/auth';
+import { login, logout, register } from '../actions/auth';
 import { connect } from 'react-redux';
 class Login extends Component {
   constructor(props) {
@@ -35,20 +33,11 @@ class Login extends Component {
   static getDerivedStateFromProps(props, state) {
     if (props.user !== state.user){
       return {
+        ...state,
         user: props.user
       };
     }
     return null;
-
-
-  static getDerivedStateFromProps(prevState, nextProps) {
-    if (nextProps.user !== prevState.user){
-      return {
-        user: nextProps.user
-      };
-    }
-    return prevState;
-
   }
 
   toggle() {
@@ -119,179 +108,172 @@ class Login extends Component {
 
 
   render() {
-    if(this.state.isLoggedIn){
+    if (this.state.user)
       return(
         <div>  <NavLink style={{ cursor: 'pointer' }} onClick={this.userLogout.bind(this)}>Log Out</NavLink></div>
       );
-    }
-    else{
-    return (
-      <div >
-        <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle.bind(this)}>Log In</NavLink>
-        <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)} className={this.props.className}>
 
-          <ModalHeader className="login-header" toggle={this.toggle.bind(this)}>Welcome Back! </ModalHeader>
+    else
+      return (
+        <div >
+          <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle.bind(this)}>Log In</NavLink>
+          <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)} className={this.props.className}>
 
-          <ModalBody>
-            <Form className = "login-body"   >
-                <FormGroup>
-                    <Label for="exampleEmail">Email:</Label>
-                    <Input type="email" name="email" value={this.state.email} onChange={this.handleChange.bind(this)} id='exampleEmail' placeholder="Enter Your Email" />
-                </FormGroup>
+            <ModalHeader className="login-header" toggle={this.toggle.bind(this)}>Welcome Back! </ModalHeader>
 
-                <FormGroup>
-                    <Label for="examplePassword">Password:</Label>
-                    <Input type="password" name="password" value={this.state.password}  onChange={this.handleChange.bind(this)} id='examplePassword' placeholder="Enter Your Password" />
-                </FormGroup>
-            </Form>
+            <ModalBody>
+              <Form className = "login-body"   >
+                  <FormGroup>
+                      <Label for="exampleEmail">Email:</Label>
+                      <Input type="email" name="email" value={this.state.email} onChange={this.handleChange.bind(this)} id='exampleEmail' placeholder="Enter Your Email" />
+                  </FormGroup>
 
-            <Button onClick={this.toggleNested.bind(this)}>Not a member yet? Sign Up</Button>
-            <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested.bind(this)} onClosed={this.closeAll ? this.toggle : undefined} className={this.props.className}>
-              <ModalBody>
-                <Form className = "login-body">
-                <Row>
+                  <FormGroup>
+                      <Label for="examplePassword">Password:</Label>
+                      <Input type="password" name="password" value={this.state.password}  onChange={this.handleChange.bind(this)} id='examplePassword' placeholder="Enter Your Password" />
+                  </FormGroup>
+              </Form>
 
-                     <Col s={12}>
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                        <Label for="exampleRegEmail">Email:</Label>
-                        <Input type="email" name="registerEmail" value={this.state.registerEmail} onChange={this.handleChange.bind(this)} id='exampleRegEmail' placeholder="name@gmail.com" /> 
-                        </FormGroup>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col s={12}>
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                        <Label for="exampleRegPassword">Password:</Label>
-                        <Input type="password" name="registerPassword" value={this.state.registerPassword}  onChange={this.handleChange.bind(this)} id='exampleRegPassword' placeholder="password" />   
-                        </FormGroup>
-                    </Col>
+              <Button onClick={this.toggleNested.bind(this)}>Not a member yet? Sign Up</Button>
+              <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested.bind(this)} onClosed={this.closeAll ? this.toggle : undefined} className={this.props.className}>
+                <ModalBody>
+                  <Form className = "login-body">
+                  <Row>
+
+                      <Col s={12}>
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                          <Label for="exampleRegEmail">Email:</Label>
+                          <Input type="email" name="registerEmail" value={this.state.registerEmail} onChange={this.handleChange.bind(this)} id='exampleRegEmail' placeholder="name@gmail.com" /> 
+                          </FormGroup>
+                      </Col>
                   </Row>
                   <Row>
-                    <Col s={12}>
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                        <Label for="exampleRegPassword">Confirm Password:</Label>
-                        <Input type="password" name="confirmPassword" value={this.state.confirmPassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="password" />   
+                      <Col s={12}>
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                          <Label for="exampleRegPassword">Password:</Label>
+                          <Input type="password" name="registerPassword" value={this.state.registerPassword}  onChange={this.handleChange.bind(this)} id='exampleRegPassword' placeholder="password" />   
+                          </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col s={12}>
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                          <Label for="exampleRegPassword">Confirm Password:</Label>
+                          <Input type="password" name="confirmPassword" value={this.state.confirmPassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="password" />   
 
-                  
-                        </FormGroup>
-                    </Col>
-                </Row>
+                    
+                          </FormGroup>
+                      </Col>
+                  </Row>
 
-                <Row>
-                     <Col >
+                  <Row>
+                      <Col >
 
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleFirstName"> First Name:  </Label>
-                            <Input type="text" name="firstName" value={this.state.firstName}  onChange={this.handleChange.bind(this)} id='exampleFirstName' placeholder="Elizabeth" />
-
-                        
-
-                        </FormGroup>
-                    </Col>
-
-                    <Col >
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-
-                            <Label for="exampleLastName"> Last Name:  </Label>
-                            <Input type="text" name="lastName" value={this.state.lastName}  onChange={this.handleChange.bind(this)} id='exampleLastName' placeholder="Swann"/>
-
-                           
-                      </FormGroup>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleAddress"> Address:  </Label>
-                            <Input type="text" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} id='exampleAddress' placeholder="1 Washington Square"/>
-
-                       
-                        </FormGroup>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col xs="6" sm="4">
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-
-                            <Label for="exampleCity"> City:  </Label>
-                            <Input type="text" name="city" value={this.state.city}  onChange={this.handleChange.bind(this)} id='exampleCity' placeholder="San Jose"/>
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                              <Label for="exampleFirstName"> First Name:  </Label>
+                              <Input type="text" name="firstName" value={this.state.firstName}  onChange={this.handleChange.bind(this)} id='exampleFirstName' placeholder="Elizabeth" />
 
                           
 
+                          </FormGroup>
+                      </Col>
+
+                      <Col >
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+
+                              <Label for="exampleLastName"> Last Name:  </Label>
+                              <Input type="text" name="lastName" value={this.state.lastName}  onChange={this.handleChange.bind(this)} id='exampleLastName' placeholder="Swann"/>
+
+                            
                         </FormGroup>
-                    </Col>
-                    <Col xs="6" sm="4">
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                      </Col>
+                  </Row>
 
-                            <Label for="exampleState"> State:  </Label>
-                            <Input type="text" name="state" value={this.state.state}  onChange={this.handleChange.bind(this)} id='exampleState' placeholder="CA"/>
+                  <Row>
+                      <Col>
 
-                        </FormGroup>
-                    </Col>
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                              <Label for="exampleAddress"> Address:  </Label>
+                              <Input type="text" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} id='exampleAddress' placeholder="1 Washington Square"/>
 
-                    <Col sm="4">
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                        
+                          </FormGroup>
+                      </Col>
+                  </Row>
 
-                            <Label for="exampleCity"> Zip Code:  </Label>
-                            <Input type="text" name="zipcode" value={this.state.zipcode}  onChange={this.handleChange.bind(this)} id='exampleZipCode' placeholder="95112"/>
-                        </FormGroup>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col s={12}>
-                        <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                            <Label for="exampleState"> Phone Number:  </Label>
-                            <Input type="text" name="phoneNumber" value={this.state.phoneNumber}  onChange={this.handleChange.bind(this)} id='examplePhoneNumber' placeholder="408-123-4553"/>
+                  <Row>
+                      <Col xs="6" sm="4">
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
 
-                         
+                              <Label for="exampleCity"> City:  </Label>
+                              <Input type="text" name="city" value={this.state.city}  onChange={this.handleChange.bind(this)} id='exampleCity' placeholder="San Jose"/>
 
-                        </FormGroup>
-                    </Col>
-                </Row>
-                <FormGroup check>
-                    <Label check className="term-condition">
-                         <Input type="checkbox"/>{'  '}
+                            
 
-                         By creating this account, you agree to our <Button className="term-condition-button">Terms & Condintions</Button>
+                          </FormGroup>
+                      </Col>
+                      <Col xs="6" sm="4">
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
 
-                    </Label>
-                </FormGroup>
-                </Form>
-              </ModalBody>
-              <ModalFooter>
+                              <Label for="exampleState"> State:  </Label>
+                              <Input type="text" name="state" value={this.state.state}  onChange={this.handleChange.bind(this)} id='exampleState' placeholder="CA"/>
 
-                <Button color="info" onClick={this.userRegister.bind(this)}>Submit</Button>{' '}
-                <Button color="secondary" onClick={this.toggle.bind(this)}>Cancel</Button>
+                          </FormGroup>
+                      </Col>
 
-              </ModalFooter>
-            </Modal>
-          </ModalBody>
+                      <Col sm="4">
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
 
-          <ModalFooter>
-            <Button color="info" onClick={this.userLogin.bind(this)}>Log In</Button>{' '}
-            <Button color="secondary" onClick={this.toggle.bind(this)}>Cancel</Button>
-          </ModalFooter>
-        </Modal>
-      </div>
-    );
-  }
+                              <Label for="exampleCity"> Zip Code:  </Label>
+                              <Input type="text" name="zipcode" value={this.state.zipcode}  onChange={this.handleChange.bind(this)} id='exampleZipCode' placeholder="95112"/>
+                          </FormGroup>
+                      </Col>
+                  </Row>
+                  <Row>
+                      <Col s={12}>
+                          <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                              <Label for="exampleState"> Phone Number:  </Label>
+                              <Input type="text" name="phoneNumber" value={this.state.phoneNumber}  onChange={this.handleChange.bind(this)} id='examplePhoneNumber' placeholder="408-123-4553"/>
+
+                          
+
+                          </FormGroup>
+                      </Col>
+                  </Row>
+                  <FormGroup check>
+                      <Label check className="term-condition">
+                          <Input type="checkbox"/>{'  '}
+
+                          By creating this account, you agree to our <Button className="term-condition-button">Terms & Condintions</Button>
+
+                      </Label>
+                  </FormGroup>
+                  </Form>
+                </ModalBody>
+                <ModalFooter>
+
+                  <Button color="info" onClick={this.userRegister.bind(this)}>Submit</Button>{' '}
+                  <Button color="secondary" onClick={this.toggle.bind(this)}>Cancel</Button>
+
+                </ModalFooter>
+              </Modal>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button color="info" onClick={this.userLogin.bind(this)}>Log In</Button>{' '}
+              <Button color="secondary" onClick={this.toggle.bind(this)}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+      );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         isLoggedIn: !!state.auth.user,
         user: state.auth.user
     };
 }
 
-<<<<<<< HEAD:getaway-client/src/components/Login.js
-
-export  default connect(mapStateToProps, { login,register})(Login)
-
-=======
-export  default connect(mapStateToProps, { login, logout })(Login)
->>>>>>> 75102fc019227791a431f0e7e88989aedaca8eb2:client/src/components/Login.js
+export  default connect(mapStateToProps, { login, logout, register })(Login)
