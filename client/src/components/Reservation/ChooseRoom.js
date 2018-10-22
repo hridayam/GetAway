@@ -7,7 +7,7 @@ export default class ChooseRoom extends Component{
     return(
         <div>
             <Container>
-            <div Card style={ styles.card}>
+            <div class="card" style={ styles.card}>
                 <div class="row ">
                     <div class="col-md-4">
                         <img alt="" src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
