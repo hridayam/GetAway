@@ -24,6 +24,6 @@ const HotelSchema = new mongoose.Schema({
     }
 });
 
-const Hotels = mongoose.model('Hotels', HotelSchema);
+const Hotels = module.exports = mongoose.model('Hotels', HotelSchema);
 
-modules.exports = { Hotels, HotelSchema };
+//modules.exports = { Hotels, HotelSchema };

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Hotels = mongoose.model('Hotels');
+const Hotels = require('../models/Hotels');
 const express = require('express');
 const router = express.Router();
 
@@ -30,3 +30,5 @@ router.get('/find_all', async(req,res) => {
         });
     }
 });
+
+module.exports = router;
