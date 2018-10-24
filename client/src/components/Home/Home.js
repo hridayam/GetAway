@@ -3,6 +3,7 @@ import SearchForm from './SearchForm';
 import Suggestion from './Suggestion';
 import ScrollToTop from 'react-scroll-up';
 import '../picture/slide/1.jpg';
+import Up from '../picture/arrow.png';
 import '../css/Home.css';
 
 export default class Home extends Component{
@@ -18,11 +19,15 @@ export default class Home extends Component{
           <SearchForm/>
         </div>
         <ScrollToTop style={ styles.upstyle} showUnder={160}>
+
+          <img src={Up} alt={"Up"}/>
+
           <div class="text-center">
             <i class="far fa-hand-point-up" style={{ fontSize: 50 }}></i>
             <br/>
             <b>Back To Top</b>
           </div>
+
         </ScrollToTop>
         <Suggestion/>
       </div>
@@ -35,11 +40,13 @@ const styles = {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '-30px',
-    paddingTop: '200px',
+    marginTop: '0px',
+    paddingTop: '30vh',
     overflowY: 'hidden'
   },
   upstyle: {
-    zIndex: '999'
+    zIndex: '999',
+    paddingBottom: '50px'
+
   }
 }

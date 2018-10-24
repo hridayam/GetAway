@@ -6,7 +6,7 @@
     "install-client": "cd client && npm install",
     "install-server": "cd server && npm install",
     "client": "npm start --prefix client",
-    "server": "npm start --prefix server",
+    "server": "nodemon --watch server",
     "initial-start": "npm install && npm run install-client && npm run install-server && npm run start",
     "start": "concurrently \"npm run client\" \"node server/app.js\""
   },
@@ -15,6 +15,6 @@
   "private": true,
   "dependencies": {
     "concurrently": "*",
-    "react-responsive-carousel": "^3.1.43"
+    "nodemon": "*"
   }
 }
