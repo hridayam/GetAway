@@ -3,6 +3,7 @@ import {Container, Button, DropdownMenu, DropdownItem, Dropdown, DropdownToggle}
 import {Carousel} from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
+import Scroll from '../ScrollUp';
 
 export default class ChooseRoom extends Component{
   constructor(props){
@@ -24,6 +25,7 @@ export default class ChooseRoom extends Component{
     return(
         <div>
             <Container>
+            <Scroll/>
             <div>
             <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
               <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>

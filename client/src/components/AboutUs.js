@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Container, Row, Col, CardImg, Card, CardBody,
     CardTitle, CardSubtitle} from 'reactstrap';
+import Scroll from './ScrollUp';
 
 export default class AboutUs extends Component {
   render() {
     return (
     <div>
     <div style = {styles.background}>
+      <Scroll/>
       <Container style = {styles.aboutus}>
         <Row> 
           <h1>We are FAMILY</h1>

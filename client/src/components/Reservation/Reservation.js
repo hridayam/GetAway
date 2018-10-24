@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import Stepper from './Stepper';
 import '../css/Home.css';
 import { Button, Form, FormGroup, Label, Container, Input, Row, Col } from 'reactstrap';
+import Scroll from '../ScrollUp';
 
 
 export default class Reservation extends Component{
     render(){
         return(
             <div>
+            <Scroll/>
             <div className = 'reservation-img' style={ styles.homeStyle}></div>
             <div className="reservation-search-edit">
             <Container>
