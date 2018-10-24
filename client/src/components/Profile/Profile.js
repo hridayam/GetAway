@@ -7,6 +7,7 @@ import {Modal,ModalBody} from 'reactstrap';
 import {connect} from 'react-redux';
 import '../picture/slide/2.jpg';
 import '../css/Home.css';
+import Scroll from '../ScrollUp';
 
 class Profile extends Component{
 
@@ -57,7 +58,7 @@ class Profile extends Component{
     <div className="background-image2">
     <div class="row" style= {styles.profileStyle}>
    </div>
-
+   <Scroll/>
 
 <Container className='text-block2'>
 <Row>

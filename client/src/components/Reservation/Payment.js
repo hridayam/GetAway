@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {CardElement, injectStripe} from 'react-stripe-elements';
 import axios from 'axios';
 import {Button, Form, FormGroup, Col, Row, Input, Label, Card, CardTitle} from 'reactstrap';
+import Scroll from '../ScrollUp';
 
 class Payment extends Component{
     constructor(props) {
@@ -120,6 +121,7 @@ class Payment extends Component{
                     </Row>
                 </Card>
             </FormGroup>
+            <Scroll/>
         </Form>
     );
   }
