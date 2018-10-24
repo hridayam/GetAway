@@ -1,0 +1,228 @@
+.fixed-top{
+  position: absolute;
+}
+
+/* Link on navbar */
+.navbar-dark .nav-link {
+    font-family: 'Lato', sans-serif;
+    font-size: 25px;
+    text-align: center;
+    color: white;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+.navbar-dark .navbar-nav .nav-link{
+    color: white;
+}
+
+  /*Top-margin from navbar*/
+.navbar-dark .navbar-nav {
+    margin:40px 0;
+ }
+
+ /* Navbar icon */
+ @media (max-width: 427px){
+ .navbar-toggler{
+    display: block;
+    margin: 0 auto;
+ }
+ }
+
+ /*Change css for brand*/
+ .navbar-dark .navbar-brand{
+    font-family: 'Allura';
+    font-size: 4.5em;
+    text-align: center;
+    color: white;
+    margin-left: 30px;
+    margin-right: 30px;
+ }
+
+/*home page background*/
+ .background-image {
+  background: fixed url('../picture/slide/1.jpg');
+  background-size: cover;
+ }
+ @media(min-width: 490px){
+  .background-image{
+    height: 100vh;
+  }
+ }
+
+/*profile page background*/
+ .background-image2 {
+  background-image: url('../picture/slide/2.jpg');
+  height: 100vh;
+  min-height: 720px;
+  background-size: cover;
+  overflow: hidden;
+ }
+
+
+
+/* Form Field */
+.text-block {
+   position: relative;
+   background-color: rgba(0,0,0,0.2);
+   text-align: center;
+}
+
+/* For the slogan */
+ .title{
+   font-family: 'Lato';
+   font-size: 4em;
+   text-align: center;
+   color: white;
+ }
+
+/* Search field */
+ .search-place{
+   font-family: 'Lato';
+   text-align: center;
+   display: inline-block;
+   width: 100%;
+   height: 3.4em;
+   color: white;
+
+ }
+ .search-date{
+   font-family: 'Lato';
+   white-space: nowrap;
+   font-size: 1.4em;
+   color: white;
+   text-align: left;
+   margin-top: 20px;
+
+ }
+
+ .search-button{
+   font-family: 'Lato';
+   font-size: 1.2em;
+   color: white;
+   text-align: center;
+   margin-top: 10px;
+   margin-bottom: 10px;
+ }
+
+ /* Suggestion  */
+
+.suggestion{
+   margin-top: 30px;
+   margin-bottom: 30px;
+   text-align: center;
+}
+
+.suggestion-title{
+   font-family: "Lato", Georgia,serif;
+   font-size: 3em;
+   text-align: center;
+   color: black;
+   margin-bottom: 30px;
+
+}
+
+.suggestion-card{
+  padding-bottom: 30px;
+}
+
+.card-title{
+  font-family: "Lato",Georgia,serif;
+  text-align: center;
+  font-style: italic;
+  font-size: auto;
+  font-weight: 800;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #000;
+}
+
+.card-text{
+  font-family: "Open Sans",Arial,sans-serif;
+  text-align: center;
+  font-size: auto;
+  padding-bottom: 20px;
+}
+
+.button-suggestion{
+  white-space: normal;
+  background-color: transparent;
+  display: inline-block;
+  font-family: BellhopIcons;
+  font-style: normal;
+  font-weight: 400;
+  font-size: auto;
+  line-height: 1;
+  color: #407bae;
+  border: 0px;
+}
+
+/* Login */
+.modal-body{
+  text-align: center;
+}
+
+.navbar-dark .login-button{
+  font-family: 'Allura', sans-serif;
+  font-size: 2.5em;
+  color: white;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.login-body{
+  font-family: "Open Sans",Arial,sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: left;
+  display: block;
+}
+
+.login-header{
+  font-family: "Open Sans",Arial,sans-serif;
+  font-size: 30px;
+  text-align: center;
+}
+.term-condition{
+  font-size: 0.8em;
+  padding-top: 50px;
+  text-align: center;
+  margin: 0;
+}
+.term-condition-button{
+  background-color: transparent;
+  border: unset;
+  color: blue;
+}
+label{
+  margin-bottom: unset;
+  margin-top: 30px;
+}
+
+.reservation-img{
+  background-image: url('../picture/slide/3.jpg');
+  height: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.reservation-search-edit{
+  border: 1px solid #e2e2e2;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.027);
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+}
+
+.edit-label{
+  margin: 0 !important;
+  color: #444;
+}
+
+.search-date.reservation.row{
+  margin-top:5px;
+}

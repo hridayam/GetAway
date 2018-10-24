@@ -1,0 +1,102 @@
+ol.progtrckr {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  ol.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    line-height: 4.5rem;
+
+  }
+  
+  ol.progtrckr li span {
+    padding: 0 1.5rem;
+  }
+  
+  @media (max-width: 650px) {
+    .progtrckr li span {
+      display: none;
+    }
+  }
+  .progtrckr em {
+    display: none;
+    font-weight: 700;
+    padding-left: 1rem;
+  }
+  
+  @media (max-width: 650px) {
+    .progtrckr em {
+      display: inline;
+    }
+  }
+  
+  ol.progtrckr li.progtrckr-todo {
+    color: silver;
+    border-bottom: 4px solid silver;
+  }
+  
+  ol.progtrckr li.progtrckr-doing { 
+    color: black;
+    border-bottom: 4px solid #2e908a ;
+  }
+  
+  ol.progtrckr li.progtrckr-done {
+    color: black;
+    border-bottom: 4px solid #97f4ec;
+  }
+  
+  ol.progtrckr li:after {
+    content: "\00a0\00a0";
+  }
+  
+  ol.progtrckr li:before {
+    position: relative;
+    bottom: -3.7rem;
+    float: left;
+    left: 50%;
+  }
+  
+  ol.progtrckr li.progtrckr-todo:before {
+    content: "\039F";
+    color: silver;
+    background-color: white;
+    width: 2em;
+    line-height: 1.4em;
+  }
+  
+  ol.progtrckr li.progtrckr-todo:hover:before {
+    color: #2e908a;
+  }
+  
+  ol.progtrckr li.progtrckr-doing:before {
+    content: "\2022";
+    color: white;
+    background-color: #2e908a;
+    width: 2em;
+    line-height: 2em;
+    border-radius: 2em;
+  }
+  
+  ol.progtrckr li.progtrckr-doing:hover:before {
+    color: #2e908a;
+  }
+  
+  ol.progtrckr li.progtrckr-done:before {
+    content: "\2713";
+    color: white;
+    background-color: #97f4ec;
+    width: 2em;
+    line-height: 2em;
+    border-radius: 2em;
+  }
+  
+  ol.progtrckr li.progtrckr-done:hover:before {
+    color: #333;
+  }
+  
+  .ml-10{
+    margin-left: 1.0em;
+  
+  }
+  

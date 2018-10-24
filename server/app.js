@@ -16,6 +16,7 @@ const index = require('./routes/index');
 const payments = require('./routes/payments');
 const reservations = require('./routes/reservations');
 const users = require('./routes/users');
+const hotels = require('./routes/hotels');
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/payments', payments);
 app.use('/reservations', reservations);
+app.use('/hotels', hotels);
 app.use('/*', index);
 
 // Localhost setup
