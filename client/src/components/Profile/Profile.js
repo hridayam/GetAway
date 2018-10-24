@@ -164,7 +164,29 @@ class Profile extends Component{
          <TabPane tabId="2">
            <Row>
               <Col sm={{ size: 50}}>
-              You have no past reservations
+                <Table style={styles.tableStyle}>
+         <thead>
+           <tr>
+             <th>ID</th>
+             <th>Date of Arrival</th>
+             <th>Destination</th>
+             <th>Room Type</th>
+             <th># of Guests</th>
+             <th>Status</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <th scope="row">1</th>
+             <td>09/13/2018</td>
+             <td>Las Vegas</td>
+             <td>Double</td>
+             <td>2</td>
+             <td>Expired</td>
+           </tr>
+
+         </tbody>
+       </Table>
            </Col>
            </Row>
          </TabPane>
@@ -222,55 +244,26 @@ class Profile extends Component{
          </TabPane>
          <TabPane tabId="4">
          <h4 style={styles.headerStyle}>Your Rewards Point: {this.state.rewardPoint}</h4>
-         <Table size="sm" style={styles.tableStyle}>
-         <thead>
-          <tr>
-          <th style={styles.tableStyle}>Point</th>
-          <th style={styles.tableStyle}>Rewards</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td style={styles.tableStyle}>10</td>
-            <td style={styles.tableStyle}>10% Discount</td>
-            <td style={styles.tableStyle}>
-            {this.state.rewardPoint >= 10?
-            <Button color="primary"
-            onClick={this.toggle1}
-            >Redeem</Button>:
-            <Button color="secondary"
-            onClick={this.toggle2}
-            >Redeem</Button>}
-            </td>
-        </tr>
-        <tr>
-            <td style={styles.tableStyle}>25</td>
-            <td style={styles.tableStyle}>25% Discount</td>
-            <td style={styles.tableStyle}>
-            {this.state.rewardPoint >= 25?
-            <Button color="primary"
-            onClick={this.toggle1}
-            >Redeem</Button>:
-            <Button color="secondary"
-            onClick={this.toggle2}
-            >Redeem</Button>}
-            </td>
-        </tr>
-        <tr>
-            <td style={styles.tableStyle}>50</td>
-            <td style={styles.tableStyle}>50% Discount</td>
-            <td style={styles.tableStyle}>
-            {this.state.rewardPoint >= 50?
-            <Button color="primary"
-            onClick={this.toggle1}
-            >Redeem</Button>:
-            <Button color="secondary"
-            onClick={this.toggle2}
-            >Redeem</Button>}
-            </td>
-        </tr>
-     </tbody>
-      </Table>
+         <Table style={styles.tableStyle}>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Price</th>
+      <th>Points Earned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">83923242</th>
+      <td>09/25/2018</td>
+      <td>$495.00</td>
+      <td>495 points</td>
+
+    </tr>
+
+  </tbody>
+</Table>
 
          </TabPane>
        </TabContent>

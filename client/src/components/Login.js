@@ -75,7 +75,7 @@ class Login extends Component {
          modal: !this.state.modal
        });
   }
-  
+
   userLogout(e){
     e.preventDefault();
     this.props.logout();
@@ -143,7 +143,7 @@ class Login extends Component {
                       <Col s={12}>
                           <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                           <Label for="exampleRegEmail">Email:</Label>
-                          <Input type="email" name="registerEmail" value={this.state.registerEmail} onChange={this.handleChange.bind(this)} id='exampleRegEmail' placeholder="name@gmail.com" /> 
+                          <Input type="email" name="registerEmail" value={this.state.registerEmail} onChange={this.handleChange.bind(this)} id='exampleRegEmail' placeholder="name@gmail.com" />
                           </FormGroup>
                       </Col>
                   </Row>
@@ -151,7 +151,7 @@ class Login extends Component {
                       <Col s={12}>
                           <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                           <Label for="exampleRegPassword">Password:</Label>
-                          <Input type="password" name="registerPassword" value={this.state.registerPassword}  onChange={this.handleChange.bind(this)} id='exampleRegPassword' placeholder="password" />   
+                          <Input type="password" name="registerPassword" value={this.state.registerPassword}  onChange={this.handleChange.bind(this)} id='exampleRegPassword' placeholder="password" />
                           </FormGroup>
                       </Col>
                     </Row>
@@ -159,9 +159,9 @@ class Login extends Component {
                       <Col s={12}>
                           <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                           <Label for="exampleRegPassword">Confirm Password:</Label>
-                          <Input type="password" name="confirmPassword" value={this.state.confirmPassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="password" />   
+                          <Input type="password" name="confirmPassword" value={this.state.confirmPassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="password" />
 
-                    
+
                           </FormGroup>
                       </Col>
                   </Row>
@@ -173,7 +173,7 @@ class Login extends Component {
                               <Label for="exampleFirstName"> First Name:  </Label>
                               <Input type="text" name="firstName" value={this.state.firstName}  onChange={this.handleChange.bind(this)} id='exampleFirstName' placeholder="Elizabeth" />
 
-                          
+
 
                           </FormGroup>
                       </Col>
@@ -184,7 +184,7 @@ class Login extends Component {
                               <Label for="exampleLastName"> Last Name:  </Label>
                               <Input type="text" name="lastName" value={this.state.lastName}  onChange={this.handleChange.bind(this)} id='exampleLastName' placeholder="Swann"/>
 
-                            
+
                         </FormGroup>
                       </Col>
                   </Row>
@@ -196,7 +196,7 @@ class Login extends Component {
                               <Label for="exampleAddress"> Address:  </Label>
                               <Input type="text" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} id='exampleAddress' placeholder="1 Washington Square"/>
 
-                        
+
                           </FormGroup>
                       </Col>
                   </Row>
@@ -208,7 +208,7 @@ class Login extends Component {
                               <Label for="exampleCity"> City:  </Label>
                               <Input type="text" name="city" value={this.state.city}  onChange={this.handleChange.bind(this)} id='exampleCity' placeholder="San Jose"/>
 
-                            
+
 
                           </FormGroup>
                       </Col>
@@ -235,7 +235,7 @@ class Login extends Component {
                               <Label for="exampleState"> Phone Number:  </Label>
                               <Input type="text" name="phoneNumber" value={this.state.phoneNumber}  onChange={this.handleChange.bind(this)} id='examplePhoneNumber' placeholder="408-123-4553"/>
 
-                          
+
 
                           </FormGroup>
                       </Col>
@@ -270,10 +270,12 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        isLoggedIn: !!state.auth.user.data,
-        user: state.auth.user.data
-    };
+    if(!!state.auth.user){
+        return {
+            isLoggedIn: !!state.auth.user,
+            user: state.auth.user.data
+        };
+    }
 }
 
 export  default connect(mapStateToProps, { login, logout, register })(Login)
