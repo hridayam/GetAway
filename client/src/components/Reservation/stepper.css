@@ -7,7 +7,7 @@ ol.progtrckr {
     display: inline-block;
     text-align: center;
     line-height: 4.5rem;
-    cursor: pointer;
+
   }
   
   ol.progtrckr li span {
@@ -36,14 +36,14 @@ ol.progtrckr {
     border-bottom: 4px solid silver;
   }
   
-  ol.progtrckr li.progtrckr-doing {
+  ol.progtrckr li.progtrckr-doing { 
     color: black;
-    border-bottom: 4px solid #af473c ;
+    border-bottom: 4px solid #2e908a ;
   }
   
   ol.progtrckr li.progtrckr-done {
     color: black;
-    border-bottom: 4px solid #626e60;
+    border-bottom: 4px solid #97f4ec;
   }
   
   ol.progtrckr li:after {
@@ -61,34 +61,34 @@ ol.progtrckr {
     content: "\039F";
     color: silver;
     background-color: white;
-    width: 1.2em;
+    width: 2em;
     line-height: 1.4em;
   }
   
   ol.progtrckr li.progtrckr-todo:hover:before {
-    color: #ff4500;
+    color: #2e908a;
   }
   
   ol.progtrckr li.progtrckr-doing:before {
     content: "\2022";
     color: white;
-    background-color: #ca4637;
-    width: 1.2em;
-    line-height: 1.2em;
-    border-radius: 1.2em;
+    background-color: #2e908a;
+    width: 2em;
+    line-height: 2em;
+    border-radius: 2em;
   }
   
   ol.progtrckr li.progtrckr-doing:hover:before {
-    color: #ff4500;
+    color: #2e908a;
   }
   
   ol.progtrckr li.progtrckr-done:before {
     content: "\2713";
     color: white;
-    background-color: #626e60;
-    width: 1.2em;
-    line-height: 1.2em;
-    border-radius: 1.2em;
+    background-color: #97f4ec;
+    width: 2em;
+    line-height: 2em;
+    border-radius: 2em;
   }
   
   ol.progtrckr li.progtrckr-done:hover:before {

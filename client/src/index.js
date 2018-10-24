@@ -13,13 +13,23 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+import { userLoggedIn } from './actions/auth';
+
 const store = createStore(
     reducer, 
     compose(
         applyMiddleware(thunk),
         window.__REDUX_DEVTOOLS_EXTENSION__? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
     )
-);    
+);
+
+if(localStorage.token) {
+    const user = {
+        jwt: localStorage.token,
+        data: JSON.parse(localStorage.data)
+    };
+    store.dispatch(userLoggedIn(user));
+}
 
 ReactDOM.render(
     <BrowserRouter>

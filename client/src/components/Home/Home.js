@@ -3,6 +3,7 @@ import SearchForm from './SearchForm';
 import Suggestion from './Suggestion';
 import Scroll from '../ScrollUp';
 import '../picture/slide/1.jpg';
+import Up from '../picture/arrow.png';
 import '../css/Home.css';
 
 export default class Home extends Component{
@@ -29,8 +30,8 @@ const styles = {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '-30px',
-    paddingTop: '200px',
+    marginTop: '0px',
+    paddingTop: '30vh',
     overflowY: 'hidden'
   }
 }
