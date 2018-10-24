@@ -80,8 +80,8 @@ export default class ChooseRoom extends Component{
                         </div>
                     </div>
                     <div class="col-md-3 price">
-                        <h1 class="reservation-price">$400</h1>
-                        <Button style={cssStyles.buttonRoom} bsStyle="primary">Choose Room</Button>
+                        <h1 class="reservation-price">$Price</h1>
+                        <Button style={cssStyles.buttonRoom} bsStyle="primary">Choose Hotel</Button>
                     </div>
                 </div>  
             </div>

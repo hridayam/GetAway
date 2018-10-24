@@ -9,16 +9,6 @@ export default class Suggestion extends Component {
         <Container className = "suggestion">
             <h1 className="suggestion-title"> Step Up Your Travel Game </h1>
             <Row>
-                <Col className="suggestion-card" sm="4">
-                    <Card>
-                        <CardImg top width="100%" src="https://t-ec.bstatic.com/images/hotel/max1024x768/537/53776472.jpg" alt="Card image cap" />
-                        <CardBody>
-                        <CardTitle className="card-title">TOP DESTINATIONS</CardTitle>
-                        <CardText className="card-text">Discover our newest urban, resort, and lifestyle hotels.</CardText>
-                        <Button className="button-suggestion">VIEW HOTELS ></Button>
-                        </CardBody>
-                    </Card>
-                </Col>
                 
                 <Col className="suggestion-card" sm="4">
                     <Card>
@@ -27,6 +17,17 @@ export default class Suggestion extends Component {
                         <CardTitle className="card-title">DAILY DEALS</CardTitle>
                         <CardText className="card-text">Plan a last-minute weekend getaway with a deal at these GetAway hotels in the U.S.</CardText>
                         <Button className="button-suggestion">VIEW DEALS ></Button>
+                        </CardBody>
+                    </Card>
+                </Col>
+
+                <Col className="suggestion-card" sm="4">
+                    <Card>
+                        <CardImg top width="100%" src="https://t-ec.bstatic.com/images/hotel/max1024x768/537/53776472.jpg" alt="Card image cap" />
+                        <CardBody>
+                        <CardTitle className="card-title">TOP DESTINATIONS</CardTitle>
+                        <CardText className="card-text">Discover our newest urban, resort, and lifestyle hotels.</CardText>
+                        <Button className="button-suggestion">VIEW HOTELS ></Button>
                         </CardBody>
                     </Card>
                 </Col>
