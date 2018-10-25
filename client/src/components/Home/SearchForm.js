@@ -1,17 +1,33 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
+import {search} from '../../actions/search';
+import {connect} from 'react-redux';
 
-export default class SearchForm extends Component {
+class SearchForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            changingText: 'life.'
+            changingText: 'life.',
+            city: '',
+            startDate: 0,
+            endDate: 0,
+            numGuests: 0
         };
 
         this.textArray = ['life.', 'work.', 'stress.'];
         this.interval = null;
     }
+
+   handleChange = event => {
+    let { name, value } = event.target;
+    this.setState({ [name]: value })
+   } 
     
+   onSubmit = event => {
+    event.preventDefault();
+    this.props.search(city, startDate, endDate, numGuests);
+   }
+
     componentDidMount() {
         var i = 0;
         this.interval = setInterval(() => {
@@ -31,11 +47,11 @@ export default class SearchForm extends Component {
             <br/>
             <h2 className="title"> Take a break from {this.state.changingText}</h2>
             <br/>
-            <Form className="form-wrapper">
+            <Form className="form-wrapper" onSubmit={this.onSubmit}>
                 <Row>
                     <Col sm="12">
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Input className="search-place" bsSize="lg" placeholder="Where do you want to go?" />
+                            <Input value={this.state.city} onChange={this.handleChange} name="city" className="search-place" bsSize="lg" placeholder="Where do you want to go?" />
                         </FormGroup>
                     </Col>
                 </Row>
@@ -44,21 +60,21 @@ export default class SearchForm extends Component {
                     <Col xs="6" sm="4">
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleDate"> Check In:  </Label>
-                            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                            <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" id="exampleDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
 
                     <Col xs="6" sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleDate"> Check Out:  </Label>
-                            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                            <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" id="exampleDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
                     
                     <Col sm="4">
                         <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="exampleDate"> Guests:  </Label>
-                            <Input type="select" name="select" id="exampleSelect" placeholder="sm">
+                            <Input value={this.state.numGuests} onChange={this.handleChange} name="numGuests" type="select" id="exampleSelect" placeholder="sm">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -69,9 +85,11 @@ export default class SearchForm extends Component {
                     </Col>
                 </Row>
 
-                <Button className="search-button" href="/reservation">Search</Button>
+                <Button type="submit" className="search-button" href="/reservation">Search</Button>
             </Form>
         </Container>
     );
   }
 }
+
+export default connect (null, { search })(SearchForm);
