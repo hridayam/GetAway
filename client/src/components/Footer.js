@@ -7,9 +7,9 @@ export default class Footer extends Component{
       <footer style={styles.footerStyle}>
         <Container>
           <Row style={styles.rowStyle}> 
-            <Col xs="6" sm="4">
-              <h1 className="text-uppercase font-weight-bold" style={{marginBottom: '30px', fontFamily:'Allura',textAlign: 'left'}}>GetAway</h1>
-                <p style={{fontSize:'20px', textAlign: 'left'}}>As one of the world’s top hospitality companies, 
+            <Col xs="6" sm="4" style={{fontSize:'20px', textAlign: 'left'}}>
+              <h2 className="text-uppercase font-weight-bold" style={{marginBottom: '20px', fontFamily:'Allura'}}>GetAway</h2>
+                <p>As one of the world’s top hospitality companies, 
                 <strong> GetAway</strong> remains committed to caring 
                 for people so they can be their best.
                 <a href='/aboutus'> Learn more</a>
