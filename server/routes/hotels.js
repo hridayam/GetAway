@@ -16,7 +16,7 @@ router.get('/all', async(req, res) => {
 });
 
 // 
-router.get('/search', async(req,res) => {
+router.post('/search', async(req,res) => {
     let { city } = req.body;
 
     try {
