@@ -15,12 +15,11 @@ router.get('/all', async(req, res) => {
     }
 });
 
-// 
 router.post('/search', async(req,res) => {
     let { city } = req.body;
 
     try {
-        findHotels({ city: new RegExp('i', city) }, res);
+        findHotels({ city: new RegExp(city, 'i') }, res);
     } catch(err) {
         res.status(400).json({
             success: false,
