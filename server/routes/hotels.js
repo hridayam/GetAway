@@ -20,7 +20,7 @@ router.post('/search', async(req,res) => {
     let { city } = req.body;
 
     try {
-        findHotels({ city }, res);
+        findHotels({ city: new RegExp('i', city) }, res);
     } catch(err) {
         res.status(400).json({
             success: false,
