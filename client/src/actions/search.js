@@ -12,4 +12,4 @@ export const search = (city, startDate, endDate, numGuests) => {
             console.log(err.response);
             })
         }
-    }
+}

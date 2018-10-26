@@ -69,11 +69,12 @@ import logo from "./picture/getaway_logo.png";
       <div >
         <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
           <NavbarBrand href="/">
-            <img src={logo} alt="logo" style={{height:'100px', width:'200px', paddingTop: '5px', float:'left'}}/>
+
+            <img src={logo} alt="logo" style={{width:'35%', paddingTop: '15px', float: 'left'}} />
+
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} style={{ display: 'center' }}/>
           <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>
-            
             <Nav className="ml-auto" navbar style={ this.state.navStyle }>
               <NavItem>
                 <NavLink href="/aboutus/">About Us</NavLink>
