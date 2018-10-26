@@ -10,60 +10,62 @@ import {connect} from 'react-redux';
 class SelectHotel extends Component{
   constructor(props){
       super(props);
-  
+
       this.state={
           dropdownOpen: false,
           hotels: []
       };
       this.toggleDropdown = this.toggleDropdown.bind(this);
+      this.createCardHotels = this.createCardHotels.bind(this);
   }
 
   static getDerivedStateFromProps(state, props){
-      if(props.hotels !== state.hotels)
+      if(props.hotels !== state.hotels){
         return{
             ...state,
             hotels: props.hotels
         }
-        return null;
+      }
+      return null;
   }
 
   createCardHotels = () => {
      return this.state.hotels.map((hotel) => {
         return(
-            <div class="card">
-                <div class="row ">
-                    <div class="col-md-4">
+            <div key={hotel.id} className="card">
+                <div className="row ">
+                    <div className="col-md-4">
                         <Carousel autoPlay infiniteLoop>
                             <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
                             </div>
                             <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
                             </div>
                             <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
                             </div>
                             <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
                             </div>
                             <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
                             </div>
                             <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
                             </div>
                             <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
                             </div>
                             <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
                             </div>
                         </Carousel>
                     </div>
-                    <div class="col-md-5 px-3">
-                        <div class="card-block px-3">
-                            <h3 class="card-title">{hotel.name}</h3> 
-                            <p class="card-text">description</p>
+                    <div className="col-md-5 px-3">
+                        <div className="card-block px-3">
+                            <h3 className="card-title">{hotel.name}</h3> 
+                            <p className="card-text">description</p>
                         </div>
                     </div>
                     <div class="col-md-3 price">
@@ -80,7 +82,7 @@ class SelectHotel extends Component{
       dropdownOpen: !prevState.dropdownOpen
     }));
   }
-  
+
   render(){
       console.log(this.state)
       console.log(this.props)
@@ -107,10 +109,50 @@ class SelectHotel extends Component{
               </DropdownMenu>
             </Dropdown>
             </div>
-            <div>
-                {this.createCardHotels()}
+            {this.state.hotels.map((hotel) => {
+            <div key={hotel.id} className="card">
+                <div className="row ">
+                    <div className="col-md-4">
+                        <Carousel autoPlay infiniteLoop>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
+                            </div>
+                            <div>
+                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
+                            </div>
+                        </Carousel>
+                    </div>
+                    <div className="col-md-5 px-3">
+                        <div className="card-block px-3">
+                            <h3 className="card-title"></h3> 
+                            <p className="card-text">{hotel.name}</p>
+                        </div>
+                    </div>
+                    <div className="col-md-3 price">
+                        <h1 className="reservation-price">$Price</h1>
+                        <Button style={cssStyles.buttonRoom} bsStyle="primary">Choose Hotel</Button>
+                    </div>
+                </div>  
             </div>
-            
+            })}
             <br></br>
             </Container>
         </div>
