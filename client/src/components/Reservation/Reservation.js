@@ -64,7 +64,7 @@ const styles = {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingTop: '200px',
+      paddingTop: '300px',
     },
     updateButton: {
       fontFamily: 'Lato',

@@ -5,7 +5,7 @@ import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
 import Scroll from '../ScrollUp';
 
-export default class ChooseRoom extends Component{
+export default class selectHotel extends Component{
   constructor(props){
       super(props);
   
@@ -83,7 +83,7 @@ export default class ChooseRoom extends Component{
                     </div>
                     <div class="col-md-3 price">
                         <h1 class="reservation-price">$Price</h1>
-                        <Button style={cssStyles.buttonRoom} bsStyle="primary">Choose Hotel</Button>
+                        <Button style={cssStyles.buttonRoom} bsStyle="primary" onClick={() => this.props.jumpToStep(1)}>Choose Hotel</Button>
                     </div>
                 </div>  
             </div>

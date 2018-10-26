@@ -8,7 +8,7 @@ export default class Footer extends Component{
         <Container>
           <Row style={styles.rowStyle}> 
             <Col xs="6" sm="4">
-              <h2 className="text-uppercase font-weight-bold" style={{marginBottom: '30px', fontFamily:'Allura',textAlign: 'left'}}>GetAway</h2>
+              <h1 className="text-uppercase font-weight-bold" style={{marginBottom: '30px', fontFamily:'Allura',textAlign: 'left'}}>GetAway</h1>
                 <p style={{fontSize:'20px', textAlign: 'left'}}>As one of the world’s top hospitality companies, 
                 <strong> GetAway</strong> remains committed to caring 
                 for people so they can be their best.
@@ -42,6 +42,7 @@ export default class Footer extends Component{
                 </a>
               </div>
 
+              <h5 style={{float:'left'}}> Subscribe Us:</h5>
               <Form className="input-group">
                 <Input type="text" class="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
                 <div className="input-group-append">
@@ -52,8 +53,8 @@ export default class Footer extends Component{
           </Row>
         </Container>
         
-        <div style={{backgroundColor: '#9499b7', color:'white', width: '100%',}}>
-        <br></br> &reg; 2018 GetAway <br></br><br></br>
+        <div style={{backgroundColor: '#8c7b75', color:'white', width: '100%',}}>
+        <br></br><h6>&reg; 2018 GetAway</h6>  <br></br>
         </div>
         
         

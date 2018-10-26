@@ -210,13 +210,13 @@ label{
 .reservation-search-edit{
   border: 1px solid #e2e2e2;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.027);
+  /* background-color: rgba(0, 0, 0, 0.027); */
+  background-color:#80cbc4;
   text-align: center;
-  margin-top: 50px;
   padding-top: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
   padding-bottom: 10px;
+  /* padding-left: 30px;
+  padding-right: 30px; */
 }
 
 .edit-label{
