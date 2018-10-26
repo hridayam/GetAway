@@ -4,47 +4,32 @@ import {Carousel} from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
 import Scroll from '../ScrollUp';
+import {search} from '../../actions/search';
+import {connect} from 'react-redux';
 
-export default class ChooseRoom extends Component{
+class SelectHotel extends Component{
   constructor(props){
       super(props);
   
       this.state={
-          dropdownOpen: false
+          dropdownOpen: false,
+          hotels: []
       };
       this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
-  toggleDropdown() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
+  static getDerivedStateFromProps(state, props){
+      if(props.hotels !== state.hotels)
+        return{
+            ...state,
+            hotels: props.hotels
+        }
+        return null;
   }
-  
-  render(){
-    return(
-        <div>
-            <Container>
-            <Scroll/>
-            <div>
-            <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-              <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
-                  Sort By:
-              </DropdownToggle>
 
-              <DropdownMenu>
-                <DropdownItem onClick={()=>{this.setSort("low");}}>
-                  Price: Low to High
-                </DropdownItem>
-
-                <DropdownItem divider />
-
-                <DropdownItem onClick={()=>{this.setSort("high");}}>
-                  Price: High to Low
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            </div>
+  createCardHotels = () => {
+     return this.state.hotels.map((hotel) => {
+        return(
             <div class="card">
                 <div class="row ">
                     <div class="col-md-4">
@@ -77,7 +62,7 @@ export default class ChooseRoom extends Component{
                     </div>
                     <div class="col-md-5 px-3">
                         <div class="card-block px-3">
-                            <h3 class="card-title">GetAway(Name of Hotels)</h3> 
+                            <h3 class="card-title">{hotel.name}</h3> 
                             <p class="card-text">description</p>
                         </div>
                     </div>
@@ -87,6 +72,45 @@ export default class ChooseRoom extends Component{
                     </div>
                 </div>  
             </div>
+    )})
+    }
+
+  toggleDropdown() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
+  
+  render(){
+      console.log(this.state)
+      console.log(this.props)
+    return(
+        <div>
+            <Container>
+            <Scroll/>
+            <div>
+            <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+              <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
+                  Sort By:
+              </DropdownToggle>
+
+              <DropdownMenu>
+                <DropdownItem onClick={()=>{this.setSort("low");}}>
+                  Price: Low to High
+                </DropdownItem>
+
+                <DropdownItem divider />
+
+                <DropdownItem onClick={()=>{this.setSort("high");}}>
+                  Price: High to Low
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            </div>
+            <div>
+                {this.createCardHotels()}
+            </div>
+            
             <br></br>
             </Container>
         </div>
@@ -105,3 +129,11 @@ const cssStyles = {
         fontSize: '0.8rem'
     }
   }
+
+  const mapStatetoProps = state => {
+    return {
+        hotels: state.search
+    };
+  }
+
+  export default connect(mapStatetoProps, {search})(SelectHotel); 
