@@ -5,6 +5,8 @@ import {
   NavLink
 } from 'reactstrap';
 import Login from './Login'
+import logo from "./picture/getaway_logo.png";
+
 
   export default class NavBar extends Component {
     constructor(props) {
@@ -66,7 +68,9 @@ import Login from './Login'
     return (
       <div >
         <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
-          <NavbarBrand href="/">GetAway</NavbarBrand>
+          <NavbarBrand href="/">
+            <img src={logo} alt="logo" style={{height:'35%', width:'35%', paddingTop: '15px', float: 'left'}} />
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>
             

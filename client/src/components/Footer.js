@@ -10,7 +10,7 @@ export default class Footer extends Component{
             <Col xs="6" sm="4">
               <h2 className="text-uppercase font-weight-bold" style={{marginBottom: '30px', fontFamily:'Allura',textAlign: 'left'}}>GetAway</h2>
                 <p style={{fontSize:'20px', textAlign: 'left'}}>As one of the world’s top hospitality companies, 
-                <strong>GetAway</strong> remains committed to caring 
+                <strong> GetAway</strong> remains committed to caring 
                 for people so they can be their best.
                 <a href='/aboutus'> Learn more</a>
                 </p>
