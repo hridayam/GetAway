@@ -4,7 +4,7 @@ export default class Footer extends Component{
   render(){
     return(
       <footer style={styles.footerStyle}>
-        <p>&reg; 2018 GetAway</p>
+        <p style={{ backgroundColor: 'black' }}>&reg; 2018 GetAway</p>
       </footer>
     );
   }
