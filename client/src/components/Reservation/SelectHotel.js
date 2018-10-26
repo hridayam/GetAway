@@ -132,7 +132,7 @@ const cssStyles = {
 
   const mapStatetoProps = state => {
     return {
-        hotels: state.search
+        hotels: state.search.hotels
     };
   }
 
