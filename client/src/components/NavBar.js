@@ -72,9 +72,6 @@ import Login from './Login'
             
             <Nav className="ml-auto" navbar style={ this.state.navStyle }>
               <NavItem>
-              <NavLink href="/events/">Event</NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink href="/aboutus/">About Us</NavLink>
               </NavItem>
               <NavItem>
