@@ -116,7 +116,7 @@ class Payment extends Component{
                             <p>Would you like to complete the purchase?</p>
                             <CardElement />
                             <p>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
-                            <Button color="info" onClick={this.submit}>Place Order</Button>
+                            <Button color="info" onClick={this.submit = () => this.props.jumpToStep(3)}>Place Order</Button>
                         </Col>
                     </Row>
                 </Card>
