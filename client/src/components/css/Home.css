@@ -140,6 +140,7 @@
   text-align: center;
   font-size: auto;
   padding-bottom: 20px;
+  height: 100px;
 }
 
 .button-suggestion{
@@ -153,6 +154,7 @@
   line-height: 1;
   color: #407bae;
   border: 0px;
+  margin-top: 20px;
 }
 
 
