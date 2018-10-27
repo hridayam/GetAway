@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Profile from './components/Profile/Profile';
 import Reservation from './components/Reservation/Reservation';
 import AboutUs from './components/AboutUs';
+import Register from './components/Register';
 
 
 //import logo from './logo.svg';
@@ -23,6 +24,7 @@ class App extends Component {
               <Route exact path='/profile' component={Profile}/>
               <Route exact path = '/reservation' component ={Reservation}/>
               <Route exact path = '/aboutus' component ={AboutUs}/>
+              <Route exact path = '/register' component ={Register}/>
             </div>
         </BrowserRouter>
 
