@@ -16,10 +16,9 @@ class SelectHotel extends Component{
           hotels: []
       };
       this.toggleDropdown = this.toggleDropdown.bind(this);
-      this.createCardHotels = this.createCardHotels.bind(this);
   }
 
-  static getDerivedStateFromProps(state, props){
+  static getDerivedStateFromProps(props, state){
       if(props.hotels !== state.hotels){
         return{
             ...state,
@@ -29,131 +28,69 @@ class SelectHotel extends Component{
       return null;
   }
 
-  createCardHotels = () => {
-     return this.state.hotels.map((hotel) => {
-        return(
+  renderHotels = () => {    
+    if (this.state.hotels !== null) 
+        return this.state.hotels.map((hotel, index) => 
             <div key={hotel.id} className="card">
                 <div className="row ">
                     <div className="col-md-4">
+                        { hotel.images.length ? 
                         <Carousel autoPlay infiniteLoop>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                        </Carousel>
+                            {hotel.images.map((v,i) => 
+                                <div>
+                                    <img src={v} alt="" className="w-100"/>
+                                </div>
+                            )}
+                        </Carousel> : <div className="align-middle" style={{height:'100%', width:'100%'}}><br/><br/><br/>No Images Available</div> }
                     </div>
                     <div className="col-md-5 px-3">
                         <div className="card-block px-3">
                             <h3 className="card-title">{hotel.name}</h3> 
-                            <p className="card-text">description</p>
+                            <p className="card-text"><i class="far fa-star"></i> {hotel.stars} Stars</p>
                         </div>
                     </div>
-                    <div className="col-md-3 price">
-                        <h1 className="reservation-price">$Price</h1>
-                        <Button style={cssStyles.buttonRoom} bsStyle="primary">Choose Hotel</Button>
+                    <div class="col-md-3 price">
+                        Starting from<h3 class="reservation-price">${hotel.price.extra_bed} per night</h3>
+                        <Button style={cssStyles.buttonRoom} bsStyle="primary" onClick={() => this.props.jumpToStep(1)}>Choose Hotel</Button>
                     </div>
                 </div>  
             </div>
-            )}
-        )
-    }
+            ); 
+    else return null;
+}
 
-  toggleDropdown() {
+toggleDropdown() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
-  }
+}
 
   render(){
-      console.log(this.state)
-      console.log(this.props)
+    console.log(this.state);
     return(
         <div>
             <Container>
-            <Scroll/>
-            <div>
-            <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-              <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
-                  Sort By:
-              </DropdownToggle>
+                <Scroll/>
+                <div>
+                    <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                    <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
+                        Sort By:
+                    </DropdownToggle>
 
-              <DropdownMenu>
-                <DropdownItem onClick={()=>{this.setSort("low");}}>
-                  Price: Low to High
-                </DropdownItem>
+                    <DropdownMenu>
+                        <DropdownItem onClick={()=>{this.setSort("low");}}>
+                        Price: Low to High
+                        </DropdownItem>
 
-                <DropdownItem divider />
+                        <DropdownItem divider />
 
-                <DropdownItem onClick={()=>{this.setSort("high");}}>
-                  Price: High to Low
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            </div>
-            {this.state.hotels.map((hotel) => {
-            <div key={hotel.id} className="card">
-                <div className="row ">
-                    <div className="col-md-4">
-                        <Carousel autoPlay infiniteLoop>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" className="w-100"/>
-                            </div>
-                        </Carousel>
-                    </div>
-                    <div className="col-md-5 px-3">
-                        <div className="card-block px-3">
-                            <h3 className="card-title"></h3> 
-                            <p className="card-text">{hotel.name}</p>
-                        </div>
-                    </div>
-                    <div className="col-md-3 price">
-                        <h1 className="reservation-price">$Price</h1>
-                        <Button style={cssStyles.buttonRoom} bsStyle="primary">Choose Hotel</Button>
-                    </div>
-                </div>  
-            </div>
-            })}
+                        <DropdownItem onClick={()=>{this.setSort("high");}}>
+                        Price: High to Low
+                        </DropdownItem>
+                    </DropdownMenu>
+                    </Dropdown>
+                </div>
+                { this.renderHotels()}
             <br></br>
             </Container>
         </div>

@@ -135,6 +135,7 @@ class Login extends Component {
                   </FormGroup>
               </Form>
               <a href="/register">Not a member yet? Sign Up</a>
+
             </ModalBody>
 
             <ModalFooter>

@@ -84,7 +84,7 @@ export default class ChooseRoom extends Component{
                     </div>
                     <div class="col-md-3 price">
                         <h1 class="reservation-price">$Price</h1>
-                        <Button style={cssStyles.buttonRoom} bsStyle="primary">Choose Room</Button>
+                        <Button style={cssStyles.buttonRoom} color="info" size="lg" onClick={() => this.props.jumpToStep(2)}>Choose Room</Button>
                     </div>
                 </div>  
             </div>
