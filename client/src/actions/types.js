@@ -2,3 +2,5 @@ export const LOGIN_USER = 'login_user';
 export const REGISTER_USER = 'register_user';
 export const LOGOUT_USER = 'logout_user';
 export const SEARCH_HOTELS = 'search_hotels';
+export const CHOOSE_ROOM = 'choose_room';
+export const PAYMENT = 'payment';
