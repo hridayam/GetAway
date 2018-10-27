@@ -28,15 +28,15 @@ class SelectHotel extends Component{
       return null;
   }
 
-  renderHotels = () => {    
-    if (this.state.hotels !== null) 
-        return this.state.hotels.map((hotel, index) => 
+  renderHotels = () => {
+    if (this.state.hotels !== null)
+        return this.state.hotels.map((hotel, index) =>
             <div key={hotel.id} className="card">
                 <div className="row ">
                     <div className="col-md-4">
-                        { hotel.images.length ? 
+                        { hotel.images && hotel.images.length ?
                         <Carousel autoPlay infiniteLoop>
-                            {hotel.images.map((v,i) => 
+                            {hotel.images.map((v,i) =>
                                 <div>
                                     <img src={v} alt="" className="w-100"/>
                                 </div>
@@ -45,7 +45,7 @@ class SelectHotel extends Component{
                     </div>
                     <div className="col-md-5 px-3">
                         <div className="card-block px-3">
-                            <h3 className="card-title">{hotel.name}</h3> 
+                            <h3 className="card-title">{hotel.name}</h3>
                             <p className="card-text"><i class="far fa-star"></i> {hotel.stars} Stars</p>
                         </div>
                     </div>
@@ -53,9 +53,9 @@ class SelectHotel extends Component{
                         Starting from<h3 class="reservation-price">${hotel.price.extra_bed} per night</h3>
                         <Button style={cssStyles.buttonRoom} bsStyle="primary" onClick={() => this.props.jumpToStep(1)}>Choose Hotel</Button>
                     </div>
-                </div>  
+                </div>
             </div>
-            ); 
+            );
     else return null;
 }
 
@@ -116,4 +116,4 @@ const cssStyles = {
     };
   }
 
-  export default connect(mapStatetoProps, {search})(SelectHotel); 
+  export default connect(mapStatetoProps, {search})(SelectHotel);
