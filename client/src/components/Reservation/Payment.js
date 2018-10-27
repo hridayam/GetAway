@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {CardElement, injectStripe} from 'react-stripe-elements';
+import {CardElement, CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
 import axios from 'axios';
 import {Button, Form, FormGroup, Col, Row, Input, Label, Card, CardTitle} from 'reactstrap';
 import Scroll from '../ScrollUp';
+import '../css/Home.css';
 
 class Payment extends Component{
     constructor(props) {
@@ -10,7 +11,7 @@ class Payment extends Component{
         this.state = {complete: false};
         this.submit = this.submit.bind(this);
     }
-    
+
     async submit(ev) {
         let {token} = await this.props.stripe.createToken({name: "hridayam"});
 
@@ -29,8 +30,8 @@ class Payment extends Component{
         //   headers: {"Content-Type": "text/plain"},
         //   body: token.id
         // });
-      
-        if (response.ok) this.setState({complete: true});  
+
+        if (response.ok) this.setState({complete: true});
     }
 
     render(){
@@ -43,7 +44,7 @@ class Payment extends Component{
                 <h2 >Checkout</h2>
                 <Card body outline color="info" style={styles.panel} >
                     <CardTitle>REVIEW ORDER</CardTitle>
-                    <Row > 
+                    <Row >
                         <Col xs="3">
                             {/* Picture */}
                         </Col>
@@ -97,25 +98,27 @@ class Payment extends Component{
                             <FormGroup>
                             <Label for="exampleZip">Zip</Label>
                             <Input type="text" name="zip" id="exampleZip"/>
-                            </FormGroup>  
+                            </FormGroup>
                         </Col>
                     </Row>
                 </Card >
 
                 <Card body outline color="info" style={styles.panel} >
                     <CardTitle>CREDIT CARD DETAIL</CardTitle>
-                    <Row > 
+                    <Row >
                         <Col sm="12" md={{ size: 8, offset: 2 }}>
-                            <Label for="cardholder" >Cardholder's Name</Label>
-                            <Input type="text" id="cardholder" bsSize="sm"/>
+
+                            <Input type="text" id="cardholder" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
+                            borderRadius: '4px', padding: '10px 14px', fontSize: '16px'}}/>
                         </Col>
                     </Row>
 
-                    <Row>  
+                    <Row>
                         <Col sm="12" md={{ size: 8, offset: 2 }} >
-                            <p>Would you like to complete the purchase?</p>
-                            <CardElement />
-                            <p>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
+
+                            <CardElement style={styles.cardpanel}/>
+
+                            <p style={styles.cardinfo}>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
                             <Button color="info" onClick={this.submit = () => this.props.jumpToStep(3)}>Place Order</Button>
                         </Col>
                     </Row>
@@ -128,7 +131,7 @@ class Payment extends Component{
 }
 const styles = {
 body:{
-    fontFamily: 'Montserrat', 
+    fontFamily: 'Montserrat',
     display: 'flex',
     width: '100%',
     height: '100%',
@@ -136,12 +139,26 @@ body:{
     justifyContent: 'center',
     alignItems: 'center',
   },
-    checkout:{  
-        display:'inline',    
+    checkout:{
+        display:'inline',
     },
     panel:{
         marginTop:'40px',
+    },
+    cardinfo:{
+        fontSize : '12px',
+        fontFamily: 'Montserrat'
+    },
+    cardpanel:{
+        base:{
+        fontSize: '16px',
+        fontFamily: 'Montserrat',
+        iconColor: 'blue',
+        color: 'red'
+
+      }
     }
+
   }
 
 export default injectStripe(Payment);
