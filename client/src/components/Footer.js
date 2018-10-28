@@ -27,7 +27,7 @@ export default class Footer extends Component{
             <Col sm="12" md="4">
               <h5 className="text-uppercase font-weight-bold" style={{marginBottom: '30px'}}>Stay tuned</h5>
 
-              <div className="row">
+              <div className="row" style={{padding:10}}>
                 <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
                   <i className="fa fa-facebook fa-lg mr-md-5 mr-3 fa-2x"> </i>
                 </a>
