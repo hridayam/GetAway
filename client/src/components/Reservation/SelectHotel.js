@@ -66,8 +66,7 @@ toggleDropdown() {
     }));
 }
 
-  render(){
-    console.log(this.state);
+  render() {
     return(
         <div>
             <Container>

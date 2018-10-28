@@ -7,7 +7,7 @@ export default class Footer extends Component{
       <footer style={styles.footerStyle}>
         <Container>
           <Row style={styles.rowStyle}> 
-            <Col xs="6" sm="4" style={{fontSize:'20px', textAlign: 'left'}}>
+            <Col sm="12" md="4" style={{fontSize:'20px', textAlign: 'left'}}>
               <h2 className="text-uppercase font-weight-bold" style={{marginBottom: '20px', fontFamily:'Allura'}}>GetAway</h2>
                 <p>As one of the world’s top hospitality companies, 
                 <strong> GetAway</strong> remains committed to caring 
@@ -15,34 +15,34 @@ export default class Footer extends Component{
                 <a href='/aboutus'> Learn more</a>
                 </p>
             </Col>
-
-            <Col xs="6" sm="4" style={{textAlign:'left'}}>
+            <br/>
+            <Col sm="12" md="4" style={{textAlign:'center'}}>
               <h5 className="text-uppercase font-weight-bold" style={{marginBottom: '30px'}}>Contact</h5>
                 <p><i class="fa fa-home mr-3"/>San Jose, CA 95192, US</p>
                 <p><i class="fa fa-envelope mr-3"/>info@getaway.com</p>
                 <p><i class="fa fa-phone mr-3"/>+ 01 408 GET AWAY</p>
                 <p><i class="fa fa-print mr-3"/> + 01 234 567 89</p>
             </Col>
-
-            <Col sm="4">
+            <br/>
+            <Col sm="12" md="4">
               <h5 className="text-uppercase font-weight-bold" style={{marginBottom: '30px'}}>Stay tuned</h5>
 
-              <div className="mb-5 flex-center" >
-                <a  href="#" style = {{color:'black'}}>
+              <div className="row">
+                <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
                   <i className="fa fa-facebook fa-lg mr-md-5 mr-3 fa-2x"> </i>
                 </a>
-                <a  href="#" style = {{color:'black'}}> 
+                <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}> 
                   <i className="fa fa-twitter fa-lg mr-md-5 mr-3 fa-2x"> </i>
                 </a>
-                <a href="#" style = {{color:'black'}}>
+                <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
                   <i className="fa fa-google-plus fa-lg mr-md-5 mr-3 fa-2x"> </i>
                 </a>
-                <a href="#" style = {{color:'black'}}>
+                <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
                 <i className="fa fa-instagram fa-lg mr-md-5 mr-3 fa-2x"> </i>
                 </a>
               </div>
-
-              <h5 style={{float:'left'}}> Subscribe Us:</h5>
+              <br/><br/>
+              <h5 style={{float:'left'}}> Subscribe to Our Emails:</h5>
               <Form className="input-group">
                 <Input type="text" class="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
                 <div className="input-group-append">
@@ -50,6 +50,7 @@ export default class Footer extends Component{
                 </div>
               </Form>
             </Col>
+            <br/>
           </Row>
         </Container>
         
