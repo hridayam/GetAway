@@ -4,12 +4,24 @@ import axios from 'axios';
 import {Button, Form, FormGroup, Col, Row, Input, Label, Card, CardTitle} from 'reactstrap';
 import Scroll from '../ScrollUp';
 import '../css/Home.css';
+import {connect} from 'react-redux';
+import {payment} from '../../actions/payment';
 
 class Payment extends Component{
     constructor(props) {
         super(props);
         this.state = {complete: false};
         this.submit = this.submit.bind(this);
+    }
+
+    static getDerivedStateFromProps(props, state){
+        if(props.price !== state.price){
+          return{
+              ...state,
+              price: props.price
+          }
+        }
+        return null;
     }
 
     async submit(ev) {
@@ -162,3 +174,12 @@ body:{
   }
 
 export default injectStripe(Payment);
+
+const mapStatetoProps = state => {
+  return {
+      reservationid: state.payment.reservationid,
+      price: state.payment.price
+  };
+}
+
+connect(mapStatetoProps, {payment})(Payment);

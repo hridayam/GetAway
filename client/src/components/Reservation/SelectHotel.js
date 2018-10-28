@@ -13,7 +13,8 @@ class SelectHotel extends Component{
 
       this.state={
           dropdownOpen: false,
-          hotels: []
+          hotels: [],
+          chosenHotel: null
       };
       this.toggleDropdown = this.toggleDropdown.bind(this);
   }

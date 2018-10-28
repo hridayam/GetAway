@@ -4,22 +4,38 @@ import {Carousel} from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
 import Scroll from '../ScrollUp';
+import {connect} from 'react-redux';
+import {chooseRoom} from '../../actions/chooseRoom';
 
 
-export default class ChooseRoom extends Component{
+class ChooseRoom extends Component{
     constructor(props){
         super(props);
-    
+
         this.state={
-            dropdownOpen: false
+            dropdownOpen: false,
+            roomType: '',
+            id: '',
+            price: null
         };
         this.toggleDropdown = this.toggleDropdown.bind(this);
     }
-  
+
     toggleDropdown() {
       this.setState(prevState => ({
         dropdownOpen: !prevState.dropdownOpen
       }));
+    }
+
+
+    static getDerivedStateFromProps(props, state){
+        if(props.room !== state.room){
+          return{
+              ...state,
+              room: props.room
+          }
+        }
+        return null;
     }
 
   render(){
@@ -78,7 +94,7 @@ export default class ChooseRoom extends Component{
                     </div>
                     <div class="col-md-5 px-3">
                         <div class="card-block px-3">
-                            <h3 class="card-title">Room type</h3> 
+                            <h3 class="card-title">Room type</h3>
                             <p class="card-text">Amenities etc..</p>
                         </div>
                     </div>
@@ -86,7 +102,7 @@ export default class ChooseRoom extends Component{
                         <h1 class="reservation-price">$Price</h1>
                         <Button style={cssStyles.buttonRoom} color="info" size="lg" onClick={() => this.props.jumpToStep(2)}>Choose Room</Button>
                     </div>
-                </div>  
+                </div>
             </div>
             <br></br>
             </Container>
@@ -106,3 +122,11 @@ const cssStyles = {
         fontSize: '0.8rem'
     }
   }
+
+  const mapStatetoProps = state => {
+    return {
+        room: state.chooseRoom.room
+    };
+  }
+
+  export default connect(mapStatetoProps, {chooseRoom})(ChooseRoom);
