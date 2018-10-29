@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Suggestion from '../components/Home/Suggestion';
 import RegisterForm from './RegisterForm';
 import Scroll from '../components/ScrollUp';
 
@@ -16,7 +15,7 @@ export default class Register extends Component{
         </div>
         <RegisterForm/>
         <Scroll/>
-        <Suggestion/>
+        <br/><br/><br/>
       </div>
     );
   }

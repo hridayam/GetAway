@@ -66,12 +66,10 @@ toggleDropdown() {
     }));
 }
 
-  render(){
-    console.log(this.state);
+  render() {
     return(
         <div>
             <Container>
-                <Scroll/>
                 <div>
                     <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                     <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>

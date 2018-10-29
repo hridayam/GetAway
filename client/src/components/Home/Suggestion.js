@@ -10,7 +10,7 @@ export default class Suggestion extends Component {
             <h1 className="suggestion-title"> Step Up Your Travel Game </h1>
             <Row >
                 
-                <Col className=" suggestion-card" sm="4" >
+                <Col className=" suggestion-card" sm="12" md="4">
                     <Card style={{height: '30rem'}}>
                     <CardImg top width="100%" src="http://samuiholiday.com/wp-content/uploads/2018/01/Nora-Buri-Resort-Spa-1024x683.jpg" alt="Card image cap" />
                         <CardBody>
@@ -21,7 +21,7 @@ export default class Suggestion extends Component {
                     </Card>
                 </Col>
 
-                <Col className="suggestion-card" sm="4" >
+                <Col className="suggestion-card" sm="12" md="4">
                     <Card style={{height: '30rem'}}>
                         <CardImg top width="100%" src="https://t-ec.bstatic.com/images/hotel/max1024x768/537/53776472.jpg" alt="Card image cap" />
                         <CardBody>
@@ -32,7 +32,7 @@ export default class Suggestion extends Component {
                     </Card>
                 </Col>
 
-                <Col className="suggestion-card" sm="4" >
+                <Col className="suggestion-card" sm="12" md="4" >
                      <Card style={{height: '30rem'}}>
                         <CardImg top width="100%" src="https://www.spittingimage.com.au/wp-content/uploads/RFT8412-1024x683.jpg" alt="Card image cap" />
                         <CardBody>

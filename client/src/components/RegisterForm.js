@@ -43,14 +43,6 @@ class registerForm extends Component {
     return null;
   }
 
-  toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
-  }
-
-  
-
   userRegister (e) {
     e.preventDefault();
        this.props.register({
@@ -215,8 +207,7 @@ class registerForm extends Component {
                   </FormGroup>
                   </Form>
 
-                  <Button color="info" href="/" onClick={this.userRegister.bind(this)}>Submit</Button>{' '}
-                  <Button color="secondary" href="/" onClick={this.toggle.bind(this)}>Cancel</Button>
+                  <Button color="info" onClick={this.userRegister.bind(this)}>Submit</Button>{' '}
                   {this.renderRedirect()}
                   
                 </Container>          
