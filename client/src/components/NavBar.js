@@ -141,10 +141,10 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-    if(!!state.auth.user){
+    if(!!state.auth.token){
         return {
-            isLoggedIn: !!state.auth.user,
-            user: state.auth.user.data
+            isLoggedIn: !!state.auth.token,
+            user: state.auth.user
         };
     }
 }

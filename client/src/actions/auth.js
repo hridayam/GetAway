@@ -11,7 +11,7 @@ export const login = (data) => {
             localStorage.token = res.data.token;
             localStorage.data = JSON.stringify(res.data.user);
             console.log(res.data)
-            dispatch(userLoggedIn({token: res.data.token, data: res.data.user}));
+            dispatch(userLoggedIn({token: res.data.token, user: res.data.user}));
         })
         .catch(err => {
             console.log(err.response);
