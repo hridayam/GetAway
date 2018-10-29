@@ -25,8 +25,8 @@ const store = createStore(
 
 if(localStorage.token) {
     const user = {
-        jwt: localStorage.token,
-        data: JSON.parse(localStorage.data)
+        token: localStorage.token,
+        user: JSON.parse(localStorage.data)
     };
     store.dispatch(userLoggedIn(user));
 }
