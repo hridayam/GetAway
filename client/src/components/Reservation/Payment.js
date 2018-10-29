@@ -136,7 +136,6 @@ class Payment extends Component{
                     </Row>
                 </Card>
             </FormGroup>
-            <Scroll/>
         </Form>
     );
   }

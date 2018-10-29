@@ -340,7 +340,7 @@ const styles = {
 }
 
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = state =>{
   return{
     user: state.auth.user.data
   };
