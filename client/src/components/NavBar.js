@@ -108,7 +108,9 @@ import { connect } from 'react-redux';
    return (
      <div >
        <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
-         <NavbarBrand href="/">GetAway</NavbarBrand>
+          <NavbarBrand href="/">
+            <img src={logo} alt="logo" style={{width:'250px', height: '100px', paddingTop: '5px', float: 'left'}} />
+          </NavbarBrand>
          <NavbarToggler onClick={this.toggle} />
          <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>
 
@@ -141,10 +143,10 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-    if(!!state.auth.user){
+    if(!!state.auth.token){
         return {
-            isLoggedIn: !!state.auth.user,
-            user: state.auth.user.data
+            isLoggedIn: !!state.auth.token,
+            user: state.auth.user
         };
     }
 }

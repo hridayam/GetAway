@@ -1,28 +1,14 @@
 import { LOGIN_USER, REGISTER_USER, LOGOUT_USER } from '../actions/types';
 
-const INITIAL_STATE = {
-  user: null
-};
+const INITIAL_STATE = {}
 
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
         case LOGIN_USER:
-          return {
-            ...state,
-            user: action.payload
-          };
-          
-        case REGISTER_USER:
-          return {
-            ...state,
-            user: action.payload
-          };
+          return action.payload;
 
         case LOGOUT_USER:
-          return{
-            ...state,
-            user: null
-          }
+          return INITIAL_STATE
 
           default:
             return state;
