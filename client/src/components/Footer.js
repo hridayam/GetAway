@@ -69,10 +69,10 @@ const styles = {
     color: 'black',
     flex: 1, 
     fontFamily: 'Lato',
+    paddingTop: 50
   }, 
   rowStyle:{
     marginTop: '40px',
     marginBottom: '40px'
   }
-
 }

@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
-import search from './search';
-import chooseRoom from './chooseRoom';
+import reservation from './reservation';
 import payment from './payment'
 
 const rootReducer = combineReducers({
     auth,
-    search,
-    chooseRoom,
+    reservation,
     payment
 });
 

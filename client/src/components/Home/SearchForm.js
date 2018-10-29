@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
-import {search} from '../../actions/search';
+import {search} from '../../actions/';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
 

@@ -12,8 +12,8 @@ export default class Home extends Component{
     return(
       <div>
         <ScrollToTop style={ styles.upstyle} showUnder={160}>
-          <div class="text-center">
-            <i class="far fa-hand-point-up" style={{ fontSize: 50 }}></i>
+          <div className="text-center">
+            <i className="far fa-hand-point-up" style={{ fontSize: 50 }}></i>
             <br/>
             <b>Back To Top</b>
           </div>

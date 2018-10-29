@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
-import {Container, Button, DropdownMenu, DropdownItem, Dropdown, DropdownToggle} from 'reactstrap';
+import {
+    Container, Button, DropdownMenu, 
+    DropdownItem, Dropdown, DropdownToggle, 
+    FormGroup, Label, Input
+} from 'reactstrap';
 import {Carousel} from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
 import Scroll from '../ScrollUp';
 import {connect} from 'react-redux';
-import {chooseRoom} from '../../actions/chooseRoom';
-
+import {selectRooms} from '../../actions';
 
 class ChooseRoom extends Component{
     constructor(props){
@@ -14,10 +17,13 @@ class ChooseRoom extends Component{
 
         this.state={
             dropdownOpen: false,
-            roomType: '',
-            id: '',
-            price: null
+            hotel: null,
+            startDate: 0,
+            endDate: 0,
+            numGuests: 0,
+            selectedRooms: {}
         };
+
         this.toggleDropdown = this.toggleDropdown.bind(this);
     }
 
@@ -29,85 +35,112 @@ class ChooseRoom extends Component{
 
 
     static getDerivedStateFromProps(props, state){
-        if(props.room !== state.room){
-          return{
-              ...state,
-              room: props.room
-          }
+        if(props.hotel !== state.hotel){
+            return {
+                ...state,
+                hotel: props.hotel,
+                startDate: 0,
+                endDate: 0,
+                numGuests: 0
+            };
         }
         return null;
     }
 
-  render(){
-    return(
-        <div>
-            <Container>
-            <div>
-            <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-              <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
-                  Sort By:
-              </DropdownToggle>
+    renderRooms = hotel => {
+        let { price } = hotel;
 
-              <DropdownMenu>
-                <DropdownItem onClick={()=>{this.setSort("low");}}>
-                  Price: Low to High
-                </DropdownItem>
-
-                <DropdownItem divider />
-
-                <DropdownItem onClick={()=>{this.setSort("high");}}>
-                  Price: High to Low
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            </div>
+        return hotel.rooms.map((r,i) => 
             <div class="card">
                 <div class="row ">
                     <div class="col-md-4">
-                        <Carousel autoPlay infiniteLoop>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                            </div>
-                            <div>
-                                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100"/>
-                            </div>
-                        </Carousel>
+                        { r.images.length ? 
+                            <Carousel autoPlay infiniteLoop>
+                                { r.images.map((v,i) => 
+                                    <img src={v} alt="" class="w-100"/>
+                                )}
+                            </Carousel> : <div><br/><br/>No Images Available</div>
+                        }
                     </div>
                     <div class="col-md-5 px-3">
                         <div class="card-block px-3">
-                            <h3 class="card-title">Room type</h3>
-                            <p class="card-text">Amenities etc..</p>
+                            <h3 class="card-title">{r.bed_type.replace(/^\w/, c => c.toUpperCase())} Bed Room</h3>
+                            <div class="card-text">
+                                Wifi, HD Television, Coffee Maker, and Refrigerator come standard.
+                                <br/><br/>
+                                This room includes {r.beds} {r.bed_type} bed(s).
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3 price">
-                        <h1 class="reservation-price">$Price</h1>
-                        <Button style={cssStyles.buttonRoom} color="info" size="lg" onClick={() => this.props.jumpToStep(2)}>Choose Room</Button>
+                        <h3 class="reservation-price">${r.beds*price[r.bed_type]} per night</h3>
+                        <FormGroup>
+                            <Label for="exampleSelect">How many rooms do you need?</Label>
+                            <Input 
+                                onChange={e => this.setState({ selectedRooms: {[r.bed_type]: e.target.value }})}
+                                type="select"
+                                name="select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                            </Input>
+                        </FormGroup>
+                        <Button 
+                            style={cssStyles.buttonRoom} 
+                            color="info" 
+                            size="lg" 
+                            onClick={() => { 
+                                if (Object.keys(this.state.selectedRooms).length)
+                                    this.props.selectRooms(hotel, this.state.selectedRooms);
+                                else
+                                    this.props.selectRooms(hotel, { [r.bed_type]: 1});
+                                this.props.jumpToStep(2);
+                            }}
+                            >
+                            Choose Room
+                        </Button>
                     </div>
                 </div>
             </div>
-            <br></br>
-            </Container>
-        </div>
-    );
-  }
+        );
+    }
+
+    render(){
+        console.log(this.state)
+        return(
+            <div>
+                <Container>
+                <div>
+                <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
+                    Sort By:
+                </DropdownToggle>
+
+                <DropdownMenu>
+                    <DropdownItem onClick={()=>{this.setSort("low");}}>
+                    Price: Low to High
+                    </DropdownItem>
+
+                    <DropdownItem divider />
+
+                    <DropdownItem onClick={()=>{this.setSort("high");}}>
+                    Price: High to Low
+                    </DropdownItem>
+                </DropdownMenu>
+                </Dropdown>
+                </div>
+                {this.renderRooms(this.state.hotel)}
+                <br></br>
+                </Container>
+            </div>
+        );
+    }
 }
 
 const cssStyles = {
@@ -120,12 +153,16 @@ const cssStyles = {
         paddingRight: '2rem',
         fontSize: '0.8rem'
     }
-  }
+}
 
-  const mapStatetoProps = state => {
+const mapStatetoProps = state => {
+    let { selectedHotel, startDate, endDate, numGuests } = state.reservation;
     return {
-        room: state.chooseRoom.room
+        hotel: selectedHotel,
+        startDate,
+        endDate,
+        numGuests
     };
-  }
+}
 
-  export default connect(mapStatetoProps, {chooseRoom})(ChooseRoom);
+export default connect(mapStatetoProps, {selectRooms})(ChooseRoom);
