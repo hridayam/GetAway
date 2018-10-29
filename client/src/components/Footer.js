@@ -1,10 +1,68 @@
 import React, {Component} from 'react';
+import { Container, Row, Col, Form, Input, Button, Breadcrumb } from 'reactstrap';
 
 export default class Footer extends Component{
   render(){
     return(
       <footer style={styles.footerStyle}>
+<<<<<<< HEAD
         <p style={{ backgroundColor: 'black' }}>&reg; 2018 GetAway</p>
+=======
+        <Container>
+          <Row style={styles.rowStyle}> 
+            <Col sm="12" md="4" style={{fontSize:'20px', textAlign: 'left'}}>
+              <h2 className="text-uppercase font-weight-bold" style={{marginBottom: '20px', fontFamily:'Allura'}}>GetAway</h2>
+                <p>As one of the world’s top hospitality companies, 
+                <strong> GetAway</strong> remains committed to caring 
+                for people so they can be their best.
+                <a href='/aboutus'> Learn more</a>
+                </p>
+            </Col>
+            <br/>
+            <Col sm="12" md="4" style={{textAlign:'center'}}>
+              <h5 className="text-uppercase font-weight-bold" style={{marginBottom: '30px'}}>Contact</h5>
+                <p><i class="fa fa-home mr-3"/>San Jose, CA 95192, US</p>
+                <p><i class="fa fa-envelope mr-3"/>info@getaway.com</p>
+                <p><i class="fa fa-phone mr-3"/>+ 01 408 GET AWAY</p>
+                <p><i class="fa fa-print mr-3"/> + 01 234 567 89</p>
+            </Col>
+            <br/>
+            <Col sm="12" md="4">
+              <h5 className="text-uppercase font-weight-bold" style={{marginBottom: '30px'}}>Stay tuned</h5>
+
+              <div className="row" style={{padding:10}}>
+                <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
+                  <i className="fa fa-facebook fa-lg mr-md-5 mr-3 fa-2x"> </i>
+                </a>
+                <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}> 
+                  <i className="fa fa-twitter fa-lg mr-md-5 mr-3 fa-2x"> </i>
+                </a>
+                <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
+                  <i className="fa fa-google-plus fa-lg mr-md-5 mr-3 fa-2x"> </i>
+                </a>
+                <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
+                <i className="fa fa-instagram fa-lg mr-md-5 mr-3 fa-2x"> </i>
+                </a>
+              </div>
+              <br/><br/>
+              <h5 style={{float:'left'}}> Subscribe to Our Emails:</h5>
+              <Form className="input-group">
+                <Input type="text" class="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
+                <div className="input-group-append">
+                  <Button className="btn btn-sm btn-outline-white" type="button">Sign up</Button>
+                </div>
+              </Form>
+            </Col>
+            <br/>
+          </Row>
+        </Container>
+        
+        <div style={{backgroundColor: '#8c7b75', color:'white', width: '100%',}}>
+        <br></br><h6>&reg; 2018 GetAway</h6>  <br></br>
+        </div>
+        
+        
+>>>>>>> 63db1eccc60c51b2e31dc48e1c2913aec7852f5e
       </footer>
     );
   }
@@ -12,8 +70,13 @@ export default class Footer extends Component{
 
 const styles = {
   footerStyle: {
-    backgroundColor: 'white',
     color: 'black',
-    flex: 1
+    flex: 1, 
+    fontFamily: 'Lato',
+    paddingTop: 50
+  }, 
+  rowStyle:{
+    marginTop: '40px',
+    marginBottom: '40px'
   }
 }

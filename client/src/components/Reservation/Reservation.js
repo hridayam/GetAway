@@ -4,8 +4,25 @@ import '../css/Home.css';
 import { Button, Form, FormGroup, Label, Container, Input, Row, Col } from 'reactstrap';
 import Scroll from '../ScrollUp';
 
+import { connect } from 'react-redux';
+import { search } from '../../actions/';
 
-export default class Reservation extends Component{
+class Reservation extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            city: '',
+            startDate: 0,
+            endDate: 0,
+            numGuests: 0
+        };
+    }
+
+    handleChange = event => {
+        let { name, value } = event.target;
+        this.setState({ [name]: value });
+    }
+
     render(){
         return(
             <div>
@@ -18,7 +35,7 @@ export default class Reservation extends Component{
                     <Col xs="6" sm="6" lg="2">
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Location:  </Label>
-                            <Input className="location" placeholder="Location"/> 
+                            <Input onChange={this.handleChange} name="city" value={this.state.city} className="location" placeholder="City Name"/> 
                             {/* replace placeholder = "Location" with the current city that was chosen*/}
                         </FormGroup>
                     </Col>
@@ -31,6 +48,11 @@ export default class Reservation extends Component{
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
                             </Input>
                         </FormGroup>
                     </Col>
@@ -47,7 +69,10 @@ export default class Reservation extends Component{
                         </FormGroup>
                     </Col>
                     <Col style={styles.updateButton} xs="12" sm="12" lg="2">
-                        <Button href="/reservation">Update Search</Button>
+                        <Button onClick={() => {
+                            if (this.state.city.length)
+                                this.props.search(this.state.city)
+                        }}>Update Search</Button>
                     </Col>
                 </Row>
             </Form>
@@ -64,7 +89,7 @@ const styles = {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingTop: '200px',
+      paddingTop: '300px'
     },
     updateButton: {
       fontFamily: 'Lato',
@@ -75,5 +100,6 @@ const styles = {
       alignItems: 'center',
       display: 'block'
     }
-    
-  }
+};
+
+export default connect(null, { search })(Reservation);

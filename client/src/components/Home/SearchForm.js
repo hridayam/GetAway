@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
-import {search} from '../../actions/search';
+import {search} from '../../actions/';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -58,7 +58,7 @@ class SearchForm extends Component {
                     <Row>
                         <Col sm="12">
                             <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                                <Input value={this.state.city} onChange={this.handleChange} name="city" className="search-place" bsSize="lg" placeholder="Where do you want to go?" />
+                                <Input style={{color: 'black'}}value={this.state.city} onChange={this.handleChange} name="city" className="search-place" bsSize="lg" placeholder="Where do you want to go?" />
                             </FormGroup>
                         </Col>
                     </Row>

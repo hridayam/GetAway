@@ -1,17 +1,19 @@
-import {SEARCH_HOTELS} from '../actions/types';
+import {PAYMENT} from '../actions/types';
 
 const INITIAL_STATE = {
-    hotels: null
+    reservationid: null,
+    price: 0
 };
 
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
-        case SEARCH_HOTELS:
+        case PAYMENT:
             return{
                 ...state,
-                hotels: action.payload
+                reservationid: action.payload,
+                price: action.payload
             }
-        default: 
+        default:
             return state;
     }
 }

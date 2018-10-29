@@ -28,7 +28,7 @@ export default class Reservation extends Component {
                 <StepZilla 
                 steps={steps}
                 showNavigation = {false}
-                hocValidationAppliedTo = {[0]}
+                hocValidationAppliedTo = {[]}
                 />
          </div>
     
