@@ -14,7 +14,7 @@ class Payment extends Component{
             complete: false,
             hotel: null,
             rooms: null,
-            price: 0
+            subtotal: 0
         };
 
         this.submit = this.submit.bind(this);
@@ -54,6 +54,20 @@ class Payment extends Component{
         if (response.ok) this.setState({complete: true});
     }
 
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
+    calculateSubtotal = () => {
+        let subtotal = 0;
+
+        Object.keys(this.state.rooms).map((v,i) => {
+            subtotal += this.state.rooms[v] * this.state.hotel.price[v];
+        });
+
+        return subtotal;
+    }
+
     render(){
         if (this.state.complete) return <h1>Purchase Complete</h1>;
 
@@ -63,18 +77,17 @@ class Payment extends Component{
                     <h2 >Checkout</h2>
                     <Card body outline color="info" style={styles.panel} >
                         <CardTitle>REVIEW ORDER</CardTitle>
-                        <Row >
-                            <Col xs="3">
-                                {this.state.hotel.images[0] ? <img src={this.state.hotel.images[0]} alt="" style={{width:500}}/> : <div><br/><br/>No Images Available</div>}
+                        <Row className="text-left">
+                            <Col s="3">
+                                {this.state.hotel.images[0] ? <img src={this.state.hotel.images[0]} alt="" style={{width:350}}/> : <div><br/><br/>No Images Available</div>}
                             </Col>
-                            <Col xs="auto">
-                                <h3>{this.state.hotel.name}</h3>
-                                <h4>{this.state.hotel.city}</h4>
+                            <Col s="9">
+                                <b>{this.state.hotel.name}</b>
+                                <br/>
+                                <small>{this.state.hotel.city}, {this.state.hotel.state}</small>
+                                <br/><br/>
+                                Price: ${this.calculateSubtotal()}
                             </Col>
-                            <Col xs="3">
-                                <b>Price: </b>{r.beds*this.state.hotel.price[r.bed_type]}
-                            </Col>
-
                         </Row>
                     </Card>
 
@@ -84,40 +97,40 @@ class Payment extends Component{
                             <Col >
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                                     <Label for="exampleDate"> First Name:  </Label>
-                                    <Input  placeholder="Enter your first name" />
+                                    <Input name="firstName" value={this.state.firstName} onChange={this.handleChange} placeholder="Enter your first name" />
                                 </FormGroup>
                             </Col>
 
                             <Col >
                                 <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                                     <Label for="exampleDate"> Last Name:  </Label>
-                                    <Input placeholder="Enter your last name" />
+                                    <Input name="lastName" onChange={this.handleChange} value={this.state.lastName} placeholder="Enter your last name" />
                                 </FormGroup>
                             </Col>
                         </Row>
 
                         <FormGroup>
                             <Label for="exampleAddress">Address</Label>
-                            <Input type="text" name="address" id="exampleAddress" placeholder="1234 Main St"/>
+                            <Input onChange={this.handleChange} value={this.state.address} type="text" name="address" id="exampleAddress" placeholder="1234 Main St"/>
                         </FormGroup>
 
                         <Row form>
                             <Col md={6}>
                                 <FormGroup>
                                 <Label for="exampleCity">City</Label>
-                                <Input type="text" name="city" id="exampleCity"/>
+                                <Input onChange={this.handleChange} value={this.state.city} type="text" name="city" id="exampleCity"/>
                                 </FormGroup>
                             </Col>
                             <Col md={4}>
                                 <FormGroup>
                                 <Label for="exampleState">State</Label>
-                                <Input type="text" name="state" id="exampleState"/>
+                                <Input onChange={this.handleChange} value={this.state.state} type="text" name="state" id="exampleState"/>
                                 </FormGroup>
                             </Col>
                             <Col md={2}>
                                 <FormGroup>
                                 <Label for="exampleZip">Zip</Label>
-                                <Input type="text" name="zip" id="exampleZip"/>
+                                <Input onChange={this.handleChange} value={this.state.zip} name="zip" type="text" name="zip" id="exampleZip"/>
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -128,7 +141,7 @@ class Payment extends Component{
                         <Row >
                             <Col sm="12" md={{ size: 8, offset: 2 }}>
 
-                                <Input type="text" id="cardholder" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
+                                <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
                                 borderRadius: '4px', padding: '10px 14px', fontSize: '16px'}}/>
                             </Col>
                         </Row>

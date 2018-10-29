@@ -5,9 +5,6 @@ export default class Footer extends Component{
   render(){
     return(
       <footer style={styles.footerStyle}>
-<<<<<<< HEAD
-        <p style={{ backgroundColor: 'black' }}>&reg; 2018 GetAway</p>
-=======
         <Container>
           <Row style={styles.rowStyle}> 
             <Col sm="12" md="4" style={{fontSize:'20px', textAlign: 'left'}}>
@@ -60,9 +57,6 @@ export default class Footer extends Component{
         <div style={{backgroundColor: '#8c7b75', color:'white', width: '100%',}}>
         <br></br><h6>&reg; 2018 GetAway</h6>  <br></br>
         </div>
-        
-        
->>>>>>> 63db1eccc60c51b2e31dc48e1c2913aec7852f5e
       </footer>
     );
   }
