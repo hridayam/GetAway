@@ -99,7 +99,6 @@ class registerForm extends Component {
               <Container>
                   <Form className = "login-body">
                   <Row>
-
                       <Col s={12}>
                           <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                           <Label for="exampleRegEmail">Email:</Label>
@@ -128,7 +127,6 @@ class registerForm extends Component {
 
                   <Row>
                       <Col >
-
                           <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                               <Label for="exampleFirstName"> First Name:  </Label>
                               <Input type="text" name="firstName" value={this.state.firstName}  onChange={this.handleChange.bind(this)} id='exampleFirstName' placeholder="Elizabeth" />
@@ -191,9 +189,6 @@ class registerForm extends Component {
                           <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                               <Label for="exampleState"> Phone Number:  </Label>
                               <Input type="text" name="phoneNumber" value={this.state.phoneNumber}  onChange={this.handleChange.bind(this)} id='examplePhoneNumber' placeholder="408-123-4553"/>
-
-
-
                           </FormGroup>
                       </Col>
                   </Row>

@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, Label, Container, Input, Row, Col } from 'reac
 import Scroll from '../ScrollUp';
 
 import { connect } from 'react-redux';
-import { search } from '../../actions';
+import { search } from '../../actions/';
 
 class Reservation extends Component{
     constructor(props) {
@@ -48,6 +48,11 @@ class Reservation extends Component{
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
                             </Input>
                         </FormGroup>
                     </Col>
@@ -84,7 +89,7 @@ const styles = {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingTop: '300px',
+      paddingTop: '300px'
     },
     updateButton: {
       fontFamily: 'Lato',
@@ -95,6 +100,6 @@ const styles = {
       alignItems: 'center',
       display: 'block'
     }
-}
+};
 
 export default connect(null, { search })(Reservation);

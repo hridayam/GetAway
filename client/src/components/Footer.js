@@ -57,8 +57,6 @@ export default class Footer extends Component{
         <div style={{backgroundColor: '#8c7b75', color:'white', width: '100%',}}>
         <br></br><h6>&reg; 2018 GetAway</h6>  <br></br>
         </div>
-        
-        
       </footer>
     );
   }
@@ -69,10 +67,10 @@ const styles = {
     color: 'black',
     flex: 1, 
     fontFamily: 'Lato',
+    paddingTop: 50
   }, 
   rowStyle:{
     marginTop: '40px',
     marginBottom: '40px'
   }
-
 }
