@@ -26,7 +26,8 @@ class Login extends Component {
       zipcode:'',
       phoneNumber:'',
       user: {},
-      isLoggedIn: false
+      isLoggedIn: false,
+      error: false
     };
 
   }
@@ -52,10 +53,15 @@ class Login extends Component {
        this.props.login({
          email: this.state.email,
          password: this.state.password
-       });
-       this.setState({
-         modal: !this.state.modal,
-         isLoggedIn: true
+       }, (err) => {
+        if(err) {
+          this.setState({ error: true})
+        } else {
+          this.setState({
+            modal: !this.state.modal,
+            isLoggedIn: true
+          });
+        }
        });
   }
 
@@ -123,6 +129,7 @@ class Login extends Component {
             <ModalHeader className="login-header" toggle={this.toggle.bind(this)}>Welcome Back! </ModalHeader>
 
             <ModalBody>
+              {this.state.error? <p>Either username or password is incorrect</p>: <p></p>}
               <Form className = "login-body"   >
                   <FormGroup>
                       <Label for="exampleEmail">Email:</Label>
