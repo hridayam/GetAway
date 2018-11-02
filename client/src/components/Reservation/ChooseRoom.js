@@ -51,13 +51,13 @@ class ChooseRoom extends Component{
         let { price } = hotel;
 
         return hotel.rooms.map((r,i) => 
-            <div className="card">
+            <div key={i}className="card">
                 <div className="row ">
                     <div className="col-md-4">
                         { r.images.length ? 
                             <Carousel autoPlay infiniteLoop>
                                 { r.images.map((v,i) => 
-                                    <img src={v} alt="" className="w-100"/>
+                                    <img key={i + '-' + v} src={v} alt="" className="w-100"/>
                                 )}
                             </Carousel> : <div><br/><br/>No Images Available</div>
                         }

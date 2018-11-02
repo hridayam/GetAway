@@ -11,19 +11,22 @@ class Payment extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            user: null,
             complete: false,
             hotel: null,
             rooms: null,
             city: '',
-            startDate: 0,
-            endDate: 0,
+            startDate: 0, endDate: 0,
             numGuests: 0,
-            card: null
+            card: null,
+            firstName: '', lastName: '',
+            address: '', userCity: '', state: '', zip: '',
+            cardholderName: '' 
         };
     }
 
     static getDerivedStateFromProps(props, state){
-        let { hotel, rooms, city, startDate, endDate, numGuests } = props; 
+        let { hotel, rooms, city, startDate, endDate, numGuests, user } = props; 
         if(props.hotel !== state.hotel){
             return{
                 ...state,
@@ -32,25 +35,54 @@ class Payment extends Component{
                 city,
                 startDate,
                 endDate,
-                numGuests
+                numGuests,
+                user
             };
         }
         return null;
     }
 
-    handleSubmit = async e => {
-        let {token} = await this.props.stripe.createToken({name: "hridayam"});
+    handleSubmit = async () => {
+        let { 
+            hotel, city, startDate, endDate, numGuests, 
+            firstName, lastName,
+            address, userCity, state, zip,
+            cardholderName 
+        } = this.state;
+
+        let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
 
         let data = {
-            amount: this.calculateTotal(),
+            amount: parseInt(this.calculateTotal()),
             currency: 'usd',
             source: token.id,
-            user_id: this.state.user._id
-        }
+            description: this.state.user.id
+        };
 
-        let response = await axios.post('http://localhost:3001/payments/pay', data);
-
-        if (response.ok) this.setState({complete: true});
+        // Nhat switched back to old promise handling for testing
+        axios.post('http://localhost:3001/payments/pay', {data})
+            .then(res => {
+                axios.post('http://localhost:3001/reservations/create', {
+                    hotel, city, startDate, endDate, numGuests, 
+                    firstName, lastName,
+                    address, userCity, state, zip,
+                    cardholderName,
+                    charge: res.data.charge,
+                    user_id: this.state.user.id
+                })
+                    .then(() => {
+                        this.props.jumpToStep(3);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            
+        
+        this.setState({complete: true});
     }
 
     handleChange = event => {
@@ -68,11 +100,10 @@ class Payment extends Component{
     }
 
     calculateTax = () => Number(this.calculateSubtotal() * 0.0925).toFixed(2);
-    calculateTotal = () => (Number(this.calculateSubtotal()) + Number(this.calculateTax())).toFixed(2);
+    calculateTotal = () => Number(parseInt(this.calculateSubtotal()) + parseInt(this.calculateTax())).toFixed(2);
     calculateRewardsPoints = () => Math.floor(Number(this.calculateTotal() * 10))
 
     render(){
-        console.log(this.state);
         if (this.state.complete) return <h1>Purchase Complete</h1>;
 
         return(
@@ -128,7 +159,7 @@ class Payment extends Component{
                             <Col md={6}>
                                 <FormGroup>
                                 <Label for="exampleCity">City</Label>
-                                <Input onChange={this.handleChange} value={this.state.city} type="text" name="city" id="exampleCity"/>
+                                <Input onChange={this.handleChange} value={this.state.userCity} type="text" name="userCity" id="exampleCity"/>
                                 </FormGroup>
                             </Col>
                             <Col md={4}>
@@ -204,6 +235,7 @@ body:{
 
 const mapStatetoProps = state => {
   return {
+      user: state.auth.user,
       hotel: state.reservation.selectedHotel,
       rooms: state.reservation.selectedRooms,
       city: state.reservation.city,

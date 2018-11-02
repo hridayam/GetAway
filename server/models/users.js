@@ -44,9 +44,9 @@ const userSchema = new Schema({
         type: String,
         default: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"
     },
-    pastReservations: [{
-        type: String
-    }]
+    reservations: { 
+        type: Array
+    }
 });
 
 const User = module.exports = mongoose.model('User', userSchema);

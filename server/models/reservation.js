@@ -13,6 +13,7 @@ const ReservationSchema = new mongoose.Schema({
     tax: Number, 
     total: Number, 
     rewards_points_earned: Number,
+    billing_info: Object,
     charge: Object
 });
 
