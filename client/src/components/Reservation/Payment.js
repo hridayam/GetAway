@@ -14,42 +14,41 @@ class Payment extends Component{
             complete: false,
             hotel: null,
             rooms: null,
-            subtotal: 0
+            city: '',
+            startDate: 0,
+            endDate: 0,
+            numGuests: 0,
+            card: null
         };
-
-        this.submit = this.submit.bind(this);
     }
 
     static getDerivedStateFromProps(props, state){
+        let { hotel, rooms, city, startDate, endDate, numGuests } = props; 
         if(props.hotel !== state.hotel){
-            console.log(props);
             return{
                 ...state,
-                hotel: props.hotel,
-                rooms: props.rooms
-            }
+                hotel,
+                rooms,
+                city,
+                startDate,
+                endDate,
+                numGuests
+            };
         }
         return null;
     }
 
-    async submit(ev) {
+    handleSubmit = async e => {
         let {token} = await this.props.stripe.createToken({name: "hridayam"});
 
         let data = {
-            amount: 1000,
+            amount: this.calculateTotal(),
             currency: 'usd',
-            source: `${token.id}`,
-            user_id: 'fdkasjhlf'
+            source: token.id,
+            user_id: this.state.user._id
         }
 
         let response = await axios.post('http://localhost:3001/payments/pay', data);
-
-
-        // let response = await fetch("/charge", {
-        //   method: "POST",
-        //   headers: {"Content-Type": "text/plain"},
-        //   body: token.id
-        // });
 
         if (response.ok) this.setState({complete: true});
     }
@@ -65,10 +64,15 @@ class Payment extends Component{
             subtotal += this.state.rooms[v] * this.state.hotel.price[v];
         });
 
-        return subtotal;
+        return Number(subtotal);
     }
 
+    calculateTax = () => Number(this.calculateSubtotal() * 0.0925).toFixed(2);
+    calculateTotal = () => (Number(this.calculateSubtotal()) + Number(this.calculateTax())).toFixed(2);
+    calculateRewardsPoints = () => Math.floor(Number(this.calculateTotal() * 10))
+
     render(){
+        console.log(this.state);
         if (this.state.complete) return <h1>Purchase Complete</h1>;
 
         return(
@@ -77,16 +81,22 @@ class Payment extends Component{
                     <h2 >Checkout</h2>
                     <Card body outline color="info" style={styles.panel} >
                         <CardTitle>REVIEW ORDER</CardTitle>
-                        <Row className="text-left">
+                        <Row className="text-right">
                             <Col s="3">
                                 {this.state.hotel.images[0] ? <img src={this.state.hotel.images[0]} alt="" style={{width:350}}/> : <div><br/><br/>No Images Available</div>}
                             </Col>
                             <Col s="9">
-                                <b>{this.state.hotel.name}</b>
+                                <b style={{fontSize:20}}>{this.state.hotel.name}</b>
                                 <br/>
                                 <small>{this.state.hotel.city}, {this.state.hotel.state}</small>
                                 <br/><br/>
-                                Price: ${this.calculateSubtotal()}
+                                Subtotal: ${this.calculateSubtotal()}
+                                <br/>
+                                Tax: ${this.calculateTax()}
+                                <br/><br/>
+                                Total: ${this.calculateTotal()}
+                                <br/>
+                                Rewards Points Earned: {this.calculateRewardsPoints()}
                             </Col>
                         </Row>
                     </Card>
@@ -152,7 +162,7 @@ class Payment extends Component{
                                 <CardElement style={styles.cardpanel}/>
 
                                 <p style={styles.cardinfo}>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
-                                <Button color="info" onClick={this.submit = () => this.props.jumpToStep(3)}>Place Order</Button>
+                                <Button color="info" onClick={this.handleSubmit}>Place Order</Button>
                             </Col>
                         </Row>
                     </Card>
@@ -185,19 +195,21 @@ body:{
         base:{
         fontSize: '16px',
         fontFamily: 'Montserrat',
-        iconColor: 'blue',
-        color: 'red'
-
+        iconColor: 'black',
+        color: 'black'
       }
     }
-
   }
 
 
 const mapStatetoProps = state => {
   return {
       hotel: state.reservation.selectedHotel,
-      rooms: state.reservation.selectedRooms
+      rooms: state.reservation.selectedRooms,
+      city: state.reservation.city,
+      startDate: state.reservation.startDate,
+      endDate: state.reservation.endDate,
+      numGuests: state.reservation.numGuests
   };
 }
 

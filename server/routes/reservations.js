@@ -117,17 +117,16 @@ router.post('/cancel', async (req,res) => {
 router.post('/create', async (req,res) => {
     let { 
         user_id,
-        hotel_name, address, city,
-        price
+        hotel, city, startDate, endDate, numGuests,
+        subtotal, tax, total, rewardsPointsEarned
     } = req.body;
 
     try {
         let reservation = new Reservation({
             user_id,
-            hotel_name,
-            city,
-            address,
-            price
+            hotel, city, numGuests,
+            startDate, endDate,
+            subtotal, tax, total, rewards_points_earned: rewardsPointsEarned
         })
 
         reservation.save((err, reservation, numAffected) => {
