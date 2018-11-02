@@ -42,7 +42,7 @@ class SelectHotel extends Component{
                             { hotel.images && hotel.images.length ?
                             <Carousel autoPlay infiniteLoop>
                                 {hotel.images.map((v,i) =>
-                                    <div>
+                                    <div key={i}>
                                         <img src={v} alt="" className="w-100"/>
                                     </div>
                                 )}

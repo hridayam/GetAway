@@ -29,7 +29,7 @@ class Reservation extends Component{
 
         let sdSplit = startDate.split('-');
         let edSplit = endDate.split('-');
-        
+
         let sdDate = new Date(
                         sdSplit[0], 
                         sdSplit[1], 
@@ -40,15 +40,15 @@ class Reservation extends Component{
                         edSplit[1],
                         edSplit[2],
                         0, 0, 0, 0);
+
         this.props.search(
             city, 
-            sdDate.getMilliseconds(), 
-            edDate.getMilliseconds(), 
+            sdDate.getTime(), 
+            edDate.getTime(), 
             numGuests);
     }
 
     render(){
-        console.log(this.state);
         return(
             <div>
             <Scroll/>
