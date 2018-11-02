@@ -56,7 +56,7 @@ class Profile extends Component{
   render(){
     return(
     <div className="background-image2">
-    <div class="row" style= {styles.profileStyle}>
+    <div className="row" style= {styles.profileStyle}>
    </div>
    <Scroll/>
 
@@ -69,8 +69,8 @@ class Profile extends Component{
 <Row>
 <Col sm={{ size: 3,offset:2}}>
 <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
-<label for="files" class="btn">Change Picture</label>
-<input style={styles.uploadStyle} type="file" class="text-center center-block file-upload"/>
+<label for="files" className="btn">Change Picture</label>
+<input style={styles.uploadStyle} type="file" className="text-center center-block file-upload"/>
 
 <Table size="sm" style={styles.tableborder}>
      <thead>

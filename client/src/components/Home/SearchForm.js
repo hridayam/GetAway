@@ -10,9 +10,9 @@ class SearchForm extends Component {
         this.state = {
             changingText: 'life.',
             city: '',
-            startDate: "",
-            endDate: "",
-            numGuests: 0,
+            startDate: '',
+            endDate: '',
+            numGuests: 1,
             submitted: false
         };
 
@@ -26,9 +26,27 @@ class SearchForm extends Component {
    } 
     
    onSubmit = event => {
-        let { city, startDate, endDate, numGuests } = this.state;
         event.preventDefault();
-        this.props.search(city, new Date(startDate).getMilliseconds(), new Date(endDate).getMilliseconds(), numGuests);
+        let { city, startDate, endDate, numGuests } = this.state;
+
+        let sdSplit = startDate.split('-');
+        let edSplit = endDate.split('-');
+        
+        let sdDate = new Date(
+                        sdSplit[0], 
+                        sdSplit[1], 
+                        sdSplit[2],
+                        0, 0, 0, 0);
+        let edDate = new Date(
+                        edSplit[0],
+                        edSplit[1],
+                        edSplit[2],
+                        0, 0, 0, 0);
+        this.props.search(
+            city, 
+            sdDate.getTime(), 
+            edDate.getTime(), 
+            numGuests);
         this.setState({ submitted: true });
    }
 

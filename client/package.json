@@ -27,6 +27,7 @@
   },
   "proxy": "http://localhost:3001/",
   "devDependencies": {
+    "@types/reactstrap": "^6.4.2",
     "ajv": "^6.5.3"
   }
 }

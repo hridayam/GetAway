@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Reservation = require('../models/reservation');
+const User = require('../models/users');
 
 // gets all the reservations made by user
 // front end makes request with user id
@@ -117,34 +118,42 @@ router.post('/cancel', async (req,res) => {
 router.post('/create', async (req,res) => {
     let { 
         user_id,
-        hotel_name, address, city,
-        price
+        hotel, city, startDate, endDate, numGuests,
+        subtotal, tax, total, rewardsPointsEarned,
+        firstName, lastName, adddress, userCity, state, zip, cardholderName,
+        charge
     } = req.body;
-
     try {
-        let reservation = new Reservation({
+        let reservation = {
             user_id,
-            hotel_name,
-            city,
-            address,
-            price
-        })
+            hotel, city, num_guests: numGuests,
+            start_date: startDate, end_Date: endDate,
+            subtotal, tax, total, rewards_points_earned: rewardsPointsEarned,
+            billing_info: {
+                firstName, lastName, adddress, userCity, state, zip, cardholderName
+            },
+            charge
+        };
 
-        reservation.save((err, reservation, numAffected) => {
-            if (err)
-                res.status(400).json({
-                    success: false,
-                    msg: err
-                });
-            else if (reservation)
-                res.status(200).json({
-                    success: true,
-                    reservation,
-                    msg: 'Successfully created the reservation.'
-                });
-        });
+        let reservationMDBO = new Reservation(reservation);
+
+        if (reservation && user_id !== undefined && user_id !== null) {
+            await User.findOneAndUpdate(
+                { _id: user_id }, 
+                { $push: { reservations: reservation }}, 
+                { upsert: true }
+                ).exec();
+            res.status(200).json({
+                success: true,
+                reservation,
+                msg: 'Successfully created the reservation.'
+            });
+        }
     }
     catch(err) {
+        Object.keys(err).map(v => {
+            console.log(err[v]);
+        })
         res.status(400).json({
             success: false,
             msg: err
