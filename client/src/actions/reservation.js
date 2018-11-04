@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, SELECT_ROOMS } from './types';
+import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, SELECT_ROOMS, ALL_RESERVATIONS } from './types';
 
 export const search = (city, startDate, endDate, numGuests) => {
     return dispatch => {
@@ -49,4 +49,13 @@ export const selectHotel = hotel => {
         type: SELECT_HOTEL,
         payload: hotel
     };
+}
+
+export const allReservations = () =>{
+    return dispatch => {
+        axios.get('http://localhost:3001/reservations/all')
+        .then(req => {
+            dispatch({type: ALL_RESERVATIONS, payload: req.reservations})
+        })
+    }
 }

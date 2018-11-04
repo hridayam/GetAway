@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import '../picture/slide/2.jpg';
 import '../css/Home.css';
 import Scroll from '../ScrollUp';
+import {allReservations} from '../../actions/'
 
 class Profile extends Component{
 
@@ -21,7 +22,8 @@ class Profile extends Component{
         activeTab: '1',
         rewardPoint:29,
         modal1: false,
-        modal2: false
+        modal2: false,
+        reservations: []
       };
     }
     toggle1() {
@@ -42,11 +44,27 @@ class Profile extends Component{
       }
     }
 
+    allReservationRender(){
+      if(this.state.reservations !== null){
+        return this.state.reservations.map((reservation, index) =>
+        <tr key={reservation._id}>
+              <th scope="row">{index}</th>
+              <td>{reservation.start_date}</td>
+              <td>Los Angeles</td>
+              <td>Single</td>
+              <td>1</td>
+              <td>Active</td>
+        </tr>
+        )
+      }
+    } 
+
 
       static getDerivedStateFromProps(props, state) {
         if (state.user !== props.user){
           return {
-            user: props.user
+            user: props.user,
+            reservations: props.reservations
           };
         }
         return null;
@@ -103,27 +121,20 @@ class Profile extends Component{
            <NavLink
              onClick={() => { this.toggle('1'); }}
            >
-             Current Reservations
-           </NavLink>
-         </NavItem>
-         <NavItem style= {styles.tabStyle}>
-           <NavLink
-             onClick={() => { this.toggle('2'); }}
-           >
-             Past Reservations
+             My Reservations
            </NavLink>
          </NavItem>
 
          <NavItem style= {styles.tabStyle}>
            <NavLink
-             onClick={() => { this.toggle('3'); }}
+             onClick={() => { this.toggle('2'); }}
            >
              Edit Profile
            </NavLink>
          </NavItem>
          <NavItem style= {styles.tabStyle}>
            <NavLink
-             onClick={() => { this.toggle('4'); }}
+             onClick={() => { this.toggle('3'); }}
            >
              Rewards
            </NavLink>
@@ -145,53 +156,15 @@ class Profile extends Component{
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>12/25/2018</td>
-            <td>Los Angeles</td>
-            <td>Single</td>
-            <td>1</td>
-            <td>Active</td>
-          </tr>
-
-        </tbody>
+        <tbody>{this.allReservationRender()}</tbody>
+        
       </Table>
 
              </Col>
            </Row>
          </TabPane>
+
          <TabPane tabId="2">
-           <Row>
-              <Col sm={{ size: 50}}>
-                <Table style={styles.tableStyle}>
-         <thead>
-           <tr>
-             <th>ID</th>
-             <th>Date of Arrival</th>
-             <th>Destination</th>
-             <th>Room Type</th>
-             <th># of Guests</th>
-             <th>Status</th>
-           </tr>
-         </thead>
-         <tbody>
-           <tr>
-             <th scope="row">1</th>
-             <td>09/13/2018</td>
-             <td>Las Vegas</td>
-             <td>Double</td>
-             <td>2</td>
-             <td>Expired</td>
-           </tr>
-
-         </tbody>
-       </Table>
-           </Col>
-           </Row>
-         </TabPane>
-
-         <TabPane tabId="3">
            <Row>
               <Col sm={{ size: 50, offset: 1}}>
 
@@ -242,7 +215,7 @@ class Profile extends Component{
            </Col>
            </Row>
          </TabPane>
-         <TabPane tabId="4">
+         <TabPane tabId="3">
          <h4 style={styles.headerStyle}>Your Rewards Point: {this.state.rewardPoint}</h4>
          <Table style={styles.tableStyle}>
   <thead>
@@ -342,8 +315,9 @@ const styles = {
 
 const mapStateToProps = state =>{
   return{
-    user: state.auth.user
+    user: state.auth.user,
+    reservations: state.reservations
   };
 }
 
-export default connect (mapStateToProps)(Profile);
+export default connect (mapStateToProps, {allReservations})(Profile);
