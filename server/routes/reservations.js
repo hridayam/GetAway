@@ -12,15 +12,16 @@ router.get('/all', async (req,res) => {
         let { user_id } = req.body;
 
         Reservation.find({ user_id }, (err, data) => {
-            if (err.name === "CastError") 
+            if (err) 
                 res.status(400).json({
                     success: false,
-                    msg: `${err.value} is an invalid user ID. Try again.`
+                    msg: err
                 });
             else if (data)
                 res.status(200).json({
                     success: true,
-                    msg: 'Successfuly found reservations from the user'
+                    msg: 'Successfuly found reservations from the user',
+                    data: data
                 });
         });
     }

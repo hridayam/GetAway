@@ -6,3 +6,8 @@ export const PAYMENT = 'payment';
 export const SELECT_HOTEL = 'select_hotel';
 export const SELECT_ROOMS = 'select_rooms';
 export const ALL_RESERVATIONS = 'all_reservations';
+
+
+
+
+export const URL = 'http://localhost:3001/';
