@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,
+   Form, FormGroup, Label, Input, Row, Col,
+  Popover, PopoverBody, PopoverHeader, Table} from 'reactstrap';
 import { NavLink } from 'reactstrap';
 import {Redirect} from 'react-router-dom';
 
@@ -26,7 +28,9 @@ class Login extends Component {
       zipcode:'',
       phoneNumber:'',
       user: {},
-      isLoggedIn: false
+      isLoggedIn: false,
+      popoverOpen: false
+
     };
 
   }
@@ -43,7 +47,7 @@ class Login extends Component {
 
   toggle() {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   }
 
@@ -103,15 +107,49 @@ class Login extends Component {
   toggleAll() {
     this.setState({
       nestedModal: !this.state.nestedModal,
-      closeAll: true
+      closeAll: true,
     });
   }
-
+  togglePop() {
+    this.setState({
+      popoverOpen: !this.state.popoverOpen,
+    });
+  }
 
   render() {
     if (this.state.user)
       return(
-        <div>  <NavLink style={{ cursor: 'pointer' }} onClick={this.userLogout.bind(this)}>Log Out</NavLink></div>
+        <div>  
+          <NavLink id="Popover1" style={{ cursor: 'pointer' }} onClick={this.togglePop.bind(this)}>Profile</NavLink>
+          <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" togglePop={this.togglePop} style={styles.popover}>
+          <PopoverHeader>Hello! {this.props.user.name}</PopoverHeader>
+          <PopoverBody>
+          <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
+          <Table size="sm" style={styles.tableborder}>
+            <thead>
+              <tr>
+                <th  style= {styles.headerStyle}>Contact Information</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr>
+                <td style={styles.tableStyle}>Email: {this.props.user.email}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableStyle} >Phone Number: {this.props.user.phoneNumber}</td>
+              </tr>
+              <tr>
+                <td style={styles.tableStyle}>Address: {this.props.user.address}</td>
+              </tr>
+            </tbody>
+          </Table>
+          </PopoverBody>
+            <Button style ={{marginRight: '10px'}} >Edit</Button>
+            <Button style ={{marginLeft: '10px'}} onClick={this.userLogout.bind(this)}>Logout</Button>
+          </Popover>
+          
+        </div>
       );
 
     else
@@ -157,5 +195,23 @@ const mapStateToProps = state => {
     }
 }
 
+const styles ={
+  imageStyles:{
+    borderRadius: '50%',
+    border: "2px solid #A9A9A9",
+    marginBottom: '10px',
+},
+  popover:{
+    textAlign: 'center',
+    marginBottom:'10px'
+  },
+  headerStyle:{
+    marginTop:10,
+    backgroundColor: '#2e908a',
+    color: 'white',
+    fontWeight: 'normal',
+    border: '2px solid black'
+},
+}
 export  default connect(mapStateToProps, { login, logout, register })(Login)
 

@@ -83,17 +83,17 @@ class Profile extends Component{
             <div class="row" style= {styles.profileStyle}>
             </div>
             <Scroll/>
-
-            <Container className='text-block2'>
-                <Row>
-                    <Col sm={{ size: 3, offset:2}} >
+            <Container >
+                {/* <Row>
+                    <Col xs="6" sm="4">
                         <h1 style={styles.nameStyle}>Hello! {this.props.user.name}</h1>
                     </Col>
                 </Row>
                 <Row>
-                    <Col sm={{ size: 3,offset:2}}>
+                    <Col xs="4" >
                         <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
-                        <label for="files" class="btn">Change Picture</label>
+                        <br/>
+                        <Button for="files" color="secondary" >Change Picture</Button>
                         <input style={styles.uploadStyle} type="file" class="text-center center-block file-upload"/>
 
                         <Table size="sm" style={styles.tableborder}>
@@ -114,40 +114,34 @@ class Profile extends Component{
                             </tr>
                             </tbody>
                         </Table>
-                    </Col>
-
-                    <Col sm={{ size: 30}}>
-
+                    </Col> */}
+                <Row style = {styles.textBlock}>
+                    <Col sm="12" md={{ size: 6, offset: 3 }}>
                         <Nav tabs style={{borderBottomColor: "transparent"}} >
                             <NavItem style= {styles.tabStyle}>
-                                <NavLink
-                                    onClick={() => { this.toggle('1'); }}
-                                >
+                                <NavLink onClick={() => { this.toggle('1'); }}>
                                     My Reservations
                                 </NavLink>
                             </NavItem>
 
                             <NavItem style= {styles.tabStyle}>
-                                <NavLink
-                                    onClick={() => { this.toggle('2'); }}
-                                >
+                                <NavLink onClick={() => { this.toggle('2'); }}>
                                     Edit Profile
                                 </NavLink>
                             </NavItem>
+
                             <NavItem style= {styles.tabStyle}>
-                                <NavLink
-                                    onClick={() => { this.toggle('3'); }}
-                                >
+                                <NavLink onClick={() => { this.toggle('3'); }}>
                                     Rewards
                                 </NavLink>
                             </NavItem>
-
                         </Nav>
-                        <TabContent activeTab={this.state.activeTab} style={{marginLeft: "23px"}}>
+                        
+                        <TabContent activeTab={this.state.activeTab}>
                             <TabPane tabId="1">
                             <Row>
-                                <Col sm={{ size: 40}}>
-                                    <Table style={styles.tableStyle}>
+                                <Col>
+                                    <Table  responsive style={styles.tableStyle}>
                                         <thead>
                                         <tr>
                                             <th>ID</th>
@@ -162,92 +156,82 @@ class Profile extends Component{
                                     </Table>
                                 </Col>
                             </Row>
-                        </TabPane>
+                            </TabPane>
 
-            <TabPane tabId="2">
-                <Row>
-                <Col sm={{ size: 50, offset: 1}}>
+                            <TabPane tabId="2">
+                            <Row>
+                                <Col >
+                                    <Form>
+                                        <Row>
+                                            <FormGroup>
+                                                <Label>First Name</Label>
+                                                <Input type="text" placeholder='Ex: John' />
+                                            </FormGroup>
+                                            <Col>
+                                            <FormGroup>
+                                                <Label>Last Name</Label>
+                                                <Input type="text" placeholder='Ex: Smith' />
+                                            </FormGroup>
+                                            </Col>
+                                        </Row>
 
+                                        <Row>
+                                            <FormGroup>
+                                                <Label>Mobile</Label>
+                                                <Input type="text" placeholder='Enter mobile number' />
+                                            </FormGroup>
+                                            <Col>
+                                            <FormGroup>
+                                                <Label for="exampleEmail">Email</Label>
+                                                <Input type="email" name="email" id="exampleEmail" placeholder='Enter Email' />
+                                            </FormGroup>
+                                            </Col>
+                                        </Row>
 
-                <Form>
-                <Row>
-                <FormGroup>
-                    <Label>First Name</Label>
-                    <Input type="text" placeholder='Ex: John' />
-                </FormGroup>
-                <Col>
-                <FormGroup>
-                    <Label>Last Name</Label>
-                    <Input type="text" placeholder='Ex: Smith' />
-                </FormGroup>
-                </Col>
+                                        <Row>
+                                            <FormGroup>
+                                                <Label for="examplePassword">Password</Label>
+                                                <Input type="password" name="password" id="examplePassword" placeholder="Enter Password" />
+                                            </FormGroup>
+                                            <Col>
+                                            <FormGroup>
+                                                <Label >Verify</Label>
+                                                <Input type="password" placeholder="Enter Password Again" />
+                                            </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Button>Submit</Button>
+                                    </Form>
+                                </Col>
+                            </Row>
+                            </TabPane>
+            
+                            <TabPane tabId="3">
+                            <h4 style={styles.headerStyle}>Your Rewards Point: {this.state.rewardPoint}</h4>
+                            <Table style={styles.tableStyle}>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Price</th>
+                                    <th>Points Earned</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <th scope="row">83923242</th>
+                                        <td>09/25/2018</td>
+                                        <td>$495.00</td>
+                                        <td>495 points</td>
+                                </tr>
+                            </tbody>
+                            </Table>
+                            </TabPane>
+                        </TabContent>
+                    </Col>
                 </Row>
-
-
-                <Row>
-                <FormGroup>
-                    <Label>Mobile</Label>
-                    <Input type="text" placeholder='Enter mobile number' />
-                </FormGroup>
-                <Col>
-                        <FormGroup>
-                            <Label for="exampleEmail">Email</Label>
-                            <Input type="email" name="email" id="exampleEmail" placeholder='Enter Email' />
-                        </FormGroup>
-                    </Col>
-                    </Row>
-                    <Row>
-                        <FormGroup>
-                            <Label for="examplePassword">Password</Label>
-                            <Input type="password" name="password" id="examplePassword" placeholder="Enter Password" />
-                        </FormGroup>
-                    <Col>
-                        <FormGroup>
-                            <Label >Verify</Label>
-                            <Input type="password" placeholder="Enter Password Again" />
-                        </FormGroup>
-                    </Col>
-                    </Row>
-                        <Button>Submit</Button>
-                        </Form>
-
-
-            </Col>
-            </Row>
-            </TabPane>
-            <TabPane tabId="3">
-            <h4 style={styles.headerStyle}>Your Rewards Point: {this.state.rewardPoint}</h4>
-            <Table style={styles.tableStyle}>
-    <thead>
-        <tr>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Price</th>
-        <th>Points Earned</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <th scope="row">83923242</th>
-        <td>09/25/2018</td>
-        <td>$495.00</td>
-        <td>495 points</td>
-
-        </tr>
-
-    </tbody>
-    </Table>
-
-            </TabPane>
-        </TabContent>
-        </Col>
-
-
-    </Row>
-    <br/>
-
-
-    </Container>
+            </Container>
     <Modal isOpen={this.state.modal1} toggle={this.toggle1} className={this.props.className}>
             <ModalBody style={styles.redeemSuccess}>
             Redeem Success
@@ -282,34 +266,47 @@ const styles = {
     },
     headerStyle:{
         marginTop:10,
-        backgroundColor: '#4682b4',
+        backgroundColor: '#2e908a',
         color: 'white',
         fontWeight: 'normal',
         border: '2px solid black'
     },
-    tableStyle:{
-        backgroundColor: '#f5f5f5',
-        marginTop: '10px'
-    },
+    // tableStyle:{
+    //     backgroundColor: '#f5f5f5',
+    //     marginTop: '10px',
+    //     textAlign: 'center',
+    // },
     tabStyle:{
-        backgroundColor: '#4682b4',
+        backgroundColor: '#2e908a',
         color: 'white',
         borderRadius: '10px',
-        marginLeft: '10px'
+        marginLeft: '10px',
+        marginTop :'20px',
+        marginBottom: '10px',
     },
-    nameStyle:{
-        color:'white',
-        fontFamily:'Georgia',
-        fontSize: '30px',
-        fontWeight:'thick'
-    },
+    // nameStyle:{
+    //     color:'black',
+    //     fontFamily:'Georgia',
+    //     fontSize: '30px',
+    //     fontWeight:'thick',
+    //     marginTop: '10px'
+    // },
     uploadStyle:{
         visibility: 'hidden'
     },
     tableborder: {
         border: "2px solid black",
         borderRadius: "10px"
-    }
+    },
+    textBlock: {
+        position: 'relative',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        textAlign: 'center', 
+        marginTop: '20px', 
+        color: 'white'
+    },
+
+
 }
 
 
