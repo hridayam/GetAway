@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, SELECT_ROOMS } from './types';
+import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, 
+    SELECT_ROOMS, ALL_RESERVATIONS, URL
+} from './types';
 
 export const search = (city, startDate, endDate, numGuests) => {
     console.log(city, startDate, endDate, numGuests);
@@ -50,4 +52,14 @@ export const selectHotel = hotel => {
         type: SELECT_HOTEL,
         payload: hotel
     };
+}
+
+export const getAllReservations = () => {
+    return dispatch => {
+        axios.get(`${URL}reservations/all`)
+        .then(req => {
+            console.log(req)
+            //dispatch({type: ALL_RESERVATIONS, payload: req.reservations})
+        })
+    }
 }

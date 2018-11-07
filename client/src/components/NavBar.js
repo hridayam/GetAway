@@ -93,7 +93,7 @@ import { withRouter } from 'react-router-dom';
                <NavLink href="/aboutus/">About Us</NavLink>
              </NavItem>
              <NavItem>
-             <NavLink href="/profile/">Profile</NavLink>
+             <NavLink href="/profile/">My Reservation</NavLink>
              </NavItem>
 
              <NavItem>
