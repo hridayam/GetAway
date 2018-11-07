@@ -159,19 +159,19 @@ class Payment extends Component{
                             <Col md={6}>
                                 <FormGroup>
                                 <Label for="exampleCity">City</Label>
-                                <Input onChange={this.handleChange} value={this.state.userCity} type="text" name="userCity" id="exampleCity"/>
+                                <Input onChange={this.handleChange} value={this.state.userCity} type="text" name="userCity" placeholder="Cityville" id="exampleCity"/>
                                 </FormGroup>
                             </Col>
                             <Col md={4}>
                                 <FormGroup>
                                 <Label for="exampleState">State</Label>
-                                <Input onChange={this.handleChange} value={this.state.state} type="text" name="state" id="exampleState"/>
+                                <Input onChange={this.handleChange} value={this.state.state} type="text" name="state" placeholder="California" id="exampleState"/>
                                 </FormGroup>
                             </Col>
                             <Col md={2}>
                                 <FormGroup>
                                 <Label for="exampleZip">Zip</Label>
-                                <Input onChange={this.handleChange} value={this.state.zip} name="zip" type="text" name="zip" id="exampleZip"/>
+                                <Input onChange={this.handleChange} value={this.state.zip} name="zip" type="text" name="zip" placeholder="28374" id="exampleZip"/>
                                 </FormGroup>
                             </Col>
                         </Row>
