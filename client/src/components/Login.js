@@ -31,7 +31,7 @@ class Login extends Component {
     };
 
   }
-  
+
   static getDerivedStateFromProps(props, state) {
     if (props.user !== state.user){
       return {
@@ -129,7 +129,7 @@ class Login extends Component {
             <ModalHeader className="login-header" toggle={this.toggle.bind(this)}>Welcome Back! </ModalHeader>
 
             <ModalBody>
-              {this.state.error? <p>Either username or password is incorrect</p>: <p></p>}
+              {this.state.error? <p style={{color: 'red'}}>Either username or password is incorrect</p>: <p></p>}
               <Form className = "login-body"   >
                   <FormGroup>
                       <Label for="exampleEmail">Email:</Label>
@@ -165,4 +165,3 @@ const mapStateToProps = state => {
 }
 
 export  default connect(mapStateToProps, { login, logout, register })(Login)
-
