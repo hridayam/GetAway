@@ -51,29 +51,29 @@ class ChooseRoom extends Component{
         let { price } = hotel;
 
         return hotel.rooms.map((r,i) => 
-            <div class="card">
-                <div class="row ">
-                    <div class="col-md-4">
+            <div key={i}className="card">
+                <div className="row ">
+                    <div className="col-md-4">
                         { r.images.length ? 
                             <Carousel autoPlay infiniteLoop>
                                 { r.images.map((v,i) => 
-                                    <img src={v} alt="" class="w-100"/>
+                                    <img key={i + '-' + v} src={v} alt="" className="w-100"/>
                                 )}
                             </Carousel> : <div><br/><br/>No Images Available</div>
                         }
                     </div>
-                    <div class="col-md-5 px-3">
-                        <div class="card-block px-3">
-                            <h3 class="card-title">{r.bed_type.replace(/^\w/, c => c.toUpperCase())} Bed Room</h3>
-                            <div class="card-text">
+                    <div className="col-md-5 px-3">
+                        <div className="card-block px-3">
+                            <h3 className="card-title">{r.bed_type.replace(/^\w/, c => c.toUpperCase())} Bed Room</h3>
+                            <div className="card-text">
                                 Wifi, HD Television, Coffee Maker, and Refrigerator come standard.
                                 <br/><br/>
                                 This room includes {r.beds} {r.bed_type} bed(s).
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 price">
-                        <h3 class="reservation-price">${r.beds*price[r.bed_type]} per night</h3>
+                    <div className="col-md-3 price">
+                        <h3 className="reservation-price">${r.beds*price[r.bed_type]} per night</h3>
                         <FormGroup>
                             <Label for="exampleSelect">How many rooms do you need?</Label>
                             <Input 

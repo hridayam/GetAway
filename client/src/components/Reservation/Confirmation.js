@@ -6,14 +6,14 @@ export default class Suggestion extends Component {
     return (
         <div>
             <div className="jumbotron text-xs-center" style ={{display:'inline-block', marginTop: '20px'}}>
-                <h1 class="display-3">Thank You!</h1>
-                <p class="lead"><strong>Please check your email</strong> for further instructions on how to complete your account setup.</p>
+                <h1 className="display-3">Thank You!</h1>
+                <p className="lead"><strong>Please check your email</strong> for further instructions on how to complete your account setup.</p>
                 <br/>
                 <p>
                     Having trouble? <a href="/aboutus">Contact us</a>
                 </p>
-                <p class="lead">
-                    <a class="btn btn-info btn-sm" href="/" role="button">Continue to homepage</a>
+                <p className="lead">
+                    <a className="btn btn-info btn-sm" href="/" role="button">Continue to homepage</a>
                 </p>
             </div>
 

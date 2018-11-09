@@ -48,7 +48,7 @@ class SelectHotel extends Component{
                             { hotel.images && hotel.images.length ?
                             <Carousel autoPlay infiniteLoop>
                                 {hotel.images.map((v,i) =>
-                                    <div>
+                                    <div key={i}>
                                         <img src={v} alt="" className="w-100"/>
                                     </div>
                                 )}
@@ -57,14 +57,13 @@ class SelectHotel extends Component{
                         <div className="col-md-5 px-3">
                             <div className="card-block px-3">
                                 <h3 className="card-title">{hotel.name}</h3>
-                                <p className="card-text"><i class="far fa-star"></i> {hotel.stars} Stars</p>
+                                <p className="card-text"><i className="far fa-star"></i> {hotel.stars} Stars</p>
                             </div>
                         </div>
-                        <div class="col-md-3 price">
-                            Starting from<h3 class="reservation-price">${hotel.price.extra_bed} per night</h3>
+                        <div className="col-md-3 price">
+                            Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
                             <Button
                                 style={cssStyles.buttonRoom}
-                                bsStyle="primary"
                                 onClick={() => {
                                     this.props.selectHotel(hotel);
                                     this.props.jumpToStep(1);

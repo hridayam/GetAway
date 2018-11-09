@@ -7,6 +7,7 @@ import {
 import Login from './Login'
 import logo from "./picture/getaway_logo.png";
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 
   class NavBar extends Component {
@@ -92,7 +93,7 @@ import { connect } from 'react-redux';
                <NavLink href="/aboutus/">About Us</NavLink>
              </NavItem>
              <NavItem>
-             <NavLink href="/profile/">Profile</NavLink>
+             <NavLink href="/profile/">My Reservation</NavLink>
              </NavItem>
 
              <NavItem>
