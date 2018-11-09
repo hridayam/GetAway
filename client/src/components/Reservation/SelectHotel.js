@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { 
-        Container, Button, DropdownMenu, 
+import {
+        Container, Button, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
 import { Carousel } from 'react-responsive-carousel';
 
@@ -18,10 +18,16 @@ class SelectHotel extends Component{
         this.state={
             dropdownOpen: false,
             hotels: [],
-            chosenHotel: null
+            chosenHotel: null,
+            sortOption: ''
         };
         this.toggleDropdown = this.toggleDropdown.bind(this);
     }
+
+    setSort(e) {
+  this.setState({sortOption: e});
+    }
+
 
     static getDerivedStateFromProps(props, state){
         if(props.hotels !== state.hotels){
@@ -56,8 +62,8 @@ class SelectHotel extends Component{
                         </div>
                         <div className="col-md-3 price">
                             Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
-                            <Button 
-                                style={cssStyles.buttonRoom} 
+                            <Button
+                                style={cssStyles.buttonRoom}
                                 onClick={() => {
                                     this.props.selectHotel(hotel);
                                     this.props.jumpToStep(1);
@@ -77,6 +83,14 @@ class SelectHotel extends Component{
     }
 
     render() {
+      if (this.state.sortOption === "low") {
+        this.props.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
+      }
+      else if (this.state.sortOption === "high"){
+        this.props.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
+      }
+
+
         return(
             <div>
                 <Container>
@@ -88,7 +102,7 @@ class SelectHotel extends Component{
 
                         <DropdownMenu>
                             <DropdownItem onClick={()=>{this.setSort("low");}}>
-                            Price: Low to High
+                            Price: Low to Hi
                             </DropdownItem>
 
                             <DropdownItem divider />

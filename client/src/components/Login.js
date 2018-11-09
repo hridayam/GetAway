@@ -29,12 +29,12 @@ class Login extends Component {
       phoneNumber:'',
       user: {},
       isLoggedIn: false,
+      error: false,
       popoverOpen: false
-
     };
 
   }
-  
+
   static getDerivedStateFromProps(props, state) {
     if (props.user !== state.user){
       return {
@@ -56,10 +56,15 @@ class Login extends Component {
        this.props.login({
          email: this.state.email,
          password: this.state.password
-       });
-       this.setState({
-         modal: !this.state.modal,
-         isLoggedIn: true
+       }, (err) => {
+        if(err) {
+          this.setState({ error: true})
+        } else {
+          this.setState({
+            modal: !this.state.modal,
+            isLoggedIn: true
+          });
+        }
        });
   }
 
@@ -119,7 +124,7 @@ class Login extends Component {
   render() {
     if (this.state.user)
       return(
-        <div>  
+        <div>
           <NavLink id="Popover1" style={{ cursor: 'pointer' }} onClick={this.togglePop.bind(this)}>Profile</NavLink>
           <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" togglePop={this.togglePop} style={styles.popover}>
           <PopoverHeader>Hello! {this.props.user.name}</PopoverHeader>
@@ -131,7 +136,7 @@ class Login extends Component {
                 <th  style= {styles.headerStyle}>Contact Information</th>
               </tr>
             </thead>
-            
+
             <tbody>
               <tr>
                 <td style={styles.tableStyle}>Email: {this.props.user.email}</td>
@@ -148,7 +153,7 @@ class Login extends Component {
             <Button style ={{marginRight: '10px'}} >Edit</Button>
             <Button style ={{marginLeft: '10px'}} onClick={this.userLogout.bind(this)}>Logout</Button>
           </Popover>
-          
+
         </div>
       );
 
@@ -161,6 +166,7 @@ class Login extends Component {
             <ModalHeader className="login-header" toggle={this.toggle.bind(this)}>Welcome Back! </ModalHeader>
 
             <ModalBody>
+              {this.state.error? <p style={{color: 'red'}}>Either username or password is incorrect</p>: <p></p>}
               <Form className = "login-body"   >
                   <FormGroup>
                       <Label for="exampleEmail">Email:</Label>
@@ -214,4 +220,3 @@ const styles ={
 },
 }
 export  default connect(mapStateToProps, { login, logout, register })(Login)
-
