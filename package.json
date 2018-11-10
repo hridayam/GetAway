@@ -15,6 +15,7 @@
   "private": true,
   "dependencies": {
     "concurrently": "*",
+    "mdbreact": "^4.8.2",
     "nodemon": "*"
   }
 }

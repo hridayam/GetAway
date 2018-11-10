@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Container, Row, Col, CardImg, Card, CardBody,
-    CardTitle, CardSubtitle} from 'reactstrap';
+import { Container, Row, Col,
+     Card, CardBody, CardImage, CardTitle, CardText} from 'mdbreact';
 import Scroll from './ScrollUp';
 
 export default class aboutUs extends Component {
@@ -30,101 +30,101 @@ export default class aboutUs extends Component {
                 <h1>Meet The Team</h1>
                 <Row>
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-                        <CardBody>
+                    <Card  style = {styles.card}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardBody >
                             <CardTitle>Nhat Trinh</CardTitle>
-                            <CardSubtitle>Project Manager</CardSubtitle>
+                            <CardText>Project Manager</CardText>
                         </CardBody>
                     </Card>
                 </Col>
                 
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Hridayam Bakshi</CardTitle>
-                            <CardSubtitle>Technical Lead</CardSubtitle>
+                            <CardText>Technical Lead</CardText>
                         </CardBody>
                     </Card>   
                 </Col>
     
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Paul Nguyen</CardTitle>
-                            <CardSubtitle>Software Developer</CardSubtitle>
+                            <CardText>Software Developer</CardText>
                         </CardBody>
                     </Card>   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Alejandro Lopez</CardTitle>
-                            <CardSubtitle>Documentation</CardSubtitle>
+                            <CardText>Documentation</CardText>
                         </CardBody>
                     </Card>   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Jennifer Nguyen</CardTitle>
-                            <CardSubtitle>Software Developer</CardSubtitle>
+                            <CardText>Software Developer</CardText>
                         </CardBody>
                     </Card>   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Truc Vo</CardTitle>
-                            <CardSubtitle>Product Owner</CardSubtitle>
+                            <CardText>Product Owner</CardText>
                         </CardBody>
                     </Card>   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Tuan Anh Le</CardTitle>
-                            <CardSubtitle>UX Designer</CardSubtitle>
+                            <CardText>UX Designer</CardText>
                         </CardBody>
                     </Card>   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Raghav Gupta</CardTitle>
-                            <CardSubtitle> Software Tester </CardSubtitle>
+                            <CardText> Software Tester </CardText>
                         </CardBody>
                     </Card>   
                 </Col> 
 
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Luis Reyes</CardTitle>
-                            <CardSubtitle> Assistant Tester</CardSubtitle>
+                            <CardText> Assistant Tester</CardText>
                         </CardBody>
                     </Card>   
                 </Col> 
 
                 <Col xs={12} md={4} lg={3}>
                     <Card style = {styles.card}>
-                        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Thomas Luong</CardTitle>
-                            <CardSubtitle> Assistant Documentation</CardSubtitle>
+                            <CardText> Assistant Documentation</CardText>
                         </CardBody>
                     </Card>   
                 </Col> 
@@ -164,6 +164,6 @@ const styles = {
         paddingTop: '100px'
     },
     card:{
-        marginBottom:'40px',
+        marginBottom:'30px',
     }
 }
