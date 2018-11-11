@@ -19,7 +19,7 @@ router.post('/search', async(req,res) => {
     let { city } = req.body;
 
     try {
-        findHotels({ city: new RegExp(city, 'i') }, res);
+        findHotels({ 'address.city': new RegExp(city, 'i') }, res);
     } catch(err) {
         res.status(400).json({
             success: false,

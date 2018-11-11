@@ -17,9 +17,13 @@ class SelectHotel extends Component{
 
         this.state={
             dropdownOpen: false,
-            reservation: {},
+            city: '',
+            startDate: '',
+            endDate: '',
+            numGuests: 1,
             chosenHotel: null,
             sortOption: '',
+            reservation: {},
             hotels: null
         };
         this.toggleDropdown = this. toggleDropdown.bind(this);
@@ -32,10 +36,14 @@ class SelectHotel extends Component{
 
     static getDerivedStateFromProps(props, state){
         if(props.reservation !== state.reservation){
+            let { city, startDate, endDate, numGuests, hotels } = props.reservation;
             return{
                 ...state,
                 reservation: props.reservation,
-                hotels: props.reservation.hotels
+                hotels,
+                city,
+                startDate, endDate,
+                numGuests
             };
         }
         return null;

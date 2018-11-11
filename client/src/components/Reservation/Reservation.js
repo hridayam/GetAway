@@ -15,20 +15,19 @@ class Reservation extends Component{
             startDate: '',
             endDate: '',
             numGuests: 1,
-            reservation: null
+            reservation: {}
         };
     }
 
     static getDerivedStateFromProps(props,state) {
-        if (props.reservation.city !== state.city) {
-            let { city, startDate, endDate, numGuests } = props.reservation;
+        if (props.reservation !== state.reservation) {
+            let { city, startDateStr, endDateStr, numGuests } = props.reservation;
             return {
-                ...state,
+                reservation: props.reservation,
                 city,
-                startDate,
-                endDate,
+                startDate: startDateStr,
+                endDate: endDateStr,
                 numGuests,
-                
             };
         }
         return null;
@@ -36,6 +35,7 @@ class Reservation extends Component{
 
     handleChange = event => {
         let { name, value } = event.target;
+        console.log(name + '-' + value);
         this.setState({ [name]: value });
     }
 
@@ -86,7 +86,6 @@ class Reservation extends Component{
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Location:  </Label>
                             <Input onChange={this.handleChange} name="city" value={this.state.city} className="location" placeholder="City Name"/> 
-                            {/* replace placeholder = "Location" with the current city that was chosen*/}
                         </FormGroup>
                     </Col>
                     <Col xs="6" sm="6" lg="2">
@@ -109,13 +108,13 @@ class Reservation extends Component{
                     <Col xs="6" sm="6" lg="3">
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Check In:</Label>
-                            <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" id="exampleDate" placeholder="date placeholder" />
+                            <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
                     <Col xs="6" sm="6" lg="3">
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Check Out:</Label>
-                            <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" id="exampleDate" placeholder="date placeholder" />
+                            <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
                     <Col style={styles.updateButton} xs="12" sm="12" lg="2">
