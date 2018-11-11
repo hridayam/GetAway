@@ -28,10 +28,42 @@ class Register extends React.Component {
           isLoggedIn: false
         };
       }
-
+    
     submitHandler = (event) => {
         event.preventDefault();
         event.target.className += ' was-validated';
+        if(this.formReady()){
+            this.props.register({
+                email: this.state.registerEmail,
+                password: this.state.registerPassword,
+                name: this.state.firstName + ' ' + this.state.lastName,
+                address:this.state.address + ' ' + this.state.city + ' ' + this.state.state + ' ' + this.state.zipcode,
+                city:this.state.city,
+                state:this.state.state,
+                zipcode:this.state.zipcode,
+                confirmPassword: this.state.confirmPassword,
+                phoneNumber: this.state.phoneNumber
+            });
+           this.setState({
+                modal: !this.state.modal,
+           });
+        }
+    }
+
+    //needed to check the form before register and taking down modal
+    formReady = () => {
+        const elements = document.getElementsByClassName('form-control');
+        const check = document.getElementsByClassName('form-check-input');
+        for(var i = 0; i < elements.length; i++){
+            //console.log(elements[i].validity.valid + ',' + elements[i])
+            if(elements[i].validity.valid !== true){
+                return false;
+            }
+        }
+        if(!check[0].checked){
+            return false;
+        }
+        return true;
     }
     
     changeHandler = (event) => {
@@ -92,15 +124,23 @@ class Register extends React.Component {
                         </div>
                     </Row>
                     <Row>
-                        <div className="col-md-12 mb-12">
+                        <div className="col-md-6 mb-6">
                             <label htmlFor="defaultFormRegisterConfirmEx3" className="grey-text">Password</label>
                             <input value={this.state.registerPassword} onChange={this.changeHandler} type="password" id="password" minLength="6" className="form-control" name='registerPassword' placeholder="Your Password" required/>
+                            <div className="invalid-feedback">Password not long enough</div>
                         </div>
-                        <div className="col-md-12 mb-12">
+                        <div className="col-md-6 mb-6">
                             <label htmlFor="defaultFormRegisterConfirmEx3" className="grey-text">Confirm Password</label>
-                            <input value={this.state.confirmPassword} onChange={this.changeHandler} type="password" pattern={this.state.registerPassword} id="confirmPassword" className="form-control" name='confirmPassword' placeholder="Your Password" required
+                            <input value={this.state.confirmPassword} onChange={this.changeHandler} type="password" pattern={this.state.registerPassword} id="confirmPassword" className="form-control" name='confirmPassword' placeholder="Confirm Password" required
                             />
                             <div className="invalid-feedback">Password does not match</div>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div className="col-md-12 mb-12">
+                            <label htmlFor="defaultFormRegisterConfirmEx3" className="grey-text">Phone Number</label>
+                            <input value={this.state.phoneNumber} onChange={this.changeHandler} type="number" id="phoneNumber" className="form-control" name='phoneNumber' placeholder="Your Phone Number" required
+                            />
                         </div>
                     </Row>
                     <Row>
@@ -138,14 +178,14 @@ class Register extends React.Component {
                         </div>
                         <div className="col-md-4 mb-4">
                             <label htmlFor="defaultFormRegisterPasswordEx4" className="grey-text">Zip</label>
-                            <input value={this.state.zipcode} onChange={this.changeHandler} type="text" id="zipcode" className="form-control" name='zipcode' placeholder="zipcode" required/>
+                            <input value={this.state.zipcode} onChange={this.changeHandler} type="number" id="zipcode" className="form-control" name='zipcode' placeholder="zipcode" required/>
                             <div className="invalid-feedback">Please provide a valid zip.</div>
                             <div className="valid-feedback">Looks good!</div>
                         </div>
                     </Row>
                         <div className="col-md-12 mb-12">
                             <div className="form-check pl-0">
-                                <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required />
+                                <input className="form-check-input"  type="checkbox" value="" id="invalidCheck" required />
                                 <label className="form-check-label" htmlFor="invalidCheck">
                                     Agree to terms and conditions
                                 </label>
