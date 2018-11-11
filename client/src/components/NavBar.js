@@ -4,7 +4,8 @@ import {
   NavbarBrand, Nav, NavItem,
   NavLink
 } from 'reactstrap';
-import Login from './Login'
+import Login from './Login';
+import Register from './Register';
 import logo from "./picture/getaway_logo.png";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -118,6 +119,9 @@ import { withRouter } from 'react-router-dom';
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
                <NavLink href="/aboutus/">About Us</NavLink>
+             </NavItem>
+             <NavItem>
+               <Register/>
              </NavItem>
              <NavItem>
                <Login />

@@ -178,8 +178,6 @@ class Login extends Component {
                       <Input type="password" name="password" value={this.state.password}  onChange={this.handleChange.bind(this)} id='examplePassword' placeholder="Enter Your Password" />
                   </FormGroup>
               </Form>
-              <a href="/register">Not a member yet? Sign Up</a>
-
             </ModalBody>
 
             <ModalFooter>

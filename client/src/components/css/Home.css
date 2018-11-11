@@ -156,8 +156,10 @@
   border: 0px;
   margin-top: 20px;
 }
-
-
+/* Register */
+.form-check-label{
+  margin-top: 0 !important;
+}
 /* Login */
 .modal-body{
   text-align: center;
