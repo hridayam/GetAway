@@ -46,7 +46,9 @@ class SearchForm extends Component {
             city, 
             sdDate.getTime(), 
             edDate.getTime(), 
-            numGuests);
+            numGuests,
+            startDate,
+            endDate);
         this.setState({ submitted: true });
    }
 

@@ -17,24 +17,26 @@ class SelectHotel extends Component{
 
         this.state={
             dropdownOpen: false,
-            hotels: [],
+            reservation: {},
             chosenHotel: null,
-            sortOption: ''
+            sortOption: '',
+            hotels: null
         };
-        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.toggleDropdown = this. toggleDropdown.bind(this);
     }
 
     setSort(e) {
-  this.setState({sortOption: e});
+        this.setState({sortOption: e});
     }
 
 
     static getDerivedStateFromProps(props, state){
-        if(props.hotels !== state.hotels){
+        if(props.reservation !== state.reservation){
             return{
                 ...state,
-                hotels: props.hotels
-            }
+                reservation: props.reservation,
+                hotels: props.reservation.hotels
+            };
         }
         return null;
     }
@@ -83,13 +85,12 @@ class SelectHotel extends Component{
     }
 
     render() {
-      if (this.state.sortOption === "low") {
-        this.props.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
-      }
-      else if (this.state.sortOption === "high"){
-        this.props.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
-      }
-
+        if (this.state.sortOption === "low") {
+            this.props.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
+        }
+        else if (this.state.sortOption === "high"){
+            this.props.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
+        }
 
         return(
             <div>
@@ -102,7 +103,7 @@ class SelectHotel extends Component{
 
                         <DropdownMenu>
                             <DropdownItem onClick={()=>{this.setSort("low");}}>
-                            Price: Low to Hi
+                            Price: Low to High
                             </DropdownItem>
 
                             <DropdownItem divider />
@@ -135,7 +136,7 @@ const cssStyles = {
 
 const mapStatetoProps = state => {
     return {
-        hotels: state.reservation.hotels
+        reservation: state.reservation
     };
 }
 

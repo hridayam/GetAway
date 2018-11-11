@@ -7,20 +7,24 @@ const INITIAL_STATE = {
     city: '',
     startDate: 0,
     endDate: 0,
+    startDateStr: '',
+    endDateStr: '',
     numGuests: 0
 };
 
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
         case SEARCH_HOTELS:
-            let { hotels, city, startDate, endDate, numGuests } = action.payload;
+            let { hotels, city, startDate, endDate, numGuests, startDateStr, endDateStr } = action.payload;
             return{
                 ...state,
                 hotels,
                 city,
                 startDate,
                 endDate,
-                numGuests
+                numGuests,
+                startDateStr,
+                endDateStr
             };
 
         case SELECT_HOTEL:

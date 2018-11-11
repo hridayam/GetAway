@@ -112,7 +112,6 @@ class ChooseRoom extends Component{
     }
 
     render(){
-        console.log(this.state)
         return(
             <div>
                 <Container>

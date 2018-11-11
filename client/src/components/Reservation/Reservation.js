@@ -6,7 +6,6 @@ import Scroll from '../ScrollUp';
 
 import { connect } from 'react-redux';
 import { search } from '../../actions/';
-import { throws } from 'assert';
 
 class Reservation extends Component{
     constructor(props) {
@@ -15,8 +14,24 @@ class Reservation extends Component{
             city: '',
             startDate: '',
             endDate: '',
-            numGuests: 1
+            numGuests: 1,
+            reservation: null
         };
+    }
+
+    static getDerivedStateFromProps(props,state) {
+        if (props.reservation.city !== state.city) {
+            let { city, startDate, endDate, numGuests } = props.reservation;
+            return {
+                ...state,
+                city,
+                startDate,
+                endDate,
+                numGuests,
+                
+            };
+        }
+        return null;
     }
 
     handleChange = event => {
@@ -45,8 +60,11 @@ class Reservation extends Component{
                 city, 
                 sdDate.getTime(), 
                 edDate.getTime(), 
-                numGuests);
+                numGuests,
+                startDate,
+                endDate);
         }
+
         else 
             this.props.search(
                 city, 
@@ -131,4 +149,10 @@ const styles = {
     }
 };
 
-export default connect(null, { search })(Reservation);
+const mapStateToProps = state => {
+    return {
+        reservation: state.reservation
+    };
+};
+
+export default connect(mapStateToProps, { search })(Reservation);
