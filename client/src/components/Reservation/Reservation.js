@@ -39,7 +39,6 @@ class Reservation extends Component{
 
     handleChange = event => {
         let { name, value } = event.target;
-        console.log(name + '-' + value);
         this.setState({ [name]: value });
     }
 
