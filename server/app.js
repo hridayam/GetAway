@@ -6,11 +6,23 @@ const bodyParser = require('body-parser');
 const morgan  = require('morgan');
 const cors = require('cors');
 const passport = require('passport');
+const cloudinary = require('cloudinary');
+
+require('dotenv').config()
 
 // Setting up mongoose
 const mongoose = require('mongoose');
 const config  = require ('./config/database');
 mongoose.connect(config.database);
+
+
+// setting up cloudinary
+let { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_SECRET } = process.env;
+cloudinary.config({ 
+    cloud_name: CLOUDINARY_CLOUD_NAME, 
+    api_key: CLOUDINARY_API_KEY, 
+    api_secret: CLOUDINARY_API_SECRET
+});
 
 const index = require('./routes/index');
 const payments = require('./routes/payments');

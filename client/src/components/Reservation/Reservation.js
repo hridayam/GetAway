@@ -24,7 +24,11 @@ class Reservation extends Component{
             let { city, startDateStr, endDateStr, numGuests } = props.reservation;
             return {
                 reservation: props.reservation,
-                city,
+                city: city
+                        .toLowerCase()
+                        .replace(/\b[a-z](?=[a-z]{2})/g, 
+                            function(letter) {
+                                return letter.toUpperCase(); } ),
                 startDate: startDateStr,
                 endDate: endDateStr,
                 numGuests,

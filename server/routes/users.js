@@ -108,6 +108,30 @@ router.post('/login', (req, res, next) => {
     });
 });
 
+router.get('/edit-profile', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
+    let { _id, newPhoneNumber, newAddress  } = req.body;
+    try {
+        await User.findOneAndUpdate(
+            { _id }, {
+                phoneNumber: newPhoneNumber,
+                address: newAddress
+            }).exec();
+
+        res.status(200).json({
+            success: true,
+            msg: 'Successfully edited user\'s profile!'
+        });
+    }
+    catch(err) {
+        res.status(400).json({
+            success: false,
+            msg: 'Error from server!',
+            err
+        });
+    }
+});
+
+
 //no need
 router.put('/connect', passport.authenticate('jwt', {session: false}), function(req, res, next){
     if (req.user.role.toLowerCase() == 'applicant') {
@@ -135,7 +159,6 @@ router.put('/connect', passport.authenticate('jwt', {session: false}), function(
         }
     });
 });
-
 // no need
 router.get('/connections', passport.authenticate('jwt', {session: false}), function(req, res, next){
     var users = [];
