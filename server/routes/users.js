@@ -6,6 +6,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt =  require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const cloudinary = require('cloudinary');
 
 const config = require('../config/database');
 const User = require('../models/users');
@@ -68,7 +69,6 @@ router.post('/register', function(req, res) {
 
 
 router.post('/login', (req, res, next) => {
-    console.log(req.body);
     const email = req.body.email;
     const password = req.body.password;
 
@@ -109,8 +109,17 @@ router.post('/login', (req, res, next) => {
 });
 
 router.post('/edit-profile', async (req, res) => {
-    let { email, newPhoneNumber, newAddress  } = req.body;
+    let { email, newPhoneNumber, newAddress, file  } = req.body;
+
+    
     try {
+        if (file.length) {
+            cloudinary.uploader.upload(
+                file, result => {
+                    console.log(result)
+                });
+        }
+            
         let user = await User.findOneAndUpdate(
             { email }, {
                 phoneNumber: newPhoneNumber,

@@ -183,7 +183,7 @@ class Profile extends Component{
                             </TabPane>
             
                             <TabPane tabId="3">
-                            <h4 style={styles.headerStyle}>Your Rewards Point: {this.state.rewardPoint}</h4>
+                            <h4 style={styles.headerStyle}>Your Rewards Points: {this.state.rewardPoint}</h4>
                             <Table style={styles.tableStyle}>
                             <thead>
                                 <tr>

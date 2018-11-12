@@ -9,6 +9,7 @@ import { login, logout, register, userLoggedIn } from '../actions/auth';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import FileBase64 from 'react-file-base64';
 //import 'react-toastify/dist/ReactToastify.css';
 
 class Login extends Component {
@@ -39,7 +40,9 @@ class Login extends Component {
       profileEmail: '',
       profilePhoneNumber: 0,
       profileAddress: '',
-      isEditing: false
+      isEditing: false,
+      profilePic: '',
+      file: ''
     };
 
   }
@@ -47,13 +50,14 @@ class Login extends Component {
   static getDerivedStateFromProps(props, state) {
     if (props.user !== state.user){
       if (props.user !== undefined && props.user) {
-        let { email, phoneNumber, address } = props.user;
+        let { email, phoneNumber, address, profilePic } = props.user;
         return {
           ...state,
           user: props.user,
           profileEmail: email,
           profilePhoneNumber: phoneNumber,
-          profileAddress: address
+          profileAddress: address,
+          profilePic
         };
       } else {
         return {
@@ -155,6 +159,7 @@ class Login extends Component {
     return this.state.isEditing ? 
       <div className="container">
           <div className="form-control">
+            <b>Upload New Image</b><br/><FileBase64 onDone={file => this.setState({ file })}/><br/><br/>
             <b>Email</b><br/>{this.state.profileEmail}<br/><br/>
             <b>Phone Number</b><br/><input className="form-control" onChange={this.handleChange} name="profilePhoneNumber" type="text" value={this.state.profilePhoneNumber}/><br/>
             <b>Address</b><br/><input className="form-control" onChange={this.handleChange} name="profileAddress" type="text" value={this.state.profileAddress}/><br/>
@@ -175,7 +180,8 @@ class Login extends Component {
       '/users/edit-profile', {
         email: this.state.profileEmail,
         newPhoneNumber: this.formatPhoneNumber(this.state.profilePhoneNumber),
-        newAddress: this.state.profileAddress
+        newAddress: this.state.profileAddress,
+        file: this.state.file
     })
       .then(res => { 
         if (res.data.success) {
@@ -203,11 +209,16 @@ class Login extends Component {
           <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" togglePop={this.togglePop.bind(this)} style={styles.popover}>
           <PopoverHeader>Hello! {this.props.user.name}</PopoverHeader>
           <PopoverBody>
-          <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
+          <img 
+            alt="" 
+            src={this.state.user.profilePic} 
+            style={styles.imageStyles}
+          />
           {this.renderProfileInfo()}
           </PopoverBody>
-            { this.state.isEditing ? <Button style ={{marginRight: '10px'}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button style ={{marginRight: '10px'}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
-            <Button style ={{marginLeft: '10px'}} onClick={this.userLogout.bind(this)}>Logout</Button>
+            <div class="btn btn-warning" style= {{marginRight: 10}} onClick={() => this.setState({ popoverOpen: false })}>Exit Profile</div>
+            { this.state.isEditing ? <Button style ={{marginRight: 10}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button style ={{marginRight: '10px'}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
+            <Button onClick={this.userLogout.bind(this)}>Logout</Button>
           </Popover>
 
         </div>
@@ -261,8 +272,10 @@ const mapStateToProps = state => {
 const styles ={
   imageStyles:{
     borderRadius: '50%',
-    border: "2px solid #A9A9A9",
+    border: "#A9A9A9",
     marginBottom: '10px',
+    width: '100%',
+    height:'auto'
   },
   popover:{
     textAlign: 'center',

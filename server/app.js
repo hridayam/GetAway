@@ -47,7 +47,7 @@ app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Body parser MW
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50MB' }));
 app.use(bodyParser.urlencoded({extended: false}));
 
 // passport init
