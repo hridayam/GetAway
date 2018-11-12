@@ -30,16 +30,25 @@ class Login extends Component {
       user: {},
       isLoggedIn: false,
       error: false,
-      popoverOpen: false
+      popoverOpen: false,
+
+      profileEmail: '',
+      profilePhoneNumber: 0,
+      profileAddress: '',
+      isEditing: false
     };
 
   }
 
   static getDerivedStateFromProps(props, state) {
     if (props.user !== state.user){
+      let { email, phoneNumber, address } = props.user;
       return {
         ...state,
-        user: props.user
+        user: props.user,
+        profileEmail: email,
+        profilePhoneNumber: phoneNumber,
+        profileAddress: address
       };
     }
     return null;
@@ -115,10 +124,30 @@ class Login extends Component {
       closeAll: true,
     });
   }
+
   togglePop() {
     this.setState({
       popoverOpen: !this.state.popoverOpen,
     });
+  }
+
+  renderProfileInfo() {
+    return this.state.isEditing ? 
+      <div className="container">
+          <div className="form-control">
+            <b>Email</b><br/>{this.state.profileEmail}<br/><br/>
+            <b>Phone Number</b><br/><input className="form-control" onChange={this.handleChange} name="profilePhoneNumber" type="text" value={this.state.profilePhoneNumber}/><br/>
+            <b>Address</b><br/><input className="form-control" onChange={this.handleChange} name="profileAddress" type="text" value={this.state.profileAddress}/><br/>
+            <div className="btn btn-primary" onClick={()=>{ this.setState({ isEditing: false })}}>Submit Changes</div>
+          </div>
+      </div>:
+      <div className="container">
+        <div className="form-control">
+          <b>Email</b><br/>{this.state.profileEmail} <br/><br/>
+          <b>Phone Number</b><br/>{this.state.profilePhoneNumber} <br/><br/>
+          <b>Address</b><br/>{this.state.profileAddress} <br/><br/>
+        </div>
+      </div>
   }
 
   render() {
@@ -130,7 +159,8 @@ class Login extends Component {
           <PopoverHeader>Hello! {this.props.user.name}</PopoverHeader>
           <PopoverBody>
           <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
-          <Table size="sm" style={styles.tableborder}>
+          {this.renderProfileInfo()}
+          {/* <Table size="sm" style={styles.tableborder}>
             <thead>
               <tr>
                 <th  style= {styles.headerStyle}>Contact Information</th>
@@ -148,9 +178,9 @@ class Login extends Component {
                 <td style={styles.tableStyle}>Address: {this.props.user.address}</td>
               </tr>
             </tbody>
-          </Table>
+          </Table> */}
           </PopoverBody>
-            <Button style ={{marginRight: '10px'}} >Edit</Button>
+            { this.state.isEditing ? <Button style ={{marginRight: '10px'}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button style ={{marginRight: '10px'}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
             <Button style ={{marginLeft: '10px'}} onClick={this.userLogout.bind(this)}>Logout</Button>
           </Popover>
 
@@ -206,17 +236,15 @@ const styles ={
     borderRadius: '50%',
     border: "2px solid #A9A9A9",
     marginBottom: '10px',
-},
+  },
   popover:{
     textAlign: 'center',
     marginBottom:'10px'
   },
   headerStyle:{
     marginTop:10,
-    backgroundColor: '#2e908a',
     color: 'white',
     fontWeight: 'normal',
-    border: '2px solid black'
 },
 }
-export  default connect(mapStateToProps, { login, logout, register })(Login)
+export default connect(mapStateToProps, { login, logout, register })(Login)

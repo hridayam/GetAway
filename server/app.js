@@ -18,12 +18,14 @@ mongoose.connect(config.database);
 
 // setting up cloudinary
 let { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_SECRET } = process.env;
+
 cloudinary.config({ 
     cloud_name: CLOUDINARY_CLOUD_NAME, 
     api_key: CLOUDINARY_API_KEY, 
     api_secret: CLOUDINARY_API_SECRET
 });
 
+// set up routes
 const index = require('./routes/index');
 const payments = require('./routes/payments');
 const reservations = require('./routes/reservations');
