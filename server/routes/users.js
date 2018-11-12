@@ -116,6 +116,9 @@ router.post('/edit-profile', async (req, res) => {
                 phoneNumber: newPhoneNumber,
                 address: newAddress
             }).exec();
+        
+        user.phoneNumber = newPhoneNumber;
+        user.address = newAddress;
 
         res.status(200).json({
             success: true,

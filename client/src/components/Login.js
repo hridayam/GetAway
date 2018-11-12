@@ -170,20 +170,24 @@ class Login extends Component {
       </div>
   }
 
-  handleProfileEditSubmit = e => {
-    let phoneNumber = this.formatPhoneNumber(this.state.profilePhoneNumber);
-
+  handleProfileEditSubmit = () => {
     axios.post(
       '/users/edit-profile', {
         email: this.state.profileEmail,
-        newPhoneNumber: phoneNumber,
+        newPhoneNumber: this.formatPhoneNumber(this.state.profilePhoneNumber),
         newAddress: this.state.profileAddress
     })
       .then(res => { 
         if (res.data.success) {
+          localStorage.setItem('data', JSON.stringify(res.data.user));
           this.props.userLoggedIn({token: this.props.token, user: res.data.user});
-          this.setState({ isEditing: false });
-          window.location.reload();
+
+          let { phoneNumber, address } = res.data.user;
+          this.setState({ 
+            isEditing: false,
+            profilePhoneNumber: phoneNumber,
+            profileAddress: address
+          });
         }
       })
       .catch(err => { 
