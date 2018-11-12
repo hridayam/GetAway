@@ -108,21 +108,23 @@ router.post('/login', (req, res, next) => {
     });
 });
 
-router.get('/edit-profile', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
-    let { _id, newPhoneNumber, newAddress  } = req.body;
+router.post('/edit-profile', async (req, res) => {
+    let { email, newPhoneNumber, newAddress  } = req.body;
     try {
-        await User.findOneAndUpdate(
-            { _id }, {
+        let user = await User.findOneAndUpdate(
+            { email }, {
                 phoneNumber: newPhoneNumber,
                 address: newAddress
             }).exec();
 
         res.status(200).json({
             success: true,
-            msg: 'Successfully edited user\'s profile!'
+            msg: 'Successfully edited user\'s profile!',
+            user
         });
     }
     catch(err) {
+        console.log(err);
         res.status(400).json({
             success: false,
             msg: 'Error from server!',

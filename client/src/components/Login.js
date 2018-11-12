@@ -5,8 +5,12 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter,
 import { NavLink } from 'reactstrap';
 import {Redirect} from 'react-router-dom';
 
-import { login, logout, register } from '../actions/auth';
+import { login, logout, register, userLoggedIn } from '../actions/auth';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+//import 'react-toastify/dist/ReactToastify.css';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -42,14 +46,21 @@ class Login extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.user !== state.user){
-      let { email, phoneNumber, address } = props.user;
-      return {
-        ...state,
-        user: props.user,
-        profileEmail: email,
-        profilePhoneNumber: phoneNumber,
-        profileAddress: address
-      };
+      if (props.user !== undefined && props.user) {
+        let { email, phoneNumber, address } = props.user;
+        return {
+          ...state,
+          user: props.user,
+          profileEmail: email,
+          profilePhoneNumber: phoneNumber,
+          profileAddress: address
+        };
+      } else {
+        return {
+          ...state,
+          user: null
+        }
+      }
     }
     return null;
   }
@@ -131,6 +142,15 @@ class Login extends Component {
     });
   }
 
+  formatPhoneNumber = str => {
+    var stripped = ('' + str).replace(/\D/g, '');
+    var match = stripped.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+    if (match) 
+      return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    return '';
+  }
+
   renderProfileInfo() {
     return this.state.isEditing ? 
       <div className="container">
@@ -138,7 +158,7 @@ class Login extends Component {
             <b>Email</b><br/>{this.state.profileEmail}<br/><br/>
             <b>Phone Number</b><br/><input className="form-control" onChange={this.handleChange} name="profilePhoneNumber" type="text" value={this.state.profilePhoneNumber}/><br/>
             <b>Address</b><br/><input className="form-control" onChange={this.handleChange} name="profileAddress" type="text" value={this.state.profileAddress}/><br/>
-            <div className="btn btn-primary" onClick={()=>{ this.setState({ isEditing: false })}}>Submit Changes</div>
+            <button onClick={this.handleProfileEditSubmit} className="btn btn-danger">Submit Changes</button>
           </div>
       </div>:
       <div className="container">
@@ -150,35 +170,37 @@ class Login extends Component {
       </div>
   }
 
+  handleProfileEditSubmit = e => {
+    let phoneNumber = this.formatPhoneNumber(this.state.profilePhoneNumber);
+
+    axios.post(
+      '/users/edit-profile', {
+        email: this.state.profileEmail,
+        newPhoneNumber: phoneNumber,
+        newAddress: this.state.profileAddress
+    })
+      .then(res => { 
+        if (res.data.success) {
+          this.props.userLoggedIn({token: this.props.token, user: res.data.user});
+          this.setState({ isEditing: false });
+          window.location.reload();
+        }
+      })
+      .catch(err => { 
+        alert(err);
+      });
+  }
+
   render() {
     if (this.state.user)
       return(
         <div>
           <NavLink id="Popover1" style={{ cursor: 'pointer' }} onClick={this.togglePop.bind(this)}>Profile</NavLink>
-          <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" togglePop={this.togglePop} style={styles.popover}>
+          <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" togglePop={this.togglePop.bind(this)} style={styles.popover}>
           <PopoverHeader>Hello! {this.props.user.name}</PopoverHeader>
           <PopoverBody>
           <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
           {this.renderProfileInfo()}
-          {/* <Table size="sm" style={styles.tableborder}>
-            <thead>
-              <tr>
-                <th  style= {styles.headerStyle}>Contact Information</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td style={styles.tableStyle}>Email: {this.props.user.email}</td>
-              </tr>
-              <tr>
-                <td style={styles.tableStyle} >Phone Number: {this.props.user.phoneNumber}</td>
-              </tr>
-              <tr>
-                <td style={styles.tableStyle}>Address: {this.props.user.address}</td>
-              </tr>
-            </tbody>
-          </Table> */}
           </PopoverBody>
             { this.state.isEditing ? <Button style ={{marginRight: '10px'}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button style ={{marginRight: '10px'}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
             <Button style ={{marginLeft: '10px'}} onClick={this.userLogout.bind(this)}>Logout</Button>
@@ -226,7 +248,8 @@ const mapStateToProps = state => {
     if(!!state.auth.token){
         return {
             isLoggedIn: !!state.auth.token,
-            user: state.auth.user
+            user: state.auth.user,
+            token: state.auth.token
         };
     }
 }
@@ -247,4 +270,4 @@ const styles ={
     fontWeight: 'normal',
 },
 }
-export default connect(mapStateToProps, { login, logout, register })(Login)
+export default connect(mapStateToProps, { login, logout, register, userLoggedIn })(Login)

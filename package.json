@@ -15,6 +15,7 @@
   "private": true,
   "dependencies": {
     "concurrently": "*",
-    "nodemon": "*"
+    "nodemon": "*",
+    "react-toastify": "^4.4.2"
   }
 }
