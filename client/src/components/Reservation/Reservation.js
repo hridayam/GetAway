@@ -6,7 +6,6 @@ import Scroll from '../ScrollUp';
 
 import { connect } from 'react-redux';
 import { search } from '../../actions/';
-import { throws } from 'assert';
 
 class Reservation extends Component{
     constructor(props) {
@@ -15,8 +14,27 @@ class Reservation extends Component{
             city: '',
             startDate: '',
             endDate: '',
-            numGuests: 1
+            numGuests: 1,
+            reservation: {}
         };
+    }
+
+    static getDerivedStateFromProps(props,state) {
+        if (props.reservation !== state.reservation) {
+            let { city, startDateStr, endDateStr, numGuests } = props.reservation;
+            return {
+                reservation: props.reservation,
+                city: city
+                        .toLowerCase()
+                        .replace(/\b[a-z](?=[a-z]{2})/g, 
+                            function(letter) {
+                                return letter.toUpperCase(); } ),
+                startDate: startDateStr,
+                endDate: endDateStr,
+                numGuests,
+            };
+        }
+        return null;
     }
 
     handleChange = event => {
@@ -45,8 +63,11 @@ class Reservation extends Component{
                 city, 
                 sdDate.getTime(), 
                 edDate.getTime(), 
-                numGuests);
+                numGuests,
+                startDate,
+                endDate);
         }
+
         else 
             this.props.search(
                 city, 
@@ -68,7 +89,6 @@ class Reservation extends Component{
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Location:  </Label>
                             <Input onChange={this.handleChange} name="city" value={this.state.city} className="location" placeholder="City Name"/> 
-                            {/* replace placeholder = "Location" with the current city that was chosen*/}
                         </FormGroup>
                     </Col>
                     <Col xs="6" sm="6" lg="2">
@@ -91,13 +111,13 @@ class Reservation extends Component{
                     <Col xs="6" sm="6" lg="3">
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Check In:</Label>
-                            <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" id="exampleDate" placeholder="date placeholder" />
+                            <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
                     <Col xs="6" sm="6" lg="3">
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Check Out:</Label>
-                            <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" id="exampleDate" placeholder="date placeholder" />
+                            <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
                     <Col style={styles.updateButton} xs="12" sm="12" lg="2">
@@ -131,4 +151,10 @@ const styles = {
     }
 };
 
-export default connect(null, { search })(Reservation);
+const mapStateToProps = state => {
+    return {
+        reservation: state.reservation
+    };
+};
+
+export default connect(mapStateToProps, { search })(Reservation);

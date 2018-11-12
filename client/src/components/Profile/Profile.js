@@ -92,37 +92,6 @@ class Profile extends Component{
             </div>
             <Scroll/>
             <Container >
-                {/* <Row>
-                    <Col xs="6" sm="4">
-                        <h1 style={styles.nameStyle}>Hello! {this.props.user.name}</h1>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="4" >
-                        <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
-                        <br/>
-                        <Button for="files" color="secondary" >Change Picture</Button>
-                        <input style={styles.uploadStyle} type="file" class="text-center center-block file-upload"/>
-
-                        <Table size="sm" style={styles.tableborder}>
-                            <thead>
-                            <tr>
-                                <th  style= {styles.headerStyle}>Contact Information</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td style={styles.tableStyle}>Email: {this.props.user.email}</td>
-                            </tr>
-                            <tr>
-                                <td style={styles.tableStyle} >Phone Number: {this.props.user.phoneNumber}</td>
-                            </tr>
-                            <tr>
-                                <td style={styles.tableStyle}>Address: {this.props.user.address}</td>
-                            </tr>
-                            </tbody>
-                        </Table>
-                    </Col> */}
                 <Row style = {styles.textBlock}>
                     <Col sm="12" md={{ size: 6, offset: 3 }}>
                         <div className="row" style={{borderBottomColor: "transparent",padding: '25px'}}>
@@ -214,7 +183,7 @@ class Profile extends Component{
                             </TabPane>
             
                             <TabPane tabId="3">
-                            <h4 style={styles.headerStyle}>Your Rewards Point: {this.state.rewardPoint}</h4>
+                            <h4 style={styles.headerStyle}>Your Rewards Points: {this.state.rewardPoint}</h4>
                             <Table style={styles.tableStyle}>
                             <thead>
                                 <tr>

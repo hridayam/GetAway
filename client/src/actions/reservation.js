@@ -4,8 +4,7 @@ import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL,
     SELECT_ROOMS, ALL_RESERVATIONS, URL
 } from './types';
 
-export const search = (city, startDate, endDate, numGuests) => {
-    console.log(city, startDate, endDate, numGuests);
+export const search = (city, startDate, endDate, numGuests, startDateStr, endDateStr) => {
     return dispatch => {
         axios.post('http://localhost:3001/hotels/search', { city, startDate, endDate, numGuests })
             .then(res => {
@@ -16,7 +15,9 @@ export const search = (city, startDate, endDate, numGuests) => {
                         startDate,
                         endDate,
                         numGuests,
-                        hotels: res.data.hotels 
+                        hotels: res.data.hotels,
+                        startDateStr,
+                        endDateStr
                 }});
             })
             .catch(err => {

@@ -21,7 +21,8 @@ class Payment extends Component{
             card: null,
             firstName: '', lastName: '',
             address: '', userCity: '', state: '', zip: '',
-            cardholderName: '' 
+            cardholderName: '',
+            subtotal: 0, total: 0, tax: 0, rewardsPoints: 0
         };
     }
 
@@ -47,7 +48,8 @@ class Payment extends Component{
             hotel, city, startDate, endDate, numGuests, 
             firstName, lastName,
             address, userCity, state, zip,
-            cardholderName 
+            cardholderName,
+            subtotal, total, tax, rewardsPoints
         } = this.state;
 
         let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
@@ -68,7 +70,8 @@ class Payment extends Component{
                     address, userCity, state, zip,
                     cardholderName,
                     charge: res.data.charge,
-                    user_id: this.state.user.id
+                    user_id: this.state.user.id,
+                    subtotal, total, tax, rewardsPoints
                 })
                     .then(() => {
                         this.props.jumpToStep(3);
@@ -85,22 +88,38 @@ class Payment extends Component{
         this.setState({complete: true});
     }
 
+    componentDidMount() {
+        // calculate all prices on window load
+        this.setState({
+            subtotal: this.calculateSubtotal(),
+            total: this.calculateTotal(),
+            tax: this.calculateTax(),
+            rewardsPoints: this.calculateRewardsPoints()
+        });
+    }
+
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     }
 
     calculateSubtotal = () => {
         let subtotal = 0;
+        let duration = 0;
+        let day = 24*60*60*1000;
+
+        duration = Math.round(Math.abs((this.state.startDate - this.state.endDate) / day));
 
         Object.keys(this.state.rooms).map((v,i) => {
             subtotal += this.state.rooms[v] * this.state.hotel.price[v];
         });
 
-        return Number(subtotal);
+        subtotal *= duration;
+
+        return subtotal;
     }
 
     calculateTax = () => Number(this.calculateSubtotal() * 0.0925).toFixed(2);
-    calculateTotal = () => Number(parseInt(this.calculateSubtotal()) + parseInt(this.calculateTax())).toFixed(2);
+    calculateTotal = () => Number(parseFloat(this.calculateSubtotal()) + parseFloat(this.calculateTax())).toFixed(2);
     calculateRewardsPoints = () => Math.floor(Number(this.calculateTotal() * 10))
 
     render(){
@@ -121,13 +140,13 @@ class Payment extends Component{
                                 <br/>
                                 <small>{this.state.hotel.city}, {this.state.hotel.state}</small>
                                 <br/><br/>
-                                Subtotal: ${this.calculateSubtotal()}
+                                Subtotal: ${this.state.subtotal}
                                 <br/>
-                                Tax: ${this.calculateTax()}
+                                Tax: ${this.state.tax}
                                 <br/><br/>
-                                Total: ${this.calculateTotal()}
+                                Total: ${this.state.total}
                                 <br/>
-                                Rewards Points Earned: {this.calculateRewardsPoints()}
+                                Rewards Points Earned: {this.state.rewardsPoints}
                             </Col>
                         </Row>
                     </Card>

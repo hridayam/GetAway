@@ -56,6 +56,7 @@ class registerForm extends Component {
          confirmPassword: this.state.confirmPassword,
          phoneNumber: this.state.phoneNumber
        });
+       
        this.setState({
          modal: !this.state.modal,
          redirect: true
@@ -90,9 +91,6 @@ class registerForm extends Component {
     });
   }
 
-
-
-
   render() {
       return (
           <div>
@@ -119,8 +117,6 @@ class registerForm extends Component {
                           <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                           <Label for="exampleRegPassword">Confirm Password:</Label>
                           <Input type="password" name="confirmPassword" value={this.state.confirmPassword}  onChange={this.handleChange.bind(this)} id='exampleComPassword' placeholder="password" />
-
-
                           </FormGroup>
                       </Col>
                   </Row>
