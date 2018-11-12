@@ -159,7 +159,7 @@ class Login extends Component {
     return this.state.isEditing ? 
       <div className="container">
           <div className="form-control">
-            <b>Upload New Image</b><br/><FileBase64 onDone={file => this.setState({ file })}/><br/><br/>
+            <b>Upload New Image</b><br/><FileBase64 onDone={file => this.setState({ file: file.base64 })}/><br/><br/>
             <b>Email</b><br/>{this.state.profileEmail}<br/><br/>
             <b>Phone Number</b><br/><input className="form-control" onChange={this.handleChange} name="profilePhoneNumber" type="text" value={this.state.profilePhoneNumber}/><br/>
             <b>Address</b><br/><input className="form-control" onChange={this.handleChange} name="profileAddress" type="text" value={this.state.profileAddress}/><br/>
