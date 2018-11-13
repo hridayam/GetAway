@@ -16,6 +16,7 @@
   "dependencies": {
     "concurrently": "*",
     "nodemon": "*",
+    "react-animated-css": "^1.0.4",
     "react-toastify": "^4.4.2"
   }
 }

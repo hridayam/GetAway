@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SearchForm from './SearchForm';
 import Suggestion from './Suggestion';
 import Scroll from '../ScrollUp';
+import { Animated } from 'react-animated-css'
+
 import '../picture/slide/1.jpg';
 import Up from '../picture/arrow.png';
 import '../css/Home.css';
@@ -16,7 +18,9 @@ export default class Home extends Component{
     return(
       <div>
         <div className="background-image" style={ styles.homeStyle }>
-          <SearchForm/>
+          <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
+            <SearchForm/>
+          </Animated>
         </div>
         <Scroll/>
         <Suggestion/>

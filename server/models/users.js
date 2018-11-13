@@ -46,6 +46,9 @@ const userSchema = new Schema({
     },
     reservations: { 
         type: Array
+    },
+    google_id: {
+        type: String
     }
 });
 
