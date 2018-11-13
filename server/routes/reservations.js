@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const Reservation = require('../models/reservation');
 const User = require('../models/users');
@@ -8,30 +9,24 @@ const User = require('../models/users');
 // front end makes request with user id
 // back end sends back array of reservations
 
-router.get('/all', async (req,res) => {
-    try {
-        let { user_id } = req.body;
+router.get('/all', passport.authenticate('jwt', {session: false}),async (req,res) => {
+    let user_id  = req.user._id;
 
-        Reservation.find({ user_id }, (err, data) => {
-            if (err) 
-                res.status(400).json({
-                    success: false,
-                    msg: err
-                });
-            else if (data)
-                res.status(200).json({
-                    success: true,
-                    msg: 'Successfuly found reservations from the user',
-                    data: data
-                });
-        });
-    }
-    catch(err) {
-        res.status(500).json({
-            success: false,
-            err: 'Error occured! Please try again.' 
-        });
-    }
+    Reservation.getAllReservationsByOneUser(user_id, (err, data) => {
+        if(err) {
+            return res.status(422).json({
+                success: false,
+                error: err
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            msg: 'Successfuly found reservations from the user',
+            data: data
+        })
+
+    });
 });
 
 // delete a reservation made by the user
@@ -116,50 +111,38 @@ router.post('/cancel', async (req,res) => {
     }
 });
 
-router.post('/create', async (req,res) => {
-    let { 
-        user_id,
-        hotel, city, startDate, endDate, numGuests,
-        subtotal, tax, total, rewardsPointsEarned,
-        firstName, lastName, adddress, userCity, state, zip, cardholderName,
-        charge
+router.post('/create', passport.authenticate('jwt', {session: false}), async (req,res) => {
+    let data = { 
+        hotel_id,
+        time_created,
+        start_date,
+        end_date,
+        charge,
+        room_number,
+        number_of_guests
     } = req.body;
-    try {
-        let reservation = {
-            user_id,
-            hotel, city, num_guests: numGuests,
-            start_date: startDate, end_Date: endDate,
-            subtotal, tax, total, rewards_points_earned: rewardsPointsEarned,
-            billing_info: {
-                firstName, lastName, adddress, userCity, state, zip, cardholderName
-            },
-            charge
-        };
 
-        let reservationMDBO = new Reservation(reservation);
+    let user_id = req.user._id;
+    data = { ...data, user_id };
+    
+    let reservation = new Reservation(data)
 
-        if (reservation && user_id !== undefined && user_id !== null) {
-            await User.findOneAndUpdate(
-                { _id: user_id }, 
-                { $push: { reservations: reservation }}, 
-                { upsert: true }
-                ).exec();
-            res.status(200).json({
+    Reservation.createReservation(reservation, (err, reservation) => {
+        if(err) {
+            console.log(err);
+            return res.status(422).json({
+                success: false,
+                message: err
+            })
+        }
+        else if (reservation) {
+            return res.status(200).json({
                 success: true,
                 reservation,
                 msg: 'Successfully created the reservation.'
             });
         }
-    }
-    catch(err) {
-        Object.keys(err).map(v => {
-            console.log(err[v]);
-        })
-        res.status(400).json({
-            success: false,
-            msg: err
-        });
-    }
+    })
 });
 
 module.exports = router;
