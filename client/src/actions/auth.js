@@ -4,9 +4,9 @@ import axios from 'axios';
 
 import { LOGIN_USER, LOGOUT_USER } from './types';
 
-export const login = (data) => {
+export const login = (data, cb) => {
     return dispatch => {
-        loginUser(data, dispatch);
+        loginUser(data, dispatch, cb);
     }
 }
 
@@ -15,16 +15,18 @@ export const userLoggedIn = data => ({
     payload: data
 });
 
-const loginUser = (data, dispatch) => {
+const loginUser = (data, dispatch, cb) => {
     axios.post('http://localhost:3001/users/login', data)
         .then(res => {
             localStorage.token = res.data.token;
             localStorage.data = JSON.stringify(res.data.user);
-            console.log(res.data)
+
             dispatch(userLoggedIn({token: res.data.token, user: res.data.user}));
+            cb();
         })
         .catch(err => {
             console.log(err.response);
+            cb(err);
         })
 };
 

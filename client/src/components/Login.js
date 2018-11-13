@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,
+   Form, FormGroup, Label, Input, Row, Col,
+  Popover, PopoverBody, PopoverHeader, Table} from 'reactstrap';
 import { NavLink } from 'reactstrap';
 import {Redirect} from 'react-router-dom';
 
-import { login, logout, register } from '../actions/auth';
+import { login, logout, register, userLoggedIn } from '../actions/auth';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import FileBase64 from 'react-file-base64';
+//import 'react-toastify/dist/ReactToastify.css';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -26,24 +33,45 @@ class Login extends Component {
       zipcode:'',
       phoneNumber:'',
       user: {},
-      isLoggedIn: false
+      isLoggedIn: false,
+      error: false,
+      popoverOpen: false,
+
+      profileEmail: '',
+      profilePhoneNumber: 0,
+      profileAddress: '',
+      isEditing: false,
+      profilePic: '',
+      file: ''
     };
 
   }
-  
+
   static getDerivedStateFromProps(props, state) {
     if (props.user !== state.user){
-      return {
-        ...state,
-        user: props.user
-      };
+      if (props.user !== undefined && props.user) {
+        let { email, phoneNumber, address, profilePic } = props.user;
+        return {
+          ...state,
+          user: props.user,
+          profileEmail: email,
+          profilePhoneNumber: phoneNumber,
+          profileAddress: address,
+          profilePic
+        };
+      } else {
+        return {
+          ...state,
+          user: null
+        }
+      }
     }
     return null;
   }
 
   toggle() {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   }
 
@@ -52,10 +80,15 @@ class Login extends Component {
        this.props.login({
          email: this.state.email,
          password: this.state.password
-       });
-       this.setState({
-         modal: !this.state.modal,
-         isLoggedIn: true
+       }, (err) => {
+        if(err) {
+          this.setState({ error: true})
+        } else {
+          this.setState({
+            modal: !this.state.modal,
+            isLoggedIn: true
+          });
+        }
        });
   }
 
@@ -103,15 +136,92 @@ class Login extends Component {
   toggleAll() {
     this.setState({
       nestedModal: !this.state.nestedModal,
-      closeAll: true
+      closeAll: true,
     });
   }
 
+  togglePop() {
+    this.setState({
+      popoverOpen: !this.state.popoverOpen,
+    });
+  }
+
+  formatPhoneNumber = str => {
+    var stripped = ('' + str).replace(/\D/g, '');
+    var match = stripped.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+    if (match) 
+      return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    return '';
+  }
+
+  renderProfileInfo() {
+    return this.state.isEditing ? 
+      <div className="container">
+          <div className="form-control">
+            <b>Upload New Image</b><br/><FileBase64 onDone={file => this.setState({ file: file.base64 })}/><br/><br/>
+            <b>Email</b><br/>{this.state.profileEmail}<br/><br/>
+            <b>Phone Number</b><br/><input className="form-control" onChange={this.handleChange} name="profilePhoneNumber" type="text" value={this.state.profilePhoneNumber}/><br/>
+            <b>Address</b><br/><input className="form-control" onChange={this.handleChange} name="profileAddress" type="text" value={this.state.profileAddress}/><br/>
+            <button onClick={this.handleProfileEditSubmit} className="btn btn-danger">Submit Changes</button>
+          </div>
+      </div>:
+      <div className="container">
+        <div className="form-control">
+          <b>Email</b><br/>{this.state.profileEmail} <br/><br/>
+          <b>Phone Number</b><br/>{this.state.profilePhoneNumber} <br/><br/>
+          <b>Address</b><br/>{this.state.profileAddress} <br/><br/>
+        </div>
+      </div>
+  }
+
+  handleProfileEditSubmit = () => {
+    axios.post(
+      '/users/edit-profile', {
+        email: this.state.profileEmail,
+        newPhoneNumber: this.formatPhoneNumber(this.state.profilePhoneNumber),
+        newAddress: this.state.profileAddress,
+        file: this.state.file
+    })
+      .then(res => { 
+        if (res.data.success) {
+          localStorage.setItem('data', JSON.stringify(res.data.user));
+          this.props.userLoggedIn({token: this.props.token, user: res.data.user});
+
+          let { phoneNumber, address } = res.data.user;
+          this.setState({ 
+            isEditing: false,
+            profilePhoneNumber: phoneNumber,
+            profileAddress: address
+          });
+        }
+      })
+      .catch(err => { 
+        alert(err);
+      });
+  }
 
   render() {
     if (this.state.user)
       return(
-        <div>  <NavLink style={{ cursor: 'pointer' }} onClick={this.userLogout.bind(this)}>Log Out</NavLink></div>
+        <div>
+          <NavLink id="Popover1" style={{ cursor: 'pointer' }} onClick={this.togglePop.bind(this)}>Profile</NavLink>
+          <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" togglePop={this.togglePop.bind(this)} style={styles.popover}>
+          <PopoverHeader>Hello! {this.props.user.name}</PopoverHeader>
+          <PopoverBody>
+          <img 
+            alt="" 
+            src={this.state.user.profilePic} 
+            style={styles.imageStyles}
+          />
+          {this.renderProfileInfo()}
+          </PopoverBody>
+            <div class="btn btn-warning" style= {{marginRight: 10}} onClick={() => this.setState({ popoverOpen: false })}>Exit Profile</div>
+            { this.state.isEditing ? <Button style ={{marginRight: 10}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button style ={{marginRight: '10px'}} onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
+            <Button onClick={this.userLogout.bind(this)}>Logout</Button>
+          </Popover>
+
+        </div>
       );
 
     else
@@ -123,6 +233,7 @@ class Login extends Component {
             <ModalHeader className="login-header" toggle={this.toggle.bind(this)}>Welcome Back! </ModalHeader>
 
             <ModalBody>
+              {this.state.error? <p style={{color: 'red'}}>Either username or password is incorrect</p>: <p></p>}
               <Form className = "login-body"   >
                   <FormGroup>
                       <Label for="exampleEmail">Email:</Label>
@@ -152,10 +263,28 @@ const mapStateToProps = state => {
     if(!!state.auth.token){
         return {
             isLoggedIn: !!state.auth.token,
-            user: state.auth.user
+            user: state.auth.user,
+            token: state.auth.token
         };
     }
 }
 
-export  default connect(mapStateToProps, { login, logout, register })(Login)
-
+const styles ={
+  imageStyles:{
+    borderRadius: '50%',
+    border: "#A9A9A9",
+    marginBottom: '10px',
+    width: '100%',
+    height:'auto'
+  },
+  popover:{
+    textAlign: 'center',
+    marginBottom:'10px'
+  },
+  headerStyle:{
+    marginTop:10,
+    color: 'white',
+    fontWeight: 'normal',
+},
+}
+export default connect(mapStateToProps, { login, logout, register, userLoggedIn })(Login)

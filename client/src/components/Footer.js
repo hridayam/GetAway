@@ -18,10 +18,10 @@ export default class Footer extends Component{
             <br/>
             <Col sm="12" md="4" style={{textAlign:'center'}}>
               <h5 className="text-uppercase font-weight-bold" style={{marginBottom: '30px'}}>Contact</h5>
-                <p><i class="fa fa-home mr-3"/>San Jose, CA 95192, US</p>
-                <p><i class="fa fa-envelope mr-3"/>info@getaway.com</p>
-                <p><i class="fa fa-phone mr-3"/>+ 01 408 GET AWAY</p>
-                <p><i class="fa fa-print mr-3"/> + 01 234 567 89</p>
+                <p><i className="fa fa-home mr-3"/>San Jose, CA 95192, US</p>
+                <p><i className="fa fa-envelope mr-3"/>info@getaway.com</p>
+                <p><i className="fa fa-phone mr-3"/>+ 01 408 GET AWAY</p>
+                <p><i className="fa fa-print mr-3"/> + 01 234 567 89</p>
             </Col>
             <br/>
             <Col sm="12" md="4">
@@ -44,7 +44,7 @@ export default class Footer extends Component{
               <br/><br/>
               <h5 style={{float:'left'}}> Subscribe to Our Emails:</h5>
               <Form className="input-group">
-                <Input type="text" class="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
+                <Input type="text" className="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
                 <div className="input-group-append">
                   <Button className="btn btn-sm btn-outline-white" type="button">Sign up</Button>
                 </div>

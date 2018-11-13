@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { 
-        Container, Button, DropdownMenu, 
+import {
+        Container, Button, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
 import { Carousel } from 'react-responsive-carousel';
 
@@ -17,18 +17,34 @@ class SelectHotel extends Component{
 
         this.state={
             dropdownOpen: false,
-            hotels: [],
-            chosenHotel: null
+            city: '',
+            startDate: '',
+            endDate: '',
+            numGuests: 1,
+            chosenHotel: null,
+            sortOption: '',
+            reservation: {},
+            hotels: null
         };
-        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.toggleDropdown = this. toggleDropdown.bind(this);
     }
 
+    setSort(e) {
+        this.setState({sortOption: e});
+    }
+
+
     static getDerivedStateFromProps(props, state){
-        if(props.hotels !== state.hotels){
+        if(props.reservation !== state.reservation){
+            let { city, startDate, endDate, numGuests, hotels } = props.reservation;
             return{
                 ...state,
-                hotels: props.hotels
-            }
+                reservation: props.reservation,
+                hotels,
+                city,
+                startDate, endDate,
+                numGuests
+            };
         }
         return null;
     }
@@ -42,7 +58,7 @@ class SelectHotel extends Component{
                             { hotel.images && hotel.images.length ?
                             <Carousel autoPlay infiniteLoop>
                                 {hotel.images.map((v,i) =>
-                                    <div>
+                                    <div key={i}>
                                         <img src={v} alt="" className="w-100"/>
                                     </div>
                                 )}
@@ -51,14 +67,13 @@ class SelectHotel extends Component{
                         <div className="col-md-5 px-3">
                             <div className="card-block px-3">
                                 <h3 className="card-title">{hotel.name}</h3>
-                                <p className="card-text"><i class="far fa-star"></i> {hotel.stars} Stars</p>
+                                <p className="card-text"><i className="far fa-star"></i> {hotel.stars} Stars</p>
                             </div>
                         </div>
-                        <div class="col-md-3 price">
-                            Starting from<h3 class="reservation-price">${hotel.price.extra_bed} per night</h3>
-                            <Button 
-                                style={cssStyles.buttonRoom} 
-                                bsStyle="primary" 
+                        <div className="col-md-3 price">
+                            Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
+                            <Button
+                                style={cssStyles.buttonRoom}
                                 onClick={() => {
                                     this.props.selectHotel(hotel);
                                     this.props.jumpToStep(1);
@@ -78,6 +93,13 @@ class SelectHotel extends Component{
     }
 
     render() {
+        if (this.state.sortOption === "low") {
+            this.props.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
+        }
+        else if (this.state.sortOption === "high"){
+            this.props.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
+        }
+
         return(
             <div>
                 <Container>
@@ -122,7 +144,7 @@ const cssStyles = {
 
 const mapStatetoProps = state => {
     return {
-        hotels: state.reservation.hotels
+        reservation: state.reservation
     };
 }
 

@@ -12,15 +12,68 @@ class Reservation extends Component{
         super(props);
         this.state = {
             city: '',
-            startDate: 0,
-            endDate: 0,
-            numGuests: 0
+            startDate: '',
+            endDate: '',
+            numGuests: 1,
+            reservation: {}
         };
+    }
+
+    static getDerivedStateFromProps(props,state) {
+        if (props.reservation !== state.reservation) {
+            let { city, startDateStr, endDateStr, numGuests } = props.reservation;
+            return {
+                reservation: props.reservation,
+                city: city
+                        .toLowerCase()
+                        .replace(/\b[a-z](?=[a-z]{2})/g, 
+                            function(letter) {
+                                return letter.toUpperCase(); } ),
+                startDate: startDateStr,
+                endDate: endDateStr,
+                numGuests,
+            };
+        }
+        return null;
     }
 
     handleChange = event => {
         let { name, value } = event.target;
         this.setState({ [name]: value });
+    }
+
+    handleSubmit = () => {
+        let { city, startDate, endDate, numGuests } = this.state;
+        if (startDate.length && endDate.length) {
+            let sdSplit = startDate.split('-');
+            let edSplit = endDate.split('-');
+
+            let sdDate = new Date(
+                            sdSplit[0], 
+                            sdSplit[1], 
+                            sdSplit[2],
+                            0, 0, 0, 0);
+            let edDate = new Date(
+                            edSplit[0],
+                            edSplit[1],
+                            edSplit[2],
+                            0, 0, 0, 0);
+            
+            this.props.search(
+                city, 
+                sdDate.getTime(), 
+                edDate.getTime(), 
+                numGuests,
+                startDate,
+                endDate);
+        }
+
+        else 
+            this.props.search(
+                city, 
+                0, 
+                0, 
+                numGuests);
     }
 
     render(){
@@ -36,13 +89,12 @@ class Reservation extends Component{
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Location:  </Label>
                             <Input onChange={this.handleChange} name="city" value={this.state.city} className="location" placeholder="City Name"/> 
-                            {/* replace placeholder = "Location" with the current city that was chosen*/}
                         </FormGroup>
                     </Col>
                     <Col xs="6" sm="6" lg="2">
                         <FormGroup >
                             <Label className="edit-label" for="exampleDate"> Guests:  </Label>
-                            <Input type="select" name="select" id="exampleSelect" placeholder="sm">
+                            <Input value={this.state.numGuests} onChange={this.handleChange} type="select" name="numGuests" id="exampleSelect" placeholder="sm">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -59,20 +111,17 @@ class Reservation extends Component{
                     <Col xs="6" sm="6" lg="3">
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Check In:</Label>
-                            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                            <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
                     <Col xs="6" sm="6" lg="3">
                         <FormGroup>
                             <Label className="edit-label" for="exampleDate"> Check Out:</Label>
-                            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
+                            <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" placeholder="date placeholder" />
                         </FormGroup>
                     </Col>
                     <Col style={styles.updateButton} xs="12" sm="12" lg="2">
-                        <Button onClick={() => {
-                            if (this.state.city.length)
-                                this.props.search(this.state.city)
-                        }}>Update Search</Button>
+                        <Button onClick={this.handleSubmit}>Update Search</Button>
                     </Col>
                 </Row>
             </Form>
@@ -102,4 +151,10 @@ const styles = {
     }
 };
 
-export default connect(null, { search })(Reservation);
+const mapStateToProps = state => {
+    return {
+        reservation: state.reservation
+    };
+};
+
+export default connect(mapStateToProps, { search })(Reservation);

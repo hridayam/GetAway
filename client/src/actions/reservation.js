@@ -4,24 +4,26 @@ import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL,
     SELECT_ROOMS, ALL_RESERVATIONS, URL
 } from './types';
 
-export const search = (city, startDate, endDate, numGuests) => {
+export const search = (city, startDate, endDate, numGuests, startDateStr, endDateStr) => {
     return dispatch => {
         axios.post('http://localhost:3001/hotels/search', { city, startDate, endDate, numGuests })
-        .then(res => {
-            dispatch({ 
-                type: SEARCH_HOTELS , 
-                payload: {
-                    city,
-                    startDate,
-                    endDate,
-                    numGuests,
-                    hotels: res.data.hotels 
-            }})
-        })
-        .catch(err => {
-            console.log(err.response);
+            .then(res => {
+                dispatch({ 
+                    type: SEARCH_HOTELS , 
+                    payload: {
+                        city,
+                        startDate,
+                        endDate,
+                        numGuests,
+                        hotels: res.data.hotels,
+                        startDateStr,
+                        endDateStr
+                }});
             })
-        }
+            .catch(err => {
+                console.log(err.response);
+                });
+            }
 }
 
 export const chooseRoom = (id, roomType, price) => {

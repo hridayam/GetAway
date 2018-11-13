@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const Reservation = require('../models/reservation');
+const User = require('../models/users');
 
 // gets all the reservations made by user
 // front end makes request with user id

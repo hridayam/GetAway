@@ -8,10 +8,11 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
         case PAYMENT:
+            let { reservationid, price } = action.payload;
             return{
                 ...state,
-                reservationid: action.payload,
-                price: action.payload
+                reservationid,
+                price
             }
         default:
             return state;
