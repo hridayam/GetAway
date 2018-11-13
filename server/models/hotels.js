@@ -51,7 +51,6 @@ const hotelSchema = new Schema({
     }]
 });
 
-
 const Hotel = module.exports = mongoose.model('Hotel', hotelSchema);
 
 // create a user function
@@ -128,6 +127,8 @@ module.exports.createHotels = function(newHotel, callBack) {
     //console.log(hotelsList);
     Hotel.insertMany(hotelsList, callBack)
 }
+
+const Hotel = module.exports = mongoose.model('Hotel', hotelSchema);
 
 // get the user with an id
 module.exports.getHotelById = function(id, callback) {
@@ -533,3 +534,40 @@ const double = [
 "https://media.expedia.com/hotels/7000000/6280000/6272000/6271901/6271901_33_z.jpg",
 "https://media.expedia.com/hotels/1000000/870000/861900/861823/861823_97_z.jpg",
 ];
+
+// updates the hotel by saving the date booled in the 
+module.exports.bookRoom = function(data, callback) {
+    const { id, room_number, start_date, end_date } = data;
+
+    date = getDates(start_date, end_date);
+    this.getHotelById(id, (err, hotel) => {
+        if (err) return callback(err);
+        
+        hotel.rooms[room_number - 1].dates_booked = hotel.rooms[room_number - 1].dates_booked.concat(date)
+        hotel.save((err, updatedHotel) => {
+            if (err) return callback(err);
+            return callback(null, updatedHotel);
+        })
+    });
+}
+
+function getDates(startDate, stopDate) {
+    startDate = new Date(startDate);
+    stopDate = new Date(stopDate);
+
+    var dateArray = new Array();
+    var currentDate = startDate;
+
+    while (currentDate <= stopDate) {
+        console.log(`${currentDate} ${stopDate}`)
+        dateArray.push(currentDate.valueOf());
+        currentDate = currentDate.addDays(1);
+    }
+    return dateArray;
+}
+
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
