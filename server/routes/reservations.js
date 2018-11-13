@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const Reservation = require('../models/reservation');
 
@@ -7,30 +8,24 @@ const Reservation = require('../models/reservation');
 // front end makes request with user id
 // back end sends back array of reservations
 
-router.get('/all', async (req,res) => {
-    try {
-        let { user_id } = req.body;
+router.get('/all', passport.authenticate('jwt', {session: false}),async (req,res) => {
+    let user_id  = req.user._id;
 
-        Reservation.find({ user_id }, (err, data) => {
-            if (err) 
-                res.status(400).json({
-                    success: false,
-                    msg: err
-                });
-            else if (data)
-                res.status(200).json({
-                    success: true,
-                    msg: 'Successfuly found reservations from the user',
-                    data: data
-                });
-        });
-    }
-    catch(err) {
-        res.status(500).json({
-            success: false,
-            err: 'Error occured! Please try again.' 
-        });
-    }
+    Reservation.getAllReservationsByOneUser(user_id, (err, data) => {
+        if(err) {
+            return res.status(422).json({
+                success: false,
+                error: err
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            msg: 'Successfuly found reservations from the user',
+            data: data
+        })
+
+    });
 });
 
 // delete a reservation made by the user
@@ -115,42 +110,38 @@ router.post('/cancel', async (req,res) => {
     }
 });
 
-router.post('/create', async (req,res) => {
-    let { 
-        user_id,
-        hotel_name, address, city,
-        price
+router.post('/create', passport.authenticate('jwt', {session: false}), async (req,res) => {
+    let data = { 
+        hotel_id,
+        time_created,
+        start_date,
+        end_date,
+        charge,
+        room_number,
+        number_of_guests
     } = req.body;
 
-    try {
-        let reservation = new Reservation({
-            user_id,
-            hotel_name,
-            city,
-            address,
-            price
-        })
+    let user_id = req.user._id;
+    data = { ...data, user_id };
+    
+    let reservation = new Reservation(data)
 
-        reservation.save((err, reservation, numAffected) => {
-            if (err)
-                res.status(400).json({
-                    success: false,
-                    msg: err
-                });
-            else if (reservation)
-                res.status(200).json({
-                    success: true,
-                    reservation,
-                    msg: 'Successfully created the reservation.'
-                });
-        });
-    }
-    catch(err) {
-        res.status(400).json({
-            success: false,
-            msg: err
-        });
-    }
+    Reservation.createReservation(reservation, (err, reservation) => {
+        if(err) {
+            console.log(err);
+            return res.status(422).json({
+                success: false,
+                message: err
+            })
+        }
+        else if (reservation) {
+            return res.status(200).json({
+                success: true,
+                reservation,
+                msg: 'Successfully created the reservation.'
+            });
+        }
+    })
 });
 
 module.exports = router;

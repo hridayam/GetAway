@@ -1,6 +1,8 @@
 const mongoose  = require ('mongoose');
 const fs = require('fs');
 
+//const cities = require('./usaCities.json');
+
 const Schema = mongoose.Schema;
 
 const hotelSchema = new Schema({
@@ -8,21 +10,17 @@ const hotelSchema = new Schema({
         type: String,
         required: true
     },
-    city: {
-        type: String,
-        required: true
+    address: {
+        streetName: String,
+        city: String,
+        state: String,
+        zipcode: Number
     },
-    state: {
-        type: String,
-        required: true
-    },
-    zipcode: {
-        type: Number,
-        required: true
-    },
-    base_price: {
-        type: Number,
-        required: true
+    price: {
+        queen: Number,
+        king: Number,
+        twin: Number,
+        extra_bed:Number
     },
     stars: {
         type: Number,
@@ -44,28 +42,56 @@ const hotelSchema = new Schema({
             type: Number,
             required: true
         },
-        images: [{
+        images: {
             type: String
-        }],
+        },
         dates_booked: [{
-            type: Date
+            type: Number
         }]
     }]
 });
 
+
 const Hotel = module.exports = mongoose.model('Hotel', hotelSchema);
-
-// create a user function
-// user will be created if the bcrypt.genSalt and bcrypt.hash functions are successful
-module.exports.createHotels = function(newHotel, callBack) {
-    let cities = fs.readFile('usaCities.js', 'utf8');
-
-    const maxNum = cities.length;
-    const num = Math.floor(Math.random() * 11) * maxNum / 10;
-    
-}
 
 // get the user with an id
 module.exports.getHotelById = function(id, callback) {
     Hotel.findById(id, callback);
+}
+
+// updates the hotel by saving the date booled in the 
+module.exports.bookRoom = function(data, callback) {
+    const { id, room_number, start_date, end_date } = data;
+
+    date = getDates(start_date, end_date);
+    this.getHotelById(id, (err, hotel) => {
+        if (err) return callback(err);
+        
+        hotel.rooms[room_number - 1].dates_booked = hotel.rooms[room_number - 1].dates_booked.concat(date)
+        hotel.save((err, updatedHotel) => {
+            if (err) return callback(err);
+            return callback(null, updatedHotel);
+        })
+    });
+}
+
+function getDates(startDate, stopDate) {
+    startDate = new Date(startDate);
+    stopDate = new Date(stopDate);
+
+    var dateArray = new Array();
+    var currentDate = startDate;
+
+    while (currentDate <= stopDate) {
+        console.log(`${currentDate} ${stopDate}`)
+        dateArray.push(currentDate.valueOf());
+        currentDate = currentDate.addDays(1);
+    }
+    return dateArray;
+}
+
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
 }
