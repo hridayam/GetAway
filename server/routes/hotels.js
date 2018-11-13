@@ -31,4 +31,15 @@ router.get('/find_all', async(req,res) => {
     }
 });
 
+router.get('/generate_random_hotel', async(req,res) => {
+    try {
+        Hotels.createHotels(null, (err, res) => {
+            console.log(err)
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+});
+
 module.exports = router;
