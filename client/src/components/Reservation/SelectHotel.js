@@ -94,10 +94,10 @@ class SelectHotel extends Component{
 
     render() {
         if (this.state.sortOption === "low") {
-            this.props.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
+            this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
         }
         else if (this.state.sortOption === "high"){
-            this.props.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
+            this.state.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
         }
 
         return(

@@ -17,6 +17,7 @@
     "concurrently": "*",
     "nodemon": "*",
     "react-animated-css": "^1.0.4",
+    "react-scroll-to": "^2.0.1",
     "react-toastify": "^4.4.2"
   }
 }

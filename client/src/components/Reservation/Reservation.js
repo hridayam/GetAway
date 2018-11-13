@@ -26,9 +26,9 @@ class Reservation extends Component{
                 reservation: props.reservation,
                 city: city
                         .toLowerCase()
-                        .replace(/\b[a-z](?=[a-z]{2})/g, 
-                            function(letter) {
-                                return letter.toUpperCase(); } ),
+                        .replace(
+                            /\b[a-z](?=[a-z]{2})/g, 
+                            letter => letter.toUpperCase()),
                 startDate: startDateStr,
                 endDate: endDateStr,
                 numGuests,
@@ -72,6 +72,8 @@ class Reservation extends Component{
             this.props.search(
                 city, 
                 0, 
+                0,
+                0,
                 0, 
                 numGuests);
     }
