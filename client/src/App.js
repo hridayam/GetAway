@@ -7,7 +7,9 @@ import Footer from './components/Footer';
 import Profile from './components/Profile/Profile';
 import Reservation from './components/Reservation/Reservation';
 import AboutUs from './components/AboutUs';
-
+import Register from './components/Register';
+import GuestRoute from './components/Routes/GuestRoute';
+import UserRoute from './components/Routes/UserRoute';
 
 //import logo from './logo.svg';
 import './App.css';
@@ -20,9 +22,10 @@ class App extends Component {
         <BrowserRouter>
             <div id='routes' style={ styles.routeStyle }>
               <Route exact path='/' component={Home} />
-              <Route exact path='/profile' component={Profile}/>
+              <UserRoute exact path='/profile' component={Profile}/>
               <Route exact path = '/reservation' component ={Reservation}/>
               <Route exact path = '/aboutus' component ={AboutUs}/>
+              <GuestRoute exact path = '/register' component ={Register}/>
             </div>
         </BrowserRouter>
 

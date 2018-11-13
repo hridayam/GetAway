@@ -82,7 +82,7 @@
    display: inline-block;
    width: 100%;
    height: 3.4em;
-   color: white;
+   color: black;
 
  }
  .search-date{
@@ -108,7 +108,7 @@
 
 .suggestion{
    margin-top: 30px;
-   margin-bottom: 30px;
+   margin-bottom: 20px;
    text-align: center;
 }
 
@@ -122,7 +122,7 @@
 }
 
 .suggestion-card{
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 
 .card-title{
@@ -140,6 +140,7 @@
   text-align: center;
   font-size: auto;
   padding-bottom: 20px;
+  height: 100px;
 }
 
 .button-suggestion{
@@ -153,7 +154,9 @@
   line-height: 1;
   color: #407bae;
   border: 0px;
+  margin-top: 20px;
 }
+
 
 /* Login */
 .modal-body{
@@ -209,13 +212,13 @@ label{
 .reservation-search-edit{
   border: 1px solid #e2e2e2;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.027);
+  /* background-color: rgba(0, 0, 0, 0.027); */
+  background-color:#80cbc4;
   text-align: center;
-  margin-top: 50px;
   padding-top: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
   padding-bottom: 10px;
+  /* padding-left: 30px;
+  padding-right: 30px; */
 }
 
 .edit-label{
@@ -225,4 +228,14 @@ label{
 
 .search-date.reservation.row{
   margin-top:5px;
+}
+
+.StripeElement {
+  display: block;
+  margin: 10px 0 20px 0;
+  max-width: 500px;
+  padding: 10px 14px;
+  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
+  border-radius: 4px;
+  background: white;
 }

@@ -7,24 +7,17 @@ var keys = require('../config/stripe');
 var stripe = require('stripe')(keys.secret_key);
 
 router.post('/pay', function(req, res) {
-    let { amount, currency, source, customer, reservation_id } = req.body;
-
+    let { data } = req.body;
     // maybe not needed
     // const destination = {
     //     account: "acct_1DCutGGZF8qeVOU9"
     // };
 
-    stripe.charges.create({
-        amount,
-        currency,
-        source,
-        description: '',
-        customer
-    }, (err, charge) => {
+    stripe.charges.create(data, (err, charge) => {
         if (err) 
             return res.status(400).json({ success: false, msg: err });
         if (charge) {
-            return res.status(200).json({ success: true, msg: charge });
+            return res.status(200).json({ success: true, charge, msg: 'Successfully charged the customer' });
         }
     });
 });
