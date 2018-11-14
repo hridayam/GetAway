@@ -1,6 +1,8 @@
 const mongoose  = require ('mongoose');
 const bcrypt = require ('bcryptjs');
 
+const Reservation = require('./reservation');
+
 const Schema = mongoose.Schema;
 
 // validate the user's email
