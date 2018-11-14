@@ -30,7 +30,12 @@ const ReservationSchema = new mongoose.Schema({
     end_date: Number,
     charge: Object,
     number_of_guests: Number,
-    cancelled: { type: Boolean, default: false }
+    subtotal: Number,
+    total: Number,
+    tax: Number,
+    rewardsPoints: Number,
+    cancelled: { type: Boolean, default: false },
+    rooms: Object
 });
 
 const Reservation = module.exports = mongoose.model('Reservation', ReservationSchema);
@@ -39,7 +44,16 @@ const Reservation = module.exports = mongoose.model('Reservation', ReservationSc
 module.exports.createReservation = function (newReservation, callback) {
     newReservation.save((err, reservation) => {
         if (err) return callback(err);
-        return callback(null, reservation);
+
+        // if user is registered, add points
+        User.getUserByEmail(reservation.user.email, (err, user) => {
+            if (err) return callback(null, reservation);
+            user.rewardsPoints += reservation.rewardsPoints;
+            user.save(() => {
+                return callback(null, reservation)
+            });
+        })
+        //return callback(null, reservation);
         // const { hotel_id, room_number, start_date, end_date } = reservation;
         // Hotel.bookRoom({ id: hotel_id, room_number, start_date, end_date }, (err, res) => {
         //     if (err) callback(err);
