@@ -10,6 +10,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -21,6 +22,7 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.13",
     "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
     "passport-jwt": "^4.0.0",
     "stripe": "^6.11.0",
     "uuid": "^3.3.2"

@@ -73,7 +73,11 @@ router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), a
 // backend responds with 200 for successful update or 400 for unsuccessful update
 router.post('/update', async (req,res) => {
     try {
-        let { reservation, user_id } = req.body;
+        let { 
+            reservation_id,
+            newStartDate, newEndDate,
+            newNumGuests, newRooms
+        } = req.body;
 
         await Reservation.findOneAndUpdate({ _id: reservation._id }, { $set: { ...reservation }});
 
