@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {CardElement, CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
 import axios from 'axios';
 import {Button, Form, FormGroup, Col, Row, Input, Label, Card, CardTitle} from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import classnames from 'classnames';
+
 import Scroll from '../ScrollUp';
 import '../css/Home.css';
 import {connect} from 'react-redux';
@@ -22,7 +25,8 @@ class Payment extends Component{
             firstName: '', lastName: '',
             address: '', userCity: '', state: '', zip: '',
             cardholderName: '',
-            subtotal: 0, total: 0, tax: 0, rewardsPoints: 0
+            subtotal: 0, total: 0, tax: 0, rewardsPoints: 0,
+            activeTab: '1'
         };
     }
 
@@ -122,6 +126,14 @@ class Payment extends Component{
     calculateTotal = () => Number(parseFloat(this.calculateSubtotal()) + parseFloat(this.calculateTax())).toFixed(2);
     calculateRewardsPoints = () => Math.floor(Number(this.calculateTotal() * 10))
 
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+          this.setState({
+            activeTab: tab
+          });
+        }
+      }
+
     render(){
         if (this.state.complete) return <h1>Purchase Complete</h1>;
 
@@ -197,7 +209,55 @@ class Payment extends Component{
                     </Card >
 
                     <Card body outline color="info" style={styles.panel} >
-                        <CardTitle>CREDIT CARD DETAIL</CardTitle>
+                        <Nav tabs>
+                            <NavItem>
+                                <NavLink
+                                className={classnames({ active: this.state.activeTab === '1' })}
+                                onClick={() => { this.toggle('1'); }}
+                                >
+                                    Rewards Points Checkout
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                className={classnames({ active: this.state.activeTab === '2' })}
+                                onClick={() => { this.toggle('2'); }}
+                                >
+                                    Credit Card Checkout
+                                </NavLink>
+                            </NavItem>
+                            </Nav>
+                            <TabContent activeTab={this.state.activeTab}>
+                            <TabPane tabId="1">
+                                <br/>
+                                <Row>
+                                    <Col sm="12">
+                                        <h4>Tab 1 Contents</h4>
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                            <TabPane tabId="2">
+                                <br/>
+                                <Row >
+                                    <Col sm="12" md={{ size: 8, offset: 2 }}>
+
+                                        <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
+                                        borderRadius: '4px', padding: '10px 14px', fontSize: '16px'}}/>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col sm="12" md={{ size: 8, offset: 2 }} >
+
+                                        <CardElement style={styles.cardpanel}/>
+
+                                        <p style={styles.cardinfo}>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
+                                        <Button color="info" onClick={this.handleSubmit}>Place Order</Button>
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                        </TabContent>
+                        {/* <CardTitle>CREDIT CARD DETAIL</CardTitle>
                         <Row >
                             <Col sm="12" md={{ size: 8, offset: 2 }}>
 
@@ -214,7 +274,7 @@ class Payment extends Component{
                                 <p style={styles.cardinfo}>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
                                 <Button color="info" onClick={this.handleSubmit}>Place Order</Button>
                             </Col>
-                        </Row>
+                        </Row> */}
                     </Card>
                 </FormGroup>
             </Form>

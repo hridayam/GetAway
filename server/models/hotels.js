@@ -161,7 +161,6 @@ module.exports.createHotels = function(newHotel, callBack) {
             hotelsList.push(hotel);
         }
     }
-    //console.log(hotelsList);
     Hotel.insertMany(hotelsList, callBack)
 }
 
