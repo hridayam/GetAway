@@ -124,11 +124,8 @@ module.exports.createHotels = function(newHotel, callBack) {
             hotelsList.push(hotel);
         }
     }
-    //console.log(hotelsList);
     Hotel.insertMany(hotelsList, callBack)
 }
-
-const Hotel = module.exports = mongoose.model('Hotel', hotelSchema);
 
 // get the user with an id
 module.exports.getHotelById = function(id, callback) {
