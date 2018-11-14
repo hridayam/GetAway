@@ -17,8 +17,6 @@
     "concurrently": "*",
     "mdbreact": "^4.8.3",
     "nodemon": "*",
-    "react-animated-css": "^1.0.4",
-    "react-scroll-to": "^2.0.1",
-    "react-toastify": "^4.4.2"
+    "react-loader-spinner": "^2.2.0"
   }
 }

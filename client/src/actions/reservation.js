@@ -1,11 +1,18 @@
 import axios from 'axios';
 
 import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, 
-    SELECT_ROOMS, ALL_RESERVATIONS, URL
+    SELECT_ROOMS, ALL_RESERVATIONS, URL, START_LOADING, END_LOADING
 } from './types';
 
 export const search = (city, startDate, endDate, numGuests, startDateStr, endDateStr) => {
     return dispatch => {
+        dispatch({
+            type: START_LOADING,
+            payload: {
+                isLoading: true
+            }
+        });
+
         axios.post('http://localhost:3001/hotels/search', { city, startDate, endDate, numGuests })
             .then(res => {
                 dispatch({ 
@@ -19,6 +26,12 @@ export const search = (city, startDate, endDate, numGuests, startDateStr, endDat
                         startDateStr,
                         endDateStr
                 }});
+                dispatch({
+                    type: END_LOADING,
+                    payload: {
+                        isLoading: false
+                    }
+                });
             })
             .catch(err => {
                 console.log(err.response);

@@ -274,8 +274,8 @@ const styles ={
     borderRadius: '50%',
     border: "#A9A9A9",
     marginBottom: '10px',
-    width: '100%',
-    height:'auto'
+    width: '250px',
+    height:'250px'
   },
   popover:{
     textAlign: 'center',
