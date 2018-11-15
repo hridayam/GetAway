@@ -6,11 +6,12 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt =  require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const cloudinary = require('cloudinary');
+const axios = require('axios');
 
 const config = require('../config/database');
 const User = require('../models/users');
 
-//let locUser;
 
 // get one user
 router.get('/profile', passport.authenticate('jwt', {session: false}), function(req, res, next){
@@ -27,7 +28,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), function(
 
 router.post('/register', function(req, res) {
     const name = req.body.name;
-    const email = req.body.email;
+    let email = req.body.email.toLowerCase();
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
     const address = req.body.address;
@@ -44,6 +45,7 @@ router.post('/register', function(req, res) {
 
     const errors = req.validationErrors();
     if(errors) {
+        res.status(422).json({success: false, msg: 'Failed to register User', errors: errors});
         console.log(errors);
     } else {
         const newUser = new User({
@@ -56,7 +58,7 @@ router.post('/register', function(req, res) {
 
         User.createUser(newUser, function(err, user){
             if(err) {
-                res.status(500).json({success: false, msg: 'Failed to register User'});
+                res.status(500).json({success: false, msg: 'Failed to register User', errors: err});
                 console.log(err)
             } else {
                 res.status(200).json({success: true, msg: 'User Registered'});
@@ -69,7 +71,8 @@ router.post('/register', function(req, res) {
 
 router.post('/login', (req, res, next) => {
     console.log(req.body);
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
+
     const password = req.body.password;
 
     User.getUserByEmail(email, function(err, user){
@@ -108,6 +111,65 @@ router.post('/login', (req, res, next) => {
     });
 });
 
+router.post('/edit-profile', async (req, res) => {
+    let { email, newPhoneNumber, newAddress, file  } = req.body;
+    
+    try {
+        if (file.length) {
+            cloudinary.v2.uploader.upload(file, async (error, result) => {
+                try {
+                    let user = await User.findOneAndUpdate(
+                        { email }, {
+                            phoneNumber: newPhoneNumber,
+                            address: newAddress,
+                            profilePic: result.secure_url
+                        }).exec();
+                    
+                    user.phoneNumber = newPhoneNumber;
+                    user.address = newAddress;
+                    user.profilePic = result.secure_url;
+
+                    return res.status(200).json({
+                        success: true,
+                        msg: 'Successfully edited user\'s profile!',
+                        user
+                    });
+                }
+                catch(err) {
+                    return res.status(400).json({
+                        success: false,
+                        msg: 'Error from server!',
+                        err
+                    });
+                }
+            })
+        } else {
+            let user = await User.findOneAndUpdate(
+                { email }, {
+                    phoneNumber: newPhoneNumber,
+                    address: newAddress
+                }).exec();
+            
+            user.phoneNumber = newPhoneNumber;
+            user.address = newAddress;
+
+            return res.status(200).json({
+                success: true,
+                msg: 'Successfully edited user\'s profile!',
+                user
+            });
+        }
+    }
+    catch(err) {
+        return res.status(400).json({
+            success: false,
+            msg: 'Error from server!',
+            err
+        });
+    }
+});
+
+
 //no need
 router.put('/connect', passport.authenticate('jwt', {session: false}), function(req, res, next){
     if (req.user.role.toLowerCase() == 'applicant') {
@@ -135,7 +197,6 @@ router.put('/connect', passport.authenticate('jwt', {session: false}), function(
         }
     });
 });
-
 // no need
 router.get('/connections', passport.authenticate('jwt', {session: false}), function(req, res, next){
     var users = [];

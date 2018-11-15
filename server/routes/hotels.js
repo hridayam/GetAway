@@ -19,12 +19,23 @@ router.post('/search', async(req,res) => {
     let { city } = req.body;
 
     try {
-        findHotels({ city: new RegExp(city, 'i') }, res);
+        findHotels({ 'address.city': new RegExp(city, 'i') }, res);
     } catch(err) {
         res.status(400).json({
             success: false,
             msg: 'Failed to find any hotels with that address'
         });
+    }
+});
+
+router.get('/generate_random_hotel', async(req,res) => {
+    try {
+        Hotels.createHotels(null, (err, res) => {
+            console.log(err)
+        });
+    }
+    catch(err) {
+        console.log(err);
     }
 });
 

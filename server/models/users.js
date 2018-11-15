@@ -1,6 +1,8 @@
 const mongoose  = require ('mongoose');
 const bcrypt = require ('bcryptjs');
 
+const Reservation = require('./reservation');
+
 const Schema = mongoose.Schema;
 
 // validate the user's email
@@ -25,7 +27,7 @@ const userSchema = new Schema({
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         required: true
     },
     password: {
@@ -42,10 +44,13 @@ const userSchema = new Schema({
     },
     profilePic: {
         type: String,
-        default: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg/600px-Default_profile_picture_%28male%29_on_Facebook.jpg"
+        default: "http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
     },
     reservations: { 
         type: Array
+    },
+    google_id: {
+        type: String
     }
 });
 

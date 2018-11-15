@@ -17,24 +17,34 @@ class SelectHotel extends Component{
 
         this.state={
             dropdownOpen: false,
-            hotels: [],
+            city: '',
+            startDate: '',
+            endDate: '',
+            numGuests: 1,
             chosenHotel: null,
-            sortOption: ''
+            sortOption: '',
+            reservation: {},
+            hotels: null
         };
-        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.toggleDropdown = this. toggleDropdown.bind(this);
     }
 
     setSort(e) {
-  this.setState({sortOption: e});
+        this.setState({sortOption: e});
     }
 
 
     static getDerivedStateFromProps(props, state){
-        if(props.hotels !== state.hotels){
+        if(props.reservation !== state.reservation){
+            let { city, startDate, endDate, numGuests, hotels } = props.reservation;
             return{
                 ...state,
-                hotels: props.hotels
-            }
+                reservation: props.reservation,
+                hotels,
+                city,
+                startDate, endDate,
+                numGuests
+            };
         }
         return null;
     }
@@ -83,36 +93,59 @@ class SelectHotel extends Component{
     }
 
     render() {
-      if (this.state.sortOption === "low") {
-        this.props.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
-      }
-      else if (this.state.sortOption === "high"){
-        this.props.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
-      }
-
+        if (this.state.sortOption === "low") {
+            this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
+        }
+        else if (this.state.sortOption === "high"){
+            this.state.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
+        }
 
         return(
             <div>
-                <Container>
-                    <div>
-                        <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                        <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
-                            Sort By:
-                        </DropdownToggle>
+            <div>
+             <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({wifi: !this.state.wifi})}>
+             <i class="fas fa-wifi"></i>  Free Wifi</Button>
+             <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({gym: !this.state.gym})}>
+             <i class="fas fa-dumbbell"></i>     Gym</Button>
+             <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({pool: !this.state.pool})}>
+             <i class="fas fa-swimmer"></i>     Pool</Button>
+             <Button style={this.state.breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({breakfast: !this.state.breakfast})}>
+             <i class="fas fa-utensils"></i>      Breakfast Included</Button>
+             <Button style={this.state.iron?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({iron: !this.state.iron})}>
+             <i class="fas fa-tshirt"></i>      Iron</Button>
+             <Button style={this.state.coffeemaker?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({coffeemaker: !this.state.coffeemaker})}>
+             <i class="fas fa-coffee"></i>     Coffee Maker</Button>
+             <Button style={this.state.tv?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({tv: !this.state.tv})} >
+             <i class="fas fa-tv"></i>      TV</Button>
+           </div>
 
-                        <DropdownMenu>
-                            <DropdownItem onClick={()=>{this.setSort("low");}}>
-                            Price: Low to Hi
-                            </DropdownItem>
+           <Container>
+               <div style={{display: 'flex'}}>
+                   <Dropdown className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                   <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
+                       Sort By:
+                   </DropdownToggle>
 
-                            <DropdownItem divider />
+                   <DropdownMenu>
+                       <DropdownItem onClick={()=>{this.setSort("low");}}>
+                       Price: Low to Hi
+                       </DropdownItem>
 
-                            <DropdownItem onClick={()=>{this.setSort("high");}}>
-                            Price: High to Low
-                            </DropdownItem>
-                        </DropdownMenu>
-                        </Dropdown>
-                    </div>
+                       <DropdownItem divider />
+
+                       <DropdownItem onClick={()=>{this.setSort("high");}}>
+                       Price: High to Low
+                       </DropdownItem>
+                   </DropdownMenu>
+                   </Dropdown>
+               </div>
                     { this.renderHotels()}
                 <br></br>
                 </Container>
@@ -130,12 +163,38 @@ const cssStyles = {
         paddingLeft: '2rem',
         paddingRight: '2rem',
         fontSize: '0.8rem'
+    },
+    inactiveStyle:{
+      color: 'black',
+      backgroundColor: 'white',
+      margin: '10px'
+    },
+    activeStyle:{
+      color: 'white',
+      background: ' linear-gradient(to right, #00cc99 0%, #33cccc 100%)',
+      borderColor: 'white',
+      margin: '10px'
+
     }
+    // inactiveStyle:{
+    //   color: 'black',
+    //   backgroundColor: 'white',
+    //   borderColor: 'white',
+    //   margin: '10px'
+    // },
+    // activeStyle:{
+    //   color: 'black',
+    //   backgroundColor: 'white',
+    //   borderImage: ' linear-gradient(to right, #00cc99 0%, #33cccc 100%)',
+    //   borderImageSlice: 2,
+    //   borderWidth: '2px',
+    //   margin: '10px',
+    // }
 };
 
 const mapStatetoProps = state => {
     return {
-        hotels: state.reservation.hotels
+        reservation: state.reservation
     };
 }
 

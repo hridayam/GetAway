@@ -58,6 +58,9 @@
   overflow: hidden;
  }
 
+ .profileHeader{
+   text-align: center !important;
+ }
 
 
 /* Form Field */
@@ -182,6 +185,15 @@
   color: black !important;
 }
 
+.btn.btn-deep-orange.logout{
+  margin-top: 50px;
+  border-radius: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: #aeada0 !important;
+  color: black !important;
+}
+
 .navbar-dark .login-button{
   font-family: 'Allura', sans-serif;
   font-size: 2.5em;
@@ -257,4 +269,13 @@ label{
   box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
   border-radius: 4px;
   background: white;
+}
+
+.fa-instagram{
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 33px;
+  margin-top: 6px;
 }

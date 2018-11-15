@@ -6,16 +6,18 @@
     "install-client": "cd client && npm install",
     "install-server": "cd server && npm install",
     "client": "npm start --prefix client",
-    "server": "nodemon --watch server",
+    "server": "node ./server",
     "initial-start": "npm install && npm run install-client && npm run install-server && npm run start",
-    "start": "concurrently \"npm run client\" \"node server/app.js\""
+    "start": "concurrently \"npm run client\" \"npm run server\""
   },
   "author": "",
   "license": "ISC",
   "private": true,
   "dependencies": {
     "concurrently": "*",
-    "mdbreact": "^4.8.2",
-    "nodemon": "*"
+    "mdbreact": "^4.8.3",
+    "react-animated-css": "^1.0.4",
+    "react-scroll-to": "^2.0.1",
+    "react-toastify": "^4.4.2"
   }
 }
