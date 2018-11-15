@@ -4,9 +4,9 @@ import { Col, Container, Row, Footer } from "mdbreact";
 export default class Foot extends Component{
   render(){
     return(
-      <footer style={styles.footerStyle}>
-        <Container>
-          <Row style={styles.rowStyle}>
+      <Footer color="grey" className="font-small darken-3 pt-0" style={styles.footerStyle}>
+        <Container style={{paddingTop: '30px'}}>
+          <Row style={styles.rowStyle}> 
             <Col sm="12" md="4" style={{fontSize:'20px', textAlign: 'left'}}>
               <h2 className="text-uppercase font-weight-bold" style={{marginBottom: '20px', fontFamily:'Allura'}}>GetAway</h2>
                 <p>As one of the world’s top hospitality companies,
@@ -54,18 +54,20 @@ export default class Foot extends Component{
           </Row>
         </Container>
 
-        <div style={{backgroundColor: '#8c7b75', color:'white', width: '100%',}}>
-        <br></br><h6>&reg; 2018 GetAway</h6>  <br></br>
+        <div className="footer-copyright text-center py-3">
+          <Container fluid>
+          &reg; 2018 GetAway
+          </Container>
         </div>
-      </footer>
+       </Footer>
     );
   }
 }
 
 const styles = {
   footerStyle: {
-    color: 'black',
-    flex: 1,
+    color: 'white',
+    flex: 1, 
     fontFamily: 'Lato',
     paddingTop: 50
   },
