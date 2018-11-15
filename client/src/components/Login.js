@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter,
-   Form, FormGroup, Label, Input, Row, Col,
-  Popover, PopoverBody, PopoverHeader, Table} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col,
+   Popover, PopoverBody, PopoverHeader, Table} from 'mdbreact';
 import { NavLink } from 'reactstrap';
-import {Redirect} from 'react-router-dom';
-
+import './css/Home.css'
 import { login, logout, register } from '../actions/auth';
 import { connect } from 'react-redux';
 class Login extends Component {
@@ -12,8 +10,8 @@ class Login extends Component {
     super(props);
     this.state = {
       modal: false,
-      nestedModal: false,
-      closeAll: false,
+      modal6: false,
+      modal7: false,
       email: '',
       password: '',
 
@@ -51,39 +49,21 @@ class Login extends Component {
     });
   }
 
-  userLogin (e) {
-    e.preventDefault();
-       this.props.login({
-         email: this.state.email,
-         password: this.state.password
-       }, (err) => {
-        if(err) {
-          this.setState({ error: true})
-        } else {
-          this.setState({
-            modal: !this.state.modal,
-            isLoggedIn: true
-          });
-        }
-       });
-  }
-
-  userRegister (e) {
-    e.preventDefault();
-       this.props.register({
-         email: this.state.registerEmail,
-         password: this.state.registerPassword,
-         name: this.state.firstName + ' ' + this.state.lastName,
-         address:this.state.address + ' ' + this.state.city + ' ' + this.state.state + ' ' + this.state.zipcode,
-         city:this.state.city,
-         state:this.state.state,
-         zipcode:this.state.zipcode,
-         confirmPassword: this.state.confirmPassword,
-         phoneNumber: this.state.phoneNumber
-       });
+  submitHandler = (event) => {
+    event.preventDefault();
+    this.props.login({
+      email: this.state.email,
+      password: this.state.password
+    }, (err) => {
+     if(err) {
+       this.setState({ error: true})
+     } else {
        this.setState({
-         modal: !this.state.modal
+         modal: !this.state.modal,
+         isLoggedIn: true
        });
+     }
+    });
   }
 
   userLogout(e){
@@ -97,40 +77,30 @@ class Login extends Component {
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
 
   }
-
-  toggleNested() {
+  
+  toggleLogged(nr) {
+    let modalNumber = 'modal' + nr
     this.setState({
-      nestedModal: !this.state.nestedModal,
-      closeAll: false
-    });
-  }
-
-  toggleAll() {
-    this.setState({
-      nestedModal: !this.state.nestedModal,
-      closeAll: true,
-    });
-  }
-  togglePop() {
-    this.setState({
-      popoverOpen: !this.state.popoverOpen,
-    });
+      [modalNumber]: !this.state[modalNumber]
+    })
   }
 
   render() {
     if (this.state.user)
       return(
         <div>
-          <NavLink id="Popover1" style={{ cursor: 'pointer' }} onClick={this.togglePop.bind(this)}>Profile</NavLink>
-          <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" togglePop={this.togglePop} style={styles.popover}>
-          <PopoverHeader>Hello! {this.props.user.name}</PopoverHeader>
-          <PopoverBody>
-          <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
-          <Table size="sm" style={styles.tableborder}>
+          <Container>
+          <NavLink style={{ cursor: 'pointer' }} onClick={() => this.toggleLogged(8)}>Profile</NavLink>
+            <Modal isOpen={this.state.modal8} toggle={() => this.toggleLogged(8)} fullHeight position="right">
+              <ModalHeader toggle={() => this.toggleLogged(8)}>
+                <img alt="" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style={styles.imageStyles}/>
+              </ModalHeader>
+              <ModalBody>
+              <Table size="sm" style={styles.tableborder}>
             <thead>
               <tr>
                 <th  style= {styles.headerStyle}>Contact Information</th>
@@ -148,43 +118,50 @@ class Login extends Component {
                 <td style={styles.tableStyle}>Address: {this.props.user.address}</td>
               </tr>
             </tbody>
-          </Table>
-          </PopoverBody>
-            <Button style ={{marginRight: '10px'}} >Edit</Button>
-            <Button style ={{marginLeft: '10px'}} onClick={this.userLogout.bind(this)}>Logout</Button>
-          </Popover>
-
+            </Table>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="secondary" onClick={() => this.toggleLogged(8)}>Close</Button>
+                <Button color="primary">Edit</Button>
+                <Button style ={{marginLeft: '10px'}} onClick={this.userLogout.bind(this)}>Logout</Button>
+              </ModalFooter>
+            </Modal>
+          </Container>
         </div>
       );
 
     else
       return (
         <div >
-          <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle.bind(this)}>Log In</NavLink>
-          <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)} className={this.props.className}>
-
-            <ModalHeader className="login-header" toggle={this.toggle.bind(this)}>Welcome Back! </ModalHeader>
-
-            <ModalBody>
-              {this.state.error? <p style={{color: 'red'}}>Either username or password is incorrect</p>: <p></p>}
-              <Form className = "login-body"   >
-                  <FormGroup>
-                      <Label for="exampleEmail">Email:</Label>
-                      <Input type="email" name="email" value={this.state.email} onChange={this.handleChange.bind(this)} id='exampleEmail' placeholder="Enter Your Email" />
-                  </FormGroup>
-
-                  <FormGroup>
-                      <Label for="examplePassword">Password:</Label>
-                      <Input type="password" name="password" value={this.state.password}  onChange={this.handleChange.bind(this)} id='examplePassword' placeholder="Enter Your Password" />
-                  </FormGroup>
-              </Form>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button color="info" onClick={this.userLogin.bind(this)}>Log In</Button>{' '}
-              <Button color="secondary" onClick={this.toggle.bind(this)}>Cancel</Button>
-            </ModalFooter>
-          </Modal>
+          <Container>
+            <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle.bind(this)}>Log In</NavLink> 
+            <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)}>
+              <ModalHeader toggle={this.toggle.bind(this)}>Welcome Back!</ModalHeader>
+              <ModalBody>
+                <Row className="mt-6">
+                  <Col md="">
+                    <form className='needs-validation' onSubmit={this.submitHandler} noValidate>
+                    <Row>
+                      <div className="col-md-12 mb-12">
+                        <label htmlFor="defaultFormRegisterNameEx" className="grey-text">User Name</label>
+                        <input value={this.state.email}  name='email' onChange={this.handleChange.bind(this)} type="email" id="defaultFormRegisterNameEx" className="form-control" placeholder="User Name" required/>
+                      </div>
+                    </Row>
+                    <Row>
+                      <div className="col-md-12 mb-12">
+                        <label htmlFor="defaultFormRegisterNameEx" className="grey-text">Password</label>
+                        <input value={this.state.password} name='password' onChange={this.handleChange.bind(this)} type="password" id="defaultFormRegisterNameEx" className="form-control" placeholder="Password" required/>
+                      </div>
+                    </Row>
+                    {this.state.error? <div style={{color: 'red'}}>Either username or password is incorrect</div>: <p></p>}
+                      <button className="btn btn-deep-orange login" type='submit'>Log In</button>
+                      <button className="btn btn-deep-orange login" onClick={this.toggle.bind(this)}>Cancel</button>
+                    </form>
+                  </Col>
+                </Row>
+              </ModalBody>
+            </Modal>
+          </Container>
         </div>
       );
   }
@@ -204,6 +181,7 @@ const styles ={
     borderRadius: '50%',
     border: "2px solid #A9A9A9",
     marginBottom: '10px',
+    horizontalAlign: 'center'
 },
   popover:{
     textAlign: 'center',

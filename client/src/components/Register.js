@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Button, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col} from 'mdbreact';
+import { Container, Button, Modal, ModalBody, ModalHeader, Row, Col} from 'mdbreact';
 import { NavLink } from 'reactstrap';
 import { connect } from 'react-redux';
 import { register } from '../actions/auth';
@@ -86,24 +86,6 @@ class Register extends React.Component {
         }
         return null; 
     }
-     
-    userRegister (e) {
-        e.preventDefault();
-            this.props.register({
-                email: this.state.registerEmail,
-                password: this.state.registerPassword,
-                name: this.state.firstName + ' ' + this.state.lastName,
-                address:this.state.address + ' ' + this.state.city + ' ' + this.state.state + ' ' + this.state.zipcode,
-                city:this.state.city,
-                state:this.state.state,
-                zipcode:this.state.zipcode,
-                confirmPassword: this.state.confirmPassword,
-                phoneNumber: this.state.phoneNumber
-            });
-           this.setState({
-                modal: !this.state.modal,
-           });
-    }
 
   render() {
     return (
@@ -121,6 +103,7 @@ class Register extends React.Component {
                             <label htmlFor="defaultFormRegisterConfirmEx3" className="grey-text">Email</label>
                             <input value={this.state.registerEmail} onChange={this.changeHandler} type="email" id="email" className="form-control" name='registerEmail' placeholder="Your Email address" required/>
                             <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <div className="invalid-feedback">Please provide a valid email address</div>
                         </div>
                     </Row>
                     <Row>
@@ -139,8 +122,8 @@ class Register extends React.Component {
                     <Row>
                         <div className="col-md-12 mb-12">
                             <label htmlFor="defaultFormRegisterConfirmEx3" className="grey-text">Phone Number</label>
-                            <input value={this.state.phoneNumber} onChange={this.changeHandler} type="number" id="phoneNumber" className="form-control" name='phoneNumber' placeholder="Your Phone Number" required
-                            />
+                            <input value={this.state.phoneNumber} onChange={this.changeHandler} type="number" id="phoneNumber" className="form-control" name='phoneNumber' placeholder="Your Phone Number" required/>
+                            <div className="invalid-feedback">Please provide your phone number.</div>
                         </div>
                     </Row>
                     <Row>
@@ -148,11 +131,13 @@ class Register extends React.Component {
                             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">First name</label>
                             <input value={this.state.firstName} name='firstName' onChange={this.changeHandler} type="text" id="firstName" className="form-control" placeholder="First name" required/>
                             <div className="valid-feedback">Looks good!</div>
+                            <div className="invalid-feedback">Please provide your first name.</div>
                         </div>
                         <div className="col-md-6 mb-6">
                             <label htmlFor="defaultFormRegisterEmailEx2" className="grey-text">Last name</label>
                             <input value={this.state.lastName} name='lastName' onChange={this.changeHandler} type="text" id="lastName" className="form-control" placeholder="Last name" required/>
                             <div className="valid-feedback">Looks good!</div>
+                            <div className="invalid-feedback">Please provide your last name.</div>
                         </div>
                     </Row>
                     <Row>
@@ -194,7 +179,7 @@ class Register extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <button className="btn btn-deep-orange" type="submit">Submit Form</button>
+                        <button className="btn btn-deep-orange register" type="submit">Submit Form</button>
                     </form>
                     </Col>
                 </Row>

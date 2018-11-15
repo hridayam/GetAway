@@ -160,9 +160,26 @@
 .form-check-label{
   margin-top: 0 !important;
 }
+.btn.btn-deep-orange.register{
+  margin-top: 50px;
+  border-radius: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: #fff44f !important;
+  color: black !important;
+}
 /* Login */
 .modal-body{
   text-align: center;
+}
+
+.btn.btn-deep-orange.login{
+  margin-top: 50px;
+  border-radius: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: #fff44f !important;
+  color: black !important;
 }
 
 .navbar-dark .login-button{
