@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Container, Row, Col, Form, Input, Button } from 'reactstrap';
+import { Col, Container, Row, Footer } from "mdbreact";
 
-export default class Footer extends Component{
+export default class Foot extends Component{
   render(){
     return(
       <footer style={styles.footerStyle}>
@@ -43,12 +43,12 @@ export default class Footer extends Component{
               </div>
               <br/><br/>
               <h5 style={{float:'left'}}> Subscribe to Our Emails:</h5>
-              <Form className="input-group">
-                <Input type="text" className="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
+              <form className="input-group">
+                <input type="text" className="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
                 <div className="input-group-append">
-                  <Button className="btn btn-sm btn-outline-white" type="button">Sign up</Button>
+                  <button className="btn btn-sm btn-outline-white" type="button">Sign up</button>
                 </div>
-              </Form>
+              </form>
             </Col>
             <br/>
           </Row>
