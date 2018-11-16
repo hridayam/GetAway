@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SearchForm from './SearchForm';
 import Suggestion from './Suggestion';
+import AboutUs from '../AboutUs'
 import Scroll from '../ScrollUp';
 import { Animated } from 'react-animated-css'
 
@@ -35,6 +36,7 @@ export default class Home extends Component{
           </div>
         </div>
         <Scroll/>
+        <AboutUs/>
         <Suggestion/>
       </div>
     );
@@ -56,6 +58,7 @@ const styles = {
     color: 'white',
     width: '100%',
     fontSize: 22,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    fontWeight: 'bold'
   }
 }

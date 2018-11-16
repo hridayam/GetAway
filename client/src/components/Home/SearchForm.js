@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Label, Input, Container, Row, Col } from 'reactstrap';
+import { Input, Col, Row, Container } from "mdbreact";
 import {search} from '../../actions/';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import '../css/Home.css';
+
 
 class SearchForm extends Component {
     constructor(props) {
@@ -70,53 +72,107 @@ class SearchForm extends Component {
         return( <Redirect to='/reservation' /> );
     else
         return(
-            <Container className="text-block">
+            <div>
+                <Container style={styles.textBlock}>
                 <br/>
                 <h2 className="title"> Take a break from {this.state.changingText}</h2>
                 <br/>
+                </Container>
+                <div></div>
+
+                <Container style={styles.searchField}>
                 <form className="form-wrapper" onSubmit={this.onSubmit}>
                     <Row>
                         <Col sm="12">
-                           
-                                <Input style={{color: 'black'}}value={this.state.city} onChange={this.handleChange} name="city" className="search-place" bsSize="lg" placeholder="Where do you want to go?" />
-                           
+                                {/* <Input style={{color: 'black'}}
+                                hint="Search"
+                                value={this.state.city} 
+                                onChange={this.handleChange} 
+                                name="city" className="search-place" bsSize="lg" 
+                                placeholder="Where do you want to go?" /> */}
+                                <Input style={styles.searchPlace}
+                                    hint="Where do you want to go?"
+                                    type="text"
+                                    value={this.state.city} 
+                                    onChange={this.handleChange} 
+                                    name="city"
+                                    containerClass="active-pink active-pink-2 mt-0 mb-3"/>
+                                    
                         </Col>
                     </Row>
                     
-                    <Row className="search-date">
-                        <Col xs="6" sm="4">
-                           
-                                <Label for="exampleDate"> Check In:  </Label>
-                                <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" id="exampleDate" placeholder="date placeholder" />
-                           
+                    <Row style={styles.searchDate} className="form-inline">
+                        <Col >
+                                <label class="control-label" for="date"> Check In:  </label>
+                                <input  value={this.state.startDate} 
+                                        onChange={this.handleChange} 
+                                        type="date" name="startDate" 
+                                        id="exampleDate" 
+                                        placeholder="date placeholder" 
+                                        />
                         </Col>
 
-                        <Col xs="6" sm="4">
-                         
-                                <Label for="exampleDate"> Check Out:  </Label>
-                                <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" id="exampleDate" placeholder="date placeholder" />
-                     
+                        <Col>
+                                <label for="exampleDate"> Check Out:  </label>
+                                <input  value={this.state.endDate} 
+                                        onChange={this.handleChange} 
+                                        type="date" name="endDate" 
+                                        id="exampleDate" 
+                                        placeholder="date placeholder" />
                         </Col>
                         
-                        <Col sm="4">
+                        <Col >
                        
-                                <Label for="exampleDate"> Guests:  </Label>
-                                <Input value={this.state.numGuests} onChange={this.handleChange} name="numGuests" type="select" id="exampleSelect" placeholder="sm">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </Input>
-                      
+                                <label> Guests:  </label>
+                                <select value={this.state.numGuests} onChange={this.handleChange} name="numGuests" placeholder="sm">
+                                    <option>Choose your option</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                        </Col>
+
+                        <Col>
+                            <button className="btn btn-deep-orange login" type='submit'> Search</button>
                         </Col>
                     </Row>
-
-                    <Button type="submit" className="search-button">Search</Button>
                 </form>
-            </Container>
+                </Container>
+            </div>
         );
     }
+}
+const styles = {
+    textBlock: {
+        position: 'relative',
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        textAlign: 'center'
+    },
+    searchField: {
+        position: 'relative',
+        backgroundColor: 'white',
+        textAlign: 'center',
+        marginTop: '130px'
+    },
+    searchDate: {
+        fontFamily: 'Lato',
+        color: 'black',
+        textAlign: 'center',
+        marginBottom:'10px', 
+        marginTop: '-50px',    
+      },
+    searchPlace: {
+        fontFamily: 'Lato',
+        fontSize: '1em',
+        color: 'black',
+        textAlign: 'center',  
+        display: 'inline-block',
+
+    },
+
 }
 
 export default connect (null, { search })(SearchForm);
