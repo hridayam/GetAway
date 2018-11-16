@@ -80,7 +80,7 @@ import { withRouter } from 'react-router-dom';
     if(this.state.user){
    return (
      <div >
-       <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
+       <Navbar className="fixed-top z-index-0" dark expand="lg" style={ this.state.navbarStyle } >
          <NavbarBrand href="/">
 
            <img src={logo} alt="logo" style={{width:'250px', height: '100px', paddingTop: '5px', float: 'left'}} />
