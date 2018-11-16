@@ -103,32 +103,32 @@ class SelectHotel extends Component{
         return(
             <div>
             <div>
-             <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             <Button className="btn btn-deep-orange "  style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({wifi: !this.state.wifi})}>
              <i class="fas fa-wifi"></i>  Free Wifi</Button>
-             <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             <Button className="btn btn-deep-orange " style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({gym: !this.state.gym})}>
              <i class="fas fa-dumbbell"></i>     Gym</Button>
-             <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             <Button  className="btn btn-deep-orange "style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({pool: !this.state.pool})}>
              <i class="fas fa-swimmer"></i>     Pool</Button>
-             <Button style={this.state.breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             <Button className="btn btn-deep-orange " style={this.state.breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({breakfast: !this.state.breakfast})}>
              <i class="fas fa-utensils"></i>      Breakfast Included</Button>
-             <Button style={this.state.iron?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             <Button className="btn btn-deep-orange " style={this.state.iron?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({iron: !this.state.iron})}>
              <i class="fas fa-tshirt"></i>      Iron</Button>
-             <Button style={this.state.coffeemaker?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             <Button className="btn btn-deep-orange " style={this.state.coffeemaker?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({coffeemaker: !this.state.coffeemaker})}>
              <i class="fas fa-coffee"></i>     Coffee Maker</Button>
-             <Button style={this.state.tv?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             <Button className="btn btn-deep-orange " style={this.state.tv?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({tv: !this.state.tv})} >
              <i class="fas fa-tv"></i>      TV</Button>
            </div>
 
            <Container>
                <div style={{display: 'flex'}}>
-                   <Dropdown className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                   <Dropdown className="btn btn-deep-orange " className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                    <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
                        Sort By:
                    </DropdownToggle>

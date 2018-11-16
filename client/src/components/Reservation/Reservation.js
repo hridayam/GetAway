@@ -123,7 +123,7 @@ class Reservation extends Component{
                         </FormGroup>
                     </Col>
                     <Col style={styles.updateButton} xs="12" sm="12" lg="2">
-                        <Button onClick={this.handleSubmit}>Update Search</Button>
+                        <button className="btn btn-deep-orange " onClick={this.handleSubmit}> Update Search</button>
                     </Col>
                 </Row>
             </Form>
@@ -146,10 +146,7 @@ const styles = {
       fontFamily: 'Lato',
       color: 'white',
       textAlign: 'center',
-      marginTop: '33.6px',
-      height: '40px',
-      alignItems: 'center',
-      display: 'block'
+
     }
 };
 
