@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'mdbreact';
+import { Container, Row, Col } from 'reactstrap';
 import { Card, CardImage, CardText, CardBody,
     CardTitle, Button, View } from 'mdbreact';
 
@@ -18,7 +18,7 @@ export default class Suggestion extends Component {
                         <CardBody>
                         <CardTitle className="card-title">DAILY DEALS</CardTitle>
                         <CardText className="card-text" >Plan a last-minute weekend getaway with a deal at these GetAway hotels in the U.S.</CardText>
-                        <Button className="button-suggestion">VIEW DEALS ></Button>
+                        <Button className="btn btn-deep-orange login" type='submit'>VIEW DEALS ></Button>
                         </CardBody>
                     </Card>
                 </Col>
@@ -31,7 +31,7 @@ export default class Suggestion extends Component {
                         <CardBody>
                         <CardTitle className="card-title">TOP DESTINATIONS</CardTitle>
                         <CardText className="card-text " >Discover our newest urban, resort, and lifestyle hotels. </CardText>
-                        <Button className="button-suggestion">VIEW HOTELS ></Button>
+                        <Button className="btn btn-deep-orange login">VIEW HOTELS ></Button>
                         </CardBody>
                     </Card>
                 </Col>
@@ -44,7 +44,7 @@ export default class Suggestion extends Component {
                         <CardBody>
                         <CardTitle className="card-title">SPECIALITY</CardTitle>
                         <CardText className="card-text" >Enjoy even more offers—like extended happy hour—at select all-inclusive resorts.</CardText>
-                        <Button className="button-suggestion">LEARN MORE ></Button>
+                        <Button className="btn btn-deep-orange login">LEARN MORE ></Button>
                         </CardBody>
                     </Card>
                 </Col>

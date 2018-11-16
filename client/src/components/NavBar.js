@@ -109,7 +109,7 @@ import { withRouter } from 'react-router-dom';
  else{
    return (
      <div >
-       <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
+       <Navbar className="fixed-top" light expand="lg" style={ this.state.navbarStyle } >
           <NavbarBrand href="/">
             <img src={logo} alt="logo" style={{width:'250px', height: '100px', paddingTop: '5px', float: 'left'}} />
           </NavbarBrand>
@@ -117,9 +117,6 @@ import { withRouter } from 'react-router-dom';
          <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
-             <NavItem>
-               <NavLink href="/aboutus/">About Us</NavLink>
-             </NavItem>
              <NavItem>
                <Register/>
              </NavItem>
@@ -143,7 +140,7 @@ const styles = {
   },
   blackStyle: {
     height: '100px',
-    backgroundColor: 'rgba(0,0,0,0.9)'
+    backgroundColor: 'rgba(0,0,0,0.5)'
   }
 }
 
