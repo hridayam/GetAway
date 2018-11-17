@@ -3,11 +3,11 @@ import {
         Container, Button, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
 import { Carousel } from 'react-responsive-carousel';
-
+import StarRatings from 'react-star-ratings';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
 import Scroll from '../ScrollUp';
-
+import ReactWeather from 'react-open-weather';
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
 
@@ -56,10 +56,10 @@ class SelectHotel extends Component{
                     <div className="row ">
                         <div className="col-md-4">
                             { hotel.images && hotel.images.length ?
-                            <Carousel autoPlay infiniteLoop>
+                            <Carousel autoPlay infiniteLoop showThumbs={false} dynamicHeight>
                                 {hotel.images.map((v,i) =>
                                     <div key={i}>
-                                        <img src={v} alt="" className="w-100"/>
+                                        <img src={v} alt="" className="w-100" />
                                     </div>
                                 )}
                             </Carousel> : <div className="align-middle" style={{height:'100%', width:'100%'}}><br/><br/><br/>No Images Available</div> }
@@ -67,10 +67,26 @@ class SelectHotel extends Component{
                         <div className="col-md-5 px-3">
                             <div className="card-block px-3">
                                 <h3 className="card-title">{hotel.name}</h3>
-                                <p className="card-text"><i className="far fa-star"></i> {hotel.stars} Stars</p>
+                                {/*<p className="card-text"><i className="far fa-star"></i> {hotel.stars} Stars</p>*/}
+                                <StarRatings
+                                numberOfStars={5}
+                                rating={hotel.stars}
+                                starDimension="30px"
+                                starSpacing="15px"
+                                starRatedColor="yellow"
+                                />
+                                <br></br>
+                                Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
+                                <Button
+                                style={cssStyles.buttonRoom}
+                                onClick={() => {
+                                    this.props.selectHotel(hotel);
+                                    this.props.jumpToStep(1);
+                                }}
+                                >Choose Hotel</Button>
                             </div>
                         </div>
-                        <div className="col-md-3 price">
+                        {/*<div className="col-md-3 price">
                             Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
                             <Button
                                 style={cssStyles.buttonRoom}
@@ -79,7 +95,7 @@ class SelectHotel extends Component{
                                     this.props.jumpToStep(1);
                                 }}
                                 >Choose Hotel</Button>
-                        </div>
+                            </div>*/}
                     </div>
                 </div>
                 );
@@ -102,6 +118,13 @@ class SelectHotel extends Component{
 
         return(
             <div>
+            <ReactWeather
+            forecast="5days"
+            apikey="6a588ccb742f4e639ae230722180911"
+            type="city"
+            city={this.state.city}
+            unit="imperial"
+            />
             <div>
              <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({wifi: !this.state.wifi})}>
@@ -155,6 +178,7 @@ class SelectHotel extends Component{
 }
 
 const cssStyles = {
+
     buttonRoom:{
         backgroundColor: '#156bc1',
         border: '1px solid #156bc1',
@@ -175,7 +199,8 @@ const cssStyles = {
       borderColor: 'white',
       margin: '10px'
 
-    }
+    },
+   
     // inactiveStyle:{
     //   color: 'black',
     //   backgroundColor: 'white',
@@ -190,6 +215,7 @@ const cssStyles = {
     //   borderWidth: '2px',
     //   margin: '10px',
     // }
+      
 };
 
 const mapStatetoProps = state => {

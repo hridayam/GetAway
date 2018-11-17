@@ -3,7 +3,9 @@ import Stepper from './Stepper';
 import '../css/Home.css';
 import { Button, Form, FormGroup, Label, Container, Input, Row, Col } from 'reactstrap';
 import Scroll from '../ScrollUp';
-
+import ReactWeather from 'react-open-weather';
+//Optional include of the default css styles 
+import 'react-open-weather/lib/css/ReactWeather.css';
 import { connect } from 'react-redux';
 import { search } from '../../actions/';
 
@@ -40,6 +42,7 @@ class Reservation extends Component{
     handleChange = event => {
         let { name, value } = event.target;
         this.setState({ [name]: value });
+
     }
 
     handleSubmit = () => {

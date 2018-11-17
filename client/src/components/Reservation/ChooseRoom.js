@@ -55,7 +55,7 @@ class ChooseRoom extends Component{
                 <div className="row ">
                     <div className="col-md-4">
                         { r.images.length ? 
-                            <Carousel autoPlay infiniteLoop>
+                            <Carousel autoPlay infiniteLoop showThumbs={false} dynamicHeight>
                                 { r.images.map((v,i) => 
                                     <img key={i + '-' + v} src={v} alt="" className="w-100"/>
                                 )}
@@ -70,10 +70,11 @@ class ChooseRoom extends Component{
                                 <br/><br/>
                                 This room includes {r.beds} {r.bed_type} bed(s).
                             </div>
+                            <h3 className="reservation-price">${r.beds*price[r.bed_type]} per night</h3>
                         </div>
                     </div>
-                    <div className="col-md-3 price">
-                        <h3 className="reservation-price">${r.beds*price[r.bed_type]} per night</h3>
+                    <div className="col-md-3">
+                        {/*<h3 className="reservation-price">${r.beds*price[r.bed_type]} per night</h3>*/}
                         <FormGroup>
                             <Label for="exampleSelect">How many rooms do you need?</Label>
                             <Input 
