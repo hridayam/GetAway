@@ -2,8 +2,20 @@ import React, { Component } from "react";
 import { Container, Row, Col,
      Card, CardBody, CardImage, CardTitle, CardText} from 'mdbreact';
 import Scroll from './ScrollUp';
-
+import ReactCardFlip from 'react-card-flip';
 export default class aboutUs extends Component {
+    constructor() {
+        super();
+        this.state = {
+          isFlipped: false
+        };
+        this.handleClick = this.handleClick.bind(this);
+      }
+     
+      handleClick(e) {
+        e.preventDefault();
+        this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      }
   render() {
     return (
     <div style={styles.rootDiv}>
@@ -30,13 +42,28 @@ export default class aboutUs extends Component {
                 <h1>Meet The Team</h1>
                 <Row>
                 <Col xs={12} md={4} lg={3}>
-                    <Card  style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Nhat Trinh</CardTitle>
+                            <CardText>Project Manager</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card  style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Nhat Trinh</CardTitle>
                             <CardText>Project Manager</CardText>
                         </CardBody>
-                    </Card>
+                </Card>*/}
                 </Col>
                 
                 <Col xs={12} md={4} lg={3}>
