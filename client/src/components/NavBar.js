@@ -91,14 +91,13 @@ import { withRouter } from 'react-router-dom';
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
-               <NavLink href="/aboutus/">About Us</NavLink>
-             </NavItem>
-             <NavItem>
              <NavLink href="/profile/">My Reservation</NavLink>
              </NavItem>
-
              <NavItem>
                <Login />
+             </NavItem>
+             <NavItem>
+               <NavLink href="/aboutus/">About Us</NavLink>
              </NavItem>
            </Nav>
          </Collapse>
@@ -118,13 +117,13 @@ import { withRouter } from 'react-router-dom';
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
-               <NavLink href="/aboutus/">About Us</NavLink>
-             </NavItem>
-             <NavItem>
                <Register/>
              </NavItem>
              <NavItem>
                <Login />
+             </NavItem>
+             <NavItem>
+               <NavLink href="/aboutus/">About Us</NavLink>
              </NavItem>
            </Nav>
          </Collapse>
@@ -138,7 +137,7 @@ import { withRouter } from 'react-router-dom';
 const styles = {
   transparentStyle: {
     height: '100px',
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0,0,0,0.4)',
     paddingTop: '0px',
   },
   blackStyle: {

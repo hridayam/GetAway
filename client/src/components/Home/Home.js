@@ -29,10 +29,10 @@ export default class Home extends Component{
         <div className="background-image" style={ styles.homeStyle }>
           <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
             <SearchForm/>
-          </Animated>
-          <div onClick={this.handleViewMoreClick} className="text-center" style={styles.viewMore}>
+            <div onClick={this.handleViewMoreClick} className="text-center" style={styles.viewMore}>
             View More <i className="fas fa-chevron-down"></i>
-          </div>
+            </div>
+          </Animated>
         </div>
         <Scroll/>
         <Suggestion/>
@@ -51,11 +51,11 @@ const styles = {
     overflowY: 'hidden'
   },
   viewMore: {
-    position: 'absolute',
+    marginTop: '20vh',
     bottom: '5%',
-    color: 'white',
+    color: 'black',
     width: '100%',
     fontSize: 22,
-    cursor: 'pointer'
+    cursor: 'pointer',
   }
 }
