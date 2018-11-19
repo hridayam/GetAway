@@ -69,13 +69,19 @@ class Payment extends Component{
         axios.post('http://localhost:3001/payments/pay', {data})
             .then(res => {
                 axios.post('http://localhost:3001/reservations/create', {
-                    hotel, city, startDate, endDate, numGuests, 
-                    firstName, lastName,
-                    address, userCity, state, zip,
-                    cardholderName,
+                    hotel_id: hotel._id, 
+                    start_date: startDate, 
+                    end_date: endDate, 
+                    number_of_guests: numGuests, 
+                    user: {
+                        name: `${firstName} ${lastName}`,
+                        email: this.state.user.email,
+                        id: this.state.user.id
+                    },
+                    rewardsPoints,
+                    subtotal, total, tax,
                     charge: res.data.charge,
-                    user_id: this.state.user.id,
-                    subtotal, total, tax, rewardsPoints
+                    
                 })
                     .then(() => {
                         this.props.jumpToStep(3);
@@ -124,7 +130,7 @@ class Payment extends Component{
 
     calculateTax = () => Number(this.calculateSubtotal() * 0.0925).toFixed(2);
     calculateTotal = () => Number(parseFloat(this.calculateSubtotal()) + parseFloat(this.calculateTax())).toFixed(2);
-    calculateRewardsPoints = () => Math.floor(Number(this.calculateTotal() * 10))
+    calculateRewardsPoints = () => Math.floor(Number(this.calculateTotal() * .1))
 
     toggle(tab) {
         if (this.state.activeTab !== tab) {
@@ -257,24 +263,6 @@ class Payment extends Component{
                                 </Row>
                             </TabPane>
                         </TabContent>
-                        {/* <CardTitle>CREDIT CARD DETAIL</CardTitle>
-                        <Row >
-                            <Col sm="12" md={{ size: 8, offset: 2 }}>
-
-                                <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
-                                borderRadius: '4px', padding: '10px 14px', fontSize: '16px'}}/>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col sm="12" md={{ size: 8, offset: 2 }} >
-
-                                <CardElement style={styles.cardpanel}/>
-
-                                <p style={styles.cardinfo}>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
-                                <Button color="info" onClick={this.handleSubmit}>Place Order</Button>
-                            </Col>
-                        </Row> */}
                     </Card>
                 </FormGroup>
             </Form>
