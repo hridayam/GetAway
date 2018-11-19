@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Hotels = require('../models/hotel').Hotels;
+const Hotels = require('../models/hotels');
 const express = require('express');
 const router = express.Router();
 
@@ -28,7 +28,6 @@ router.post('/search', async(req,res) => {
     }
 });
 
-<<<<<<< HEAD
 router.get('/generate_random_hotel', async(req,res) => {
     try {
         Hotels.createHotels(null, (err, res) => {
@@ -39,24 +38,5 @@ router.get('/generate_random_hotel', async(req,res) => {
         console.log(err);
     }
 });
-=======
-const findHotels = (params,res) => {
-    Hotels.find(params, (err,hotels) => {
-        if (err) {
-            res.status(500).json({
-                success: false,
-                msg: err
-            });
-        }
-        else if (hotels) {
-            res.status(200).json({
-                success: true,
-                msg: 'Found the hotels!',
-                hotels
-            });
-        }
-    });
-}
->>>>>>> e891c456e64f51f9afb933051a61e3eb36b5e0ef
 
 module.exports = router;
