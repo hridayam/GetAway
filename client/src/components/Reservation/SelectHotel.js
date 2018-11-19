@@ -3,6 +3,7 @@ import {
         Container, Button, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
 import { Carousel } from 'react-responsive-carousel';
+import Loader from 'react-loader-spinner';
 
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
@@ -24,7 +25,8 @@ class SelectHotel extends Component{
             chosenHotel: null,
             sortOption: '',
             reservation: {},
-            hotels: null
+            hotels: null,
+            isLoading: false
         };
         this.toggleDropdown = this. toggleDropdown.bind(this);
     }
@@ -36,21 +38,22 @@ class SelectHotel extends Component{
 
     static getDerivedStateFromProps(props, state){
         if(props.reservation !== state.reservation){
-            let { city, startDate, endDate, numGuests, hotels } = props.reservation;
+            let { city, startDate, endDate, numGuests, hotels, isLoading } = props.reservation;
             return{
                 ...state,
                 reservation: props.reservation,
                 hotels,
                 city,
                 startDate, endDate,
-                numGuests
+                numGuests,
+                isLoading
             };
         }
         return null;
     }
 
   renderHotels = () => {
-        if (this.state.hotels !== null)
+        if (this.state.hotels !== null && !this.state.loading)
             return this.state.hotels.map((hotel, index) =>
                 <div key={hotel._id} className="card">
                     <div className="row ">
@@ -83,6 +86,11 @@ class SelectHotel extends Component{
                     </div>
                 </div>
                 );
+        else if (this.state.loading) {
+            return (
+                <Loader type="Plane" color="#008080" height={100} width={100} />
+            );
+        }
         else return null;
     }
 

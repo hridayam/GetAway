@@ -102,8 +102,9 @@ router.put('/cancel/:id', passport.authenticate('jwt', {session: false}), (req,r
 
     Reservation.findById(id, (err, reservation) => {
         if (err) return res.status(422).json({success: false, error: err});
-        console.log(Date.now().valueOf(), reservation.time_created, reservation.start_date);
-        if (Date.now().valueOf() - reservation.time_created < 86400000) 
+        console.log(Date.now().valueOf() - reservation.start_date);
+        if (Date.now().valueOf() - reservation.time_created < 86400000 &&
+            reservation.start_date - Date.now().valueOf() > 86400000) 
         {
             Reservation.cancelReservation(reservation, (err, updatedReservation) => {
                 if (err) return res.status(422).json({success: false, error: err});
@@ -131,16 +132,11 @@ router.put('/cancel/:id', passport.authenticate('jwt', {session: false}), (req,r
     })
 });
 
-router.post('/create', passport.authenticate('jwt', {session: false}), async (req,res) => {
+router.post('/create', async (req,res) => {
     let data = { 
-        hotel_id,
-        time_created,
-        start_date,
-        end_date,
-        charge,
-        room_number,
-        number_of_guests,
-        user,
+        hotel_id, time_created, start_date, end_date,
+        charge, room_number, number_of_guests,
+        user, total, subtotal, tax, rewardsPoints
     } = req.body;
     
     let reservation = new Reservation(data)
