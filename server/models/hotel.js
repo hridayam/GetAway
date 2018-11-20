@@ -27,3 +27,7 @@ const HotelSchema = new mongoose.Schema({
 const Hotels = mongoose.model('Hotels', HotelSchema);
 
 module.exports = { Hotels, HotelSchema };
+
+module.exports.getHotelById = function(id, callback) {
+    Hotels.findById(id, callback);
+}

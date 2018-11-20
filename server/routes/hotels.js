@@ -39,4 +39,22 @@ router.get('/generate_random_hotel', async(req,res) => {
     }
 });
 
+const findHotels = (params,res) => {
+    Hotels.find(params, (err,hotels) => {
+        if (err) {
+            res.status(500).json({
+                success: false,
+                msg: err
+            });
+        }
+        else if (hotels) {
+            res.status(200).json({
+                success: true,
+                msg: 'Found the hotels!',
+                hotels
+            });
+        }
+    });
+}
+
 module.exports = router;

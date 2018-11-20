@@ -4,7 +4,8 @@ import {
   NavbarBrand, Nav, NavItem,
   NavLink
 } from 'reactstrap';
-import Login from './Login'
+import Login from './Login';
+import Register from './Register';
 import logo from "./picture/getaway_logo.png";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -79,7 +80,7 @@ import { withRouter } from 'react-router-dom';
     if(this.state.user){
    return (
      <div >
-       <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
+       <Navbar className="fixed-top z-index-0" dark expand="lg" style={ this.state.navbarStyle } >
          <NavbarBrand href="/">
 
            <img src={logo} alt="logo" style={{width:'250px', height: '100px', paddingTop: '5px', float: 'left'}} />
@@ -90,14 +91,13 @@ import { withRouter } from 'react-router-dom';
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
-               <NavLink href="/aboutus/">About Us</NavLink>
-             </NavItem>
-             <NavItem>
              <NavLink href="/profile/">My Reservation</NavLink>
              </NavItem>
-
              <NavItem>
                <Login />
+             </NavItem>
+             <NavItem>
+               <NavLink href="/aboutus/">About Us</NavLink>
              </NavItem>
            </Nav>
          </Collapse>
@@ -117,10 +117,13 @@ import { withRouter } from 'react-router-dom';
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
-               <NavLink href="/aboutus/">About Us</NavLink>
+               <Register/>
              </NavItem>
              <NavItem>
                <Login />
+             </NavItem>
+             <NavItem>
+               <NavLink href="/aboutus/">About Us</NavLink>
              </NavItem>
            </Nav>
          </Collapse>
@@ -134,7 +137,7 @@ import { withRouter } from 'react-router-dom';
 const styles = {
   transparentStyle: {
     height: '100px',
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0,0,0,0.4)',
     paddingTop: '0px',
   },
   blackStyle: {

@@ -28,7 +28,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), function(
 
 router.post('/register', function(req, res) {
     const name = req.body.name;
-    const email = req.body.email;
+    let email = req.body.email.toLowerCase();
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
     const address = req.body.address;
@@ -45,6 +45,7 @@ router.post('/register', function(req, res) {
 
     const errors = req.validationErrors();
     if(errors) {
+        res.status(422).json({success: false, msg: 'Failed to register User', errors: errors});
         console.log(errors);
     } else {
         const newUser = new User({
@@ -57,7 +58,7 @@ router.post('/register', function(req, res) {
 
         User.createUser(newUser, function(err, user){
             if(err) {
-                res.status(500).json({success: false, msg: 'Failed to register User'});
+                res.status(500).json({success: false, msg: 'Failed to register User', errors: err});
                 console.log(err)
             } else {
                 res.status(200).json({success: true, msg: 'User Registered'});
@@ -69,7 +70,9 @@ router.post('/register', function(req, res) {
 
 
 router.post('/login', (req, res, next) => {
-    const email = req.body.email;
+    console.log(req.body);
+    const email = req.body.email.toLowerCase();
+
     const password = req.body.password;
 
     User.getUserByEmail(email, function(err, user){
