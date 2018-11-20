@@ -38,7 +38,7 @@ const hotelSchema = new Schema({
             required: true
         }
     ],
-    amenity: {
+    amenities: {
         wifi: {
             type: Boolean,
             required: true, 
@@ -107,7 +107,7 @@ module.exports.createHotels = function(newHotel, callBack) {
                 zipcode: Math.floor((Math.random() * 90000) + 10000) 
             };
             
-            let amenities = {
+            let amenity = {
                 wifi: boolean[Math.floor(Math.random() * 2)],     
                 gym: boolean[Math.floor(Math.random() * 2)], 
                 pool: boolean[Math.floor(Math.random() * 2)],
@@ -123,7 +123,7 @@ module.exports.createHotels = function(newHotel, callBack) {
                 twin: twin[Math.floor(Math.random()*twin.length)]
             }
             
-            let hotel = new Hotel({ ...hotels[ranHotels], address: hotelAddress, ...descriptions[ranDes], amenities, room_images});
+            let hotel = new Hotel({ ...hotels[ranHotels], address: hotelAddress, ...descriptions[ranDes], amenities: amenity, room_images});
             //console.log(hotel)
             //hotel.save()
             
