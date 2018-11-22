@@ -24,7 +24,14 @@ class SelectHotel extends Component{
             chosenHotel: null,
             sortOption: '',
             reservation: {},
-            hotels: null
+            hotels: null,
+            wifi: false,
+            gym: false,
+            pool: false,
+            complimentary_breakfast: false,
+            coffe: false,
+            laundry: false,
+            free_parking: false
         };
         this.toggleDropdown = this. toggleDropdown.bind(this);
     }
@@ -68,6 +75,14 @@ class SelectHotel extends Component{
                             <div className="card-block px-3">
                                 <h3 className="card-title">{hotel.name}</h3>
                                 <p className="card-text"><i className="far fa-star"></i> {hotel.stars} Stars</p>
+                                  <p style={{fontWeight: '800', color: '#484848'}}> Amenities Included: </p>
+                                  <p style={{}}>{hotel.amenities.wifi? <i class="fas fa-wifi"></i> : ""}
+                                  {hotel.amenities.gym? <i class="fas fa-dumbbell" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                  {hotel.amenities.pool?  <i class="fas fa-swimmer" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                  {hotel.amenities.complimentary_breakfast? <i class="fas fa-utensils" style={{marginLeft: "14px", color: '#484848'}}></i>  : ""}
+                                  {hotel.amenities.coffee? <i class="fas fa-coffee" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                  {hotel.amenities.laundry? <i class="fas fa-tshirt" style={{marginLeft: "14px", color: '#484848'}}></i>  : ""}
+                                  {hotel.amenities.free_parking? <i class="fas fa-car" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}</p>
                             </div>
                         </div>
                         <div className="col-md-3 price">
@@ -117,13 +132,13 @@ class SelectHotel extends Component{
              <i class="fas fa-utensils"></i>      Breakfast Included</Button>
              <Button style={this.state.iron?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({iron: !this.state.iron})}>
-             <i class="fas fa-tshirt"></i>      Iron</Button>
+             <i class="fas fa-tshirt"></i>      Laundry</Button>
              <Button style={this.state.coffeemaker?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({coffeemaker: !this.state.coffeemaker})}>
              <i class="fas fa-coffee"></i>     Coffee Maker</Button>
-             <Button style={this.state.tv?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({tv: !this.state.tv})} >
-             <i class="fas fa-tv"></i>      TV</Button>
+             <Button style={this.state.parking?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({parking: !this.state.parking})} >
+             <i class="fas fa-car"></i>    Free Parking</Button>
            </div>
 
            <Container>
