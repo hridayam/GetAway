@@ -222,7 +222,7 @@ class Login extends Component {
                     </Row>
                     {this.state.error? <div style={{color: 'red'}}>Either username or password is incorrect</div>: <p></p>}
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
-                      <button className="btn btn-deep-orange login" onClick={this.toggle.bind(this)}>Cancel</button>
+                      <button className="btn btn-deep-orange logout" onClick={this.toggle.bind(this)}>Cancel</button>
                     </form>
                   </Col>
                 </Row>

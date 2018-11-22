@@ -52,12 +52,19 @@ const styles = {
     overflowY: 'hidden'
   },
   viewMore: {
-    position: 'absolute',
+    marginTop: '20vh',
     bottom: '5%',
+<<<<<<< HEAD
     color: 'white',
     width: '30%',
     left: '35%',
     fontSize: 14,
     cursor: 'pointer'
+=======
+    color: 'black',
+    width: '100%',
+    fontSize: 22,
+    cursor: 'pointer',
+>>>>>>> 1043644b5ead6a918978eb77b612e7fa427bed00
   }
 }

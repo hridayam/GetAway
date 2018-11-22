@@ -45,7 +45,7 @@
  }
  @media(min-width: 490px){
   .background-image{
-    height: 100vh;
+    height: 120vh;
   }
  }
 
@@ -66,7 +66,8 @@
 /* Form Field */
 .text-block {
    position: relative;
-   background-color: rgba(0,0,0,0.2);
+   background-color: rgba(0, 0, 0, 0.329);
+   border-radius: 20px;
    text-align: center;
 }
 
@@ -79,32 +80,55 @@
  }
 
 /* Search field */
- .search-place{
+ .location-search-input{
    font-family: 'Lato';
-   text-align: center;
-   display: inline-block;
-   width: 100%;
-   height: 3.4em;
+   height: 30.797;
    color: black;
-
+   text-align: center;
+   display: inline !important;
+   width: auto;
+   box-sizing: border-box !important;
  }
- .search-date{
-   font-family: 'Lato';
-   white-space: nowrap;
-   font-size: 1.4em;
-   color: white;
-   text-align: left;
-   margin-top: 20px;
-
+ .autocomplete-dropdown-container{
+   border-radius: 5px;
  }
-
+ 
+ .guestPicker{
+   height: 2.8em !important;
+   margin-top: 54px !important;
+   text-align: center;
+   display: inline !important;
+   width: 100px !important;
+   box-sizing: border-box !important;
+ }
+ 
+ .DateRangePicker{
+   padding-top: 54px;
+ }
+ 
+ .DateRangePickerInput__withBorder{
+  border-radius: 5px !important;
+ }
+ .DateInput{
+   border-radius: 5px;
+   background: white !important;
+   width: auto !important;
+   margin-left: 5em !important;
+   height: 2.8em !important;
+   box-sizing: border-box !important;
+ }
+ .DateInput_input{
+   font-weight: 400 !important;
+   background-color: transparent !important;
+ }
  .search-button{
    font-family: 'Lato';
    font-size: 1.2em;
    color: white;
    text-align: center;
-   margin-top: 10px;
-   margin-bottom: 10px;
+   margin-top: 30px !important;
+   margin-bottom: 20px !important;
+   border-radius: 20px !important;
  }
 
  /* Suggestion  */
@@ -156,8 +180,9 @@
   font-size: auto;
   line-height: 1;
   color: #407bae;
-  border: 0px;
+  border: 1px;
   margin-top: 20px;
+  border-radius: 20px !important;
 }
 /* Register */
 .form-check-label{
@@ -168,7 +193,7 @@
   border-radius: 20px;
   padding-right: 50px;
   padding-left: 50px;
-  background-color: #fff44f !important;
+  background-color: #2bbbad !important;
   color: black !important;
 }
 /* Login */
@@ -181,7 +206,7 @@
   border-radius: 20px;
   padding-right: 50px;
   padding-left: 50px;
-  background-color: #fff44f !important;
+  background-color: #2bbbad !important;
   color: black !important;
 }
 
@@ -190,7 +215,7 @@
   border-radius: 20px;
   padding-right: 50px;
   padding-left: 50px;
-  background-color: #aeada0 !important;
+  background-color: #cb4153c5   !important;
   color: black !important;
 }
 
