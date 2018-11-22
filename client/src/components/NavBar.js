@@ -4,7 +4,8 @@ import {
   NavbarBrand, Nav, NavItem,
   NavLink
 } from 'reactstrap';
-import Login from './Login'
+import Login from './Login';
+import Register from './Register';
 import logo from "./picture/getaway_logo.png";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -104,8 +105,7 @@ import { withRouter } from 'react-router-dom';
        </Navbar>
      </div>
    );
- }
- else{
+ } else{
    return (
      <div >
        <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
@@ -118,6 +118,9 @@ import { withRouter } from 'react-router-dom';
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
                <NavLink href="/aboutus/">About Us</NavLink>
+             </NavItem>
+             <NavItem>
+               <Register/>
              </NavItem>
              <NavItem>
                <Login />
@@ -136,10 +139,12 @@ const styles = {
     height: '100px',
     backgroundColor: 'transparent',
     paddingTop: '0px',
+    boxShadow: 'none'
   },
   blackStyle: {
     height: '100px',
-    backgroundColor: 'rgba(0,0,0,0.9)'
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    boxShadow: 'none'
   }
 }
 

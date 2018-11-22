@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
+import { Button, Label, Input, Container, Row, Col } from 'reactstrap';
 import {search} from '../../actions/';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -74,32 +74,32 @@ class SearchForm extends Component {
                 <br/>
                 <h2 className="title"> Take a break from {this.state.changingText}</h2>
                 <br/>
-                <Form className="form-wrapper" onSubmit={this.onSubmit}>
+                <form className="form-wrapper" onSubmit={this.onSubmit}>
                     <Row>
                         <Col sm="12">
-                            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                           
                                 <Input style={{color: 'black'}}value={this.state.city} onChange={this.handleChange} name="city" className="search-place" bsSize="lg" placeholder="Where do you want to go?" />
-                            </FormGroup>
+                           
                         </Col>
                     </Row>
                     
                     <Row className="search-date">
                         <Col xs="6" sm="4">
-                            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                           
                                 <Label for="exampleDate"> Check In:  </Label>
                                 <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" id="exampleDate" placeholder="date placeholder" />
-                            </FormGroup>
+                           
                         </Col>
 
                         <Col xs="6" sm="4">
-                            <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                         
                                 <Label for="exampleDate"> Check Out:  </Label>
                                 <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" id="exampleDate" placeholder="date placeholder" />
-                            </FormGroup>
+                     
                         </Col>
                         
                         <Col sm="4">
-                            <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
+                       
                                 <Label for="exampleDate"> Guests:  </Label>
                                 <Input value={this.state.numGuests} onChange={this.handleChange} name="numGuests" type="select" id="exampleSelect" placeholder="sm">
                                     <option>1</option>
@@ -108,12 +108,12 @@ class SearchForm extends Component {
                                     <option>4</option>
                                     <option>5</option>
                                 </Input>
-                            </FormGroup>
+                      
                         </Col>
                     </Row>
 
                     <Button type="submit" className="search-button">Search</Button>
-                </Form>
+                </form>
             </Container>
         );
     }

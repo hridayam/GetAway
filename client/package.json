@@ -21,7 +21,8 @@
     "redux-thunk": "^2.3.0",
     "react-animated-css": "^1.0.4",
     "react-scroll-to": "^2.0.1",
-    "react-toastify": "^4.4.2"
+    "react-toastify": "^4.4.2",
+    "react-loader-spinner": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

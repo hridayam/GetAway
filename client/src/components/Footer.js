@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import { Container, Row, Col, Form, Input, Button } from 'reactstrap';
+import { Col, Container, Row, Footer } from "mdbreact";
 
-export default class Footer extends Component{
+export default class Foot extends Component{
   render(){
     return(
-      <footer style={styles.footerStyle}>
-        <Container>
-          <Row style={styles.rowStyle}>
+      <Footer color="grey" className="font-small darken-3 pt-0" style={styles.footerStyle}>
+        <Container style={{paddingTop: '30px'}}>
+          <Row style={styles.rowStyle}> 
             <Col sm="12" md="4" style={{fontSize:'20px', textAlign: 'left'}}>
               <h2 className="text-uppercase font-weight-bold" style={{marginBottom: '20px', fontFamily:'Allura'}}>GetAway</h2>
                 <p>As one of the world’s top hospitality companies,
@@ -43,29 +43,31 @@ export default class Footer extends Component{
               </div>
               <br/><br/>
               <h5 style={{float:'left'}}> Subscribe to Our Emails:</h5>
-              <Form className="input-group">
-                <Input type="text" className="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
+              <form className="input-group">
+                <input type="text" className="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
                 <div className="input-group-append">
-                  <Button className="btn btn-sm btn-outline-white" type="button">Sign up</Button>
+                  <button className="btn btn-sm btn-outline-white" type="button">Sign up</button>
                 </div>
-              </Form>
+              </form>
             </Col>
             <br/>
           </Row>
         </Container>
 
-        <div style={{backgroundColor: '#8c7b75', color:'white', width: '100%',}}>
-        <br></br><h6>&reg; 2018 GetAway</h6>  <br></br>
+        <div className="footer-copyright text-center py-3">
+          <Container fluid>
+          &reg; 2018 GetAway
+          </Container>
         </div>
-      </footer>
+       </Footer>
     );
   }
 }
 
 const styles = {
   footerStyle: {
-    color: 'black',
-    flex: 1,
+    color: 'white',
+    flex: 1, 
     fontFamily: 'Lato',
     paddingTop: 50
   },

@@ -8,6 +8,7 @@ import Loader from 'react-loader-spinner';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
 import Scroll from '../ScrollUp';
+import Spinner from 'react-loader-spinner';
 
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';

@@ -26,7 +26,8 @@ class Payment extends Component{
             address: '', userCity: '', state: '', zip: '',
             cardholderName: '',
             subtotal: 0, total: 0, tax: 0, rewardsPoints: 0,
-            activeTab: '1'
+            activeTab: '1',
+            usingRewards: true
         };
     }
 
@@ -56,45 +57,49 @@ class Payment extends Component{
             subtotal, total, tax, rewardsPoints
         } = this.state;
 
-        let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
+        if (!this.state.usingRewards) {
+            let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
 
-        let data = {
-            amount: parseInt(this.calculateTotal()),
-            currency: 'usd',
-            source: token.id,
-            description: this.state.user.id
-        };
+            let data = {
+                amount: parseInt(this.calculateTotal()),
+                currency: 'usd',
+                source: token.id,
+                description: this.state.user.id
+            };
 
-        // Nhat switched back to old promise handling for testing
-        axios.post('http://localhost:3001/payments/pay', {data})
-            .then(res => {
-                axios.post('http://localhost:3001/reservations/create', {
-                    hotel_id: hotel._id, 
-                    start_date: startDate, 
-                    end_date: endDate, 
-                    number_of_guests: numGuests, 
-                    user: {
-                        name: `${firstName} ${lastName}`,
-                        email: this.state.user.email,
-                        id: this.state.user.id
-                    },
-                    rewardsPoints,
-                    subtotal, total, tax,
-                    charge: res.data.charge,
-                    
-                })
-                    .then(() => {
-                        this.props.jumpToStep(3);
+            // Nhat switched back to old promise handling for testing
+            axios.post('http://localhost:3001/payments/pay', {data})
+                .then(res => {
+                    axios.post('http://localhost:3001/reservations/create', {
+                        hotel_id: hotel._id, 
+                        start_date: startDate, 
+                        end_date: endDate, 
+                        number_of_guests: numGuests, 
+                        user: {
+                            name: `${firstName} ${lastName}`,
+                            email: this.state.user.email,
+                            id: this.state.user.id
+                        },
+                        rewardsPoints,
+                        subtotal, total, tax,
+                        charge: res.data.charge,
+                        usingRewards: false
                     })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            })
-            .catch(err => {
-                console.log(err);
-            })
+                        .then(() => {
+                            this.props.jumpToStep(3);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        } else {
             
-        
+        }
+            
+            
         this.setState({complete: true});
     }
 
@@ -219,7 +224,7 @@ class Payment extends Component{
                             <NavItem>
                                 <NavLink
                                 className={classnames({ active: this.state.activeTab === '1' })}
-                                onClick={() => { this.toggle('1'); }}
+                                onClick={() => { this.toggle('1'); this.setState({ usingRewards: true })}}
                                 >
                                     Rewards Points Checkout
                                 </NavLink>
@@ -227,7 +232,7 @@ class Payment extends Component{
                             <NavItem>
                                 <NavLink
                                 className={classnames({ active: this.state.activeTab === '2' })}
-                                onClick={() => { this.toggle('2'); }}
+                                onClick={() => { this.toggle('2'); this.setState({ usingRewards: false })}}
                                 >
                                     Credit Card Checkout
                                 </NavLink>

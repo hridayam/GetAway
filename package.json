@@ -16,7 +16,6 @@
   "dependencies": {
     "concurrently": "*",
     "mdbreact": "^4.8.3",
-    "nodemon": "*",
-    "react-loader-spinner": "^2.2.0"
+    "nodemon": "*"
   }
 }
