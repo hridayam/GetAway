@@ -38,6 +38,7 @@ class App extends Component {
 }
 
 const styles = {
-}
+  routeStyle: {}
+};
 
 export default App;

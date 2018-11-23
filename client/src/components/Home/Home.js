@@ -19,7 +19,6 @@ export default class Home extends Component{
   handleViewMoreClick = () => {
     window.scrollTo({
       top: window.innerHeight,
-      left: 0,
       behavior: 'smooth'
     });
   }
@@ -44,27 +43,20 @@ export default class Home extends Component{
 
 const styles = {
   homeStyle: {
-    flex: 1,
+    height: '100vh',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '0px',
-    paddingTop: '30vh',
+    paddingTop: '20vh',
     overflowY: 'hidden'
   },
   viewMore: {
-    marginTop: '20vh',
+    marginTop: '30px',
     bottom: '5%',
-<<<<<<< HEAD
     color: 'white',
     width: '30%',
     left: '35%',
     fontSize: 14,
     cursor: 'pointer'
-=======
-    color: 'black',
-    width: '100%',
-    fontSize: 22,
-    cursor: 'pointer',
->>>>>>> 1043644b5ead6a918978eb77b612e7fa427bed00
   }
 }
