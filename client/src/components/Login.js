@@ -206,7 +206,7 @@ class Login extends Component {
               <ModalHeader toggle={this.toggle.bind(this)}>Welcome Back!</ModalHeader>
               <ModalBody>
                 <Row className="mt-6">
-                  <Col md="">
+                  <Col>
                     <form className='needs-validation' onSubmit={this.submitHandler} noValidate>
                     <Row>
                       <div className="col-md-12 mb-12">
