@@ -91,7 +91,7 @@ import { withRouter } from 'react-router-dom';
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
-             <NavLink href="/profile/">My Reservation</NavLink>
+             <NavLink href="/myreservation/">My Reservation</NavLink>
              </NavItem>
              <NavItem>
                <Login />

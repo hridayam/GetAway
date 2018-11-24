@@ -179,19 +179,25 @@ class Login extends Component {
               <ModalHeader className="profileHeader" toggle={() => this.toggleLogged(8)}>
                 <div>Profile overview</div>
               </ModalHeader>
-              <ModalBody>
-                <img alt="" src={this.state.user.profilePic} style={styles.imageStyles}/>
-                {this.renderProfileInfo()}
-                { this.state.isEditing ? <Button color="btn btn-deep-orange login" onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button color="btn btn-deep-orange login" onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
+              <ModalBody>         
+                  <img alt="" src={this.state.user.profilePic} style={styles.imageStyles}/>
+                <Row>
+                  {this.renderProfileInfo()}
+                </Row>
+                <Row>
+                  <Col>
+                    {this.state.isEditing ? <Button color="btn btn-deep-orange login" onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button color="btn btn-deep-orange login" onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Button color="btn btn-deep-orange logout" onClick={() => this.toggleLogged(8)}>Close</Button>
+                  </Col>
+                  <Col>
+                    <Button color="btn btn-deep-orange logout" onClick={this.userLogout.bind(this)}>Logout</Button>
+                  </Col>
+                </Row>
               </ModalBody>
-              <ModalFooter>
-                <Col>
-                  <Button color="btn btn-deep-orange logout" onClick={() => this.toggleLogged(8)}>Close</Button>
-                </Col>
-                <Col>
-                  <Button color="btn btn-deep-orange logout" onClick={this.userLogout.bind(this)}>Logout</Button>
-                </Col>
-              </ModalFooter>
             </Modal>
           </Container>
         </div>

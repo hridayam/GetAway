@@ -24,7 +24,7 @@ class SearchForm extends Component {
             startDate: '',
             endDate: '',
             numGuests: 1,
-            submitted: false
+            submitted: false,
         };
 
         this.textArray = ['life.', 'work.', 'stress.'];
@@ -49,7 +49,7 @@ class SearchForm extends Component {
     
    onSubmit = event => {
         event.preventDefault();
-        let { city, startDate, endDate, numGuests } = this.state;
+        let { city, numGuests } = this.state;
 
         let startD = moment(this.state.startDate).format('L');
         let endD = moment(this.state.endDate).format('L');
@@ -57,23 +57,37 @@ class SearchForm extends Component {
         let sdSplit = startD.split('/');
         let edSplit = endD.split('/');
         
-        let sdDate = new Date(
-                        sdSplit[0], 
-                        sdSplit[1], 
-                        sdSplit[2],
-                        0, 0, 0, 0);
-        let edDate = new Date(
-                        edSplit[0],
-                        edSplit[1],
-                        edSplit[2],
-                        0, 0, 0, 0);
+        // let sdDate = new Date(
+        //                 sdSplit[0], 
+        //                 sdSplit[1], 
+        //                 sdSplit[2], 
+        //                 0, 0, 0, 0);
+        // let edDate = new Date(
+        //                 edSplit[0],
+        //                 edSplit[1],
+        //                 edSplit[2],
+        //                 0, 0, 0, 0);
+        
+        let newStartDate = sdSplit[2] + "-" + sdSplit[0] + "-" + sdSplit[1];
+        let newEndDate = edSplit[2] + "-" + edSplit[0] + "-" + edSplit[1];
+
+        //getting only city
+        let tempCity = city;
+
+        let getCity = tempCity.split(',');
+
+        let newCity = new String(
+                        getCity[1]   
+        )
+
         this.props.search(
-            city, 
-            sdDate.getTime(), 
-            edDate.getTime(), 
+            newCity, 
+            //ask Nhat if we need it since we dont use it when we post to database
+            // sdDate.getTime(), 
+            // edDate.getTime(), 
             numGuests,
-            startDate,
-            endDate);
+            newStartDate,
+            newEndDate);
         this.setState({ submitted: true });
    }
 
@@ -89,8 +103,6 @@ class SearchForm extends Component {
     componentWillUnmount() {
         clearInterval(this.interval);
     }
-
-    
     
     render() {
     
@@ -112,12 +124,13 @@ class SearchForm extends Component {
                                 onChange={this.handleChangeAuto}
                                 onSelect={this.handleSelectAuto}
                                 style={styles.searchField}
+                                searchOptions={{types:['address']}}
                             >
                                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                     <div>
                                         <input
                                             {...getInputProps({
-                                            placeholder: 'Search Places ...',
+                                            placeholder: 'Where do you want to go?',
                                             className: 'location-search-input',
                                             })}
                                         />

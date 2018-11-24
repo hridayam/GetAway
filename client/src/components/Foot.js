@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import { Col, Container, Row, Footer } from "mdbreact";
+import { Col, Container, Row } from "mdbreact";
+import '../components/css/Home.css';
 
 export default class Foot extends Component{
   render(){
     return(
-      <Footer color="grey" className="font-small darken-3 pt-0" style={styles.footerStyle}>
+      <footer style={styles.footerStyle}>
         <Container style={{paddingTop: '30px'}}>
           <Row style={styles.rowStyle}> 
             <Col sm="12" md="4" style={{fontSize:'20px', textAlign: 'left'}}>
@@ -59,7 +60,7 @@ export default class Foot extends Component{
           &reg; 2018 GetAway
           </Container>
         </div>
-       </Footer>
+       </footer>
     );
   }
 }
@@ -69,7 +70,7 @@ const styles = {
     color: 'white',
     flex: 1, 
     fontFamily: 'Lato',
-    paddingTop: 50
+    backgroundColor: '#262626'
   },
   rowStyle:{
     marginTop: '40px',
