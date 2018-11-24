@@ -24,7 +24,7 @@ class SearchForm extends Component {
             startDate: new moment(),
             endDate: new moment(),
             numGuests: 1,
-            submitted: false
+            submitted: false,
         };
 
         this.textArray = ['life.', 'work.', 'stress.'];
@@ -49,7 +49,7 @@ class SearchForm extends Component {
     
    onSubmit = event => {
         event.preventDefault();
-        let { city, startDate, endDate, numGuests } = this.state;
+        let { city, numGuests } = this.state;
 
         let citySplit = city.split(',');
 
@@ -79,8 +79,8 @@ class SearchForm extends Component {
             startD, 
             endD, 
             numGuests,
-            startDate,
-            endDate);
+            newStartDate,
+            newEndDate);
         this.setState({ submitted: true });
    }
 

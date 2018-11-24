@@ -3,8 +3,8 @@ import { BrowserRouter, Route} from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import Home from './components/Home/Home';
-import Footer from './components/Footer';
-import Profile from './components/Profile/Profile';
+import Foot from './components/Foot';
+import MyReservation from './components/Profile/MyReservation';
 import Reservation from './components/Reservation/Reservation';
 import AboutUs from './components/AboutUs';
 import Register from './components/Register';
@@ -22,7 +22,7 @@ class App extends Component {
         <BrowserRouter>
             <div id='routes' style={ styles.routeStyle }>
               <Route exact path='/' component={Home} />
-              <UserRoute exact path='/profile' component={Profile}/>
+              <UserRoute exact path='/myreservation' component={MyReservation}/>
               <Route exact path = '/reservation' component ={Reservation}/>
               <Route exact path = '/aboutus' component ={AboutUs}/>
               <GuestRoute exact path = '/register' component ={Register}/>
@@ -30,7 +30,7 @@ class App extends Component {
         </BrowserRouter>
 
         <div className = 'App-footer'>
-          <Footer/>
+          <Foot/>
         </div>
       </div>
     );

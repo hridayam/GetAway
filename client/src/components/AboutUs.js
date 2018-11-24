@@ -145,7 +145,7 @@ const styles = {
         width: '100%'
     },
     background: {
-        background: ' right no-repeat fixed url(https://hiverhq.com/blog/wp-content/uploads/2015/12/EE1.jpg)'
+        background: ' center no-repeat fixed url(https://www.beachwalkresortfl.com/i/SITE_170317_16231421_5SMU1/content/app/EEEA0629-C770-029B-33E743A8044CF851.jpg)'
     },
     overlay: {
         flex: 1,
