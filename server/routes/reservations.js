@@ -141,13 +141,21 @@ router.post('/create', async (req,res) => {
     } = req.body;
     
     try {
-        let user = await User.findOne({ _id: user.id }).exec();
         let reservation = new Reservation(data);
 
         // modify user's rewards points
-        if (usingRewards && user !== null) {
-            user.rewardsPoints -= (total - rewardsPoints);
-            user.save();
+        if (data.usingRewards) {
+            await User.findOneAndUpdate({ _id: data.user.id }, {
+                $inc: {
+                    rewardsPoints: -Number(data.subtotal)
+                }
+            }).exec();
+        } else {
+            await User.findOneAndUpdate({ _id: data.user.id }, {
+                $inc: {
+                    rewardsPoints: data.rewardsPoints
+                }
+            }).exec();
         }
 
         Reservation.createReservation(reservation, (err, reservation) => {
@@ -167,6 +175,7 @@ router.post('/create', async (req,res) => {
         });
     }
     catch(err) {
+        console.log(err);
         res.status(422).json({
             success: false,
             msg: 'Could not create reservation'

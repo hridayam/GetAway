@@ -58,43 +58,68 @@ class Payment extends Component{
             usingRewards
         } = this.state;
 
-        let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
+        if (!usingRewards) {
+            let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
 
-        let data = {
-            amount: parseInt(this.calculateTotal()),
-            currency: 'usd',
-            source: token.id,
-            description: this.state.user.id
-        };
+            let data = {
+                amount: parseInt(this.calculateTotal()),
+                currency: 'usd',
+                source: token.id,
+                description: this.state.user.id
+            };
 
-        // Nhat switched back to old promise handling for testing
-        axios.post('http://localhost:3001/payments/pay', {data})
-            .then(res => {
-                axios.post('http://localhost:3001/reservations/create', {
-                    hotel_id: hotel._id, 
-                    start_date: startDate.valueOf(), 
-                    end_date: endDate.valueOf(), 
-                    number_of_guests: numGuests, 
-                    user: {
-                        name: `${firstName} ${lastName}`,
-                        email: this.state.user.email,
-                        id: this.state.user.id
-                    },
-                    rewardsPoints,
-                    subtotal, total, tax,
-                    charge: res.data.charge,
-                    usingRewards
-                })
-                    .then(() => {
-                        this.props.jumpToStep(3);
+            // Nhat switched back to old promise handling for testing
+            axios.post('http://localhost:3001/payments/pay', {data})
+                .then(res => {
+                    axios.post('http://localhost:3001/reservations/create', {
+                        hotel_id: hotel._id, 
+                        start_date: startDate.valueOf(), 
+                        end_date: endDate.valueOf(), 
+                        number_of_guests: numGuests, 
+                        user: {
+                            name: `${firstName} ${lastName}`,
+                            email: this.state.user.email,
+                            id: this.state.user.id,
+                            phoneNumber: this.state.user.phoneNumber
+                        },
+                        rewardsPoints,
+                        subtotal, total, tax,
+                        charge: res.data.charge,
+                        usingRewards
                     })
-                    .catch(err => {
-                        console.log(err);
-                    });
+                        .then(() => {
+                            this.props.jumpToStep(3);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+            axios.post('http://localhost:3001/reservations/create', {
+                hotel_id: hotel._id, 
+                start_date: startDate.valueOf(), 
+                end_date: endDate.valueOf(), 
+                number_of_guests: numGuests, 
+                user: {
+                    name: `${firstName} ${lastName}`,
+                    email: this.state.user.email,
+                    id: this.state.user.id
+                },
+                rewardsPoints,
+                subtotal, total, tax,
+                charge: {},
+                usingRewards
             })
-            .catch(err => {
-                console.log(err);
-            });
+                .then(() => {
+                    this.props.jumpToStep(3);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
             
             
         this.setState({complete: true});
@@ -132,7 +157,7 @@ class Payment extends Component{
 
     calculateTax = () => Number(this.calculateSubtotal() * 0.0925).toFixed(2);
     calculateTotal = () => Number(parseFloat(this.calculateSubtotal()) + parseFloat(this.calculateTax())).toFixed(2);
-    calculateRewardsPoints = () => Math.floor(Number(this.calculateTotal() * .1))
+    calculateRewardsPoints = () => Math.floor(Number(this.calculateSubtotal() * .1))
 
     toggle(tab) {
         if (this.state.activeTab !== tab) {
@@ -244,7 +269,7 @@ class Payment extends Component{
                                             <div>
                                                 <h5>Congrats you have enough rewards points to cover your current reservation!</h5>
                                                 <p>You will have {this.state.user.rewardsPoints - this.state.total} after this reservation is made</p>
-                                                <Button>Finish Checkout</Button>
+                                                <Button color="info" onClick={this.handleSubmit}>Finish Checkout</Button>
                                             </div> :
                                             <div>
                                                 <h5>Oops! You do not have enough rewards points to cover your current reservation.</h5>
