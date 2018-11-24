@@ -20,8 +20,8 @@ class Reservation extends Component{
         super(props);
         this.state = {
             city: '',
-            startDate: '',
-            endDate: '',
+            startDate: {},
+            endDate: {},
             numGuests: 1,
             reservation: {}
         };
@@ -29,7 +29,7 @@ class Reservation extends Component{
 
     static getDerivedStateFromProps(props,state) {
         if (props.reservation !== state.reservation) {
-            let { city, startDateStr, endDateStr, numGuests } = props.reservation;
+            let { city, startDateMoment, endDateMoment, numGuests } = props.reservation;
             return {
                 reservation: props.reservation,
                 city: city
@@ -37,8 +37,8 @@ class Reservation extends Component{
                         .replace(
                             /\b[a-z](?=[a-z]{2})/g, 
                             letter => letter.toUpperCase()),
-                startDate: startDateStr,
-                endDate: endDateStr,
+                startDate: moment(startDateMoment),
+                endDate: moment(endDateMoment),
                 numGuests,
             };
         }
@@ -128,21 +128,19 @@ class Reservation extends Component{
         let getCity = tempCity.split(',');
 
         let newCity = new String(
-                        getCity[1]   
+                        getCity[0]   
         )
 
         this.props.search(
             newCity, 
-            //ask Nhat if we need it since we dont use it when we post to database
-            // sdDate.getTime(), 
-            // edDate.getTime(), 
             numGuests,
-            newStartDate,
-            newEndDate);
+            this.state.startDate,
+            this.state.endDate);
         this.setState({ submitted: true });
    }
 
     render(){
+        console.log(this.props);
         return(
             <div>
             <Scroll/>

@@ -18,8 +18,8 @@ class ChooseRoom extends Component{
         this.state={
             dropdownOpen: false,
             hotel: null,
-            startDate: 0,
-            endDate: 0,
+            startDate: {},
+            endDate: {},
             numGuests: 0,
             selectedRooms: {}
         };
@@ -39,9 +39,9 @@ class ChooseRoom extends Component{
             return {
                 ...state,
                 hotel: props.hotel,
-                startDate: 0,
-                endDate: 0,
-                numGuests: 0
+                startDate: props.startDateMoment,
+                endDate: props.endDateMoment,
+                numGuests: props.numGuests
             };
         }
         return null;

@@ -20,8 +20,8 @@ class SelectHotel extends Component{
         this.state={
             dropdownOpen: false,
             city: '',
-            startDate: '',
-            endDate: '',
+            startDate: {},
+            endDate: {},
             numGuests: 1,
             chosenHotel: null,
             sortOption: '',

@@ -8,8 +8,6 @@ const INITIAL_STATE = {
     selectedRooms: null,
     selectedHotel: null,
     city: '',
-    startDate: 0,
-    endDate: 0,
     startDateMoment: {},
     endDateMoment: {},
     numGuests: 0,
@@ -24,8 +22,6 @@ export default function (state = INITIAL_STATE, action) {
                 ...state,
                 hotels,
                 city,
-                startDate,
-                endDate,
                 numGuests,
                 startDateMoment,
                 endDateMoment

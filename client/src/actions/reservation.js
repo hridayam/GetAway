@@ -1,10 +1,11 @@
 import axios from 'axios';
+import moment from 'moment';
 
 import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, 
     SELECT_ROOMS, ALL_RESERVATIONS, URL, START_LOADING, END_LOADING
 } from './types';
 
-export const search = (city, startDate, endDate, numGuests, startDateMoment, endDateMoment) => {
+export const search = (city, numGuests, startDateMoment, endDateMoment) => {
     return dispatch => {
         dispatch({
             type: START_LOADING,
@@ -13,14 +14,12 @@ export const search = (city, startDate, endDate, numGuests, startDateMoment, end
             }
         });
 
-        axios.post('http://localhost:3001/hotels/search', { city, startDate, endDate, numGuests })
+        axios.post('http://localhost:3001/hotels/search', { city, numGuests })
             .then(res => {
                 dispatch({ 
                     type: SEARCH_HOTELS , 
                     payload: {
                         city,
-                        startDate,
-                        endDate,
                         numGuests,
                         hotels: res.data.hotels,
                         startDateMoment,

@@ -85,7 +85,6 @@ class Login extends Component {
        this.setState({ error: true})
      } else {
        this.setState({
-         modal: !this.state.modal,
          isLoggedIn: true
        });
      }
@@ -174,9 +173,8 @@ class Login extends Component {
     if (this.state.user)
       return(
         <div>
-          <Container>
           <NavLink style={{ cursor: 'pointer' }} onClick={() => this.toggleLogged(8)}>Profile</NavLink>
-            <Modal isOpen={this.state.modal8} toggle={() => this.toggleLogged(8)} fullHeight position="right">
+          <Modal isOpen={this.state.modal8} toggle={() => this.toggleLogged(8)} fullHeight position="right">
               <ModalHeader className="profileHeader" toggle={() => this.toggleLogged(8)}>
                 <div>Profile overview</div>
               </ModalHeader>
@@ -200,7 +198,6 @@ class Login extends Component {
                 </Row>
               </ModalBody>
             </Modal>
-          </Container>
         </div>
       );
 
@@ -214,7 +211,7 @@ class Login extends Component {
               <ModalBody>
                 <Row className="mt-6">
                   <Col>
-                    <form className='needs-validation' onSubmit={this.submitHandler} noValidate>
+                    <form className='needs-validation' onSubmit={this.submitHandler}>
                     <Row>
                       <div className="col-md-12 mb-12">
                         <label htmlFor="defaultFormRegisterNameEx" className="grey-text">User Name</label>

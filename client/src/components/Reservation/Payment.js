@@ -19,7 +19,7 @@ class Payment extends Component{
             hotel: null,
             rooms: null,
             city: '',
-            startDate: 0, endDate: 0,
+            startDate: {}, endDate: {},
             numGuests: 0,
             card: null,
             firstName: '', lastName: '',
@@ -72,8 +72,8 @@ class Payment extends Component{
             .then(res => {
                 axios.post('http://localhost:3001/reservations/create', {
                     hotel_id: hotel._id, 
-                    start_date: startDate, 
-                    end_date: endDate, 
+                    start_date: startDate.valueOf(), 
+                    end_date: endDate.valueOf(), 
                     number_of_guests: numGuests, 
                     user: {
                         name: `${firstName} ${lastName}`,
@@ -119,7 +119,7 @@ class Payment extends Component{
         let duration = 0;
         let day = 24*60*60*1000;
 
-        duration = Math.round(Math.abs((this.state.startDate - this.state.endDate) / day));
+        duration = Math.round(Math.abs((this.state.startDate.valueOf() - this.state.endDate.valueOf()) / day));
 
         Object.keys(this.state.rooms).map((v,i) => {
             subtotal += this.state.rooms[v] * this.state.hotel.price[v];
@@ -324,8 +324,8 @@ const mapStatetoProps = state => {
       hotel: state.reservation.selectedHotel,
       rooms: state.reservation.selectedRooms,
       city: state.reservation.city,
-      startDate: state.reservation.startDate,
-      endDate: state.reservation.endDate,
+      startDate: state.reservation.startDateMoment,
+      endDate: state.reservation.endDateMoment,
       numGuests: state.reservation.numGuests
   };
 }

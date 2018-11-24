@@ -57,8 +57,8 @@ class SearchForm extends Component {
         if (citySplit.length > 1)
             city = citySplit[0];
 
-        let startD = moment(this.state.startDate).valueOf();
-        let endD = moment(this.state.endDate).valueOf();
+        // let startD = moment(this.state.startDate).valueOf();
+        // let endD = moment(this.state.endDate).valueOf();
         
         // let sdSplit = startD.split('/');
         // let edSplit = endD.split('/');
@@ -76,11 +76,9 @@ class SearchForm extends Component {
 
         this.props.search(
             city, 
-            startD, 
-            endD, 
             numGuests,
-            newStartDate,
-            newEndDate);
+            this.state.startDate,
+            this.state.endDate);
         this.setState({ submitted: true });
    }
 
