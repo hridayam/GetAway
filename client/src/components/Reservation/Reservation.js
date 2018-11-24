@@ -3,17 +3,25 @@ import Stepper from './Stepper';
 import '../css/Home.css';
 import { Button, Form, FormGroup, Label, Container, Input, Row, Col } from 'reactstrap';
 import Scroll from '../ScrollUp';
-
+import { DateRangePicker} from 'react-dates';
 import { connect } from 'react-redux';
 import { search } from '../../actions/';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import {
+    geocodeByAddress,
+    geocodeByPlaceId,
+    getLatLng,
+  } from 'react-places-autocomplete';
+import moment from 'moment';
+
 
 class Reservation extends Component{
     constructor(props) {
         super(props);
         this.state = {
             city: '',
-            startDate: '',
-            endDate: '',
+            startDate: {},
+            endDate: {},
             numGuests: 1,
             reservation: {}
         };
@@ -21,7 +29,7 @@ class Reservation extends Component{
 
     static getDerivedStateFromProps(props,state) {
         if (props.reservation !== state.reservation) {
-            let { city, startDateStr, endDateStr, numGuests } = props.reservation;
+            let { city, startDateMoment, endDateMoment, numGuests } = props.reservation;
             return {
                 reservation: props.reservation,
                 city: city
@@ -29,8 +37,8 @@ class Reservation extends Component{
                         .replace(
                             /\b[a-z](?=[a-z]{2})/g, 
                             letter => letter.toUpperCase()),
-                startDate: startDateStr,
-                endDate: endDateStr,
+                startDate: moment(startDateMoment),
+                endDate: moment(endDateMoment),
                 numGuests,
             };
         }
@@ -42,56 +50,145 @@ class Reservation extends Component{
         this.setState({ [name]: value });
     }
 
-    handleSubmit = () => {
-        let { city, startDate, endDate, numGuests } = this.state;
-        if (startDate.length && endDate.length) {
-            let sdSplit = startDate.split('-');
-            let edSplit = endDate.split('-');
+    handleChangeAuto = city => {
+        this.setState({ city });
+       };
+    
+       handleSelectAuto = city => {
+        geocodeByAddress(city)
+          .then(results => getLatLng(results[0]))
+          .then(latLng => console.log('Success', latLng))
+          .catch(error => console.error('Error', error));
+    };
 
-            let sdDate = new Date(
-                            sdSplit[0], 
-                            sdSplit[1], 
-                            sdSplit[2],
-                            0, 0, 0, 0);
-            let edDate = new Date(
-                            edSplit[0],
-                            edSplit[1],
-                            edSplit[2],
-                            0, 0, 0, 0);
+
+    // handleSubmit = () => {
+    //     let { city, startDate, endDate, numGuests } = this.state;
+    //     if (startDate.length && endDate.length) {
+    //         let sdSplit = startDate.split('-');
+    //         let edSplit = endDate.split('-');
+
+    //         let sdDate = new Date(
+    //                         sdSplit[0], 
+    //                         sdSplit[1], 
+    //                         sdSplit[2],
+    //                         0, 0, 0, 0);
+    //         let edDate = new Date(
+    //                         edSplit[0],
+    //                         edSplit[1],
+    //                         edSplit[2],
+    //                         0, 0, 0, 0);
             
-            this.props.search(
-                city, 
-                sdDate.getTime(), 
-                edDate.getTime(), 
-                numGuests,
-                startDate,
-                endDate);
-        }
+    //         this.props.search(
+    //             city, 
+    //             sdDate.getTime(), 
+    //             edDate.getTime(), 
+    //             numGuests,
+    //             startDate,
+    //             endDate);
+    //     }
 
-        else 
-            this.props.search(
-                city, 
-                0, 
-                0,
-                0,
-                0, 
-                numGuests);
-    }
+    //     else 
+    //         this.props.search(
+    //             city, 
+    //             0, 
+    //             0,
+    //             0,
+    //             0, 
+    //             numGuests);
+    // }
+
+    onSubmit = event => {
+        event.preventDefault();
+        let { city, numGuests } = this.state;
+
+        let startD = moment(this.state.startDate).format('L');
+        let endD = moment(this.state.endDate).format('L');
+
+        let sdSplit = startD.split('/');
+        let edSplit = endD.split('/');
+        
+        // let sdDate = new Date(
+        //                 sdSplit[0], 
+        //                 sdSplit[1], 
+        //                 sdSplit[2], 
+        //                 0, 0, 0, 0);
+        // let edDate = new Date(
+        //                 edSplit[0],
+        //                 edSplit[1],
+        //                 edSplit[2],
+        //                 0, 0, 0, 0);
+        
+        let newStartDate = sdSplit[2] + "-" + sdSplit[0] + "-" + sdSplit[1];
+        let newEndDate = edSplit[2] + "-" + edSplit[0] + "-" + edSplit[1];
+
+        //getting only city
+        let tempCity = city;
+
+        let getCity = tempCity.split(',');
+
+        let newCity = new String(
+                        getCity[0]   
+        )
+
+        this.props.search(
+            newCity, 
+            numGuests,
+            this.state.startDate,
+            this.state.endDate);
+        this.setState({ submitted: true });
+   }
 
     render(){
         return(
             <div>
             <Scroll/>
-            <div className = 'reservation-img' style={ styles.homeStyle}></div>
+            <div className = 'reservation-img' style={styles.homeStyle}></div>
             <div className="reservation-search-edit">
             <Container>
-            <Form className="form-wrapper">
+            <Form className="form-wrapper" onSubmit={this.onSubmit}>
                 <Row className="search-date reservation">
                     <Col xs="6" sm="6" lg="2">
-                        <FormGroup>
-                            <Label className="edit-label" for="exampleDate"> Location:  </Label>
-                            <Input onChange={this.handleChange} name="city" value={this.state.city} className="location" placeholder="City Name"/> 
-                        </FormGroup>
+                    <PlacesAutocomplete
+                                value={this.state.city}
+                                onChange={this.handleChangeAuto}
+                                onSelect={this.handleSelectAuto}
+                                style={styles.searchField}
+                                searchOptions={{types:['address']}}
+                            >
+                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                    <div>
+                                        <input
+                                            {...getInputProps({
+                                            placeholder: this.state.city,
+                                            className: 'location-search-input',
+                                            })}
+                                        />
+                                        <div className="autocomplete-dropdown-container">
+                                            {loading && <div>Loading...</div>}
+                                            {suggestions.map(suggestion => {
+                                                const className = suggestion.active
+                                                    ? 'suggestion-item--active'
+                                                    : 'suggestion-item';
+                                                    // inline style for demonstration purpose
+                                                const style = suggestion.active
+                                                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                    return (
+                                                        <div
+                                                            {...getSuggestionItemProps(suggestion, {
+                                                                className,
+                                                                style,
+                                                            })}
+                                                        >
+                                                            <span>{suggestion.description}</span>
+                                                        </div>
+                                                    );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                            </PlacesAutocomplete>
                     </Col>
                     <Col xs="6" sm="6" lg="2">
                         <FormGroup >
@@ -110,20 +207,21 @@ class Reservation extends Component{
                             </Input>
                         </FormGroup>
                     </Col>
-                    <Col xs="6" sm="6" lg="3">
-                        <FormGroup>
-                            <Label className="edit-label" for="exampleDate"> Check In:</Label>
-                            <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" placeholder="date placeholder" />
-                        </FormGroup>
-                    </Col>
-                    <Col xs="6" sm="6" lg="3">
-                        <FormGroup>
-                            <Label className="edit-label" for="exampleDate"> Check Out:</Label>
-                            <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" placeholder="date placeholder" />
-                        </FormGroup>
+                    <Col sm="12">
+                            <DateRangePicker
+                                 withPortal={true}
+                                 startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                                 endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                                 onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                                 focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                                 onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                                 required={true}
+                                 startDatePlaceholderText= {this.state.startDate}
+                                 endDatePlaceholderText= {this.state.endDate}
+                            />
                     </Col>
                     <Col style={styles.updateButton} xs="12" sm="12" lg="2">
-                        <Button onClick={this.handleSubmit}>Update Search</Button>
+                        <Button type='submit'>Update Search</Button>
                     </Col>
                 </Row>
             </Form>

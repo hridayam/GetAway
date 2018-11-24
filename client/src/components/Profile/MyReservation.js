@@ -8,9 +8,9 @@ import {connect} from 'react-redux';
 import '../picture/slide/2.jpg';
 import '../css/Home.css';
 import Scroll from '../ScrollUp';
-import { getAllReservations } from '../../actions/'
+import { getAllReservations } from '../../actions'
 
-class Profile extends Component{
+class MyReservation extends Component{
 
     constructor(props) {
         super(props);
@@ -21,7 +21,7 @@ class Profile extends Component{
         this.state = {
             activeTab: '1',
             active: 1,
-            oldActive: 1,
+            oldActive: 1,   
             rewardPoint:29,
             modal1: false,
             modal2: false,
@@ -100,14 +100,8 @@ class Profile extends Component{
                                     My Reservations
                                 </a>
                             </div>
-                            <div className="col-sm-4" style= {this.state.tabStyles[1]}>
-                                <a onClick={() => { this.toggle('2'); }}>
-                                    Edit Profile
-                                </a>
-                            </div>
-
                             <div className="col-sm-4" style= {this.state.tabStyles[2]}>
-                                <a onClick={() => { this.toggle('3'); }}>
+                                <a onClick={() => { this.toggle('2'); }}>
                                     Rewards
                                 </a>
                             </div>
@@ -133,56 +127,7 @@ class Profile extends Component{
                                 </Col>
                             </Row>
                             </TabPane>
-
                             <TabPane tabId="2">
-                            <Row>
-                                <Col >
-                                    <Form>
-                                        <Row>
-                                            <FormGroup>
-                                                <Label>First Name</Label>
-                                                <Input type="text" placeholder='Ex: John' />
-                                            </FormGroup>
-                                            <Col>
-                                            <FormGroup>
-                                                <Label>Last Name</Label>
-                                                <Input type="text" placeholder='Ex: Smith' />
-                                            </FormGroup>
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <FormGroup>
-                                                <Label>Mobile</Label>
-                                                <Input type="text" placeholder='Enter mobile number' />
-                                            </FormGroup>
-                                            <Col>
-                                            <FormGroup>
-                                                <Label for="exampleEmail">Email</Label>
-                                                <Input type="email" name="email" id="exampleEmail" placeholder='Enter Email' />
-                                            </FormGroup>
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <FormGroup>
-                                                <Label for="examplePassword">Password</Label>
-                                                <Input type="password" name="password" id="examplePassword" placeholder="Enter Password" />
-                                            </FormGroup>
-                                            <Col>
-                                            <FormGroup>
-                                                <Label >Verify</Label>
-                                                <Input type="password" placeholder="Enter Password Again" />
-                                            </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Button>Submit</Button>
-                                    </Form>
-                                </Col>
-                            </Row>
-                            </TabPane>
-            
-                            <TabPane tabId="3">
                             <h4 style={styles.headerStyle}>Your Rewards Points: {this.state.rewardPoint}</h4>
                             <Table style={styles.tableStyle}>
                             <thead>
@@ -285,6 +230,7 @@ const styles = {
     textBlock: {
         position: 'relative',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        borderRadius: '20px',
         textAlign: 'center', 
         marginTop: '20px', 
         color: 'white'
@@ -301,4 +247,4 @@ const mapStateToProps = state =>{
     };
 }
 
-export default connect (mapStateToProps, { getAllReservations })(Profile);
+export default connect (mapStateToProps, { getAllReservations })(MyReservation);

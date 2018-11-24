@@ -1,24 +1,36 @@
 import axios from 'axios';
+import moment from 'moment';
 
 import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, 
-    SELECT_ROOMS, ALL_RESERVATIONS, URL
+    SELECT_ROOMS, ALL_RESERVATIONS, URL, START_LOADING, END_LOADING
 } from './types';
 
-export const search = (city, startDate, endDate, numGuests, startDateStr, endDateStr) => {
+export const search = (city, numGuests, startDateMoment, endDateMoment) => {
     return dispatch => {
-        axios.post('http://localhost:3001/hotels/search', { city, startDate, endDate, numGuests })
+        dispatch({
+            type: START_LOADING,
+            payload: {
+                isLoading: true
+            }
+        });
+
+        axios.post('http://localhost:3001/hotels/search', { city, numGuests })
             .then(res => {
                 dispatch({ 
                     type: SEARCH_HOTELS , 
                     payload: {
                         city,
-                        startDate,
-                        endDate,
                         numGuests,
                         hotels: res.data.hotels,
-                        startDateStr,
-                        endDateStr
+                        startDateMoment,
+                        endDateMoment
                 }});
+                dispatch({
+                    type: END_LOADING,
+                    payload: {
+                        isLoading: false
+                    }
+                });
             })
             .catch(err => {
                 console.log(err.response);
