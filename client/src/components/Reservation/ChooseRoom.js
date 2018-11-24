@@ -50,34 +50,28 @@ class ChooseRoom extends Component{
     renderRooms = hotel => {
         let { price } = hotel;
 
-        return hotel.rooms.map((r,i) => 
+        return Object.keys(hotel.room_images).map((k,i) => {
+            let roomName = `${k.replace(/^\w/, c => c.toUpperCase())} Bed Room`;
+            return (
             <div key={i}className="card">
                 <div className="row ">
                     <div className="col-md-4">
-                        { r.images.length ? 
-                            <Carousel autoPlay infiniteLoop>
-                                { r.images.map((v,i) => 
-                                    <img key={i + '-' + v} src={v} alt="" className="w-100"/>
-                                )}
-                            </Carousel> : <div><br/><br/>No Images Available</div>
-                        }
+                        <img key={i + '-' + hotel.room_images[k]} src={hotel.room_images[k]} alt="" className="w-100"/>
                     </div>
                     <div className="col-md-5 px-3">
                         <div className="card-block px-3">
-                            <h3 className="card-title">{r.bed_type.replace(/^\w/, c => c.toUpperCase())} Bed Room</h3>
+                            <h3 className="card-title">{roomName}</h3>
                             <div className="card-text">
-                                Wifi, HD Television, Coffee Maker, and Refrigerator come standard.
-                                <br/><br/>
-                                This room includes {r.beds} {r.bed_type} bed(s).
+                                This {roomName} is cool!
                             </div>
                         </div>
                     </div>
                     <div className="col-md-3 price">
-                        <h3 className="reservation-price">${r.beds*price[r.bed_type]} per night</h3>
+                        <h3 className="reservation-price">${hotel.price[k]} per night</h3>
                         <FormGroup>
                             <Label for="exampleSelect">How many rooms do you need?</Label>
                             <Input 
-                                onChange={e => this.setState({ selectedRooms: {[r.bed_type]: e.target.value }})}
+                                onChange={e => this.setState({ selectedRooms: {[k]: e.target.value }})}
                                 type="select"
                                 name="select">
                                 <option>1</option>
@@ -99,7 +93,7 @@ class ChooseRoom extends Component{
                                 if (Object.keys(this.state.selectedRooms).length)
                                     this.props.selectRooms(hotel, this.state.selectedRooms);
                                 else
-                                    this.props.selectRooms(hotel, { [r.bed_type]: 1});
+                                    this.props.selectRooms(hotel, { [k]: 1});
                                 this.props.jumpToStep(2);
                             }}
                             >
@@ -108,10 +102,12 @@ class ChooseRoom extends Component{
                     </div>
                 </div>
             </div>
-        );
+            );
+        });
     }
 
     render(){
+        console.log(this.props);
         return(
             <div>
                 <Container>

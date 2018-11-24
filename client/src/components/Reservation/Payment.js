@@ -54,50 +54,47 @@ class Payment extends Component{
             firstName, lastName,
             address, userCity, state, zip,
             cardholderName,
-            subtotal, total, tax, rewardsPoints
+            subtotal, total, tax, rewardsPoints,
+            usingRewards
         } = this.state;
 
-        if (!this.state.usingRewards) {
-            let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
+        let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
 
-            let data = {
-                amount: parseInt(this.calculateTotal()),
-                currency: 'usd',
-                source: token.id,
-                description: this.state.user.id
-            };
+        let data = {
+            amount: parseInt(this.calculateTotal()),
+            currency: 'usd',
+            source: token.id,
+            description: this.state.user.id
+        };
 
-            // Nhat switched back to old promise handling for testing
-            axios.post('http://localhost:3001/payments/pay', {data})
-                .then(res => {
-                    axios.post('http://localhost:3001/reservations/create', {
-                        hotel_id: hotel._id, 
-                        start_date: startDate, 
-                        end_date: endDate, 
-                        number_of_guests: numGuests, 
-                        user: {
-                            name: `${firstName} ${lastName}`,
-                            email: this.state.user.email,
-                            id: this.state.user.id
-                        },
-                        rewardsPoints,
-                        subtotal, total, tax,
-                        charge: res.data.charge,
-                        usingRewards: false
+        // Nhat switched back to old promise handling for testing
+        axios.post('http://localhost:3001/payments/pay', {data})
+            .then(res => {
+                axios.post('http://localhost:3001/reservations/create', {
+                    hotel_id: hotel._id, 
+                    start_date: startDate, 
+                    end_date: endDate, 
+                    number_of_guests: numGuests, 
+                    user: {
+                        name: `${firstName} ${lastName}`,
+                        email: this.state.user.email,
+                        id: this.state.user.id
+                    },
+                    rewardsPoints,
+                    subtotal, total, tax,
+                    charge: res.data.charge,
+                    usingRewards
+                })
+                    .then(() => {
+                        this.props.jumpToStep(3);
                     })
-                        .then(() => {
-                            this.props.jumpToStep(3);
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        });
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        } else {
-            
-        }
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
             
             
         this.setState({complete: true});
@@ -234,7 +231,7 @@ class Payment extends Component{
                                 className={classnames({ active: this.state.activeTab === '2' })}
                                 onClick={() => { this.toggle('2'); this.setState({ usingRewards: false })}}
                                 >
-                                    Credit Card Checkout
+                                    Card Checkout
                                 </NavLink>
                             </NavItem>
                             </Nav>
@@ -243,7 +240,23 @@ class Payment extends Component{
                                 <br/>
                                 <Row>
                                     <Col sm="12">
-                                        <h4>Tab 1 Contents</h4>
+                                        {this.state.user.rewardsPoints > this.state.total ?
+                                            <div>
+                                                <h5>Congrats you have enough rewards points to cover your current reservation!</h5>
+                                                <p>You will have {this.state.user.rewardsPoints - this.state.total} after this reservation is made</p>
+                                                <Button>Finish Checkout</Button>
+                                            </div> :
+                                            <div>
+                                                <h5>Oops! You do not have enough rewards points to cover your current reservation.</h5>
+                                                <p>You can still check out with your credit/debit card :)</p>
+                                                <Button onClick={
+                                                    () => { 
+                                                        this.toggle('2'); 
+                                                        this.setState({ usingRewards: false 
+                                                        })}}>
+                                                    Checkout with Card</Button>
+                                            </div>
+                                        }
                                     </Col>
                                 </Row>
                             </TabPane>
@@ -263,7 +276,7 @@ class Payment extends Component{
                                         <CardElement style={styles.cardpanel}/>
 
                                         <p style={styles.cardinfo}>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
-                                        <Button color="info" onClick={this.handleSubmit}>Place Order</Button>
+                                        <Button color="info" onClick={this.handleSubmit}>Finish Checkout</Button>
                                     </Col>
                                 </Row>
                             </TabPane>

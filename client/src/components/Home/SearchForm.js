@@ -21,8 +21,8 @@ class SearchForm extends Component {
         this.state = {
             changingText: 'life.',
             city: '',
-            startDate: '',
-            endDate: '',
+            startDate: new moment(),
+            endDate: new moment(),
             numGuests: 1,
             submitted: false
         };
@@ -57,26 +57,27 @@ class SearchForm extends Component {
         if (citySplit.length > 1)
             city = citySplit[0];
 
-        let startD = moment(this.state.startDate).format('L');
-        let endD = moment(this.state.endDate).format('L');
-
-        let sdSplit = startD.split('/');
-        let edSplit = endD.split('/');
+        let startD = moment(this.state.startDate).valueOf();
+        let endD = moment(this.state.endDate).valueOf();
         
-        let sdDate = new Date(
-                        sdSplit[0], 
-                        sdSplit[1], 
-                        sdSplit[2],
-                        0, 0, 0, 0);
-        let edDate = new Date(
-                        edSplit[0],
-                        edSplit[1],
-                        edSplit[2],
-                        0, 0, 0, 0);
+        // let sdSplit = startD.split('/');
+        // let edSplit = endD.split('/');
+        
+        // let sdDate = new Date(
+        //                 sdSplit[0], 
+        //                 sdSplit[1], 
+        //                 sdSplit[2],
+        //                 0, 0, 0, 0);
+        // let edDate = new Date(
+        //                 edSplit[0],
+        //                 edSplit[1],
+        //                 edSplit[2],
+        //                 0, 0, 0, 0);
+
         this.props.search(
             city, 
-            sdDate.getTime(), 
-            edDate.getTime(), 
+            startD, 
+            endD, 
             numGuests,
             startDate,
             endDate);
@@ -97,6 +98,7 @@ class SearchForm extends Component {
     }
 
     render() {
+        console.log(this.state);
         if (this.state.submitted)
             return( <Redirect to='/reservation' /> );
         else

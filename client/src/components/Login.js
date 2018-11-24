@@ -18,6 +18,7 @@ class Login extends Component {
       modal: false,
       modal6: false,
       modal7: false,
+      modal8: false,
       email: '',
       password: '',
 

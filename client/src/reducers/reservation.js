@@ -10,8 +10,8 @@ const INITIAL_STATE = {
     city: '',
     startDate: 0,
     endDate: 0,
-    startDateStr: '',
-    endDateStr: '',
+    startDateMoment: {},
+    endDateMoment: {},
     numGuests: 0,
     isLoading: false
 };
@@ -19,7 +19,7 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
         case SEARCH_HOTELS:
-            let { hotels, city, startDate, endDate, numGuests, startDateStr, endDateStr } = action.payload;
+            let { hotels, city, startDate, endDate, numGuests, startDateMoment, endDateMoment } = action.payload;
             return{
                 ...state,
                 hotels,
@@ -27,8 +27,8 @@ export default function (state = INITIAL_STATE, action) {
                 startDate,
                 endDate,
                 numGuests,
-                startDateStr,
-                endDateStr
+                startDateMoment,
+                endDateMoment
             };
 
         case SELECT_HOTEL:

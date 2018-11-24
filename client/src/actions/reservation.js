@@ -4,7 +4,7 @@ import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL,
     SELECT_ROOMS, ALL_RESERVATIONS, URL, START_LOADING, END_LOADING
 } from './types';
 
-export const search = (city, startDate, endDate, numGuests, startDateStr, endDateStr) => {
+export const search = (city, startDate, endDate, numGuests, startDateMoment, endDateMoment) => {
     return dispatch => {
         dispatch({
             type: START_LOADING,
@@ -23,8 +23,8 @@ export const search = (city, startDate, endDate, numGuests, startDateStr, endDat
                         endDate,
                         numGuests,
                         hotels: res.data.hotels,
-                        startDateStr,
-                        endDateStr
+                        startDateMoment,
+                        endDateMoment
                 }});
                 dispatch({
                     type: END_LOADING,
