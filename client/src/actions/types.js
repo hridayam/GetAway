@@ -6,6 +6,8 @@ export const PAYMENT = 'payment';
 export const SELECT_HOTEL = 'select_hotel';
 export const SELECT_ROOMS = 'select_rooms';
 export const ALL_RESERVATIONS = 'all_reservations';
+export const START_LOADING = 'start_loading';
+export const END_LOADING = 'end_loading';
 
 
 

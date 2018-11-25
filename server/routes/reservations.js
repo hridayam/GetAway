@@ -136,27 +136,51 @@ router.post('/create', async (req,res) => {
     let data = { 
         hotel_id, time_created, start_date, end_date,
         charge, room_number, number_of_guests,
-        user, total, subtotal, tax, rewardsPoints
+        user, total, subtotal, tax, rewardsPoints,
+        usingRewards
     } = req.body;
     
-    let reservation = new Reservation(data)
+    try {
+        let reservation = new Reservation(data);
 
-    Reservation.createReservation(reservation, (err, reservation) => {
-        if(err) {
-            console.log(err);
-            return res.status(422).json({
-                success: false,
-                message: err
-            })
+        // modify user's rewards points
+        if (data.usingRewards) {
+            await User.findOneAndUpdate({ _id: data.user.id }, {
+                $inc: {
+                    rewardsPoints: -Number(data.subtotal)
+                }
+            }).exec();
+        } else {
+            await User.findOneAndUpdate({ _id: data.user.id }, {
+                $inc: {
+                    rewardsPoints: data.rewardsPoints
+                }
+            }).exec();
         }
-        else if (reservation) {
-            return res.status(200).json({
-                success: true,
-                reservation,
-                msg: 'Successfully created the reservation.'
-            });
-        }
-    })
+
+        Reservation.createReservation(reservation, (err, reservation) => {
+            if(err) {
+                return res.status(422).json({
+                    success: false,
+                    message: err
+                });
+            }
+            else if (reservation) {
+                return res.status(200).json({
+                    success: true,
+                    reservation,
+                    msg: 'Successfully created the reservation.'
+                });
+            }
+        });
+    }
+    catch(err) {
+        console.log(err);
+        res.status(422).json({
+            success: false,
+            msg: 'Could not create reservation'
+        });
+    }
 });
 
 module.exports = router;
