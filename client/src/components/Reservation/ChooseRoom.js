@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {
-    Container, Button, DropdownMenu, 
+    Container, DropdownMenu, 
     DropdownItem, Dropdown, DropdownToggle, 
     FormGroup, Label, Input
 } from 'reactstrap';
+import {Button} from 'mdbreact'
+
 import {Carousel} from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
@@ -86,8 +88,7 @@ class ChooseRoom extends Component{
                             </Input>
                         </FormGroup>
                         <Button 
-                            style={cssStyles.buttonRoom} 
-                            color="info" 
+                            style={cssStyles.buttonRoom}  
                             size="lg" 
                             onClick={() => { 
                                 if (Object.keys(this.state.selectedRooms).length)
@@ -112,7 +113,7 @@ class ChooseRoom extends Component{
             <div>
                 <Container>
                 <div>
-                <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                <Dropdown style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
                 <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
                     Sort By:
                 </DropdownToggle>

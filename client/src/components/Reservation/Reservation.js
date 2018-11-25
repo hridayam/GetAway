@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Stepper from './Stepper';
 import '../css/Home.css';
-import { Button, Form, FormGroup, Label, Container, Input, Row, Col } from 'reactstrap';
+import {Input, Container, Form, FormGroup, Label } from 'reactstrap';
+import {Button, Row, Col} from 'mdbreact'
 import Scroll from '../ScrollUp';
 import { DateRangePicker} from 'react-dates';
 import { connect } from 'react-redux';
@@ -145,10 +146,26 @@ class Reservation extends Component{
             <Scroll/>
             <div className = 'reservation-img' style={styles.homeStyle}></div>
             <div className="reservation-search-edit">
-            <Container>
-            <Form className="form-wrapper" onSubmit={this.onSubmit}>
-                <Row className="search-date reservation">
-                    <Col xs="6" sm="6" lg="2">
+            <Container onSubmit={this.onSubmit}>
+                <Row style={{textAlign:'center',marginTop:'-50px', marginBottom:'10px'}} >
+                    <Col sm="12" md={{ size: 6, offset: 3 }}>      
+                        <DateRangePicker
+                                 withPortal={true}
+                                 startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                                 endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                                 onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                                 focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                                 onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                                 required={true}
+                                 startDatePlaceholderText= {this.state.startDate}
+                                 endDatePlaceholderText= {this.state.endDate}
+                                 style={{textAlign:'center'}}
+                            />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs="6" sm="4">
+                    <Label className="edit-label"> Change Place:  </Label>
                     <PlacesAutocomplete
                                 value={this.state.city}
                                 onChange={this.handleChangeAuto}
@@ -158,12 +175,14 @@ class Reservation extends Component{
                             >
                                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                     <div>
-                                        <input
-                                            {...getInputProps({
-                                            placeholder: this.state.city,
-                                            className: 'location-search-input',
-                                            })}
-                                        />
+                                        <Input
+                                                {...getInputProps({
+                                                placeholder: 'Search Places ...',
+                                                className: 'location-search-input',
+                                                })}
+                                                className="form-control text-center col-sm-8 offset-sm-2"
+                                                
+                                            />
                                         <div className="autocomplete-dropdown-container">
                                             {loading && <div>Loading...</div>}
                                             {suggestions.map(suggestion => {
@@ -190,8 +209,8 @@ class Reservation extends Component{
                                 )}
                             </PlacesAutocomplete>
                     </Col>
-                    <Col xs="6" sm="6" lg="2">
-                        <FormGroup >
+                    <Col xs="6" sm="4">
+                        <FormGroup inline>
                             <Label className="edit-label" for="exampleDate"> Guests:  </Label>
                             <Input value={this.state.numGuests} onChange={this.handleChange} type="select" name="numGuests" id="exampleSelect" placeholder="sm">
                                 <option>1</option>
@@ -207,24 +226,11 @@ class Reservation extends Component{
                             </Input>
                         </FormGroup>
                     </Col>
-                    <Col sm="12">
-                            <DateRangePicker
-                                 withPortal={true}
-                                 startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                                 endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                                 onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-                                 focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                                 onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                                 required={true}
-                                 startDatePlaceholderText= {this.state.startDate}
-                                 endDatePlaceholderText= {this.state.endDate}
-                            />
-                    </Col>
-                    <Col style={styles.updateButton} xs="12" sm="12" lg="2">
-                        <Button type='submit'>Update Search</Button>
+                    <Col sm="4">
+                        <Button type='submit' style={{textAlign:'center',marginTop:'15px'}}>Update Search</Button>
                     </Col>
                 </Row>
-            </Form>
+
             </Container>
         </div>
             <Stepper/>
@@ -248,6 +254,13 @@ const styles = {
       height: '40px',
       alignItems: 'center',
       display: 'block'
+    },
+    searchField:{
+        position: 'relative',
+        textAlign: 'center',
+        height:'1000px',
+        weight:'10000px',
+        width: '100%'
     }
 };
 

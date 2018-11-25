@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
-        Container, Button, DropdownMenu,
+        Container, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
+import {Button} from 'mdbreact'
+
 import { Carousel } from 'react-responsive-carousel';
 import Loader from 'react-loader-spinner';
 
