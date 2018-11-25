@@ -85,7 +85,9 @@ class Payment extends Component{
                         rewardsPoints,
                         subtotal, total, tax,
                         charge: res.data.charge,
-                        usingRewards
+                        usingRewards,
+                        city: hotel.address.city,
+                        hotel_name: hotel.name
                     })
                         .then(() => {
                             this.props.jumpToStep(3);

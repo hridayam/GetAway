@@ -137,7 +137,7 @@ router.post('/create', async (req,res) => {
         hotel_id, time_created, start_date, end_date,
         charge, room_number, number_of_guests,
         user, total, subtotal, tax, rewardsPoints,
-        usingRewards
+        usingRewards, city, hotel_name
     } = req.body;
     
     try {

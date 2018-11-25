@@ -226,7 +226,9 @@ class Login extends Component {
                     </Row>
                     <hr/>
                     <Row>
-                      <a href="http://localhost:3001/auth/google"><GoogleButton/></a>
+                      <a href="http://localhost:3001/auth/google">
+                        <GoogleButton />
+                      </a>
                     </Row>
                     {this.state.error? <div style={{color: 'red'}}>Either username or password is incorrect</div>: <p></p>}
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
@@ -268,6 +270,6 @@ const styles ={
     marginTop:10,
     color: 'white',
     fontWeight: 'normal',
-},
+  }
 }
 export default connect(mapStateToProps, { login, logout, register, userLoggedIn })(Login)

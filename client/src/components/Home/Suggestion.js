@@ -9,7 +9,6 @@ export default class Suggestion extends Component {
         <Container className = "suggestion" >
             <h1 className="suggestion-title"> Step Up Your Travel Game </h1>
             <Row >
-                
                 <Col className=" suggestion-card" sm="12" md="4">
                     <Card style={{height: '30rem'}}>
                         <View zoom>

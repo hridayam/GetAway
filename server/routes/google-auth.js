@@ -44,8 +44,8 @@ router.get('/auth/google/callback',
                 email: emails[0].value,
                 profilePic: photos[0].value,
                 google_id: id,
-                address: 'No address given',
-                phoneNumber: 'No phone number given'
+                address: '',
+                phoneNumber: ''
             });
 
             newUser.save();
