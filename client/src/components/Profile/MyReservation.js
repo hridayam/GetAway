@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import { Container, Row, Col } from 'reactstrap'
+import { FlippingCard, Card, CardBody, Fa, CardUp, Avatar } from 'mdbreact';
+import { Container, Row, Col, } from 'reactstrap';
 import {TabContent, TabPane, Nav, div, a, Button} from 'reactstrap';
-import {Form, FormGroup, Label, Input} from 'reactstrap';
 import {Modal,ModalBody} from 'reactstrap';
+import Scroll from '../ScrollUp';
+
 import {connect} from 'react-redux';
+import { getAllReservations } from '../../actions';
+
 import '../picture/slide/2.jpg';
 import '../css/Home.css';
-import Scroll from '../ScrollUp';
-import { getAllReservations } from '../../actions'
 
 class MyReservation extends Component{
 
@@ -26,12 +28,13 @@ class MyReservation extends Component{
             modal1: false,
             modal2: false,
             reservations: [],
-            tabStyles: [ styles.activeTabStyle, styles.inactiveTabStyle, styles.inactiveTabStyle ]
+            tabStyles: [ styles.activeTabStyle, styles.inactiveTabStyle, styles.inactiveTabStyle ],
+            user: {},
         };
     }
 
     componentDidMount() {
-        this.props.getAllReservations()
+        this.props.getAllReservations(this.state.user._id)
     }
 
     toggle1() {
@@ -58,27 +61,32 @@ class MyReservation extends Component{
         }
     }
 
-    allReservationRender(){
-        if(this.state.reservations !== null){
-            return this.state.reservations.map((reservation, index) =>
-            <tr key={reservation._id}>
-                <th scope="row">{index}</th>
-                <td>{reservation.start_date}</td>
-                <td>Los Angeles</td>
-                <td>Single</td>
-                <td>1</td>
-                <td>Active</td>
-            </tr>
-            )
-        }
-    } 
+    // renderAllReservations(){
+    //     if(this.state.reservations && this.state.reservations !== undefined){
+    //         return this.state.reservations.map((reservation, index) =>
+    //         <tr key={reservation._id}>
+    //             <th scope="row">{index}</th>
+    //             <td>{reservation.start_date}</td>
+    //             <td>Los Angeles</td>
+    //             <td>Single</td>
+    //             <td>1</td>
+    //             <td>Active</td>
+    //         </tr>
+    //         )
+    //     }
+    // } 
 
+    renderAllReservations() {
+        this.state.reservations.length ?
+        <div></div>
+        : null
+    }
 
     static getDerivedStateFromProps(props, state) {
-        if (state.user !== props.user){
+        if (state.user !== props.user || state.reservations !== props.reservations){
             return {
-            user: props.user,
-            reservations: props.reservations
+                user: props.user,
+                reservations: props.reservations
             };
         }
         return null;
@@ -88,19 +96,17 @@ class MyReservation extends Component{
     render(){
     return(
         <div className="background-image2">
-            <div class="row" style= {styles.profileStyle}>
-            </div>
             <Scroll/>
-            <Container >
+            <Container style={{ marginTop: '10em' }}>
                 <Row style = {styles.textBlock}>
-                    <Col sm="12" md={{ size: 6, offset: 3 }}>
+                    <Col sm={12}>
                         <div className="row" style={{borderBottomColor: "transparent",padding: '25px'}}>
-                            <div className="col-sm-4" style= {this.state.tabStyles[0]}>
+                            <div className="col-sm-3 offset-sm-3" style= {this.state.tabStyles[0]}>
                                 <a onClick={() => { this.toggle('1'); }}>
                                     My Reservations
                                 </a>
                             </div>
-                            <div className="col-sm-4" style= {this.state.tabStyles[2]}>
+                            <div className="col-sm-3" style= {this.state.tabStyles[1]}>
                                 <a onClick={() => { this.toggle('2'); }}>
                                     Rewards
                                 </a>
@@ -111,7 +117,7 @@ class MyReservation extends Component{
                             <TabPane tabId="1">
                             <Row>
                                 <Col>
-                                    <Table  responsive style={styles.tableStyle}>
+                                    {/* <Table  responsive style={styles.tableStyle}>
                                         <thead>
                                         <tr>
                                             <th>ID</th>
@@ -122,8 +128,9 @@ class MyReservation extends Component{
                                             <th>Status</th>
                                         </tr>
                                         </thead>
-                                        <tbody>{this.allReservationRender()}</tbody>
-                                    </Table>
+                                        <tbody>{this.renderAllReservations()}</tbody>
+                                    </Table> */}
+                                    {this.renderAllReservations()}
                                 </Col>
                             </Row>
                             </TabPane>
@@ -233,17 +240,18 @@ const styles = {
         borderRadius: '20px',
         textAlign: 'center', 
         marginTop: '20px', 
-        color: 'white'
+        color: 'white',
+        minHeight: '50vh'
     },
 
 
 }
 
 
-const mapStateToProps = state =>{
+const mapStateToProps = state => {
     return{
         user: state.auth.user,
-        reservations: state.allReservations
+        reservations: state.reservation.reservations
     };
 }
 

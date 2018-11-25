@@ -114,25 +114,25 @@ class SelectHotel extends Component{
             <div>
              <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({wifi: !this.state.wifi})}>
-             <i class="fas fa-wifi"></i>  Free Wifi</Button>
+             <i className="fas fa-wifi"></i>  Free Wifi</Button>
              <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({gym: !this.state.gym})}>
-             <i class="fas fa-dumbbell"></i>     Gym</Button>
+             <i className="fas fa-dumbbell"></i>     Gym</Button>
              <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({pool: !this.state.pool})}>
-             <i class="fas fa-swimmer"></i>     Pool</Button>
+             <i className="fas fa-swimmer"></i>     Pool</Button>
              <Button style={this.state.breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({breakfast: !this.state.breakfast})}>
-             <i class="fas fa-utensils"></i>      Breakfast Included</Button>
+             <i className="fas fa-utensils"></i>      Breakfast Included</Button>
              <Button style={this.state.iron?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({iron: !this.state.iron})}>
-             <i class="fas fa-tshirt"></i>      Iron</Button>
+             <i className="fas fa-tshirt"></i>      Iron</Button>
              <Button style={this.state.coffeemaker?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({coffeemaker: !this.state.coffeemaker})}>
-             <i class="fas fa-coffee"></i>     Coffee Maker</Button>
+             <i className="fas fa-coffee"></i>     Coffee Maker</Button>
              <Button style={this.state.tv?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({tv: !this.state.tv})} >
-             <i class="fas fa-tv"></i>      TV</Button>
+             <i className="fas fa-tv"></i>      TV</Button>
            </div>
 
            <Container>

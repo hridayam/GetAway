@@ -1,6 +1,7 @@
 import { 
             SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, SELECT_ROOMS, 
-            START_LOADING, END_LOADING 
+            START_LOADING, END_LOADING,
+            ALL_RESERVATIONS 
         } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -11,7 +12,8 @@ const INITIAL_STATE = {
     startDateMoment: {},
     endDateMoment: {},
     numGuests: 0,
-    isLoading: false
+    isLoading: false,
+    reservations: []
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -55,6 +57,12 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...state,
                 ...action.payload
+            };
+
+        case ALL_RESERVATIONS:
+            return {
+                ...state,
+                reservations: action.payload
             };
 
         default: 

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col,
    Popover, PopoverBody, PopoverHeader, Table} from 'mdbreact';
 import { NavLink } from 'reactstrap';
-import {Redirect} from 'react-router-dom';
-import './css/Home.css'
+import axios from 'axios';
+import FileBase64 from 'react-file-base64';
+import GoogleButton from 'react-google-button';
+
 import { login, logout, register, userLoggedIn } from '../actions/auth';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import FileBase64 from 'react-file-base64';
-//import 'react-toastify/dist/ReactToastify.css';
+
+import './css/Home.css';
 
 class Login extends Component {
   constructor(props) {
@@ -189,10 +189,10 @@ class Login extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
+                  {/* <Col>
                     <Button color="btn btn-deep-orange logout" onClick={() => this.toggleLogged(8)}>Close</Button>
-                  </Col>
-                  <Col>
+                  </Col> */}
+                  <Col sm={12}>
                     <Button color="btn btn-deep-orange logout" onClick={this.userLogout.bind(this)}>Logout</Button>
                   </Col>
                 </Row>
@@ -223,6 +223,10 @@ class Login extends Component {
                         <label htmlFor="defaultFormRegisterNameEx" className="grey-text">Password</label>
                         <input value={this.state.password} name='password' onChange={this.handleChange.bind(this)} type="password" id="defaultFormRegisterNameEx" className="form-control" placeholder="Password" required/>
                       </div>
+                    </Row>
+                    <hr/>
+                    <Row>
+                      <a href="http://localhost:3001/auth/google"><GoogleButton/></a>
                     </Row>
                     {this.state.error? <div style={{color: 'red'}}>Either username or password is incorrect</div>: <p></p>}
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
