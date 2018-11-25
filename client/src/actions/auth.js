@@ -19,7 +19,7 @@ const loginUser = (data, dispatch, cb) => {
     axios.post('http://localhost:3001/users/login', data)
         .then(res => {
             localStorage.token = res.data.token;
-            localStorage.user = JSON.stringify(res.data.user);
+            localStorage.data = JSON.stringify(res.data.user);
 
             dispatch(userLoggedIn({token: res.data.token, user: res.data.user}));
             cb();
@@ -33,7 +33,7 @@ const loginUser = (data, dispatch, cb) => {
 export const logout =() => {
     return dispatch => {
         localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        localStorage.removeItem('data');
         dispatch({
             type: LOGOUT_USER,
         });

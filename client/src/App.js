@@ -24,9 +24,12 @@ class App extends Component {
     if (query.id) {
       axios.post('http://localhost:3001/auth/find-by-google-id', { google_id: query.id })
         .then(res => {
+          let { token, user } = res.data;
+          localStorage.setItem('token', token);
+          localStorage.setItem('data', JSON.stringify(user));
           this.props.userLoggedIn({ 
-            user: res.data.user,
-            token: res.data.token
+            user,
+            token
           });
         })
         .catch(err => {
