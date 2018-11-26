@@ -140,6 +140,8 @@ router.post('/create', async (req,res) => {
         usingRewards, city, hotel_name
     } = req.body;
     
+    console.log(data);
+    
     try {
         let reservation = new Reservation(data);
 

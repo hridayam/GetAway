@@ -72,6 +72,7 @@ class Payment extends Component{
             // Nhat switched back to old promise handling for testing
             axios.post('http://localhost:3001/payments/pay', {data})
                 .then(res => {
+                    console.log(res);
                     axios.post('http://localhost:3001/reservations/create', {
                         hotel_id: hotel._id, 
                         start_date: startDate.valueOf(), 

@@ -33,8 +33,7 @@ const userSchema = new Schema({
         type: String
     },
     address: {
-        type: String,
-        required: true
+        type: String
     },
     rewardsPoints: {
         type: Number,
