@@ -127,6 +127,7 @@ class SelectHotel extends Component{
     }
 
     render() {
+        console.log(this.state.hotels)
         if (this.state.sortOption === "low") {
             this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
         }
@@ -139,10 +140,10 @@ class SelectHotel extends Component{
             <div>
              <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({wifi: !this.state.wifi})}>
-             <i class="fas fa-wifi"></i>  Free Wifi</Button>
+             <i className="fas fa-wifi"></i>  Free Wifi</Button>
              <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({gym: !this.state.gym})}>
-             <i class="fas fa-dumbbell"></i>     Gym</Button>
+             <i className="fas fa-dumbbell"></i>     Gym</Button>
              <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({pool: !this.state.pool})}>
              <i class="fas fa-swimmer"></i>     Pool</Button>

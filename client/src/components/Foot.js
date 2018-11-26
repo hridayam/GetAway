@@ -39,7 +39,7 @@ export default class Foot extends Component{
                    <i className="fa fa-google-plus fa-lg mr-md-5 mr-3 fa-2x"> </i>
                  </a>
                  <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color: 'black'}}>
-                 <i class="fab fa-instagram"></i>
+                 <i className="fab fa-instagram"></i>
                 </a>
               </div>
               <br/><br/>

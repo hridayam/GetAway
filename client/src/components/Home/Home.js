@@ -51,12 +51,12 @@ const styles = {
     overflowY: 'hidden'
   },
   viewMore: {
-    marginTop: '30px',
-    bottom: '5%',
     color: 'white',
     width: '30%',
     left: '35%',
     fontSize: 14,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    bottom: '2%',
+    position: 'absolute'
   }
 }

@@ -27,16 +27,13 @@ const userSchema = new Schema({
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     phoneNumber: {
-        type: String,
-        required: true
+        type: String
     },
     password: {
-        type: String,
-        required: true
+        type: String
     },
     address: {
-        type: String,
-        required: true
+        type: String
     },
     rewardsPoints: {
         type: Number,

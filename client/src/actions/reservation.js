@@ -67,12 +67,17 @@ export const selectHotel = hotel => {
     };
 }
 
-export const getAllReservations = () => {
+export const getAllReservations = id => {
     return dispatch => {
-        axios.get(`${URL}reservations/all`)
-        .then(req => {
-            console.log(req)
-            //dispatch({type: ALL_RESERVATIONS, payload: req.reservations})
-        })
+        axios.post(`http://localhost:3001/reservations/all`, { id })
+            .then(res => {
+                dispatch({
+                    type: ALL_RESERVATIONS, 
+                    payload: res.data.reservations
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 }

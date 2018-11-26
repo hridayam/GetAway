@@ -82,9 +82,7 @@ import { withRouter } from 'react-router-dom';
      <div >
        <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
          <NavbarBrand href="/">
-
            <img src={logo} alt="logo" style={{width:'250px', height: '100px', paddingTop: '5px', float: 'left'}} />
-
          </NavbarBrand>
          <NavbarToggler onClick={this.toggle} style={{ display: 'center' }}/>
          <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>

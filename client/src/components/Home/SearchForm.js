@@ -183,23 +183,27 @@ class SearchForm extends Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col sm="6">
+                            <Col sm="5">
                                 <h4 className="text-white text-right" style={{ margin: '60px 0px 0px 0px'}}>
                                     Number of Guests:
                                 </h4>
                             </Col>
-                            <Col sm="6" className="text-left">
+                            <Col sm="7" className="text-left">
                                 <Input value={this.state.numGuests} className='guestPicker' onChange={this.handleChange} name="numGuests" type="select" id="exampleSelect">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
                                     <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
                                 </Input>
+                                <Button style={{ marginLeft: '5em', marginTop: '-55px' }} type="submit" className="search-button">Search</Button>
                             </Col>
                         </Row>
-
-                        <Button type="submit" className="search-button">Search</Button>
                     </form>
                     
                 </Container>

@@ -31,7 +31,7 @@ const store = createStore(
     )
 );
 
-if(localStorage.token) {
+if (localStorage.token) {
     const user = {
         token: localStorage.token,
         user: JSON.parse(localStorage.data)

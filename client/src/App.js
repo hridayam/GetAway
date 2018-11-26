@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route} from 'react-router-dom';
+import queryString from 'query-string';
+import axios from 'axios';
+import { WOW } from 'wowjs';
 
 import NavBar from './components/NavBar';
 import Home from './components/Home/Home';
@@ -11,10 +14,54 @@ import Register from './components/Register';
 import GuestRoute from './components/Routes/GuestRoute';
 import UserRoute from './components/Routes/UserRoute';
 
-//import logo from './logo.svg';
+import { connect } from 'react-redux';
+import { userLoggedIn } from './actions/auth';
+
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    try {
+      var query = queryString.parse(this.props.location.search);
+      if (query.id) {
+        axios.post('http://localhost:3001/auth/find-by-google-id', { google_id: query.id })
+          .then(res => {
+            let { token, user } = res.data;
+            localStorage.setItem('token', token);
+            localStorage.setItem('data', JSON.stringify(user));
+            this.props.userLoggedIn({ 
+              user,
+              token
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          })
+          .finally(() => {
+            this.props.history.push("/");
+          });
+      }
+    }
+    catch(err) {
+      console.log(err);
+    }
+    finally {
+      var wow = new WOW(
+        {
+          boxClass:     'wow',     
+          animateClass: 'animated', 
+          offset:       0,          
+          mobile:       true,       
+          live:         true,       
+          callback:     box => {
+          },
+          scrollContainer: null 
+        }
+      );
+      wow.init();
+    }
+  }
+
   render() {
     return (
       <div >
@@ -41,4 +88,4 @@ const styles = {
   routeStyle: {}
 };
 
-export default App;
+export default connect(null, { userLoggedIn })(App);

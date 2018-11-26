@@ -9,8 +9,7 @@ export default class Suggestion extends Component {
         <Container className = "suggestion" >
             <h1 className="suggestion-title"> Step Up Your Travel Game </h1>
             <Row >
-                
-                <Col className=" suggestion-card" sm="12" md="4">
+                <Col className="suggestion-card wow slideInLeft" sm="12" md="4">
                     <Card style={{height: '30rem'}}>
                         <View zoom>
                             <CardImage top width="100%" src="http://samuiholiday.com/wp-content/uploads/2018/01/Nora-Buri-Resort-Spa-1024x683.jpg" alt="Card image cap" />
@@ -36,7 +35,7 @@ export default class Suggestion extends Component {
                     </Card>
                 </Col>
 
-                <Col className="suggestion-card" sm="12" md="4" >
+                <Col className="suggestion-card wow slideInRight" sm="12" md="4" >
                      <Card style={{height: '30rem'}}>
                         <View zoom>
                             <CardImage top width="100%" src="https://www.spittingimage.com.au/wp-content/uploads/RFT8412-1024x683.jpg" alt="Card image cap" />
