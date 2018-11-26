@@ -134,6 +134,9 @@ class SelectHotel extends Component{
         else if (this.state.sortOption === "high"){
             this.state.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
         }
+        else if(this.state.sortOption === 'rating'){
+            this.state.hotels.sort((a,b) => ((b.stars - a.stars)))
+        }
 
         return(
             <div>
@@ -170,7 +173,7 @@ class SelectHotel extends Component{
 
                    <DropdownMenu>
                        <DropdownItem onClick={()=>{this.setSort("low");}}>
-                       Price: Low to Hi
+                       Price: Low to High
                        </DropdownItem>
 
                        <DropdownItem divider />
@@ -178,6 +181,13 @@ class SelectHotel extends Component{
                        <DropdownItem onClick={()=>{this.setSort("high");}}>
                        Price: High to Low
                        </DropdownItem>
+
+                       <DropdownItem divider />
+
+                       <DropdownItem onClick={()=>{this.setSort("rating");}}>
+                       Highest Rating
+                       </DropdownItem>
+
                    </DropdownMenu>
                    </Dropdown>
                </div>
