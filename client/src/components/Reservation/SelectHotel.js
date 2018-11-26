@@ -29,12 +29,12 @@ class SelectHotel extends Component{
             sortOption: '',
             reservation: {},
             hotels: null,
-            isLoading: false
+            isLoading: false,
             wifi: false,
             gym: false,
             pool: false,
             complimentary_breakfast: false,
-            coffe: false,
+            coffee: false,
             laundry: false,
             free_parking: false
         };
@@ -64,7 +64,15 @@ class SelectHotel extends Component{
 
   renderHotels = () => {
         if (this.state.hotels !== null && !this.state.loading)
-            return this.state.hotels.map((hotel, index) =>
+            return this.state.hotels.filter(hotel => (!this.state.wifi || (this.state.wifi && hotel.amenities.wifi))
+            && (!this.state.gym || (this.state.gym && hotel.amenities.gym))
+            && (!this.state.pool || (this.state.pool && hotel.amenities.pool))
+            && (!this.state.complimentary_breakfast || (this.state.complimentary_breakfast && hotel.amenities.complimentary_breakfast))
+            && (!this.state.coffee || (this.state.coffee && hotel.amenities.coffee))
+            && (!this.state.laundry || (this.state.laundry && hotel.amenities.laundry))
+            &&(!this.state.free_parking || (this.state.free_parking && hotel.amenities.free_parking))
+            )
+            .map((hotel, index) =>
                 <div key={hotel._id} className="card">
                     <div className="row ">
                         <div className="col-md-4">
@@ -138,17 +146,17 @@ class SelectHotel extends Component{
              <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({pool: !this.state.pool})}>
              <i class="fas fa-swimmer"></i>     Pool</Button>
-             <Button style={this.state.breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({breakfast: !this.state.breakfast})}>
+             <Button style={this.state.complimentary_breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({complimentary_breakfast: !this.state.complimentary_breakfast})}>
              <i class="fas fa-utensils"></i>      Breakfast Included</Button>
-             <Button style={this.state.iron?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({iron: !this.state.iron})}>
+             <Button style={this.state.laundry?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({laundry: !this.state.laundry})}>
              <i class="fas fa-tshirt"></i>      Laundry</Button>
-             <Button style={this.state.coffeemaker?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({coffeemaker: !this.state.coffeemaker})}>
+             <Button style={this.state.coffee?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({coffee: !this.state.coffee})}>
              <i class="fas fa-coffee"></i>     Coffee Maker</Button>
-             <Button style={this.state.parking?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({parking: !this.state.parking})} >
+             <Button style={this.state.free_parking?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({free_parking: !this.state.free_parking})} >
              <i class="fas fa-car"></i>    Free Parking</Button>
            </div>
 
@@ -190,12 +198,13 @@ const cssStyles = {
         paddingRight: '2rem',
         fontSize: '0.8rem'
     },
-    inactiveStyle:{
-      color: 'black',
-      backgroundColor: 'white',
+    activeStyle:{
+      color: 'white',
+      background: ' linear-gradient(to right, #DD5E89 30%, #F7BB97 100%)',
+      borderColor: 'white',
       margin: '10px'
     },
-    activeStyle:{
+    inactiveStyle:{
       color: 'white',
       background: ' linear-gradient(to right, #00cc99 0%, #33cccc 100%)',
       borderColor: 'white',
