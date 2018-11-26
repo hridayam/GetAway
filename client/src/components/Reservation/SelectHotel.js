@@ -104,6 +104,7 @@ class SelectHotel extends Component{
     }
 
     render() {
+        console.log(this.state.hotels)
         if (this.state.sortOption === "low") {
             this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
         }

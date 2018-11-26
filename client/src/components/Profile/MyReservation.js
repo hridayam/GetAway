@@ -110,7 +110,7 @@ class MyReservation extends Component{
                 </tbody>
             </Table> 
             : 
-                <div style={{ marginTop: '8em' }}>
+                <div style={{ margin: '10% 0 10% 0'}}>
                     <h5>No Reservations Yet!</h5>
                     <p>Go book a reservation now :)</p>
                 </div>

@@ -172,6 +172,7 @@ class Payment extends Component{
       }
 
     render(){
+        console.log(this.state.hotel);
         if (this.state.complete) return <h1>Purchase Complete</h1>;
 
         return(
