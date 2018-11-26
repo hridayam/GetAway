@@ -23,7 +23,7 @@ class Payment extends Component{
             startDate: {}, endDate: {},
             numGuests: 0,
             card: null,
-            firstName: '', lastName: '',
+            name: '',
             address: '', userCity: '', state: '', zip: '',
             cardholderName: '',
             subtotal: 0, total: 0, tax: 0, rewardsPoints: 0,
@@ -34,7 +34,8 @@ class Payment extends Component{
 
     static getDerivedStateFromProps(props, state){
         let { hotel, rooms, city, startDate, endDate, numGuests, user } = props; 
-        if(props.hotel !== state.hotel){
+        if(props.hotel !== state.hotel && user !== null && user !== undefined){
+            let addressSplit = props.user.address.split(',');
             return{
                 ...state,
                 hotel,
@@ -43,16 +44,36 @@ class Payment extends Component{
                 startDate,
                 endDate,
                 numGuests,
-                user
+                user,
+                name: user.name.length ? 
+                    user.name.split(' ')
+                        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                        .join(' ') : '',
+                address: addressSplit.length ? addressSplit[0] : '',
+                userCity: addressSplit.length > 1 ? addressSplit[1] : '',
+                state: addressSplit.length > 2 ? addressSplit[2] : '',
+                zip: addressSplit.length > 3 ? addressSplit[3] : '',
             };
+        } else if (props.hotel !== state.hotel && (user === null || user !== undefined)){
+            return {
+                ...state,
+                hotel,
+                rooms,
+                city,
+                startDate,
+                endDate,
+                numGuests,
+                user
+            }
+        } else {
+            return null;
         }
-        return null;
     }
 
     handleSubmit = async () => {
         let { 
             hotel, city, startDate, endDate, numGuests, 
-            firstName, lastName,
+            name,
             address, userCity, state, zip,
             cardholderName,
             subtotal, total, tax, rewardsPoints,
@@ -79,9 +100,9 @@ class Payment extends Component{
                         end_date: endDate.valueOf(), 
                         number_of_guests: numGuests, 
                         user: {
-                            name: `${firstName} ${lastName}`,
+                            name,
                             email: this.state.user.email,
-                            id: this.state.user.id,
+                            id: this.state.user.id || this.state.user._id,
                             phoneNumber: this.state.user.phoneNumber
                         },
                         rewardsPoints,
@@ -108,7 +129,7 @@ class Payment extends Component{
                 end_date: endDate.valueOf(), 
                 number_of_guests: numGuests, 
                 user: {
-                    name: `${firstName} ${lastName}`,
+                    name,
                     email: this.state.user.email,
                     id: this.state.user.id
                 },
@@ -206,17 +227,17 @@ class Payment extends Component{
                         <Row>
                             <Col >
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                                    <Label for="exampleDate"> First Name:  </Label>
-                                    <Input name="firstName" value={this.state.firstName} onChange={this.handleChange} placeholder="Enter your first name" />
+                                    <Label for="exampleDate">Full Name:  </Label>
+                                    <Input name="name" value={this.state.name} onChange={this.handleChange} placeholder="Jane Fonda" />
                                 </FormGroup>
                             </Col>
 
-                            <Col >
+                            {/* <Col >
                                 <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
                                     <Label for="exampleDate"> Last Name:  </Label>
                                     <Input name="lastName" onChange={this.handleChange} value={this.state.lastName} placeholder="Enter your last name" />
                                 </FormGroup>
-                            </Col>
+                            </Col> */}
                         </Row>
 
                         <FormGroup>
@@ -240,7 +261,7 @@ class Payment extends Component{
                             <Col md={2}>
                                 <FormGroup>
                                 <Label for="exampleZip">Zip</Label>
-                                <Input onChange={this.handleChange} value={this.state.zip} name="zip" type="text" name="zip" placeholder="28374" id="exampleZip"/>
+                                <Input onChange={this.handleChange} value={this.state.zip} name="zip" type="text" name="zip" placeholder="12345" id="exampleZip"/>
                                 </FormGroup>
                             </Col>
                         </Row>

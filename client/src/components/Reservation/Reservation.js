@@ -99,15 +99,14 @@ class Reservation extends Component{
     //             numGuests);
     // }
 
-    onSubmit = event => {
-        event.preventDefault();
+    onSubmit = () => {
         let { city, numGuests } = this.state;
 
-        let startD = moment(this.state.startDate).format('L');
-        let endD = moment(this.state.endDate).format('L');
-
-        let sdSplit = startD.split('/');
-        let edSplit = endD.split('/');
+        // let startD = moment(this.state.startDate).format('L');
+        // let endD = moment(this.state.endDate).format('L');
+        
+        // let sdSplit = startD.split('/');
+        // let edSplit = endD.split('/');
         
         // let sdDate = new Date(
         //                 sdSplit[0], 
@@ -120,8 +119,8 @@ class Reservation extends Component{
         //                 edSplit[2],
         //                 0, 0, 0, 0);
         
-        let newStartDate = sdSplit[2] + "-" + sdSplit[0] + "-" + sdSplit[1];
-        let newEndDate = edSplit[2] + "-" + edSplit[0] + "-" + edSplit[1];
+        // let newStartDate = sdSplit[2] + "-" + sdSplit[0] + "-" + sdSplit[1];
+        // let newEndDate = edSplit[2] + "-" + edSplit[0] + "-" + edSplit[1];
 
         //getting only city
         let tempCity = city;
@@ -167,6 +166,47 @@ class Reservation extends Component{
                     <Col xs="6" sm="4">
                     <Label className="edit-label"> Change Place:  </Label>
                     <PlacesAutocomplete
+                                    value={this.state.city}
+                                    onChange={this.handleChangeAuto}
+                                    onSelect={this.handleSelectAuto}
+                                    style={styles.searchField}
+                                >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div>
+                                            <input
+                                                {...getInputProps({
+                                                placeholder: 'Search Places ...',
+                                                className: 'location-search-input',
+                                                })}
+                                                className="form-control text-center col-sm-8 offset-sm-2"
+                                                style={{ height: '3em' }}
+                                            />
+                                            <div className="autocomplete-dropdown-container">
+                                                {loading && <div>Loading...</div>}
+                                                {Array.prototype.slice.call(suggestions,0,1).map(suggestion => {
+                                                    const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                        // inline style for demonstration purpose
+                                                    const style = suggestion.active
+                                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                        return (
+                                                            <div
+                                                                {...getSuggestionItemProps(suggestion, {
+                                                                    className,
+                                                                    style,
+                                                                })}
+                                                            >
+                                                                <span onClick={()=>this.setState({ city: suggestion.description })}>{suggestion.description}</span>
+                                                            </div>
+                                                        );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
+                    {/* <PlacesAutocomplete
                                 value={this.state.city}
                                 onChange={this.handleChangeAuto}
                                 onSelect={this.handleSelectAuto}
@@ -207,7 +247,7 @@ class Reservation extends Component{
                                         </div>
                                     </div>
                                 )}
-                            </PlacesAutocomplete>
+                            </PlacesAutocomplete> */}
                     </Col>
                     <Col xs="6" sm="4">
                         <FormGroup inline>
@@ -227,7 +267,7 @@ class Reservation extends Component{
                         </FormGroup>
                     </Col>
                     <Col sm="4">
-                        <Button type='submit' style={{textAlign:'center',marginTop:'15px'}}>Update Search</Button>
+                        <Button onClick={this.onSubmit} style={{textAlign:'center',marginTop:'15px'}}>Update Search</Button>
                     </Col>
                 </Row>
 
