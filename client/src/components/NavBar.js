@@ -82,31 +82,27 @@ import { withRouter } from 'react-router-dom';
      <div >
        <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
          <NavbarBrand href="/">
-
            <img src={logo} alt="logo" style={{width:'250px', height: '100px', paddingTop: '5px', float: 'left'}} />
-
          </NavbarBrand>
          <NavbarToggler onClick={this.toggle} style={{ display: 'center' }}/>
          <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
-               <NavLink href="/aboutus/">About Us</NavLink>
+             <NavLink href="/myreservation/">My Reservation</NavLink>
              </NavItem>
-             <NavItem>
-             <NavLink href="/profile/">My Reservation</NavLink>
-             </NavItem>
-
              <NavItem>
                <Login />
+             </NavItem>
+             <NavItem>
+               <NavLink href="/aboutus/">About Us</NavLink>
              </NavItem>
            </Nav>
          </Collapse>
        </Navbar>
      </div>
    );
- }
- else{
+ } else{
    return (
      <div >
        <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
@@ -118,13 +114,13 @@ import { withRouter } from 'react-router-dom';
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
-               <NavLink href="/aboutus/">About Us</NavLink>
-             </NavItem>
-             <NavItem>
                <Register/>
              </NavItem>
              <NavItem>
                <Login />
+             </NavItem>
+             <NavItem>
+               <NavLink href="/aboutus/">About Us</NavLink>
              </NavItem>
            </Nav>
          </Collapse>
@@ -138,12 +134,14 @@ import { withRouter } from 'react-router-dom';
 const styles = {
   transparentStyle: {
     height: '100px',
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0,0,0,0.4)',
     paddingTop: '0px',
+    boxShadow: 'none'
   },
   blackStyle: {
     height: '100px',
-    backgroundColor: 'rgba(0,0,0,0.9)'
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    boxShadow: 'none'
   }
 }
 

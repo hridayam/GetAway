@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import SearchForm from './SearchForm';
 import Suggestion from './Suggestion';
 import Scroll from '../ScrollUp';
-import { Animated } from 'react-animated-css'
+import { Animated } from 'react-animated-css';
+import { Button } from 'mdbreact';
 
 import '../picture/slide/1.jpg';
 import '../css/Home.css';
@@ -18,7 +19,6 @@ export default class Home extends Component{
   handleViewMoreClick = () => {
     window.scrollTo({
       top: window.innerHeight,
-      left: 0,
       behavior: 'smooth'
     });
   }
@@ -30,9 +30,9 @@ export default class Home extends Component{
           <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
             <SearchForm/>
           </Animated>
-          <div onClick={this.handleViewMoreClick} className="text-center" style={styles.viewMore}>
+          <Button onClick={this.handleViewMoreClick} className="text-center" style={styles.viewMore}>
             View More <i className="fas fa-chevron-down"></i>
-          </div>
+          </Button>
         </div>
         <Scroll/>
         <Suggestion/>
@@ -43,19 +43,20 @@ export default class Home extends Component{
 
 const styles = {
   homeStyle: {
-    flex: 1,
+    height: '100vh',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '0px',
-    paddingTop: '30vh',
+    paddingTop: '20vh',
     overflowY: 'hidden'
   },
   viewMore: {
-    position: 'absolute',
-    bottom: '5%',
     color: 'white',
-    width: '100%',
-    fontSize: 22,
-    cursor: 'pointer'
+    width: '30%',
+    left: '35%',
+    fontSize: 14,
+    cursor: 'pointer',
+    bottom: '2%',
+    position: 'absolute'
   }
 }

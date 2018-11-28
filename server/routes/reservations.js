@@ -8,10 +8,10 @@ const User = require('../models/users');
 // gets all the reservations made by user
 // front end makes request with user id
 // back end sends back array of reservations
-router.get('/all', passport.authenticate('jwt', {session: false}),async (req,res) => {
-    let user_id  = req.user._id;
+router.post('/all',async (req,res) => {
+    let { id }   = req.body;
 
-    Reservation.getAllReservationsByOneUser(user_id, (err, data) => {
+    Reservation.getAllReservationsByOneUser(id, (err, data) => {
         if(err) {
             return res.status(422).json({
                 success: false,
@@ -22,8 +22,8 @@ router.get('/all', passport.authenticate('jwt', {session: false}),async (req,res
         return res.status(200).json({
             success: true,
             msg: 'Successfuly found reservations from the user',
-            data: data
-        })
+            reservations: data
+        });
 
     });
 });
@@ -136,27 +136,45 @@ router.post('/create', async (req,res) => {
     let data = { 
         hotel_id, time_created, start_date, end_date,
         charge, room_number, number_of_guests,
-        user, total, subtotal, tax, rewardsPoints
+        user, total, subtotal, tax, rewardsPoints,
+        usingRewards, city, hotel_name
     } = req.body;
     
-    let reservation = new Reservation(data)
+    console.log(data);
+    
+    try {
+        let reservation = new Reservation(data);
 
-    Reservation.createReservation(reservation, (err, reservation) => {
-        if(err) {
-            console.log(err);
-            return res.status(422).json({
-                success: false,
-                message: err
-            })
-        }
-        else if (reservation) {
-            return res.status(200).json({
-                success: true,
-                reservation,
-                msg: 'Successfully created the reservation.'
-            });
-        }
-    })
+        // modify user's rewards points
+        await User.findOneAndUpdate({ _id: data.user.id }, {
+            $inc: {
+                rewardsPoints: data.usingRewards ? -Number(data.subtotal) : data.rewardsPoints
+            }
+        }).exec();
+
+        Reservation.createReservation(reservation, (err, reservation) => {
+            if(err) {
+                return res.status(422).json({
+                    success: false,
+                    message: err
+                });
+            }
+            else if (reservation) {
+                return res.status(200).json({
+                    success: true,
+                    reservation,
+                    msg: 'Successfully created the reservation.'
+                });
+            }
+        });
+    }
+    catch(err) {
+        console.log(err);
+        res.status(422).json({
+            success: false,
+            msg: 'Could not create reservation'
+        });
+    }
 });
 
 module.exports = router;

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import {
-        Container, Button, DropdownMenu,
+        Container, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
+import {Button} from 'mdbreact'
+
 import { Carousel } from 'react-responsive-carousel';
-import StarRatings from 'react-star-ratings';
+import Loader from 'react-loader-spinner';
+
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './selectHotel.css'
 import Scroll from '../ScrollUp';
-import ReactWeather from 'react-open-weather';
+import Spinner from 'react-loader-spinner';
+
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
 
@@ -18,13 +22,21 @@ class SelectHotel extends Component{
         this.state={
             dropdownOpen: false,
             city: '',
-            startDate: '',
-            endDate: '',
+            startDate: {},
+            endDate: {},
             numGuests: 1,
             chosenHotel: null,
             sortOption: '',
             reservation: {},
-            hotels: null
+            hotels: null,
+            isLoading: false,
+            wifi: false,
+            gym: false,
+            pool: false,
+            complimentary_breakfast: false,
+            coffee: false,
+            laundry: false,
+            free_parking: false
         };
         this.toggleDropdown = this. toggleDropdown.bind(this);
     }
@@ -36,30 +48,39 @@ class SelectHotel extends Component{
 
     static getDerivedStateFromProps(props, state){
         if(props.reservation !== state.reservation){
-            let { city, startDate, endDate, numGuests, hotels } = props.reservation;
+            let { city, startDate, endDate, numGuests, hotels, isLoading } = props.reservation;
             return{
                 ...state,
                 reservation: props.reservation,
                 hotels,
                 city,
                 startDate, endDate,
-                numGuests
+                numGuests,
+                isLoading
             };
         }
         return null;
     }
 
   renderHotels = () => {
-        if (this.state.hotels !== null)
-            return this.state.hotels.map((hotel, index) =>
+        if (this.state.hotels !== null && !this.state.loading)
+            return this.state.hotels.filter(hotel => (!this.state.wifi || (this.state.wifi && hotel.amenities.wifi))
+            && (!this.state.gym || (this.state.gym && hotel.amenities.gym))
+            && (!this.state.pool || (this.state.pool && hotel.amenities.pool))
+            && (!this.state.complimentary_breakfast || (this.state.complimentary_breakfast && hotel.amenities.complimentary_breakfast))
+            && (!this.state.coffee || (this.state.coffee && hotel.amenities.coffee))
+            && (!this.state.laundry || (this.state.laundry && hotel.amenities.laundry))
+            &&(!this.state.free_parking || (this.state.free_parking && hotel.amenities.free_parking))
+            )
+            .map((hotel, index) =>
                 <div key={hotel._id} className="card">
                     <div className="row ">
                         <div className="col-md-4">
                             { hotel.images && hotel.images.length ?
-                            <Carousel autoPlay infiniteLoop showThumbs={false} dynamicHeight>
+                            <Carousel autoPlay infiniteLoop>
                                 {hotel.images.map((v,i) =>
                                     <div key={i}>
-                                        <img src={v} alt="" className="w-100" />
+                                        <img src={v} alt="" className="w-100"/>
                                     </div>
                                 )}
                             </Carousel> : <div className="align-middle" style={{height:'100%', width:'100%'}}><br/><br/><br/>No Images Available</div> }
@@ -67,26 +88,22 @@ class SelectHotel extends Component{
                         <div className="col-md-5 px-3">
                             <div className="card-block px-3">
                                 <h3 className="card-title">{hotel.name}</h3>
-                                {/*<p className="card-text"><i className="far fa-star"></i> {hotel.stars} Stars</p>*/}
-                                <StarRatings
-                                numberOfStars={5}
-                                rating={hotel.stars}
-                                starDimension="30px"
-                                starSpacing="15px"
-                                starRatedColor="yellow"
-                                />
-                                <br></br>
-                                Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
-                                <Button
-                                style={cssStyles.buttonRoom}
-                                onClick={() => {
-                                    this.props.selectHotel(hotel);
-                                    this.props.jumpToStep(1);
-                                }}
-                                >Choose Hotel</Button>
+                                <p className="card-text">{hotel.stars === 5? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                {hotel.stars === 4? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                {hotel.stars ===3? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>  </div> : ""}
+                                {hotel.stars ===2? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                {hotel.stars ===1? <i class="fas fa-star"></i> : ""}</p>
+                                  <p style={{fontWeight: '800', color: '#484848'}}> Amenities Included: </p>
+                                  <p style={{}}>{hotel.amenities.wifi? <i class="fas fa-wifi"></i> : ""}
+                                  {hotel.amenities.gym? <i class="fas fa-dumbbell" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                  {hotel.amenities.pool?  <i class="fas fa-swimmer" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                  {hotel.amenities.complimentary_breakfast? <i class="fas fa-utensils" style={{marginLeft: "14px", color: '#484848'}}></i>  : ""}
+                                  {hotel.amenities.coffee? <i class="fas fa-coffee" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                  {hotel.amenities.laundry? <i class="fas fa-tshirt" style={{marginLeft: "14px", color: '#484848'}}></i>  : ""}
+                                  {hotel.amenities.free_parking? <i class="fas fa-car" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}</p>
                             </div>
                         </div>
-                        {/*<div className="col-md-3 price">
+                        <div className="col-md-3 price">
                             Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
                             <Button
                                 style={cssStyles.buttonRoom}
@@ -95,10 +112,15 @@ class SelectHotel extends Component{
                                     this.props.jumpToStep(1);
                                 }}
                                 >Choose Hotel</Button>
-                            </div>*/}
+                        </div>
                     </div>
                 </div>
                 );
+        else if (this.state.loading) {
+            return (
+                <Loader type="Plane" color="#008080" height={100} width={100} />
+            );
+        }
         else return null;
     }
 
@@ -109,56 +131,53 @@ class SelectHotel extends Component{
     }
 
     render() {
+        console.log(this.state.hotels)
         if (this.state.sortOption === "low") {
             this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
         }
         else if (this.state.sortOption === "high"){
             this.state.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
         }
+        else if(this.state.sortOption === 'rating'){
+            this.state.hotels.sort((a,b) => ((b.stars - a.stars)))
+        }
 
         return(
             <div>
-            <ReactWeather
-            forecast="5days"
-            apikey="6a588ccb742f4e639ae230722180911"
-            type="city"
-            city={this.state.city}
-            unit="imperial"
-            />
             <div>
              <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({wifi: !this.state.wifi})}>
-             <i class="fas fa-wifi"></i>  Free Wifi</Button>
+             <i className="fas fa-wifi"></i>  Free Wifi</Button>
              <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({gym: !this.state.gym})}>
-             <i class="fas fa-dumbbell"></i>     Gym</Button>
+             <i className="fas fa-dumbbell"></i>     Gym</Button>
              <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
              onClick={() => this.setState({pool: !this.state.pool})}>
              <i class="fas fa-swimmer"></i>     Pool</Button>
-             <Button style={this.state.breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({breakfast: !this.state.breakfast})}>
+             <Button style={this.state.complimentary_breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({complimentary_breakfast: !this.state.complimentary_breakfast})}>
              <i class="fas fa-utensils"></i>      Breakfast Included</Button>
-             <Button style={this.state.iron?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({iron: !this.state.iron})}>
-             <i class="fas fa-tshirt"></i>      Iron</Button>
-             <Button style={this.state.coffeemaker?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({coffeemaker: !this.state.coffeemaker})}>
+             <Button style={this.state.laundry?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({laundry: !this.state.laundry})}>
+             <i class="fas fa-tshirt"></i>      Laundry</Button>
+             <Button style={this.state.coffee?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({coffee: !this.state.coffee})}>
              <i class="fas fa-coffee"></i>     Coffee Maker</Button>
-             <Button style={this.state.tv?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({tv: !this.state.tv})} >
-             <i class="fas fa-tv"></i>      TV</Button>
+             <Button style={this.state.free_parking?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+             onClick={() => this.setState({free_parking: !this.state.free_parking})} >
+             <i class="fas fa-car"></i>    Free Parking</Button>
            </div>
 
            <Container>
                <div style={{display: 'flex'}}>
                    <Dropdown className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                   <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
+                   <DropdownToggle outline color = 'default'  caret>
                        Sort By:
                    </DropdownToggle>
 
                    <DropdownMenu>
                        <DropdownItem onClick={()=>{this.setSort("low");}}>
-                       Price: Low to Hi
+                       Price: Low to High
                        </DropdownItem>
 
                        <DropdownItem divider />
@@ -166,6 +185,13 @@ class SelectHotel extends Component{
                        <DropdownItem onClick={()=>{this.setSort("high");}}>
                        Price: High to Low
                        </DropdownItem>
+
+                       <DropdownItem divider />
+
+                       <DropdownItem onClick={()=>{this.setSort("rating");}}>
+                       Highest Rating
+                       </DropdownItem>
+
                    </DropdownMenu>
                    </Dropdown>
                </div>
@@ -178,7 +204,6 @@ class SelectHotel extends Component{
 }
 
 const cssStyles = {
-
     buttonRoom:{
         backgroundColor: '#156bc1',
         border: '1px solid #156bc1',
@@ -188,19 +213,19 @@ const cssStyles = {
         paddingRight: '2rem',
         fontSize: '0.8rem'
     },
-    inactiveStyle:{
-      color: 'black',
-      backgroundColor: 'white',
+    activeStyle:{
+      color: 'white',
+      background: ' linear-gradient(to right, #DD5E89 30%, #F7BB97 100%)',
+      borderColor: 'white',
       margin: '10px'
     },
-    activeStyle:{
+    inactiveStyle:{
       color: 'white',
       background: ' linear-gradient(to right, #00cc99 0%, #33cccc 100%)',
       borderColor: 'white',
       margin: '10px'
 
-    },
-   
+    }
     // inactiveStyle:{
     //   color: 'black',
     //   backgroundColor: 'white',
@@ -215,7 +240,6 @@ const cssStyles = {
     //   borderWidth: '2px',
     //   margin: '10px',
     // }
-      
 };
 
 const mapStatetoProps = state => {
