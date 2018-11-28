@@ -15,6 +15,7 @@
     "react-file-base64": "^1.0.3",
     "react-google-button": "^0.5.3",
     "react-loader-spinner": "^2.2.0",
+    "react-open-weather": "^0.4.0",
     "react-places-autocomplete": "^7.2.0",
     "react-redux": "^5.0.7",
     "react-responsive-carousel": "^3.1.43",

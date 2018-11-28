@@ -14,7 +14,9 @@ import Spinner from 'react-loader-spinner';
 
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
-
+import ReactWeather from 'react-open-weather';
+//Optional include of the default css styles 
+import 'react-open-weather/lib/css/ReactWeather.css';
 class SelectHotel extends Component{
     constructor(props){
         super(props);
