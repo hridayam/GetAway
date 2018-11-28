@@ -113,8 +113,8 @@ class ChooseRoom extends Component{
             <div>
                 <Container>
                 <div>
-                <Dropdown style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
+                <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                <DropdownToggle outline color = 'default' caret>
                     Sort By:
                 </DropdownToggle>
 
