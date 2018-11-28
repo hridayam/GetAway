@@ -88,7 +88,11 @@ class SelectHotel extends Component{
                         <div className="col-md-5 px-3">
                             <div className="card-block px-3">
                                 <h3 className="card-title">{hotel.name}</h3>
-                                <p className="card-text"><i className="far fa-star"></i> {hotel.stars} Stars</p>
+                                <p className="card-text">{hotel.stars === 5? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                {hotel.stars === 4? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                {hotel.stars ===3? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>  </div> : ""}
+                                {hotel.stars ===2? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                {hotel.stars ===1? <i class="fas fa-star"></i> : ""}</p>
                                   <p style={{fontWeight: '800', color: '#484848'}}> Amenities Included: </p>
                                   <p style={{}}>{hotel.amenities.wifi? <i class="fas fa-wifi"></i> : ""}
                                   {hotel.amenities.gym? <i class="fas fa-dumbbell" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}

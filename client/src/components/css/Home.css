@@ -92,7 +92,7 @@
  .autocomplete-dropdown-container{
    border-radius: 5px;
  }
- 
+
  .guestPicker{
    height: 2.8em !important;
    margin-top: 54px !important;
@@ -101,11 +101,11 @@
    width: 100px !important;
    box-sizing: border-box !important;
  }
- 
+
  .DateRangePicker{
    padding-top: 54px;
  }
- 
+
  .DateRangePickerInput__withBorder{
   border-radius: 5px !important;
  }
@@ -303,4 +303,9 @@ label{
   -webkit-text-fill-color: transparent;
   font-size: 33px;
   margin-top: 6px;
+}
+
+.fa-star{
+  color: #FFCD3A;
+  font-size: 13px;
 }
