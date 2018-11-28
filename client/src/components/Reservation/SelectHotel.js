@@ -167,7 +167,7 @@ class SelectHotel extends Component{
            <Container>
                <div style={{display: 'flex'}}>
                    <Dropdown className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                   <DropdownToggle style={{backgroundColor: "white", borderColor: "grey" , color: "black"}} caret>
+                   <DropdownToggle outline color = 'default'  caret>
                        Sort By:
                    </DropdownToggle>
 
