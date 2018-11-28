@@ -47,13 +47,15 @@ export default class aboutUs extends Component {
                 key="front"
                 onClick={this.handleClick}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Nhat Trinh</CardTitle>
+                        <CardText>Project Manager</CardText>
                 </Card>
                 <Card style = {styles.card} 
                 key="back"
                 onClick={this.handleClick}>
                          <CardBody >
-                            <CardTitle>Nhat Trinh</CardTitle>
-                            <CardText>Project Manager</CardText>
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
                         </CardBody>
                 </Card>
                 </ReactCardFlip>
@@ -67,93 +69,246 @@ export default class aboutUs extends Component {
                 </Col>
                 
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Hridayam Bakshi</CardTitle>
+                        <CardText>Technical Lead</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Hridayam Bakshi</CardTitle>
                             <CardText>Technical Lead</CardText>
                         </CardBody>
-                    </Card>   
+            </Card>*/}   
                 </Col>
     
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Paul Nguyen</CardTitle>
+                        <CardText>Software Developer</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Paul Nguyen</CardTitle>
                             <CardText>Software Developer</CardText>
                         </CardBody>
-                    </Card>   
+        </Card>*/}   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Alejandro Lopez</CardTitle>
+                        <CardText>Documentation</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Alejandro Lopez</CardTitle>
                             <CardText>Documentation</CardText>
                         </CardBody>
-                    </Card>   
+    </Card>*/}   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Jennifer Nguyen</CardTitle>
+                        <CardText>Software Developer</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Jennifer Nguyen</CardTitle>
                             <CardText>Software Developer</CardText>
                         </CardBody>
-                    </Card>   
+</Card>*/}   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Truc Vo</CardTitle>
+                        <CardText>Product Owner</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Truc Vo</CardTitle>
                             <CardText>Product Owner</CardText>
                         </CardBody>
-                    </Card>   
+</Card>*/}   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Tuan Anh Le</CardTitle>
+                        <CardText>UX Designer</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Tuan Anh Le</CardTitle>
                             <CardText>UX Designer</CardText>
                         </CardBody>
-                    </Card>   
+</Card>*/}   
                 </Col>
 
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Raghav Gupta</CardTitle>
+                        <CardText>Software Tester</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Raghav Gupta</CardTitle>
                             <CardText> Software Tester </CardText>
                         </CardBody>
-                    </Card>   
+</Card>*/}   
                 </Col> 
 
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Luis Reyes</CardTitle>
+                        <CardText>Assistant Tester</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Luis Reyes</CardTitle>
                             <CardText> Assistant Tester</CardText>
                         </CardBody>
-                    </Card>   
+</Card>*/}   
                 </Col> 
 
                 <Col xs={12} md={4} lg={3}>
-                    <Card style = {styles.card}>
+                <ReactCardFlip isFlipped={this.state.isFlipped}>
+                <Card style = {styles.card} 
+                key="front"
+                onClick={this.handleClick}>
+                        <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                        <CardTitle>Thomas Luong</CardTitle>
+                        <CardText>Assistant Documentation</CardText>
+                </Card>
+                <Card style = {styles.card} 
+                key="back"
+                onClick={this.handleClick}>
+                         <CardBody >
+                            <CardTitle>Personal Desciption</CardTitle>
+                            <CardText>....</CardText>
+                        </CardBody>
+                </Card>
+                </ReactCardFlip>
+                    {/*<Card style = {styles.card}>
                         <CardImage className="img-fluid" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                         <CardBody>
                             <CardTitle>Thomas Luong</CardTitle>
                             <CardText> Assistant Documentation</CardText>
                         </CardBody>
-                    </Card>   
+</Card>*/}   
                 </Col> 
 
                 </Row>
