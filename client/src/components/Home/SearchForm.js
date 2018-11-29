@@ -53,7 +53,6 @@ class SearchForm extends Component {
 
         let citySplit = city.split(',');
 
-        console.log(citySplit.length);
         // take only the first slice before comma, only submit city name
         if (citySplit.length > 1 && citySplit.length < 4){
             city = citySplit[0];
