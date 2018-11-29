@@ -54,9 +54,12 @@ class SearchForm extends Component {
         let citySplit = city.split(',');
 
         // take only the first slice before comma, only submit city name
-        if (citySplit.length > 1)
+        if (citySplit.length > 1 && citySplit.length < 4){
             city = citySplit[0];
-
+        } else if (citySplit.length > 3){
+            city = citySplit[citySplit.length - 3].trim();
+        }
+    
         // let startD = moment(this.state.startDate).valueOf();
         // let endD = moment(this.state.endDate).valueOf();
         
@@ -183,25 +186,27 @@ class SearchForm extends Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col sm="5">
-                                <h4 className="text-white text-right" style={{ margin: '60px 0px 0px 0px'}}>
-                                    Number of Guests:
-                                </h4>
+                            <Col className="offset-sm-3" sm="4" style={{ marginTop: '-20px'}}>
+                                <Row>
+                                    <div className="text-white text-center" style={{ margin: '60px 20px 0px 0px'}}>
+                                        <h4>Number of Guests:</h4>
+                                    </div>
+                                    <Input value={this.state.numGuests} className='guestPicker' onChange={this.handleChange} name="numGuests" type="select" id="exampleSelect">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                    </Input>
+                                </Row>
                             </Col>
-                            <Col sm="7" className="text-left">
-                                <Input value={this.state.numGuests} className='guestPicker' onChange={this.handleChange} name="numGuests" type="select" id="exampleSelect">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                </Input>
-                                <Button style={{ marginLeft: '5em', marginTop: '-55px' }} type="submit" className="search-button">Search</Button>
+                            <Col sm="4" className="text-left">
+                                <Button type="submit" className="search-button">Search</Button>
                             </Col>
                         </Row>
                     </form>

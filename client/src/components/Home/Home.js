@@ -17,10 +17,10 @@ export default class Home extends Component{
   }
 
   handleViewMoreClick = () => {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: 'smooth'
-    });
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth'
+      });
   }
 
   render(){
@@ -47,7 +47,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '0px',
-    paddingTop: '20vh',
+    paddingTop: '12%',
     overflowY: 'hidden'
   },
   viewMore: {
