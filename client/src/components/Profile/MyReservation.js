@@ -66,7 +66,7 @@ class MyReservation extends Component{
                 </thead>
                 <tbody>
                     { this.state.reservations.map((v,i) => 
-                        <tr>
+                        <tr key={v._id}>
                             <td>{v._id}</td>
                             <td>{moment(v.time_created).format("DD MMM YYYY HH:MM")}</td>
                             <td>$ {v.total}</td>
@@ -97,7 +97,7 @@ class MyReservation extends Component{
                 </thead>
                 <tbody>{
                     this.state.reservations.map((v,i) => 
-                        <tr>
+                        <tr key={v._id}>
                             <td style={{ paddingTop: 25 }}>{v._id}</td>
                             <td style={{ paddingTop: 25 }}>{moment(v.start_date).format("DD MMM YYYY")} - {moment(v.end_date).format("DD MMM YYYY")}</td>
                             <td style={{ paddingTop: 25 }}>{v.city && v.city.length ? v.city : 'N/A'}</td>
@@ -137,9 +137,15 @@ class MyReservation extends Component{
     }
 
     toggleModal = () => {
-        this.setState({
-          modal: !this.state.modal
-        });
+        this.state.modal ?
+            this.setState({
+                modal: !this.state.modal,
+                isCancelling: false,
+                cancelled: false
+            }) :
+            this.setState({
+                modal: !this.state.modal
+            });
       }
 
     renderCancellationBody(data) {
@@ -150,23 +156,30 @@ class MyReservation extends Component{
                     { cancelledData ? 
                     <div>
                         {
-                            cancelledData.sucess ? 
+                            cancelledData.success ? 
                             <div>
                                 <h3>Cancellation Success!</h3>
+                                <br/>
                                 {cancelledData.charge ? 
                                     <div>
                                         <p>The cancellation was a success!</p>
-                                        <p>You have been charged {Math.floor(data.subtotal * .1)}</p>
+                                        <p>You have been charged {Math.floor(data.subtotal * .1)}.</p>
+                                        <p>Reserve again soon!</p>
                                     </div>
                                     :
                                     <div>
+                                        <p>The cancellation was a success!</p>
+                                        <p>You have not been charged.</p>
+                                        <p>Reserve again soon!</p>
                                     </div>
                                 }
                             </div>
                             :
-                            <p>{cancelledData.msg}</p>
+                            <div>
+                                <h3>Oh No!</h3>
+                                <p style={{ marginTop: '2em' }}>{cancelledData.msg}</p>
+                            </div>
                         }
-                        <Button color="info" onClick={this.toggle}>Got it</Button>
                     </div>
                     :
                     <div>
@@ -176,20 +189,38 @@ class MyReservation extends Component{
                     }
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="info" onClick={() => this.setState({ isCancelling: false })}>I Don't Want to Cancel</Button>
-                    <Button 
-                        color="danger" 
-                        onClick={() => {
-                            axios.put(`/cancel/${data._id}`)
-                                .then(res => {
-                                    this.setState({ cancelledData: res.data });
-                                })
-                                .catch(err => {
-                                    console.log(err);
-                                });
-                        }}>
-                        Confirm Cancellation
-                    </Button>
+                    { this.state.cancelledData === undefined || this.state.cancelledData === null ? 
+                        <Row>
+                            <Col sm="6">
+                                <Button color="info" onClick={() => this.setState({ isCancelling: false })}>I Don't Want to Cancel</Button>
+                            </Col>
+                            <Col sm="6">
+                                <Button 
+                                    color="danger" 
+                                    onClick={() => {
+                                        axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+                                        axios.post(`/reservations/cancel/${data._id}`)
+                                            .then(res => {
+                                                this.setState({ cancelledData: res.data });
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            });
+                                    }}>
+                                    Confirm Cancellation
+                                </Button>
+                            </Col>
+                        </Row>
+                        : 
+                        <Button 
+                            color="info" 
+                            onClick={() => {
+                                this.setState({ cancelledData: null })
+                                this.toggleModal();
+                            }}>
+                            Got it
+                        </Button>
+                    }
                 </ModalFooter>
             </div>
         )
@@ -199,10 +230,10 @@ class MyReservation extends Component{
         let data = { ...this.state.selectedReservation };
 
         return (
-            <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+            <Modal size="large" isOpen={this.state.modal} toggle={this.toggleModal}>
                 <ModalHeader toggle={this.toggleModal}>{ this.state.isCancelling ? 'Reservation Cancellation': 'Reservation Details' }</ModalHeader>
                 { this.state.isCancelling ? 
-                    this.renderCancellationBody(data._id)
+                    this.renderCancellationBody(data)
                 : 
                 <div>
                     <ModalBody>
@@ -221,7 +252,9 @@ class MyReservation extends Component{
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        { data.cancelled ? null :
+                        { data.cancelled === undefined || data.cancelled === null ? 
+                            null
+                            :
                             <div>
                                 <Button color="info">Edit Reservation</Button>
                                 <Button color="danger" onClick={() => this.setState({ isCancelling: true })}>Cancel Reservation</Button>
@@ -233,7 +266,6 @@ class MyReservation extends Component{
             </Modal>
         );
     }
-
 
     render(){
         return(

@@ -79,7 +79,7 @@ router.post('/auth/find-by-google-id', async (req,res) => {
         message: 'Found user with that Google ID',
         success: true,
         user,
-        token
+        token: `Bearer ${token}`
       });
     } else {
       throw new Error('Could not find user');
