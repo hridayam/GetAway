@@ -10,6 +10,7 @@
     "query-string": "^6.2.0",
     "react": "^16.5.0",
     "react-animated-css": "^1.0.4",
+    "react-card-flip": "^0.3.0",
     "react-dates": "^18.2.2",
     "react-dom": "^16.5.0",
     "react-file-base64": "^1.0.3",
