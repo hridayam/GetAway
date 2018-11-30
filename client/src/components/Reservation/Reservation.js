@@ -15,6 +15,7 @@ import {
   } from 'react-places-autocomplete';
 import moment from 'moment';
 
+
 class Reservation extends Component{
     constructor(props) {
         super(props);
@@ -61,8 +62,10 @@ class Reservation extends Component{
           .catch(error => console.error('Error', error));
     };
 
+
     onSubmit = () => {
         let { city, numGuests } = this.state;
+
 
         //getting only city
         let tempCity = city;

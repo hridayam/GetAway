@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
+
 import { 
             View, CardImage, CardText, CardBody, Card, Fa, CardTitle, 
             Modal, ModalHeader, ModalFooter, ModalBody } from 'mdbreact';
@@ -9,6 +10,7 @@ import Scroll from '../ScrollUp';
 import moment from 'moment';
 import { Animated } from 'react-animated-css';
 import axios from 'axios';
+
 
 import {connect} from 'react-redux';
 import { getAllReservations } from '../../actions';
@@ -21,10 +23,13 @@ class MyReservation extends Component{
     constructor(props) {
         super(props);
 
+
+
         this.state = {
             activeTab: '1',
             active: 1,
             oldActive: 1,
+
             reservations: [],
             tabStyles: [ styles.activeTabStyle, styles.inactiveTabStyle ],
             user: {},
@@ -32,12 +37,15 @@ class MyReservation extends Component{
             selectedReservation: {},
             isCancelling: false,
             cancelledData: null
+
         };
     }
 
     componentDidMount() {
+
         this.props.getAllReservations(this.state.user.email);
     }
+
 
     toggle(tab) {
         if (this.state.activeTab !== tab) {
@@ -53,6 +61,23 @@ class MyReservation extends Component{
         }
     }
 
+
+    // renderAllReservations(){
+    //     if(this.state.reservations && this.state.reservations !== undefined){
+    //         return this.state.reservations.map((reservation, index) =>
+    //         <tr key={reservation._id}>
+    //             <th scope="row">{index}</th>
+    //             <td>{reservation.start_date}</td>
+    //             <td>Los Angeles</td>
+    //             <td>Single</td>
+    //             <td>1</td>
+    //             <td>Active</td>
+    //         </tr>
+    //         )
+    //     }
+    // } 
+
+
     renderAllRewards = () => 
         this.state.reservations.length ? 
             <Table style={styles.tableStyle}>
@@ -66,9 +91,11 @@ class MyReservation extends Component{
                 </thead>
                 <tbody>
                     { this.state.reservations.map((v,i) => 
+
                         <tr key={v._id}>
                             <td>{v._id}</td>
                             <td>{moment(v.time_created).format("DD MMM YYYY HH:MM")}</td>
+
                             <td>$ {v.total}</td>
                             <td>{v.rewardsPoints}</td>
                         </tr>
@@ -79,10 +106,12 @@ class MyReservation extends Component{
         : 
             <div style={{ margin: '10% 0 10% 0'}}>
                 <h5>No Rewards Awarded Yet!</h5>
+
                 <p>Go book a reservation!</p>
             </div>
 
     renderAllReservations = () => 
+
         this.state.reservations.length ?
             <Table responsive style={styles.tableStyle}>
                 <thead>
@@ -97,12 +126,15 @@ class MyReservation extends Component{
                 </thead>
                 <tbody>{
                     this.state.reservations.map((v,i) => 
+
                         <tr key={v._id}>
+
                             <td style={{ paddingTop: 25 }}>{v._id}</td>
                             <td style={{ paddingTop: 25 }}>{moment(v.start_date).format("DD MMM YYYY")} - {moment(v.end_date).format("DD MMM YYYY")}</td>
                             <td style={{ paddingTop: 25 }}>{v.city && v.city.length ? v.city : 'N/A'}</td>
                             <td style={{ paddingTop: 25 }}>{v.hotel_name && v.hotel_name.length ? v.hotel_name : 'N/A'}</td>
                             <td style={{ paddingTop: 25 }}>{v.cancelled ?  'Cancelled' : 'Active' }</td>
+
                             <td>
                                 <Button 
                                     onClick={() => {
@@ -115,6 +147,7 @@ class MyReservation extends Component{
                                         <Fa icon="eye"></Fa>
                                 </Button>
                             </td>
+
                         </tr>
                     )}
                 </tbody>
@@ -122,7 +155,9 @@ class MyReservation extends Component{
             : 
                 <div style={{ margin: '10% 0 10% 0'}}>
                     <h5>No Reservations Yet!</h5>
+
                     <p>Go book a reservation!</p>
+
                 </div>
     
 
@@ -135,6 +170,7 @@ class MyReservation extends Component{
         }
         return null;
     }
+
 
     toggleModal = () => {
         this.state.modal ?
@@ -270,6 +306,7 @@ class MyReservation extends Component{
             <div className="background-image2">
                 <Scroll/>
                 {this.renderModal()}
+
                 <Animated animationIn="fadeInDown" animationOut="fadeOut" isVisible={true}>
                     <Container style={{ marginTop: '10em' }}>
                         <Row style = {styles.textBlock}>
@@ -292,10 +329,12 @@ class MyReservation extends Component{
                                         {this.renderAllReservations()}
                                     </TabPane>
                                     <TabPane tabId="2">
+
                                         <hr/>
                                         <h4>Your Rewards Points: {this.state.user.rewardsPoints} </h4>
                                         <hr/>
                                         {this.renderAllRewards()}
+
                                     </TabPane>
                                 </TabContent>
                             </Col>
