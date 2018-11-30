@@ -87,14 +87,14 @@ module.exports.getAllReservationsByOneUser = function(user_id, callback) {
         if(err) return callback(err);
         Hotel.findById(res.hotel_id, (err, hotel) => {
             if (err) return callback(err);
-            const { hotel, address } = hotel;
+            const { name, address } = hotel;
             const data = {
                 ...reservation,
-                hotel,
+                hotel_name: name,
                 city: address.city
             }
+            return callback(null, data);
         });
-        return callback(null, res);
     })
 }
 
