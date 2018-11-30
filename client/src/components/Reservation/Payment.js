@@ -195,9 +195,11 @@ class Payment extends Component{
         }
       }
 
+
     render() {
         if (this.state.complete)
             return <h1 style={{ margin: '20em 0px 20em 0px' }}>Purchase Complete</h1>
+
 
         return(
             <Form style = {styles.body}>
@@ -232,8 +234,10 @@ class Payment extends Component{
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                                     <Label for="exampleDate">Full Name:  </Label>
                                     <Input name="name" value={this.state.name} onChange={this.handleChange} placeholder="Jane Fonda" />
+
+
                                 </FormGroup>
-                            </Col>
+                            </Col> */}
                         </Row>
                         <FormGroup>
                             <Label for="exampleAddress">Address</Label>
@@ -266,16 +270,20 @@ class Payment extends Component{
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
+
                                     className={classnames({ active: this.state.activeTab === '1' })}
                                     onClick={() => { this.toggle('1'); this.setState({ usingRewards: true })}}
+
                                 >
                                     Rewards Points Checkout
                                 </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink
+
                                     className={classnames({ active: this.state.activeTab === '2' })}
                                     onClick={() => { this.toggle('2'); this.setState({ usingRewards: false })}}
+
                                 >
                                     Card Checkout
                                 </NavLink>

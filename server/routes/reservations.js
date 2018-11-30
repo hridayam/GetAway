@@ -10,10 +10,12 @@ const User = require('../models/users');
 // gets all the reservations made by user
 // front end makes request with user id
 // back end sends back array of reservations
+
 router.post('/all', async (req,res) => {
     let { email }   = req.body;
 
     Reservation.getAllReservationsByOneUser(email, (err, data) => {
+
         if(err) {
             return res.status(422).json({
                 success: false,
@@ -45,6 +47,7 @@ router.post('/reservation/confirmation', (req, res) => {
     .then( () => {
         res.status(400).json({
             success: true,
+
             message: 'email delivered'
         })
     })
@@ -55,6 +58,7 @@ router.post('/reservation/confirmation', (req, res) => {
                 error: err,
                 message: 'email delivery failed'
             })
+
     });
 })
 
@@ -172,6 +176,7 @@ router.post('/create', async (req,res) => {
         usingRewards, city, hotel_name
     } = req.body;
     
+
     try {
         let reservation = new Reservation(data);
 
@@ -185,6 +190,7 @@ router.post('/create', async (req,res) => {
             },
             
         },{ upsert: true }).exec();
+
 
         Reservation.createReservation(reservation, (err, reservation) => {
             if(err) {

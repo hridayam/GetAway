@@ -14,7 +14,9 @@ import Spinner from 'react-loader-spinner';
 
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
-
+import ReactWeather from 'react-open-weather';
+//Optional include of the default css styles 
+import 'react-open-weather/lib/css/ReactWeather.css';
 class SelectHotel extends Component{
     constructor(props){
         super(props);
@@ -77,10 +79,11 @@ class SelectHotel extends Component{
                     <div className="row ">
                         <div className="col-md-4">
                             { hotel.images && hotel.images.length ?
-                            <Carousel autoPlay infiniteLoop>
+                            <Carousel dynamicHeight={true}
+                            autoPlay infiniteLoop>
                                 {hotel.images.map((v,i) =>
                                     <div key={i}>
-                                        <img src={v} alt="" className="w-100"/>
+                                        <img src={v} alt="" className="w-100" />
                                     </div>
                                 )}
                             </Carousel> : <div className="align-middle" style={{height:'100%', width:'100%'}}><br/><br/><br/>No Images Available</div> }

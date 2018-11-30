@@ -192,7 +192,9 @@ class Login extends Component {
                   {/* <Col>
                     <Button color="btn btn-deep-orange logout" onClick={() => this.toggleLogged(8)}>Close</Button>
                   </Col> */}
+
                   <Col sm="12">
+
                     <Button color="btn btn-deep-orange logout" onClick={this.userLogout.bind(this)}>Logout</Button>
                   </Col>
                 </Row>
