@@ -7,15 +7,15 @@
     "install-server": "cd server && npm install",
     "client": "npm start --prefix client",
     "server": "node ./server",
+    "nodemon-server": "nodemon --watch ./server/",
     "initial-start": "npm install && npm run install-client && npm run install-server && npm run start",
-    "start": "concurrently \"npm run client\" \"npm run server\""
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "start-with-nodemon": "concurrently \"npm run client\" \"npm run nodemon-server\""
   },
   "author": "",
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "concurrently": "*",
-    "nodemon": "*",
-    "react-toastify": "^4.4.2"
+    "concurrently": "*"
   }
 }

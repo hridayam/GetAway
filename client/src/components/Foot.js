@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
-import { Container, Row, Col, Form, Input, Button } from 'reactstrap';
+import { Col, Container, Row } from "mdbreact";
+import '../components/css/Home.css';
 
-export default class Footer extends Component{
+export default class Foot extends Component{
   render(){
     return(
       <footer style={styles.footerStyle}>
-        <Container>
+        <Container style={{paddingTop: '30px'}}>
           <Row style={styles.rowStyle}> 
             <Col sm="12" md="4" style={{fontSize:'20px', textAlign: 'left'}}>
               <h2 className="text-uppercase font-weight-bold" style={{marginBottom: '20px', fontFamily:'Allura'}}>GetAway</h2>
-                <p>As one of the world’s top hospitality companies, 
-                <strong> GetAway</strong> remains committed to caring 
+                <p>As one of the world’s top hospitality companies,
+                <strong> GetAway</strong> remains committed to caring
                 for people so they can be their best.
                 <a href='/aboutus'> Learn more</a>
                 </p>
@@ -28,47 +29,49 @@ export default class Footer extends Component{
               <h5 className="text-uppercase font-weight-bold" style={{marginBottom: '30px'}}>Stay tuned</h5>
 
               <div className="row" style={{padding:10}}>
-                <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
-                  <i className="fa fa-facebook fa-lg mr-md-5 mr-3 fa-2x"> </i>
-                </a>
-                <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}> 
-                  <i className="fa fa-twitter fa-lg mr-md-5 mr-3 fa-2x"> </i>
-                </a>
-                <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
-                  <i className="fa fa-google-plus fa-lg mr-md-5 mr-3 fa-2x"> </i>
-                </a>
-                <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'black',marginTop:9}}>
-                <i className="fa fa-instagram fa-lg mr-md-5 mr-3 fa-2x"> </i>
+                 <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'#3b5998',marginTop:9}}>
+                   <i className="fa fa-facebook fa-lg mr-md-5 mr-3 fa-2x"> </i>
+                 </a>
+                 <a  className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'#00acee',marginTop:9}}>
+                   <i className="fa fa-twitter fa-lg mr-md-5 mr-3 fa-2x"> </i>
+                 </a>
+                 <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color:'#DD4B39',marginTop:9}}>
+                   <i className="fa fa-google-plus fa-lg mr-md-5 mr-3 fa-2x"> </i>
+                 </a>
+                 <a className="col-xs-6 col-sm-6 col-md-3" href="#" style = {{color: 'black'}}>
+                 <i className="fab fa-instagram"></i>
                 </a>
               </div>
               <br/><br/>
               <h5 style={{float:'left'}}> Subscribe to Our Emails:</h5>
-              <Form className="input-group">
-                <Input type="text" className="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
+              <form className="input-group">
+                <input type="text" className="form-control form-control-sm" placeholder="Your email" aria-label="Your email" aria-describedby="basic-addon2"/>
                 <div className="input-group-append">
-                  <Button className="btn btn-sm btn-outline-white" type="button">Sign up</Button>
+                  <button className="btn btn-sm btn-outline-white" type="button">Sign up</button>
                 </div>
-              </Form>
+              </form>
             </Col>
             <br/>
           </Row>
         </Container>
-        
-        <div style={{backgroundColor: '#8c7b75', color:'white', width: '100%',}}>
-        <br></br><h6>&reg; 2018 GetAway</h6>  <br></br>
+
+        <div className="footer-copyright text-center py-3">
+          <Container fluid>
+          &reg; 2018 GetAway
+          </Container>
         </div>
-      </footer>
+       </footer>
     );
   }
 }
 
 const styles = {
   footerStyle: {
-    color: 'black',
+    color: 'white',
     flex: 1, 
     fontFamily: 'Lato',
-    paddingTop: 50
-  }, 
+    backgroundColor: '#262626'
+  },
   rowStyle:{
     marginTop: '40px',
     marginBottom: '40px'

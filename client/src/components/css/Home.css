@@ -45,7 +45,7 @@
  }
  @media(min-width: 490px){
   .background-image{
-    height: 100vh;
+    height: 120vh;
   }
  }
 
@@ -58,12 +58,16 @@
   overflow: hidden;
  }
 
+ .profileHeader{
+   text-align: center !important;
+ }
 
 
 /* Form Field */
 .text-block {
    position: relative;
-   background-color: rgba(0,0,0,0.2);
+   background-color: rgba(0, 0, 0, 0.329);
+   border-radius: 20px;
    text-align: center;
 }
 
@@ -76,32 +80,55 @@
  }
 
 /* Search field */
- .search-place{
+ .location-search-input{
    font-family: 'Lato';
-   text-align: center;
-   display: inline-block;
-   width: 100%;
-   height: 3.4em;
+   height: 30.797;
    color: black;
-
+   text-align: center;
+   display: inline !important;
+   width: auto;
+   box-sizing: border-box !important;
  }
- .search-date{
-   font-family: 'Lato';
-   white-space: nowrap;
-   font-size: 1.4em;
-   color: white;
-   text-align: left;
-   margin-top: 20px;
-
+ .autocomplete-dropdown-container{
+   border-radius: 5px;
  }
 
+ .guestPicker{
+   height: 2.8em !important;
+   margin-top: 54px !important;
+   text-align: center;
+   display: inline !important;
+   width: 100px !important;
+   box-sizing: border-box !important;
+ }
+
+ .DateRangePicker{
+   padding-top: 54px;
+ }
+
+ .DateRangePickerInput__withBorder{
+  border-radius: 5px !important;
+ }
+ .DateInput{
+   border-radius: 5px;
+   background: white !important;
+   width: auto !important;
+   margin-left: 5em !important;
+   height: 2.8em !important;
+   box-sizing: border-box !important;
+ }
+ .DateInput_input{
+   font-weight: 400 !important;
+   background-color: transparent !important;
+ }
  .search-button{
    font-family: 'Lato';
    font-size: 1.2em;
    color: white;
    text-align: center;
-   margin-top: 10px;
-   margin-bottom: 10px;
+   margin-top: 30px !important;
+   margin-bottom: 20px !important;
+   border-radius: 20px !important;
  }
 
  /* Suggestion  */
@@ -153,14 +180,43 @@
   font-size: auto;
   line-height: 1;
   color: #407bae;
-  border: 0px;
+  border: 1px;
   margin-top: 20px;
+  border-radius: 20px !important;
 }
-
-
+/* Register */
+.form-check-label{
+  margin-top: 0 !important;
+}
+.btn.btn-deep-orange.register{
+  margin-top: 50px;
+  border-radius: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: #2bbbad !important;
+  color: black !important;
+}
 /* Login */
 .modal-body{
   text-align: center;
+}
+
+.btn.btn-deep-orange.login{
+  margin-top: 50px;
+  border-radius: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: #2bbbad !important;
+  color: black !important;
+}
+
+.btn.btn-deep-orange.logout{
+  margin-top: 50px;
+  border-radius: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: #cb4153c5   !important;
+  color: black !important;
 }
 
 .navbar-dark .login-button{
@@ -238,4 +294,18 @@ label{
   box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
   border-radius: 4px;
   background: white;
+}
+
+.fa-instagram{
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 33px;
+  margin-top: 6px;
+}
+
+.fa-star{
+  color: #FFCD3A;
+  font-size: 13px;
 }

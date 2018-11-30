@@ -4,10 +4,16 @@ const HotelSchema = new mongoose.Schema({
     _id: String,
     name: String,
     city: String,
-    address: String,
-    state: String,
+    address: {
+        streetName: String,
+        city: String,
+        state: String,
+        zipcode: Number
+    },
+    descriptions: Array,
+    amenities: Object,
+    images: Array,
     stars: Number,
-    zipcode: Number,
     rooms: [{
             beds: Number,
             bed_type: String,
@@ -16,6 +22,7 @@ const HotelSchema = new mongoose.Schema({
             dates_booked: Array,
             dates_blocked: Array
     }],
+    room_images: Object,
     price: {
         queen: Number,
         king: Number,

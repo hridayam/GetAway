@@ -13,6 +13,8 @@ router.post('/pay', function(req, res) {
     //     account: "acct_1DCutGGZF8qeVOU9"
     // };
 
+    console.log(data);
+
     stripe.charges.create(data, (err, charge) => {
         if (err) 
             return res.status(400).json({ success: false, msg: err });
@@ -51,8 +53,6 @@ router.post('/refund', async (req,res) => {
             err
         });
     }
-
-
 });
 
 module.exports = router;

@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
+import { Container } from 'mdbreact';
+import moment from 'moment';
 import {CardElement, CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
 import axios from 'axios';
-import {Button, Form, FormGroup, Col, Row, Input, Label, Card, CardTitle} from 'reactstrap';
+import {Button} from 'mdbreact'
+import {Form, FormGroup, Col, Row, Input, Label, Card, CardTitle} from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import classnames from 'classnames';
+
 import Scroll from '../ScrollUp';
 import '../css/Home.css';
 import {connect} from 'react-redux';
@@ -16,19 +22,22 @@ class Payment extends Component{
             hotel: null,
             rooms: null,
             city: '',
-            startDate: 0, endDate: 0,
+            startDate: {}, endDate: {},
             numGuests: 0,
             card: null,
-            firstName: '', lastName: '',
+            name: '',
             address: '', userCity: '', state: '', zip: '',
             cardholderName: '',
-            subtotal: 0, total: 0, tax: 0, rewardsPoints: 0
+            subtotal: 0, total: 0, tax: 0, rewardsPoints: 0,
+            activeTab: '1',
+            usingRewards: true
         };
     }
 
     static getDerivedStateFromProps(props, state){
         let { hotel, rooms, city, startDate, endDate, numGuests, user } = props; 
-        if(props.hotel !== state.hotel){
+        if(props.hotel !== state.hotel && user !== null && user !== undefined){
+            let addressSplit = props.user.address.split(',');
             return{
                 ...state,
                 hotel,
@@ -37,54 +46,109 @@ class Payment extends Component{
                 startDate,
                 endDate,
                 numGuests,
-                user
+                user,
+                name: user.name.length ? 
+                    user.name.split(' ')
+                        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+                        .join(' ') : '',
+                address: addressSplit.length ? addressSplit[0] : '',
+                userCity: addressSplit.length > 1 ? addressSplit[1] : '',
+                state: addressSplit.length > 2 ? addressSplit[2] : '',
+                zip: addressSplit.length > 3 ? addressSplit[3] : '',
             };
+        } else if (props.hotel !== state.hotel && (user === null || user !== undefined)){
+            return {
+                ...state,
+                hotel,
+                rooms,
+                city,
+                startDate,
+                endDate,
+                numGuests,
+                user
+            }
+        } else {
+            return null;
         }
-        return null;
     }
 
     handleSubmit = async () => {
         let { 
             hotel, city, startDate, endDate, numGuests, 
-            firstName, lastName,
+            name,
             address, userCity, state, zip,
             cardholderName,
-            subtotal, total, tax, rewardsPoints
+            subtotal, total, tax, rewardsPoints,
+            usingRewards
         } = this.state;
 
-        let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
+        if (!usingRewards) {
+            let {token} = await this.props.stripe.createToken({name: this.state.cardholderName});
 
-        let data = {
-            amount: parseInt(this.calculateTotal()),
-            currency: 'usd',
-            source: token.id,
-            description: this.state.user.id
-        };
+            let data = {
+                amount: parseInt(this.calculateTotal()),
+                currency: 'usd',
+                source: token.id,
+                description: this.state.user.id
+            };
 
-        // Nhat switched back to old promise handling for testing
-        axios.post('http://localhost:3001/payments/pay', {data})
-            .then(res => {
-                axios.post('http://localhost:3001/reservations/create', {
-                    hotel, city, startDate, endDate, numGuests, 
-                    firstName, lastName,
-                    address, userCity, state, zip,
-                    cardholderName,
-                    charge: res.data.charge,
-                    user_id: this.state.user.id,
-                    subtotal, total, tax, rewardsPoints
-                })
-                    .then(() => {
-                        this.props.jumpToStep(3);
+            // Nhat switched back to old promise handling for testing
+            axios.post('http://localhost:3001/payments/pay', {data})
+                .then(res => {
+                    console.log(res);
+                    axios.post('http://localhost:3001/reservations/create', {
+                        hotel_id: hotel._id, 
+                        start_date: startDate.valueOf(), 
+                        end_date: endDate.valueOf(), 
+                        number_of_guests: numGuests, 
+                        user: {
+                            name,
+                            email: this.state.user.email,
+                            id: this.state.user.id || this.state.user._id,
+                            phoneNumber: this.state.user.phoneNumber
+                        },
+                        rewardsPoints,
+                        subtotal, total, tax,
+                        charge: res.data.charge,
+                        usingRewards,
+                        city: hotel.address.city,
+                        hotel_name: hotel.name
                     })
-                    .catch(err => {
-                        console.log(err);
-                    });
+                        .then(() => {
+                            this.props.jumpToStep(3);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+            axios.post('http://localhost:3001/reservations/create', {
+                hotel_id: hotel._id, 
+                start_date: startDate.valueOf(), 
+                end_date: endDate.valueOf(), 
+                number_of_guests: numGuests, 
+                user: {
+                    name,
+                    email: this.state.user.email,
+                    id: this.state.user.id
+                },
+                rewardsPoints,
+                subtotal, total, tax,
+                charge: {},
+                usingRewards
             })
-            .catch(err => {
-                console.log(err);
-            })
+                .then(() => {
+                    this.props.jumpToStep(3);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
             
-        
+            
         this.setState({complete: true});
     }
 
@@ -107,7 +171,7 @@ class Payment extends Component{
         let duration = 0;
         let day = 24*60*60*1000;
 
-        duration = Math.round(Math.abs((this.state.startDate - this.state.endDate) / day));
+        duration = Math.round(Math.abs((this.state.startDate.valueOf() - this.state.endDate.valueOf()) / day));
 
         Object.keys(this.state.rooms).map((v,i) => {
             subtotal += this.state.rooms[v] * this.state.hotel.price[v];
@@ -120,10 +184,31 @@ class Payment extends Component{
 
     calculateTax = () => Number(this.calculateSubtotal() * 0.0925).toFixed(2);
     calculateTotal = () => Number(parseFloat(this.calculateSubtotal()) + parseFloat(this.calculateTax())).toFixed(2);
-    calculateRewardsPoints = () => Math.floor(Number(this.calculateTotal() * 10))
+    calculateRewardsPoints = () => Math.floor(Number(this.calculateSubtotal() * .1))
+
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+          this.setState({
+            activeTab: tab
+          });
+        }
+      }
 
     render(){
-        if (this.state.complete) return <h1>Purchase Complete</h1>;
+        console.log(this.state.user);
+        // check if user has made a reservation in the past 24 hours
+        // if (this.state.user.latest_reservation_created && Date.now().valueOf() - this.state.user.latest_reservation_created < 86400000) {
+        //     return (
+        //         <Container className="text-center" style={{ flex: 1 }}>
+        //             <h3>Sorry!</h3>
+        //             <p>We appreciate your business, but you can't book more than one reservation in a 24-hour period.</p>
+        //             <p>Please book again in {moment(86400000 - Date.prototype.valueOf() - this.state.user.latest_reservation_created).format('HH')} hours</p>
+        //         </Container>
+        //     );
+        // }
+
+        if (this.state.complete)
+            return <h1 style={{ margin: '20em 0px 20em 0px' }}>Purchase Complete</h1>
 
         return(
             <Form style = {styles.body}>
@@ -156,19 +241,11 @@ class Payment extends Component{
                         <Row>
                             <Col >
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                                    <Label for="exampleDate"> First Name:  </Label>
-                                    <Input name="firstName" value={this.state.firstName} onChange={this.handleChange} placeholder="Enter your first name" />
-                                </FormGroup>
-                            </Col>
-
-                            <Col >
-                                <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                                    <Label for="exampleDate"> Last Name:  </Label>
-                                    <Input name="lastName" onChange={this.handleChange} value={this.state.lastName} placeholder="Enter your last name" />
+                                    <Label for="exampleDate">Full Name:  </Label>
+                                    <Input name="name" value={this.state.name} onChange={this.handleChange} placeholder="Jane Fonda" />
                                 </FormGroup>
                             </Col>
                         </Row>
-
                         <FormGroup>
                             <Label for="exampleAddress">Address</Label>
                             <Input onChange={this.handleChange} value={this.state.address} type="text" name="address" id="exampleAddress" placeholder="1234 Main St"/>
@@ -190,31 +267,76 @@ class Payment extends Component{
                             <Col md={2}>
                                 <FormGroup>
                                 <Label for="exampleZip">Zip</Label>
-                                <Input onChange={this.handleChange} value={this.state.zip} name="zip" type="text" name="zip" placeholder="28374" id="exampleZip"/>
+                                <Input onChange={this.handleChange} value={this.state.zip} name="zip" type="text" name="zip" placeholder="12345" id="exampleZip"/>
                                 </FormGroup>
                             </Col>
                         </Row>
                     </Card >
 
                     <Card body outline color="info" style={styles.panel} >
-                        <CardTitle>CREDIT CARD DETAIL</CardTitle>
-                        <Row >
-                            <Col sm="12" md={{ size: 8, offset: 2 }}>
+                        <Nav tabs>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: this.state.activeTab === '1' })}
+                                    onClick={() => { this.toggle('1'); this.setState({ usingRewards: true })}}
+                                >
+                                    Rewards Points Checkout
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: this.state.activeTab === '2' })}
+                                    onClick={() => { this.toggle('2'); this.setState({ usingRewards: false })}}
+                                >
+                                    Card Checkout
+                                </NavLink>
+                            </NavItem>
+                            </Nav>
+                            <TabContent activeTab={this.state.activeTab}>
+                            <TabPane tabId="1">
+                                <br/>
+                                <Row>
+                                    <Col sm="12">
+                                        {this.state.user.rewardsPoints > this.state.total ?
+                                            <div>
+                                                <h5>Congrats you have enough rewards points to cover your current reservation!</h5>
+                                                <p>You will have {this.state.user.rewardsPoints - this.state.total} after this reservation is made</p>
+                                                <Button color="info" onClick={this.handleSubmit}>Finish Checkout</Button>
+                                            </div> :
+                                            <div>
+                                                <h5>Oops! You do not have enough rewards points to cover your current reservation.</h5>
+                                                <p>You can still check out with your credit/debit card :)</p>
+                                                <Button onClick={
+                                                    () => { 
+                                                        this.toggle('2'); 
+                                                        this.setState({ usingRewards: false 
+                                                        })}}>
+                                                    Checkout with Card</Button>
+                                            </div>
+                                        }
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                            <TabPane tabId="2">
+                                <br/>
+                                <Row >
+                                    <Col sm="12" md={{ size: 8, offset: 2 }}>
+                                        <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
+                                        borderRadius: '4px', padding: '10px 14px', fontSize: '16px'}}/>
+                                    </Col>
+                                </Row>
 
-                                <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
-                                borderRadius: '4px', padding: '10px 14px', fontSize: '16px'}}/>
-                            </Col>
-                        </Row>
+                                <Row>
+                                    <Col sm="12" md={{ size: 8, offset: 2 }} >
 
-                        <Row>
-                            <Col sm="12" md={{ size: 8, offset: 2 }} >
+                                        <CardElement style={styles.cardpanel}/>
 
-                                <CardElement style={styles.cardpanel}/>
-
-                                <p style={styles.cardinfo}>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
-                                <Button color="info" onClick={this.handleSubmit}>Place Order</Button>
-                            </Col>
-                        </Row>
+                                        <p style={styles.cardinfo}>* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</p>
+                                        <Button color="info" onClick={this.handleSubmit}>Finish Checkout</Button>
+                                    </Col>
+                                </Row>
+                            </TabPane>
+                        </TabContent>
                     </Card>
                 </FormGroup>
             </Form>
@@ -258,8 +380,8 @@ const mapStatetoProps = state => {
       hotel: state.reservation.selectedHotel,
       rooms: state.reservation.selectedRooms,
       city: state.reservation.city,
-      startDate: state.reservation.startDate,
-      endDate: state.reservation.endDate,
+      startDate: state.reservation.startDateMoment,
+      endDate: state.reservation.endDateMoment,
       numGuests: state.reservation.numGuests
   };
 }

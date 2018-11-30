@@ -34,7 +34,10 @@ const ReservationSchema = new mongoose.Schema({
     tax: Number,
     rewardsPoints: Number,
     cancelled: { type: Boolean, default: false },
-    rooms: Object
+    rooms: Object,
+    special_accomodations: String,
+    city: String,
+    hotel_name: String
 });
 
 const Reservation = module.exports = mongoose.model('Reservation', ReservationSchema);
@@ -74,14 +77,14 @@ module.exports.getReservationById = function(id, callback) {
                 address: hotel.address,
                 hotel_images: hotel.images
             };
-            console.log(data);
             return callback(null, data);
         });
     });
 }
 
 module.exports.getAllReservationsByOneUser = function(user_id, callback) {
-    Reservation.find({ 'user.id': user_id }, function(err, res) {
+    Reservation.find({ 'user.email': user_id }, function(err, res) {
+        console.log(res);
         if(err) return callback(err);
         return callback(null, res);
     })
