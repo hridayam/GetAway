@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const Reservation = require('../models/reservation');
 const User = require('../models/users');
@@ -28,6 +30,33 @@ router.post('/all', async (req,res) => {
 
     });
 });
+
+router.post('/reservation/confirmation', (req, res) => {
+    const { email } = req.body;
+    const msg = {
+        to: email,
+        from: 'no-reply@getaway.io',
+        subject: 'Sending with SendGrid is Fun',
+        text: 'and easy to do anywhere, even with Node.js',
+        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    };
+
+    sgMail.send(msg)
+    .then( () => {
+        res.status(400).json({
+            success: true,
+            message: 'email delivered'
+        })
+    })
+    .catch(
+        (err) => {
+            res.status(422).json({
+                success: false,
+                error: err,
+                message: 'email delivery failed'
+            })
+    });
+})
 
 //get one reservation based on ID
 router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
@@ -94,6 +123,8 @@ router.post('/update', async (req,res) => {
         });
     }
 });
+
+
 
 // cancel a reservation made by the user identified by the user_id
 // front end makes a request 
