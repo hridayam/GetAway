@@ -83,10 +83,25 @@ module.exports.getReservationById = function(id, callback) {
 }
 
 module.exports.getAllReservationsByOneUser = function(user_id, callback) {
-    Reservation.find({ 'user.email': user_id }, function(err, res) {
-        console.log(res);
+    Reservation.find({ 'user.email': user_id }, function(err, reservations) {
         if(err) return callback(err);
-        return callback(null, res);
+        const hotels = [];
+        reservations.forEach((reservation) => {
+            Hotel.getHotelById(reservation.hotel_id, (err, hotel) => {
+                if (err) return callback(err);
+                const { name, address } = hotel;
+                const data = {
+                    ...reservation._doc,
+                    hotel_name: name,
+                    city: address.city
+                }
+                console.log('data', data);
+                hotels.push(data);
+                if (hotels.length === reservations.length) {
+                    return callback(null, hotels);
+                }
+            });
+        })
     })
 }
 
