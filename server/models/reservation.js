@@ -95,7 +95,7 @@ module.exports.getAllReservationsByOneUser = function(user_id, callback) {
                     hotel_name: name,
                     city: address.city
                 }
-                console.log('data', data);
+                
                 hotels.push(data);
                 if (hotels.length === reservations.length) {
                     return callback(null, hotels);
