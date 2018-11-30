@@ -26,8 +26,7 @@ const loginUser = (data, dispatch, cb) => {
         })
         .catch(err => {
             console.log(err.response);
-         
-        })
+        });
 };
 
 export const logout =() => {
