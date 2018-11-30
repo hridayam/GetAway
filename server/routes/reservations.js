@@ -74,12 +74,12 @@ router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), a
 router.post('/update', async (req,res) => {
     try {
         let { 
-            reservation_id,
-            newStartDate, newEndDate,
-            newNumGuests, newRooms
+            _id,
+            special_accomodations,
+            number_of_guests
         } = req.body;
 
-        await Reservation.findOneAndUpdate({ _id: reservation._id }, { $set: { ...reservation }});
+        await Reservation.findOneAndUpdate({ _id }, { $set: { special_accomodations, number_of_guests }});
 
         res.status(200).json({
             success: true,

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import { View, CardImage, CardText, CardBody, Card, Fa, CardTitle } from 'mdbreact';
+import { 
+            View, CardImage, CardText, CardBody, Card, Fa, CardTitle, 
+            Modal, ModalHeader, ModalFooter, ModalBody } from 'mdbreact';
 import { Container, Row, Col, } from 'reactstrap';
 import {TabContent, TabPane, Nav, div, a, Button} from 'reactstrap';
-import {Modal,ModalBody} from 'reactstrap';
 import Scroll from '../ScrollUp';
 import moment from 'moment';
 import { Animated } from 'react-animated-css';
+import axios from 'axios';
 
 import {connect} from 'react-redux';
 import { getAllReservations } from '../../actions';
@@ -19,18 +21,17 @@ class MyReservation extends Component{
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
-        this.toggle1 = this.toggle1.bind(this);
-        this.toggle2 = this.toggle2.bind(this);
         this.state = {
             activeTab: '1',
             active: 1,
             oldActive: 1,
-            modal1: false,
-            modal2: false,
             reservations: [],
             tabStyles: [ styles.activeTabStyle, styles.inactiveTabStyle ],
             user: {},
+            modal: false,
+            selectedReservation: {},
+            isCancelling: false,
+            cancelledData: null
         };
     }
 
@@ -38,16 +39,6 @@ class MyReservation extends Component{
         this.props.getAllReservations(this.state.user._id)
     }
 
-    toggle1() {
-        this.setState({
-            modal1: !this.state.modal1
-        });
-    }
-    toggle2() {
-        this.setState({
-            modal2: !this.state.modal2
-        });
-    }
     toggle(tab) {
         if (this.state.activeTab !== tab) {
             let { active, tabStyles } = this.state;
@@ -61,21 +52,6 @@ class MyReservation extends Component{
             });
         }
     }
-
-    // renderAllReservations(){
-    //     if(this.state.reservations && this.state.reservations !== undefined){
-    //         return this.state.reservations.map((reservation, index) =>
-    //         <tr key={reservation._id}>
-    //             <th scope="row">{index}</th>
-    //             <td>{reservation.start_date}</td>
-    //             <td>Los Angeles</td>
-    //             <td>Single</td>
-    //             <td>1</td>
-    //             <td>Active</td>
-    //         </tr>
-    //         )
-    //     }
-    // } 
 
     renderAllRewards = () => 
         this.state.reservations.length ? 
@@ -92,7 +68,7 @@ class MyReservation extends Component{
                     { this.state.reservations.map((v,i) => 
                         <tr>
                             <td>{v._id}</td>
-                            <td>{moment(v.time_created).format("DD MMM YYYY")}</td>
+                            <td>{moment(v.time_created).format("DD MMM YYYY HH:MM")}</td>
                             <td>$ {v.total}</td>
                             <td>{v.rewardsPoints}</td>
                         </tr>
@@ -103,19 +79,10 @@ class MyReservation extends Component{
         : 
             <div style={{ margin: '10% 0 10% 0'}}>
                 <h5>No Rewards Awarded Yet!</h5>
-                <p>Go book a reservation now :)</p>
+                <p>Go book a reservation!</p>
             </div>
 
     renderAllReservations = () => 
-    /*
-        <th>ID</th>
-        <th>Dates</th>
-        <th>Destination</th>
-        <th>Hotel Name</th>
-        <th>Room Type</th>
-        <th># of Guests</th>
-        <th>Status</th>
-    */
         this.state.reservations.length ?
             <Table responsive style={styles.tableStyle}>
                 <thead>
@@ -131,13 +98,23 @@ class MyReservation extends Component{
                 <tbody>{
                     this.state.reservations.map((v,i) => 
                         <tr>
-                            {console.log(v)}
                             <td style={{ paddingTop: 25 }}>{v._id}</td>
                             <td style={{ paddingTop: 25 }}>{moment(v.start_date).format("DD MMM YYYY")} - {moment(v.end_date).format("DD MMM YYYY")}</td>
                             <td style={{ paddingTop: 25 }}>{v.city && v.city.length ? v.city : 'N/A'}</td>
                             <td style={{ paddingTop: 25 }}>{v.hotel_name && v.hotel_name.length ? v.hotel_name : 'N/A'}</td>
                             <td style={{ paddingTop: 25 }}>{v.cancelled ?  'Cancelled' : 'Active' }</td>
-                            <td><Button color="blue" className="text-center" style={{ margin: 0 }}><Fa icon="eye"></Fa></Button></td>
+                            <td>
+                                <Button 
+                                    onClick={() => {
+                                        this.setState({ selectedReservation: v });
+                                        this.toggleModal();
+                                        }}
+                                    color="blue" 
+                                    className="text-center" 
+                                    style={{ margin: 0 }}>
+                                        <Fa icon="eye"></Fa>
+                                </Button>
+                            </td>
                         </tr>
                     )}
                 </tbody>
@@ -145,7 +122,7 @@ class MyReservation extends Component{
             : 
                 <div style={{ margin: '10% 0 10% 0'}}>
                     <h5>No Reservations Yet!</h5>
-                    <p>Go book a reservation now :)</p>
+                    <p>Go book a reservation!</p>
                 </div>
     
 
@@ -159,11 +136,110 @@ class MyReservation extends Component{
         return null;
     }
 
+    toggleModal = () => {
+        this.setState({
+          modal: !this.state.modal
+        });
+      }
+
+    renderCancellationBody(data) {
+        let { cancelledData } = this.state;
+        return (
+            <div>
+                <ModalBody>
+                    { cancelledData ? 
+                    <div>
+                        {
+                            cancelledData.sucess ? 
+                            <div>
+                                <h3>Cancellation Success!</h3>
+                                {cancelledData.charge ? 
+                                    <div>
+                                        <p>The cancellation was a success!</p>
+                                        <p>You have been charged {Math.floor(data.subtotal * .1)}</p>
+                                    </div>
+                                    :
+                                    <div>
+                                    </div>
+                                }
+                            </div>
+                            :
+                            <p>{cancelledData.msg}</p>
+                        }
+                        <Button color="info" onClick={this.toggle}>Got it</Button>
+                    </div>
+                    :
+                    <div>
+                        <h3 style={{ color: 'red' }}>Warning</h3>
+                        <p>Cancelling after 24 hours from the reservation time will result in you being charged 10% of the subtotal paid for this reservation.</p>
+                    </div>
+                    }
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="info" onClick={() => this.setState({ isCancelling: false })}>I Don't Want to Cancel</Button>
+                    <Button 
+                        color="danger" 
+                        onClick={() => {
+                            axios.put(`/cancel/${data._id}`)
+                                .then(res => {
+                                    this.setState({ cancelledData: res.data });
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                });
+                        }}>
+                        Confirm Cancellation
+                    </Button>
+                </ModalFooter>
+            </div>
+        )
+    }
+
+    renderModal = () => {
+        let data = { ...this.state.selectedReservation };
+
+        return (
+            <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+                <ModalHeader toggle={this.toggleModal}>{ this.state.isCancelling ? 'Reservation Cancellation': 'Reservation Details' }</ModalHeader>
+                { this.state.isCancelling ? 
+                    this.renderCancellationBody(data._id)
+                : 
+                <div>
+                    <ModalBody>
+                        <h3>{data.hotel_name} in {data.city}</h3>
+                        <small className="text-center">This reservation {data.cancelled ? 'is cancelled' : 'is active'}</small><br/><br/>
+                        <div className="text-center">
+                        <b>Starts On: </b>{moment(data.start_date).format('DD MMM YYYY')}<br/>
+                        <b>Ends On: </b>{moment(data.end_date).format('DD MMM YYYY')}<br/>
+                        <b>Number of Guests: </b>{data.number_of_guests}<br/>
+                        <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
+                        <hr/>
+                        <b>Rewards Points Earned: </b>{data.rewardsPoints}<br/>
+                        <b>Subtotal: </b>${data.subtotal}<br/>
+                        <b>Tax: </b>${data.tax}<br/>
+                        <b>Total: </b>${data.total}<br/>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        { data.cancelled ? null :
+                            <div>
+                                <Button color="info">Edit Reservation</Button>
+                                <Button color="danger" onClick={() => this.setState({ isCancelling: true })}>Cancel Reservation</Button>
+                            </div>
+                        }
+                    </ModalFooter>
+                </div>
+                }
+            </Modal>
+        );
+    }
+
 
     render(){
         return(
             <div className="background-image2">
                 <Scroll/>
+                {this.renderModal()}
                 <Animated animationIn="fadeInDown" animationOut="fadeOut" isVisible={true}>
                     <Container style={{ marginTop: '10em' }}>
                         <Row style = {styles.textBlock}>
