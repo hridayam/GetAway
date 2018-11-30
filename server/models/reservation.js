@@ -15,7 +15,6 @@ const ReservationSchema = new mongoose.Schema({
         id: mongoose.SchemaTypes.ObjectId,
         email: {
             type: String,
-            unique: true,
             trim: true,
             lowercase: true,
             required: true,
