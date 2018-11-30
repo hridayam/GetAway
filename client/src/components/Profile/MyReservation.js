@@ -163,7 +163,7 @@ class MyReservation extends Component{
                                 {cancelledData.charge ? 
                                     <div>
                                         <p>The cancellation was a success!</p>
-                                        <p>You have been charged {Math.floor(data.subtotal * .1)}.</p>
+                                        <p>You have been charged ${Math.floor(data.subtotal * .1)}.</p>
                                         <p>Reserve again soon!</p>
                                     </div>
                                     :
@@ -215,8 +215,7 @@ class MyReservation extends Component{
                         <Button 
                             color="info" 
                             onClick={() => {
-                                this.setState({ cancelledData: null })
-                                this.toggleModal();
+                                window.location.reload();
                             }}>
                             Got it
                         </Button>
@@ -251,23 +250,22 @@ class MyReservation extends Component{
                         <b>Total: </b>${data.total}<br/>
                         </div>
                     </ModalBody>
-                    <ModalFooter>
-                        { data.cancelled === undefined || data.cancelled === null ? 
-                            null
-                            :
-                            <div>
-                                <Button color="info">Edit Reservation</Button>
-                                <Button color="danger" onClick={() => this.setState({ isCancelling: true })}>Cancel Reservation</Button>
-                            </div>
-                        }
-                    </ModalFooter>
+                    { data.cancelled  ? 
+                        <div style={{ marginTop: '2em' }}></div> :
+                        <ModalFooter>
+                                <div>
+                                    <Button color="info">Edit Reservation</Button>
+                                    <Button color="danger" onClick={() => this.setState({ isCancelling: true })}>Cancel Reservation</Button>
+                                </div>
+                        </ModalFooter>
+                    }
                 </div>
                 }
             </Modal>
         );
     }
 
-    render(){
+    render() {
         return(
             <div className="background-image2">
                 <Scroll/>
@@ -294,10 +292,10 @@ class MyReservation extends Component{
                                         {this.renderAllReservations()}
                                     </TabPane>
                                     <TabPane tabId="2">
-                                    <hr/>
-                                    <h4>Your Rewards Points: {this.state.user.rewardsPoints} </h4>
-                                    <hr/>
-                                    {this.renderAllRewards()}
+                                        <hr/>
+                                        <h4>Your Rewards Points: {this.state.user.rewardsPoints} </h4>
+                                        <hr/>
+                                        {this.renderAllRewards()}
                                     </TabPane>
                                 </TabContent>
                             </Col>

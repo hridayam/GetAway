@@ -102,9 +102,6 @@ router.post('/cancel/:id', (req,res) => {
 
     
     Reservation.findById(id, (err, reservation) => {
-        console.log(Date.now().valueOf());
-        console.log(reservation.start_date);
-        console.log(reservation.time_created);
         if (err) return res.status(422).json({success: false, error: err});
         console.log(Date.now().valueOf() - reservation.start_date);
         if (Date.now().valueOf() - reservation.time_created < 86400000 &&
@@ -118,7 +115,7 @@ router.post('/cancel/:id', (req,res) => {
                 });
             })
         } else if (Date.now().valueOf() - reservation.time_created > 86400000 && 
-                    Date.now().valueOf() - reservation.start_date > 86400000) {
+            reservation.start_date - Date.now().valueOf() > 86400000) {
             Reservation.cancelReservation(reservation, (err, updatedReservation) => {
                 if (err) return res.status(422).json({success: false, error: err});
                 return res.status(200).json({
@@ -144,17 +141,19 @@ router.post('/create', async (req,res) => {
         usingRewards, city, hotel_name
     } = req.body;
     
-    console.log(data);
-    
     try {
         let reservation = new Reservation(data);
 
-        // modify user's rewards points
+        // modify user's rewards points and reservation create time
         await User.findOneAndUpdate({ _id: data.user.id }, {
+            $set: {
+                latest_reservation_created: Date.now().valueOf()
+            },
             $inc: {
                 rewardsPoints: data.usingRewards ? -Number(data.subtotal) : data.rewardsPoints
-            }
-        }).exec();
+            },
+            
+        },{ upsert: true }).exec();
 
         Reservation.createReservation(reservation, (err, reservation) => {
             if(err) {

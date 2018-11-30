@@ -48,6 +48,10 @@ const userSchema = new Schema({
     },
     google_id: {
         type: String
+    },
+    latest_reservation_created: {
+        type: Number,
+        default: 0
     }
 });
 
