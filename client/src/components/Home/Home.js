@@ -47,7 +47,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '0px',
-    paddingTop: '13em',
+    paddingTop: '11em',
     overflowY: 'hidden'
   },
   viewMore: {

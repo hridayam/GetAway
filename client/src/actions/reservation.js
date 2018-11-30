@@ -67,9 +67,9 @@ export const selectHotel = hotel => {
     };
 }
 
-export const getAllReservations = id => {
+export const getAllReservations = email => {
     return dispatch => {
-        axios.post(`http://localhost:3001/reservations/all`, { id })
+        axios.post(`http://localhost:3001/reservations/all`, { email })
             .then(res => {
                 dispatch({
                     type: ALL_RESERVATIONS, 

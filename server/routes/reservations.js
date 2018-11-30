@@ -8,22 +8,23 @@ const User = require('../models/users');
 // gets all the reservations made by user
 // front end makes request with user id
 // back end sends back array of reservations
-router.post('/all',async (req,res) => {
-    let { id }   = req.body;
+router.post('/all', async (req,res) => {
+    let { email }   = req.body;
 
-    Reservation.getAllReservationsByOneUser(id, (err, data) => {
+    Reservation.getAllReservationsByOneUser(email, (err, data) => {
         if(err) {
             return res.status(422).json({
                 success: false,
                 error: err
             });
         }
-
-        return res.status(200).json({
-            success: true,
-            msg: 'Successfuly found reservations from the user',
-            reservations: data
-        });
+        if (data) {
+            return res.status(200).json({
+                success: true,
+                msg: 'Successfuly found reservations from the user',
+                reservations: data
+            });
+        }
 
     });
 });
@@ -100,7 +101,6 @@ router.post('/update', async (req,res) => {
 router.post('/cancel/:id', (req,res) => {
     let { id } = req.params;
 
-    
     Reservation.findById(id, (err, reservation) => {
         if (err) return res.status(422).json({success: false, error: err});
         console.log(Date.now().valueOf() - reservation.start_date);

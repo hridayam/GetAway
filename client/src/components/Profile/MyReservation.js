@@ -36,7 +36,7 @@ class MyReservation extends Component{
     }
 
     componentDidMount() {
-        this.props.getAllReservations(this.state.user._id)
+        this.props.getAllReservations(this.state.user.email);
     }
 
     toggle(tab) {
