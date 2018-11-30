@@ -74,20 +74,20 @@ router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), a
 router.post('/update', async (req,res) => {
     try {
         let { 
-            reservation_id,
-            newStartDate, newEndDate,
-            newNumGuests, newRooms
+            _id,
+            special_accomodations,
+            number_of_guests
         } = req.body;
 
-        await Reservation.findOneAndUpdate({ _id: reservation._id }, { $set: { ...reservation }});
+        await Reservation.findOneAndUpdate({ _id }, { $set: { special_accomodations, number_of_guests }});
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             msg: 'Successfully updated the reservation'
         });
     }
     catch(err) {
-        res.status(400).json({
+        return res.status(400).json({
             success: false,
             err
         });
@@ -97,9 +97,10 @@ router.post('/update', async (req,res) => {
 // cancel a reservation made by the user identified by the user_id
 // front end makes a request 
 // 24 hrs for free, full fee after that until a week before
-router.put('/cancel/:id', passport.authenticate('jwt', {session: false}), (req,res) => {
+router.post('/cancel/:id', (req,res) => {
     let { id } = req.params;
 
+    
     Reservation.findById(id, (err, reservation) => {
         if (err) return res.status(422).json({success: false, error: err});
         console.log(Date.now().valueOf() - reservation.start_date);
@@ -114,7 +115,7 @@ router.put('/cancel/:id', passport.authenticate('jwt', {session: false}), (req,r
                 });
             })
         } else if (Date.now().valueOf() - reservation.time_created > 86400000 && 
-                    Date.now().valueOf() - reservation.start_date > 86400000) {
+            reservation.start_date - Date.now().valueOf() > 86400000) {
             Reservation.cancelReservation(reservation, (err, updatedReservation) => {
                 if (err) return res.status(422).json({success: false, error: err});
                 return res.status(200).json({
@@ -140,17 +141,19 @@ router.post('/create', async (req,res) => {
         usingRewards, city, hotel_name
     } = req.body;
     
-    console.log(data);
-    
     try {
         let reservation = new Reservation(data);
 
-        // modify user's rewards points
+        // modify user's rewards points and reservation create time
         await User.findOneAndUpdate({ _id: data.user.id }, {
+            $set: {
+                latest_reservation_created: Date.now().valueOf()
+            },
             $inc: {
                 rewardsPoints: data.usingRewards ? -Number(data.subtotal) : data.rewardsPoints
-            }
-        }).exec();
+            },
+            
+        },{ upsert: true }).exec();
 
         Reservation.createReservation(reservation, (err, reservation) => {
             if(err) {

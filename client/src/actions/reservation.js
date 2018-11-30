@@ -16,6 +16,12 @@ export const search = (city, numGuests, startDateMoment, endDateMoment) => {
 
         axios.post('http://localhost:3001/hotels/search', { city, numGuests })
             .then(res => {
+                dispatch({
+                    type: END_LOADING,
+                    payload: {
+                        isLoading: false
+                    }
+                });
                 dispatch({ 
                     type: SEARCH_HOTELS , 
                     payload: {
@@ -25,12 +31,6 @@ export const search = (city, numGuests, startDateMoment, endDateMoment) => {
                         startDateMoment,
                         endDateMoment
                 }});
-                dispatch({
-                    type: END_LOADING,
-                    payload: {
-                        isLoading: false
-                    }
-                });
             })
             .catch(err => {
                 console.log(err.response);
