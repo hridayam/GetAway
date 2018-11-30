@@ -197,17 +197,17 @@ class Payment extends Component{
     render(){
         console.log(this.state.user);
         // check if user has made a reservation in the past 24 hours
-        if (this.state.user.latest_reservation_created && Date.now().valueOf() - this.state.user.latest_reservation_created < 86400000) {
-            return (
-                <Container className="text-center" style={{ flex: 1 }}>
-                    <h3>Sorry!</h3>
-                    <p>We appreciate your business, but you can't book more than one reservation in a 24-hour period.</p>
-                    <p>Please book again in {moment(86400000 - Date.prototype.valueOf() - this.state.user.latest_reservation_created).format('HH')} hours</p>
-                </Container>
-            );
-        }
+        // if (this.state.user.latest_reservation_created && Date.now().valueOf() - this.state.user.latest_reservation_created < 86400000) {
+        //     return (
+        //         <Container className="text-center" style={{ flex: 1 }}>
+        //             <h3>Sorry!</h3>
+        //             <p>We appreciate your business, but you can't book more than one reservation in a 24-hour period.</p>
+        //             <p>Please book again in {moment(86400000 - Date.prototype.valueOf() - this.state.user.latest_reservation_created).format('HH')} hours</p>
+        //         </Container>
+        //     );
+        // }
 
-        else if (this.state.complete)
+        if (this.state.complete)
             return <h1 style={{ margin: '20em 0px 20em 0px' }}>Purchase Complete</h1>
 
         return(
