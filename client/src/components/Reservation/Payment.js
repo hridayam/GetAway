@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { Container } from 'mdbreact';
+import moment from 'moment';
 import {CardElement, CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
 import axios from 'axios';
 import {Button} from 'mdbreact'
@@ -193,8 +195,22 @@ class Payment extends Component{
       }
 
     render(){
-        console.log(this.state.hotel);
-        if (this.state.complete) return <h1>Purchase Complete</h1>;
+
+        console.log(this.state.user);
+        // check if user has made a reservation in the past 24 hours
+        // if (this.state.user.latest_reservation_created && Date.now().valueOf() - this.state.user.latest_reservation_created < 86400000) {
+        //     return (
+        //         <Container className="text-center" style={{ flex: 1 }}>
+        //             <h3>Sorry!</h3>
+        //             <p>We appreciate your business, but you can't book more than one reservation in a 24-hour period.</p>
+        //             <p>Please book again in {moment(86400000 - Date.prototype.valueOf() - this.state.user.latest_reservation_created).format('HH')} hours</p>
+        //         </Container>
+        //     );
+        // }
+
+        if (this.state.complete)
+            return <h1 style={{ margin: '20em 0px 20em 0px' }}>Purchase Complete</h1>
+
 
         return(
             <Form style = {styles.body}>
@@ -229,17 +245,11 @@ class Payment extends Component{
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                                     <Label for="exampleDate">Full Name:  </Label>
                                     <Input name="name" value={this.state.name} onChange={this.handleChange} placeholder="Jane Fonda" />
-                                </FormGroup>
-                            </Col>
 
-                            {/* <Col >
-                                <FormGroup inline className="mb-2 mr-sm-2 mb-sm-0">
-                                    <Label for="exampleDate"> Last Name:  </Label>
-                                    <Input name="lastName" onChange={this.handleChange} value={this.state.lastName} placeholder="Enter your last name" />
+
                                 </FormGroup>
                             </Col> */}
                         </Row>
-
                         <FormGroup>
                             <Label for="exampleAddress">Address</Label>
                             <Input onChange={this.handleChange} value={this.state.address} type="text" name="address" id="exampleAddress" placeholder="1234 Main St"/>
@@ -271,16 +281,20 @@ class Payment extends Component{
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
-                                className={classnames({ active: this.state.activeTab === '1' })}
-                                onClick={() => { this.toggle('1'); this.setState({ usingRewards: true })}}
+
+                                    className={classnames({ active: this.state.activeTab === '1' })}
+                                    onClick={() => { this.toggle('1'); this.setState({ usingRewards: true })}}
+
                                 >
                                     Rewards Points Checkout
                                 </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink
-                                className={classnames({ active: this.state.activeTab === '2' })}
-                                onClick={() => { this.toggle('2'); this.setState({ usingRewards: false })}}
+
+                                    className={classnames({ active: this.state.activeTab === '2' })}
+                                    onClick={() => { this.toggle('2'); this.setState({ usingRewards: false })}}
+
                                 >
                                     Card Checkout
                                 </NavLink>
@@ -315,7 +329,6 @@ class Payment extends Component{
                                 <br/>
                                 <Row >
                                     <Col sm="12" md={{ size: 8, offset: 2 }}>
-
                                         <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
                                         borderRadius: '4px', padding: '10px 14px', fontSize: '16px'}}/>
                                     </Col>

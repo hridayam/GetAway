@@ -16,6 +16,12 @@ export const search = (city, numGuests, startDateMoment, endDateMoment) => {
 
         axios.post('http://localhost:3001/hotels/search', { city, numGuests })
             .then(res => {
+                dispatch({
+                    type: END_LOADING,
+                    payload: {
+                        isLoading: false
+                    }
+                });
                 dispatch({ 
                     type: SEARCH_HOTELS , 
                     payload: {
@@ -67,9 +73,11 @@ export const selectHotel = hotel => {
     };
 }
 
-export const getAllReservations = id => {
+
+export const getAllReservations = email => {
     return dispatch => {
-        axios.post(`http://localhost:3001/reservations/all`, { id })
+        axios.post(`http://localhost:3001/reservations/all`, { email })
+
             .then(res => {
                 dispatch({
                     type: ALL_RESERVATIONS, 
