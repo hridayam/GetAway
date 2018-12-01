@@ -16,8 +16,6 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-
     "concurrently": "*"
-
   }
 }

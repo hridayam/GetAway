@@ -13,7 +13,7 @@ class Register extends React.Component {
           modal: false,
           email: '',
           password: '',
-    
+
           confirmPassword:'',
           registerEmail: '',
           registerPassword: '',
@@ -28,7 +28,7 @@ class Register extends React.Component {
           isLoggedIn: false
         };
       }
-    
+
     submitHandler = (event) => {
         event.preventDefault();
         event.target.className += ' was-validated';
@@ -65,7 +65,7 @@ class Register extends React.Component {
         }
         return true;
     }
-    
+
     changeHandler = (event) => {
       this.setState({
         [event.target.name]: event.target.value
@@ -84,7 +84,7 @@ class Register extends React.Component {
                 user: props.user
             };
         }
-        return null; 
+        return null;
     }
 
   render() {
