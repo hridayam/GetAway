@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col,
-   Popover, PopoverBody, PopoverHeader, Table} from 'mdbreact';
+import { Button, Modal, ModalHeader, ModalBody, Container, Row, Col,
+  } from 'mdbreact';
 import { NavLink } from 'reactstrap';
 import axios from 'axios';
 import FileBase64 from 'react-file-base64';

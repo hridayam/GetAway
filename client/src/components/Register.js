@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Button, Modal, ModalBody, ModalHeader, Row, Col} from 'mdbreact';
+import { Container, Modal, ModalBody, ModalHeader, Row, Col} from 'mdbreact';
 import { NavLink } from 'reactstrap';
 import { connect } from 'react-redux';
 import { register } from '../actions';

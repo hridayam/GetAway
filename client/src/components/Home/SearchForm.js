@@ -60,7 +60,6 @@ class SearchForm extends Component {
             city = citySplit[citySplit.length - 3].trim();
         }
 
-
         this.props.search(
             city,
             numGuests,
@@ -142,10 +141,7 @@ class SearchForm extends Component {
                                 </PlacesAutocomplete>
                             </Col>
                         </Row>
-
                         <Row className="search-date">
-
-
                             <Col sm="12">
                                 <DateRangePicker
                                     withPortal={true}
