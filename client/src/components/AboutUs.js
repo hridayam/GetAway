@@ -102,7 +102,7 @@ export default class aboutUs extends Component {
                     onClick={this.handleClick1}
                     key="front">
                         <CardImage
-                        className="img-fluid" src="http://2.bp.blogspot.com/-zyKlWanN5dI/Vj1Cd2jlWSI/AAAAAAAADL8/7IrG3rb9j1I/s1600/Anonymous-hacker-profile-picture.jpg" alt="Card image cap" />
+                        className="img-fluid"  style = {styles.imgFluid} src="http://2.bp.blogspot.com/-zyKlWanN5dI/Vj1Cd2jlWSI/AAAAAAAADL8/7IrG3rb9j1I/s1600/Anonymous-hacker-profile-picture.jpg" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Nhat Trinh</CardTitle>
                             <CardText>Project Manager</CardText>
@@ -112,7 +112,7 @@ export default class aboutUs extends Component {
                     <Card onClick={this.handleClick1}
                      key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Nhat Trinh</CardTitle>
                             <CardText>Dedicated leader who guide the team to successful</CardText>
                     </CardBody>
                     </Card>
@@ -123,7 +123,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped2}>
                     <Card onClick={this.handleClick2}
                     key="front">
-                        <CardImage className="img-fluid" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9017084ac611b76fb7506ccc54d854ac&w=1000&q=80" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9017084ac611b76fb7506ccc54d854ac&w=1000&q=80" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Hridayam</CardTitle>
                             <CardText>Technical Lead</CardText>
@@ -133,7 +133,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick2}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Hridayam</CardTitle>
                             <CardText>Work as the friendly second leader to help people with any coding problems</CardText>
                     </CardBody>
                     </Card>
@@ -145,7 +145,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped3}>
                     <Card onClick={this.handleClick3}
                     key="front">
-                        <CardImage className="img-fluid" src="https://facebook.github.io/react/logo-og.png" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://facebook.github.io/react/logo-og.png" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Paul</CardTitle>
                             <CardText>Software Developer</CardText>
@@ -155,7 +155,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick3}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Paul</CardTitle>
                             <CardText>Front-end developer who can work indepently</CardText>
                     </CardBody>
                     </Card>
@@ -170,7 +170,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped4}>
                     <Card onClick={this.handleClick4}
                     key="front">
-                        <CardImage className="img-fluid" src="https://bnetproduct-a.akamaihd.net//70/dfdccc3712ed263d4903fa18806adab7-sc2-carbot-feature-003.jpg" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://bnetproduct-a.akamaihd.net//70/dfdccc3712ed263d4903fa18806adab7-sc2-carbot-feature-003.jpg" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Alejandro Lopez</CardTitle>
                             <CardText>Documentation</CardText>
@@ -180,7 +180,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick4}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Alejandro Lopez</CardTitle>
                             <CardText>Keeps track of the team progress through out the development process</CardText>
                     </CardBody>
                     </Card>
@@ -195,7 +195,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped5}>
                     <Card onClick={this.handleClick5}
                     key="front">
-                        <CardImage className="img-fluid" src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Jennifer Nguyen</CardTitle>
                             <CardText>Software Developer</CardText>
@@ -205,7 +205,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick5}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Jennifer Nguyen</CardTitle>
                             <CardText>Front-end developer who can work well with other teammember</CardText>
                     </CardBody>
                     </Card>
@@ -220,7 +220,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped6}>
                     <Card onClick={this.handleClick6}
                     key="front">
-                        <CardImage className="img-fluid" src="https://static1.squarespace.com/static/5697a3ff2399a3bb2ba89073/t/56eaccf32b8dde3a9952b73c/1458228472215/DSC_2521.JPG?format=1500w" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://static1.squarespace.com/static/5697a3ff2399a3bb2ba89073/t/56eaccf32b8dde3a9952b73c/1458228472215/DSC_2521.JPG?format=1500w" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Truc Vo</CardTitle>
                             <CardText>Product Owner</CardText>
@@ -230,7 +230,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick6}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Truc Vo</CardTitle>
                             <CardText>Works on majority of the UI of the project</CardText>
                     </CardBody>
                     </Card>
@@ -246,7 +246,7 @@ export default class aboutUs extends Component {
                     <Card 
                     onClick={this.handleClick7}
                     key="front">
-                        <CardImage className="img-fluid" src="https://academy.growthx.com/wp-content/uploads/sites/2/2017/01/featured_ux-870x380.jpg" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://academy.growthx.com/wp-content/uploads/sites/2/2017/01/featured_ux-870x380.jpg" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Tuan Anh Le</CardTitle>
                             <CardText>UX Designer</CardText>
@@ -256,7 +256,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick7}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Tuan Anh Le</CardTitle>
                             <CardText>The person who makes the UI look professional</CardText>
                     </CardBody>
                     </Card>
@@ -271,7 +271,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped8}>
                     <Card onClick={this.handleClick8}
                     key="front">
-                        <CardImage className="img-fluid" src="https://gauss-development.com/wp-content/uploads/2017/02/skills-of-a-good-software-tester.png" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://gauss-development.com/wp-content/uploads/2017/02/skills-of-a-good-software-tester.png" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Raghav Gupta</CardTitle>
                             <CardText>Software Tester</CardText>
@@ -281,7 +281,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick8}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Raghav Gupta</CardTitle>
                             <CardText>Tester for the project through each development cycle</CardText>
                     </CardBody>
                     </Card>
@@ -296,7 +296,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped9}>
                     <Card onClick={this.handleClick9}
                     key="front">
-                        <CardImage className="img-fluid" src="https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Operations/Our%20Insights/The%20expanding%20role%20of%20design%20in%20creating%20an%20end%20to%20end%20customer%20experience/Expanding-role-of-design-1536x1536-400_Standard.ashx" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Operations/Our%20Insights/The%20expanding%20role%20of%20design%20in%20creating%20an%20end%20to%20end%20customer%20experience/Expanding-role-of-design-1536x1536-400_Standard.ashx" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Luis Reyes</CardTitle>
                             <CardText>Assistant Tester</CardText>
@@ -306,7 +306,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick9}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Luis Reyes</CardTitle>
                             <CardText>The creative logos and icons creater for the project</CardText>
                     </CardBody>
                     </Card>
@@ -320,7 +320,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped10}>
                     <Card onClick={this.handleClick10}
                     key="front">
-                        <CardImage className="img-fluid" src="https://pmcvariety.files.wordpress.com/2018/05/discord-logo.jpg?w=1000&h=563&crop=1" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://pmcvariety.files.wordpress.com/2018/05/discord-logo.jpg?w=1000&h=563&crop=1" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Thomas Luong</CardTitle>
                             <CardText>Assistant Documentation</CardText>
@@ -330,7 +330,7 @@ export default class aboutUs extends Component {
                     <Card  onClick={this.handleClick10}
                     key="back">
                      <CardBody >
-                            <CardTitle>About</CardTitle>
+                            <CardTitle>Thomas Luong</CardTitle>
                             <CardText>Works on the hotel images for the project</CardText>
                     </CardBody>
                     </Card>
@@ -375,5 +375,9 @@ const styles = {
     },
     card:{
         marginBottom:'30px',
+    },
+    imgFluid:{
+        height: '150px',
+        width: '318px'
     }
 }
