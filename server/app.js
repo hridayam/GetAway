@@ -27,6 +27,7 @@ const payments = require('./routes/payments');
 const reservations = require('./routes/reservations');
 const users = require('./routes/users');
 const hotels = require('./routes/hotels');
+const google_auth = require('./routes/google-auth');
 
 const app = express();
 
@@ -61,7 +62,9 @@ app.use('/users', users);
 app.use('/payments', payments);
 app.use('/reservations', reservations);
 app.use('/hotels', hotels);
-app.use('/*', index);
+// app.use('/*', index);
+
+app.use(google_auth);
 
 // Localhost setup
 const PORT = 3001;

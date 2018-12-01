@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col,
    Popover, PopoverBody, PopoverHeader, Table} from 'mdbreact';
 import { NavLink } from 'reactstrap';
-import {Redirect} from 'react-router-dom';
-import './css/Home.css'
+import axios from 'axios';
+import FileBase64 from 'react-file-base64';
+import GoogleButton from 'react-google-button';
+
 import { login, logout, register, userLoggedIn } from '../actions/auth';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import FileBase64 from 'react-file-base64';
-//import 'react-toastify/dist/ReactToastify.css';
+
+import './css/Home.css';
 
 class Login extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class Login extends Component {
       modal: false,
       modal6: false,
       modal7: false,
+      modal8: false,
       email: '',
       password: '',
 
@@ -84,7 +85,6 @@ class Login extends Component {
        this.setState({ error: true})
      } else {
        this.setState({
-         modal: !this.state.modal,
          isLoggedIn: true
        });
      }
@@ -173,27 +173,33 @@ class Login extends Component {
     if (this.state.user)
       return(
         <div>
-          <Container>
           <NavLink style={{ cursor: 'pointer' }} onClick={() => this.toggleLogged(8)}>Profile</NavLink>
-            <Modal isOpen={this.state.modal8} toggle={() => this.toggleLogged(8)} fullHeight position="right">
+          <Modal isOpen={this.state.modal8} toggle={() => this.toggleLogged(8)} fullHeight position="right">
               <ModalHeader className="profileHeader" toggle={() => this.toggleLogged(8)}>
                 <div>Profile overview</div>
               </ModalHeader>
-              <ModalBody>
-                <img alt="" src={this.state.user.profilePic} style={styles.imageStyles}/>
-                {this.renderProfileInfo()}
-                { this.state.isEditing ? <Button color="btn btn-deep-orange login" onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button color="btn btn-deep-orange login" onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
+              <ModalBody>         
+                  <img alt="" src={this.state.user.profilePic} style={styles.imageStyles}/>
+                <Row>
+                  {this.renderProfileInfo()}
+                </Row>
+                <Row>
+                  <Col>
+                    {this.state.isEditing ? <Button color="btn btn-deep-orange login" onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Cancel Edit</Button> : <Button color="btn btn-deep-orange login" onClick={() => this.setState({ isEditing: !this.state.isEditing })}>Edit</Button>}
+                  </Col>
+                </Row>
+                <Row>
+                  {/* <Col>
+                    <Button color="btn btn-deep-orange logout" onClick={() => this.toggleLogged(8)}>Close</Button>
+                  </Col> */}
+
+                  <Col sm="12">
+
+                    <Button color="btn btn-deep-orange logout" onClick={this.userLogout.bind(this)}>Logout</Button>
+                  </Col>
+                </Row>
               </ModalBody>
-              <ModalFooter>
-                <Col>
-                  <Button color="btn btn-deep-orange logout" onClick={() => this.toggleLogged(8)}>Close</Button>
-                </Col>
-                <Col>
-                  <Button color="btn btn-deep-orange logout" onClick={this.userLogout.bind(this)}>Logout</Button>
-                </Col>
-              </ModalFooter>
             </Modal>
-          </Container>
         </div>
       );
 
@@ -206,8 +212,8 @@ class Login extends Component {
               <ModalHeader toggle={this.toggle.bind(this)}>Welcome Back!</ModalHeader>
               <ModalBody>
                 <Row className="mt-6">
-                  <Col md="">
-                    <form className='needs-validation' onSubmit={this.submitHandler} noValidate>
+                  <Col>
+                    <form className='needs-validation' onSubmit={this.submitHandler}>
                     <Row>
                       <div className="col-md-12 mb-12">
                         <label htmlFor="defaultFormRegisterNameEx" className="grey-text">User Name</label>
@@ -219,6 +225,12 @@ class Login extends Component {
                         <label htmlFor="defaultFormRegisterNameEx" className="grey-text">Password</label>
                         <input value={this.state.password} name='password' onChange={this.handleChange.bind(this)} type="password" id="defaultFormRegisterNameEx" className="form-control" placeholder="Password" required/>
                       </div>
+                    </Row>
+                    <hr/>
+                    <Row>
+                      <a href="http://localhost:3001/auth/google">
+                        <GoogleButton />
+                      </a>
                     </Row>
                     {this.state.error? <div style={{color: 'red'}}>Either username or password is incorrect</div>: <p></p>}
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
@@ -249,9 +261,8 @@ const styles ={
     borderRadius: '50%',
     border: "#A9A9A9",
     marginBottom: '10px',
-    width: '100%',
-    height:'auto'
-
+    width: '250px',
+    height:'250px'
   },
   popover:{
     textAlign: 'center',
@@ -261,6 +272,6 @@ const styles ={
     marginTop:10,
     color: 'white',
     fontWeight: 'normal',
-},
+  }
 }
 export default connect(mapStateToProps, { login, logout, register, userLoggedIn })(Login)

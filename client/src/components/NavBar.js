@@ -80,18 +80,16 @@ import { withRouter } from 'react-router-dom';
     if(this.state.user){
    return (
      <div >
-       <Navbar className="fixed-top z-index-0" dark expand="lg" style={ this.state.navbarStyle } >
+       <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
          <NavbarBrand href="/">
-
            <img src={logo} alt="logo" style={{width:'250px', height: '100px', paddingTop: '5px', float: 'left'}} />
-
          </NavbarBrand>
          <NavbarToggler onClick={this.toggle} style={{ display: 'center' }}/>
          <Collapse style={{ margin: 0 }} isOpen={this.state.isOpen} navbar>
 
            <Nav className="ml-auto" navbar style={ this.state.navStyle }>
              <NavItem>
-             <NavLink href="/profile/">My Reservation</NavLink>
+             <NavLink href="/myreservation/">My Reservation</NavLink>
              </NavItem>
              <NavItem>
                <Login />
@@ -104,8 +102,7 @@ import { withRouter } from 'react-router-dom';
        </Navbar>
      </div>
    );
- }
- else{
+ } else{
    return (
      <div >
        <Navbar className="fixed-top" dark expand="lg" style={ this.state.navbarStyle } >
@@ -139,10 +136,12 @@ const styles = {
     height: '100px',
     backgroundColor: 'rgba(0,0,0,0.4)',
     paddingTop: '0px',
+    boxShadow: 'none'
   },
   blackStyle: {
     height: '100px',
-    backgroundColor: 'rgba(0,0,0,0.9)'
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    boxShadow: 'none'
   }
 }
 
