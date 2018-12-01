@@ -63,64 +63,8 @@ class Reservation extends Component{
     };
 
 
-    // handleSubmit = () => {
-    //     let { city, startDate, endDate, numGuests } = this.state;
-    //     if (startDate.length && endDate.length) {
-    //         let sdSplit = startDate.split('-');
-    //         let edSplit = endDate.split('-');
-
-    //         let sdDate = new Date(
-    //                         sdSplit[0],
-    //                         sdSplit[1],
-    //                         sdSplit[2],
-    //                         0, 0, 0, 0);
-    //         let edDate = new Date(
-    //                         edSplit[0],
-    //                         edSplit[1],
-    //                         edSplit[2],
-    //                         0, 0, 0, 0);
-
-    //         this.props.search(
-    //             city,
-    //             sdDate.getTime(),
-    //             edDate.getTime(),
-    //             numGuests,
-    //             startDate,
-    //             endDate);
-    //     }
-
-    //     else
-    //         this.props.search(
-    //             city,
-    //             0,
-    //             0,
-    //             0,
-    //             0,
-    //             numGuests);
-    // }
-
     onSubmit = () => {
         let { city, numGuests } = this.state;
-
-        // let startD = moment(this.state.startDate).format('L');
-        // let endD = moment(this.state.endDate).format('L');
-
-        // let sdSplit = startD.split('/');
-        // let edSplit = endD.split('/');
-
-        // let sdDate = new Date(
-        //                 sdSplit[0],
-        //                 sdSplit[1],
-        //                 sdSplit[2],
-        //                 0, 0, 0, 0);
-        // let edDate = new Date(
-        //                 edSplit[0],
-        //                 edSplit[1],
-        //                 edSplit[2],
-        //                 0, 0, 0, 0);
-
-        // let newStartDate = sdSplit[2] + "-" + sdSplit[0] + "-" + sdSplit[1];
-        // let newEndDate = edSplit[2] + "-" + edSplit[0] + "-" + edSplit[1];
 
         //getting only city
         let tempCity = city;

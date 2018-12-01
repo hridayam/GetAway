@@ -15,7 +15,6 @@ const ReservationSchema = new mongoose.Schema({
         id: mongoose.SchemaTypes.ObjectId,
         email: {
             type: String,
-            unique: true,
             trim: true,
             lowercase: true,
             required: true,
@@ -78,16 +77,31 @@ module.exports.getReservationById = function(id, callback) {
                 address: hotel.address,
                 hotel_images: hotel.images
             };
-            console.log(data);
             return callback(null, data);
         });
     });
 }
 
 module.exports.getAllReservationsByOneUser = function(user_id, callback) {
-    Reservation.find({ 'user.id': user_id }, function(err, res) {
+    Reservation.find({ 'user.email': user_id }, function(err, reservations) {
         if(err) return callback(err);
-        return callback(null, res);
+        const hotels = [];
+        reservations.forEach((reservation) => {
+            Hotel.getHotelById(reservation.hotel_id, (err, hotel) => {
+                if (err) return callback(err);
+                const { name, address } = hotel;
+                const data = {
+                    ...reservation._doc,
+                    hotel_name: name,
+                    city: address.city
+                }
+                console.log('data', data);
+                hotels.push(data);
+                if (hotels.length === reservations.length) {
+                    return callback(null, hotels);
+                }
+            });
+        })
     })
 }
 

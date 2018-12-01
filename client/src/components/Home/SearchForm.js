@@ -54,25 +54,12 @@ class SearchForm extends Component {
         let citySplit = city.split(',');
 
         // take only the first slice before comma, only submit city name
-        if (citySplit.length > 1)
+
+        if (citySplit.length > 1 && citySplit.length < 4){
             city = citySplit[0];
-
-        // let startD = moment(this.state.startDate).valueOf();
-        // let endD = moment(this.state.endDate).valueOf();
-
-        // let sdSplit = startD.split('/');
-        // let edSplit = endD.split('/');
-
-        // let sdDate = new Date(
-        //                 sdSplit[0],
-        //                 sdSplit[1],
-        //                 sdSplit[2],
-        //                 0, 0, 0, 0);
-        // let edDate = new Date(
-        //                 edSplit[0],
-        //                 edSplit[1],
-        //                 edSplit[2],
-        //                 0, 0, 0, 0);
+        } else if (citySplit.length > 3){
+            city = citySplit[citySplit.length - 3].trim();
+        }
 
         this.props.search(
             city,
@@ -119,7 +106,9 @@ class SearchForm extends Component {
                                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                         <div>
                                             <input
-                                                {...getInputProps({
+
+                                                required
+                                                 {...getInputProps({
                                                 placeholder: 'Search Places ...',
                                                 className: 'location-search-input',
                                                 })}
@@ -155,19 +144,6 @@ class SearchForm extends Component {
                         </Row>
 
                         <Row className="search-date">
-                            {/* <Col xs="6" sm="4">
-
-                                    <Label for="exampleDate"> Check In:  </Label>
-                                    <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" id="exampleDate" placeholder="date placeholder" />
-
-                            </Col>
-
-                            <Col xs="6" sm="4">
-
-                                    <Label for="exampleDate"> Check Out:  </Label>
-                                    <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" id="exampleDate" placeholder="date placeholder" />
-
-                            </Col> */}
                             <Col sm="12">
                                 <DateRangePicker
                                     withPortal={true}
@@ -179,29 +155,41 @@ class SearchForm extends Component {
                                     required={true}
                                     startDatePlaceholderText= "Check In"
                                     endDatePlaceholderText= "Check Out"
+
+                                    startDateId="startDateId"
+                                    endDateId="endDateId"
+
                                 />
                             </Col>
                         </Row>
                         <Row>
-                            <Col sm="5">
-                                <h4 className="text-white text-right" style={{ margin: '60px 0px 0px 0px'}}>
-                                    Number of Guests:
-                                </h4>
+
+                            <Col className="offset-sm-2" sm="4" style={{ marginTop: '-20px'}}>
+                                <Row>
+                                    <Col sm="6" className="offset-sm-1">
+                                        <div className="text-white text-center" style={{ margin: '3em 0px 0px 0px'}}>
+                                            <h4>Number of Guests:</h4>
+                                        </div>
+                                    </Col>
+                                    <Col sm="5">
+                                        <Input value={this.state.numGuests} className='guestPicker' onChange={this.handleChange} name="numGuests" type="select" id="exampleSelect">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                        </Input>
+                                    </Col>
+                                </Row>
                             </Col>
-                            <Col sm="7" className="text-left">
-                                <Input value={this.state.numGuests} className='guestPicker' onChange={this.handleChange} name="numGuests" type="select" id="exampleSelect">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                </Input>
-                                <Button style={{ marginLeft: '5em', marginTop: '-55px' }} type="submit" className="search-button">Search</Button>
+                            <Col sm="4" className="offset-sm-1 text-right">
+                                <Button type="submit" className="search-button">Search</Button>
+
                             </Col>
                         </Row>
                     </form>
