@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const mongoose = require('mongoose');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -105,7 +106,7 @@ router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), a
 // update a reservation made by the user
 // front end makes a request with the user id in the parameter and put reservation object inside the request
 // backend responds with 200 for successful update or 400 for unsuccessful update
-router.post('/update', async (req,res) => {
+router.post('/edit', async (req,res) => {
     try {
         let { 
             _id,
@@ -113,11 +114,12 @@ router.post('/update', async (req,res) => {
             number_of_guests
         } = req.body;
 
-        await Reservation.findOneAndUpdate({ _id }, { $set: { special_accomodations, number_of_guests }});
+        let reservation = await Reservation.findOneAndUpdate({ _id }, { $set: { special_accomodations, number_of_guests }});
 
         return res.status(200).json({
             success: true,
-            msg: 'Successfully updated the reservation'
+            msg: 'Successfully updated the reservation',
+            reservation
         });
     }
     catch(err) {
@@ -173,9 +175,10 @@ router.post('/create', async (req,res) => {
         hotel_id, time_created, start_date, end_date,
         charge, room_number, number_of_guests,
         user, total, subtotal, tax, rewardsPoints,
-        usingRewards, city, hotel_name
+        usingRewards, city, hotel_name, special_accomodations
     } = req.body;
-    
+
+    data._id = mongoose.Types.ObjectId();
 
     try {
         let reservation = new Reservation(data);
@@ -192,14 +195,14 @@ router.post('/create', async (req,res) => {
         },{ upsert: true }).exec();
 
 
-        Reservation.createReservation(reservation, (err, reservation) => {
+        reservation.save((err, reservation) => {
             if(err) {
+                console.log(err)
                 return res.status(422).json({
                     success: false,
                     message: err
                 });
-            }
-            else if (reservation) {
+            } else if (reservation) {
                 return res.status(200).json({
                     success: true,
                     reservation,
