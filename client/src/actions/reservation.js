@@ -1,8 +1,8 @@
 import axios from 'axios';
-import moment from 'moment';
 
-import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, 
-    SELECT_ROOMS, ALL_RESERVATIONS, URL, START_LOADING, END_LOADING
+
+import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL,
+    SELECT_ROOMS, ALL_RESERVATIONS, START_LOADING, END_LOADING
 } from './types';
 
 export const search = (city, numGuests, startDateMoment, endDateMoment) => {
@@ -16,8 +16,8 @@ export const search = (city, numGuests, startDateMoment, endDateMoment) => {
 
         axios.post('http://localhost:3001/hotels/search', { city, numGuests })
             .then(res => {
-                dispatch({ 
-                    type: SEARCH_HOTELS , 
+                dispatch({
+                    type: SEARCH_HOTELS ,
                     payload: {
                         city,
                         numGuests,
@@ -72,7 +72,7 @@ export const getAllReservations = id => {
         axios.post(`http://localhost:3001/reservations/all`, { id })
             .then(res => {
                 dispatch({
-                    type: ALL_RESERVATIONS, 
+                    type: ALL_RESERVATIONS,
                     payload: res.data.reservations
                 });
             })

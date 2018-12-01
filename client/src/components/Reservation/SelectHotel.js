@@ -7,10 +7,10 @@ import {Button} from 'mdbreact'
 import { Carousel } from 'react-responsive-carousel';
 import Loader from 'react-loader-spinner';
 
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 import './selectHotel.css'
-import Scroll from '../ScrollUp';
-import Spinner from 'react-loader-spinner';
+
+
 
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
@@ -38,7 +38,7 @@ class SelectHotel extends Component{
             laundry: false,
             free_parking: false
         };
-        this.toggleDropdown = this. toggleDropdown.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
     }
 
     setSort(e) {

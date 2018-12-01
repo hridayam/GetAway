@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Stepper from './Stepper';
 import '../css/Home.css';
-import {Input, Container, Form, FormGroup, Label } from 'reactstrap';
+import {Input, Container, FormGroup, Label } from 'reactstrap';
 import {Button, Row, Col} from 'mdbreact'
 import Scroll from '../ScrollUp';
 import { DateRangePicker} from 'react-dates';
@@ -10,7 +10,7 @@ import { search } from '../../actions/';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {
     geocodeByAddress,
-    geocodeByPlaceId,
+
     getLatLng,
   } from 'react-places-autocomplete';
 import moment from 'moment';
@@ -36,7 +36,7 @@ class Reservation extends Component{
                 city: city
                         .toLowerCase()
                         .replace(
-                            /\b[a-z](?=[a-z]{2})/g, 
+                            /\b[a-z](?=[a-z]{2})/g,
                             letter => letter.toUpperCase()),
                 startDate: moment(startDateMoment),
                 endDate: moment(endDateMoment),
@@ -54,7 +54,7 @@ class Reservation extends Component{
     handleChangeAuto = city => {
         this.setState({ city });
        };
-    
+
        handleSelectAuto = city => {
         geocodeByAddress(city)
           .then(results => getLatLng(results[0]))
@@ -70,8 +70,8 @@ class Reservation extends Component{
     //         let edSplit = endDate.split('-');
 
     //         let sdDate = new Date(
-    //                         sdSplit[0], 
-    //                         sdSplit[1], 
+    //                         sdSplit[0],
+    //                         sdSplit[1],
     //                         sdSplit[2],
     //                         0, 0, 0, 0);
     //         let edDate = new Date(
@@ -79,23 +79,23 @@ class Reservation extends Component{
     //                         edSplit[1],
     //                         edSplit[2],
     //                         0, 0, 0, 0);
-            
+
     //         this.props.search(
-    //             city, 
-    //             sdDate.getTime(), 
-    //             edDate.getTime(), 
+    //             city,
+    //             sdDate.getTime(),
+    //             edDate.getTime(),
     //             numGuests,
     //             startDate,
     //             endDate);
     //     }
 
-    //     else 
+    //     else
     //         this.props.search(
-    //             city, 
-    //             0, 
+    //             city,
     //             0,
     //             0,
-    //             0, 
+    //             0,
+    //             0,
     //             numGuests);
     // }
 
@@ -104,21 +104,21 @@ class Reservation extends Component{
 
         // let startD = moment(this.state.startDate).format('L');
         // let endD = moment(this.state.endDate).format('L');
-        
+
         // let sdSplit = startD.split('/');
         // let edSplit = endD.split('/');
-        
+
         // let sdDate = new Date(
-        //                 sdSplit[0], 
-        //                 sdSplit[1], 
-        //                 sdSplit[2], 
+        //                 sdSplit[0],
+        //                 sdSplit[1],
+        //                 sdSplit[2],
         //                 0, 0, 0, 0);
         // let edDate = new Date(
         //                 edSplit[0],
         //                 edSplit[1],
         //                 edSplit[2],
         //                 0, 0, 0, 0);
-        
+
         // let newStartDate = sdSplit[2] + "-" + sdSplit[0] + "-" + sdSplit[1];
         // let newEndDate = edSplit[2] + "-" + edSplit[0] + "-" + edSplit[1];
 
@@ -128,11 +128,11 @@ class Reservation extends Component{
         let getCity = tempCity.split(',');
 
         let newCity = new String(
-                        getCity[0]   
+                        getCity[0]
         )
 
         this.props.search(
-            newCity, 
+            newCity,
             numGuests,
             this.state.startDate,
             this.state.endDate);
@@ -147,7 +147,7 @@ class Reservation extends Component{
             <div className="reservation-search-edit">
             <Container onSubmit={this.onSubmit}>
                 <Row style={{textAlign:'center',marginTop:'-50px', marginBottom:'10px'}} >
-                    <Col sm="12" md={{ size: 6, offset: 3 }}>      
+                    <Col sm="12" md={{ size: 6, offset: 3 }}>
                         <DateRangePicker
                                  withPortal={true}
                                  startDate={this.state.startDate} // momentPropTypes.momentObj or null,
@@ -221,7 +221,7 @@ class Reservation extends Component{
                                                 className: 'location-search-input',
                                                 })}
                                                 className="form-control text-center col-sm-8 offset-sm-2"
-                                                
+
                                             />
                                         <div className="autocomplete-dropdown-container">
                                             {loading && <div>Loading...</div>}
@@ -278,7 +278,7 @@ class Reservation extends Component{
         );
       }
     }
-    
+
 const styles = {
     homeStyle: {
       flex: 1,

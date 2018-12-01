@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import { View, CardImage, CardText, CardBody, Card, Fa, CardTitle } from 'mdbreact';
+import { Fa} from 'mdbreact';
 import { Container, Row, Col, } from 'reactstrap';
-import {TabContent, TabPane, Nav, div, a, Button} from 'reactstrap';
-import {Modal,ModalBody} from 'reactstrap';
+import {TabContent, TabPane, div, a, Button} from 'reactstrap';
+
 import Scroll from '../ScrollUp';
 import moment from 'moment';
 import { Animated } from 'react-animated-css';
@@ -75,10 +75,10 @@ class MyReservation extends Component{
     //         </tr>
     //         )
     //     }
-    // } 
+    // }
 
-    renderAllRewards = () => 
-        this.state.reservations.length ? 
+    renderAllRewards = () =>
+        this.state.reservations.length ?
             <Table style={styles.tableStyle}>
                 <thead>
                     <tr>
@@ -89,7 +89,7 @@ class MyReservation extends Component{
                     </tr>
                 </thead>
                 <tbody>
-                    { this.state.reservations.map((v,i) => 
+                    { this.state.reservations.map((v,i) =>
                         <tr>
                             <td>{v._id}</td>
                             <td>{moment(v.time_created).format("DD MMM YYYY")}</td>
@@ -97,16 +97,16 @@ class MyReservation extends Component{
                             <td>{v.rewardsPoints}</td>
                         </tr>
                     )}
-                    
+
                 </tbody>
             </Table>
-        : 
+        :
             <div style={{ margin: '10% 0 10% 0'}}>
                 <h5>No Rewards Awarded Yet!</h5>
                 <p>Go book a reservation now :)</p>
             </div>
 
-    renderAllReservations = () => 
+    renderAllReservations = () =>
     /*
         <th>ID</th>
         <th>Dates</th>
@@ -129,7 +129,7 @@ class MyReservation extends Component{
                 </tr>
                 </thead>
                 <tbody>{
-                    this.state.reservations.map((v,i) => 
+                    this.state.reservations.map((v,i) =>
                         <tr>
                             {console.log(v)}
                             <td style={{ paddingTop: 25 }}>{v._id}</td>
@@ -141,13 +141,13 @@ class MyReservation extends Component{
                         </tr>
                     )}
                 </tbody>
-            </Table> 
-            : 
+            </Table>
+            :
                 <div style={{ margin: '10% 0 10% 0'}}>
                     <h5>No Reservations Yet!</h5>
                     <p>Go book a reservation now :)</p>
                 </div>
-    
+
 
     static getDerivedStateFromProps(props, state) {
         if (state.user !== props.user || state.reservations !== props.reservations){
@@ -180,7 +180,7 @@ class MyReservation extends Component{
                                         </a>
                                     </div>
                                 </div>
-                                
+
                                 <TabContent activeTab={this.state.activeTab}>
                                     <TabPane tabId="1">
                                         {this.renderAllReservations()}
@@ -264,8 +264,8 @@ const styles = {
         position: 'relative',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: '20px',
-        textAlign: 'center', 
-        marginTop: '20px', 
+        textAlign: 'center',
+        marginTop: '20px',
         color: 'white',
         minHeight: '50vh'
     },

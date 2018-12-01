@@ -11,7 +11,7 @@ import moment from 'moment';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {
     geocodeByAddress,
-    geocodeByPlaceId,
+
     getLatLng,
   } from 'react-places-autocomplete';
 
@@ -34,7 +34,7 @@ class SearchForm extends Component {
    handleChange = event => {
         let { name, value } = event.target;
         this.setState({ [name]: value });
-   } 
+   }
 
    handleChangeAuto = city => {
     this.setState({ city });
@@ -46,7 +46,7 @@ class SearchForm extends Component {
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error));
    };
-    
+
    onSubmit = event => {
         event.preventDefault();
         let { city, numGuests } = this.state;
@@ -59,13 +59,13 @@ class SearchForm extends Component {
 
         // let startD = moment(this.state.startDate).valueOf();
         // let endD = moment(this.state.endDate).valueOf();
-        
+
         // let sdSplit = startD.split('/');
         // let edSplit = endD.split('/');
-        
+
         // let sdDate = new Date(
-        //                 sdSplit[0], 
-        //                 sdSplit[1], 
+        //                 sdSplit[0],
+        //                 sdSplit[1],
         //                 sdSplit[2],
         //                 0, 0, 0, 0);
         // let edDate = new Date(
@@ -75,7 +75,7 @@ class SearchForm extends Component {
         //                 0, 0, 0, 0);
 
         this.props.search(
-            city, 
+            city,
             numGuests,
             this.state.startDate,
             this.state.endDate);
@@ -153,20 +153,20 @@ class SearchForm extends Component {
                                 </PlacesAutocomplete>
                             </Col>
                         </Row>
-                        
+
                         <Row className="search-date">
                             {/* <Col xs="6" sm="4">
-                            
+
                                     <Label for="exampleDate"> Check In:  </Label>
                                     <Input value={this.state.startDate} onChange={this.handleChange} type="date" name="startDate" id="exampleDate" placeholder="date placeholder" />
-                            
+
                             </Col>
 
                             <Col xs="6" sm="4">
-                            
+
                                     <Label for="exampleDate"> Check Out:  </Label>
                                     <Input value={this.state.endDate} onChange={this.handleChange} type="date" name="endDate" id="exampleDate" placeholder="date placeholder" />
-                        
+
                             </Col> */}
                             <Col sm="12">
                                 <DateRangePicker
@@ -205,7 +205,7 @@ class SearchForm extends Component {
                             </Col>
                         </Row>
                     </form>
-                    
+
                 </Container>
         );
     }
