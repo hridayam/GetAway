@@ -28,6 +28,7 @@ const reservations = require('./routes/reservations');
 const users = require('./routes/users');
 const hotels = require('./routes/hotels');
 const google_auth = require('./routes/google-auth');
+const admins = require('./routes/admins');
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use('/users', users);
 app.use('/payments', payments);
 app.use('/reservations', reservations);
 app.use('/hotels', hotels);
+app.use('/admins', admins)
 // app.use('/*', index);
 
 app.use(google_auth);

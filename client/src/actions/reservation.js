@@ -1,8 +1,6 @@
 import axios from 'axios';
-
-
 import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL,
-    SELECT_ROOMS, ALL_RESERVATIONS, START_LOADING, END_LOADING
+    SELECT_ROOMS, ALL_RESERVATIONS, START_LOADING, END_LOADING, EDIT_RESERVATION
 } from './types';
 
 export const search = (city, numGuests, startDateMoment, endDateMoment) => {

@@ -44,7 +44,6 @@ class Login extends Component {
       profilePic: '',
       file: ''
     };
-
   }
 
   static getDerivedStateFromProps(props, state) {
