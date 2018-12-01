@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Scroll from '../ScrollUp';
+
 
 export default class Suggestion extends Component {
   render() {

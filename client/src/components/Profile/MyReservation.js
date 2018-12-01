@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-
-import { 
-            View, CardImage, CardText, CardBody, Card, Fa, CardTitle, 
-            Modal, ModalHeader, ModalFooter, ModalBody } from 'mdbreact';
+import { Fa} from 'mdbreact';
 import { Container, Row, Col, } from 'reactstrap';
-import {TabContent, TabPane, Nav, div, a, Button} from 'reactstrap';
+import {TabContent, TabPane, div, a, Button} from 'reactstrap';
 import Scroll from '../ScrollUp';
 import moment from 'moment';
 import { Animated } from 'react-animated-css';
@@ -75,8 +72,7 @@ class MyReservation extends Component{
     //         </tr>
     //         )
     //     }
-    // } 
-
+    // }
 
     renderAllRewards = () => 
         this.state.reservations.length ? 
@@ -100,10 +96,10 @@ class MyReservation extends Component{
                             <td>{v.rewardsPoints}</td>
                         </tr>
                     )}
-                    
+
                 </tbody>
             </Table>
-        : 
+        :
             <div style={{ margin: '10% 0 10% 0'}}>
                 <h5>No Rewards Awarded Yet!</h5>
 
@@ -111,7 +107,6 @@ class MyReservation extends Component{
             </div>
 
     renderAllReservations = () => 
-
         this.state.reservations.length ?
             <Table responsive style={styles.tableStyle}>
                 <thead>
@@ -128,7 +123,6 @@ class MyReservation extends Component{
                     this.state.reservations.map((v,i) => 
 
                         <tr key={v._id}>
-
                             <td style={{ paddingTop: 25 }}>{v._id}</td>
                             <td style={{ paddingTop: 25 }}>{moment(v.start_date).format("DD MMM YYYY")} - {moment(v.end_date).format("DD MMM YYYY")}</td>
                             <td style={{ paddingTop: 25 }}>{v.city && v.city.length ? v.city : 'N/A'}</td>
@@ -151,15 +145,15 @@ class MyReservation extends Component{
                         </tr>
                     )}
                 </tbody>
-            </Table> 
-            : 
+            </Table>
+            :
                 <div style={{ margin: '10% 0 10% 0'}}>
                     <h5>No Reservations Yet!</h5>
 
                     <p>Go book a reservation!</p>
 
                 </div>
-    
+
 
     static getDerivedStateFromProps(props, state) {
         if (state.user !== props.user || state.reservations !== props.reservations){
@@ -323,7 +317,7 @@ class MyReservation extends Component{
                                         </a>
                                     </div>
                                 </div>
-                                
+
                                 <TabContent activeTab={this.state.activeTab}>
                                     <TabPane tabId="1">
                                         {this.renderAllReservations()}
@@ -409,8 +403,8 @@ const styles = {
         position: 'relative',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: '20px',
-        textAlign: 'center', 
-        marginTop: '20px', 
+        textAlign: 'center',
+        marginTop: '20px',
         color: 'white',
         minHeight: '50vh'
     },

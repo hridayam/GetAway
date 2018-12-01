@@ -11,7 +11,7 @@ import moment from 'moment';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {
     geocodeByAddress,
-    geocodeByPlaceId,
+
     getLatLng,
   } from 'react-places-autocomplete';
 
@@ -34,7 +34,7 @@ class SearchForm extends Component {
    handleChange = event => {
         let { name, value } = event.target;
         this.setState({ [name]: value });
-   } 
+   }
 
    handleChangeAuto = city => {
     this.setState({ city });
@@ -46,7 +46,7 @@ class SearchForm extends Component {
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error));
    };
-    
+
    onSubmit = event => {
         event.preventDefault();
         let { city, numGuests } = this.state;
@@ -61,9 +61,8 @@ class SearchForm extends Component {
             city = citySplit[citySplit.length - 3].trim();
         }
 
-
         this.props.search(
-            city, 
+            city,
             numGuests,
             this.state.startDate,
             this.state.endDate);
@@ -143,10 +142,8 @@ class SearchForm extends Component {
                                 </PlacesAutocomplete>
                             </Col>
                         </Row>
-                        
+
                         <Row className="search-date">
-
-
                             <Col sm="12">
                                 <DateRangePicker
                                     withPortal={true}
@@ -196,7 +193,7 @@ class SearchForm extends Component {
                             </Col>
                         </Row>
                     </form>
-                    
+
                 </Container>
         );
     }
