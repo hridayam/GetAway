@@ -254,6 +254,7 @@ const mapStateToProps = state => {
             token: state.auth.token
         };
     }
+    return {};
 }
 
 const styles ={

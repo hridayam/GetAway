@@ -152,6 +152,7 @@ const mapStateToProps = state => {
             user: state.auth.user
         };
     }
+    return {};
 }
 
 export default connect (mapStateToProps)(NavBar);
