@@ -30,7 +30,8 @@ class Payment extends Component{
             cardholderName: '',
             subtotal: 0, total: 0, tax: 0, rewardsPoints: 0,
             activeTab: '1',
-            usingRewards: true
+            usingRewards: true,
+            special_accommodations: ''
         };
     }
 
@@ -149,7 +150,6 @@ class Payment extends Component{
                 });
         }
 
-
         this.setState({complete: true});
     }
 
@@ -230,14 +230,12 @@ class Payment extends Component{
                     <Card body outline color="info" style={styles.panel}>
                         <CardTitle>BILLING ADDRESS</CardTitle>
                         <Row>
-                            <Col >
+                            <Col>
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                                     <Label for="exampleDate">Full Name:  </Label>
                                     <Input name="name" value={this.state.name} onChange={this.handleChange} placeholder="Jane Fonda" />
-
-
                                 </FormGroup>
-                            </Col> */}
+                            </Col>
                         </Row>
                         <FormGroup>
                             <Label for="exampleAddress">Address</Label>
@@ -259,12 +257,22 @@ class Payment extends Component{
                             </Col>
                             <Col md={2}>
                                 <FormGroup>
-                                <Label for="exampleZip">Zip</Label>
+                                <Label for="exampleZip">Zip Code</Label>
                                 <Input onChange={this.handleChange} value={this.state.zip} type="text" name="zip" placeholder="12345" id="exampleZip"/>
                                 </FormGroup>
                             </Col>
                         </Row>
                     </Card >
+
+                    <Card body outline color="info" style={styles.panel}>
+                        <CardTitle>SPECIAL ACCOMMODATIONS</CardTitle>
+                        <Col md={2}>
+                            <FormGroup>
+                            <Label for="exampleZip">Zip Code</Label>
+                            <textarea onChange={this.handleChange} value={this.state.special_accommodations} type="text" name="special_accommodations" placeholder="If you need any special accommodations in place that the hotel could provide for you, let them know here."/>
+                            </FormGroup>
+                        </Col>
+                    </Card>
 
                     <Card body outline color="info" style={styles.panel} >
                         <Nav tabs>

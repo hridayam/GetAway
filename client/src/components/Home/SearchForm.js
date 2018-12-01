@@ -117,7 +117,7 @@ class SearchForm extends Component {
                                             />
                                             <div className="autocomplete-dropdown-container">
                                                 {loading && <div>Loading...</div>}
-                                                {Array.prototype.slice.call(suggestions,0,1).map(suggestion => {
+                                                {Array.prototype.slice.call(suggestions).map(suggestion => {
                                                     const className = suggestion.active
                                                         ? 'suggestion-item--active'
                                                         : 'suggestion-item';
