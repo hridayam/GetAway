@@ -71,8 +71,7 @@ export default class Weather extends Component {
   render() {
     return this.state.loading !== true
       ? <div className="form-control">
-          <h2 className='forecast-header'>Weather Forecast for {this.props.city}</h2>
-          <hr/>
+          <h2 className='forecast-header'>Weather in {this.props.city}</h2>
           <br/>
           <Row>
             <Col md="1">{null}</Col>

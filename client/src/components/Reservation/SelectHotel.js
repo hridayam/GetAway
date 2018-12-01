@@ -101,7 +101,7 @@ class SelectHotel extends Component{
                             </div>
                         </div>
                         <div className="col-md-3 price">
-                            Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
+                            Starting from<h3 className="reservation-price">${hotel.price.twin} per night</h3>
                             <Button
                                 style={cssStyles.buttonRoom}
                                 onClick={() => {
@@ -129,10 +129,10 @@ class SelectHotel extends Component{
 
     render() {
         if (this.state.sortOption === "low") {
-            this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
+            this.state.hotels.sort((a,b) => ((a.price.twin) - (b.price.twin)));
         }
         else if (this.state.sortOption === "high"){
-            this.state.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
+            this.state.hotels.sort((a,b) => ((b.price.twin) - (a.price.twin)));
         }
         else if(this.state.sortOption === 'rating'){
             this.state.hotels.sort((a,b) => ((b.stars - a.stars)))
@@ -191,6 +191,7 @@ class SelectHotel extends Component{
                    </DropdownMenu>
                    </Dropdown>
                </div>
+               <br/><br/>
                 <Weather city={this.state.city}/>
                 { this.renderHotels() }
                 <br></br>
