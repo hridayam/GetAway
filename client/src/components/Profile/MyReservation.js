@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 import { Fa} from 'mdbreact';
-import { Container, Row, Col, } from 'reactstrap';
+import { Container, Row, Col,Modal,ModalBody,ModalHeader,ModalFooter } from 'reactstrap';
 import {TabContent, TabPane, div, a, Button} from 'reactstrap';
 import Scroll from '../ScrollUp';
 import moment from 'moment';
