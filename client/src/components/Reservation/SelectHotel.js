@@ -3,20 +3,15 @@ import {
         Container, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
 import {Button} from 'mdbreact'
-
 import { Carousel } from 'react-responsive-carousel';
 import Loader from 'react-loader-spinner';
+import Weather from '../Weather';
 
-
-import './selectHotel.css'
-
-
+import './selectHotel.css';
 
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
 
-//Optional include of the default css styles
-import 'react-open-weather/lib/css/ReactWeather.css';
 class SelectHotel extends Component{
     constructor(props){
         super(props);
@@ -47,11 +42,10 @@ class SelectHotel extends Component{
         this.setState({sortOption: e});
     }
 
-
     static getDerivedStateFromProps(props, state){
         if(props.reservation !== state.reservation){
             let { city, startDate, endDate, numGuests, hotels, isLoading } = props.reservation;
-            return{
+            return {
                 ...state,
                 reservation: props.reservation,
                 hotels,
@@ -134,7 +128,6 @@ class SelectHotel extends Component{
     }
 
     render() {
-        console.log(this.state.hotels)
         if (this.state.sortOption === "low") {
             this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
         }
@@ -198,7 +191,8 @@ class SelectHotel extends Component{
                    </DropdownMenu>
                    </Dropdown>
                </div>
-                    { this.renderHotels()}
+                <Weather city={this.state.city}/>
+                { this.renderHotels() }
                 <br></br>
                 </Container>
             </div>
