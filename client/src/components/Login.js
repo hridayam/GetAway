@@ -56,6 +56,10 @@ class Login extends Component {
           profileEmail: email,
           profilePhoneNumber: phoneNumber,
           profileAddress: address,
+          address: address.split(",")[0],
+          city: address.split(",")[1],
+          state: address.split(",")[2],
+          zipcode: address.split(",")[3],
           profilePic
         };
       } else {
@@ -129,7 +133,10 @@ class Login extends Component {
             <b>Upload New Image</b><br/><FileBase64 onDone={file => this.setState({ file: file.base64 })}/><br/><br/>
             <b>Email</b><br/>{this.state.profileEmail}<br/><br/>
             <b>Phone Number</b><br/><input className="form-control" onChange={this.handleChange} name="profilePhoneNumber" type="text" value={this.state.profilePhoneNumber}/><br/>
-            <b>Address</b><br/><input className="form-control" onChange={this.handleChange} name="profileAddress" type="text" value={this.state.profileAddress}/><br/>
+            <b>Address</b><br/><input className="form-control" onChange={this.handleChange} name="address" type="text" value={this.state.address}/><br/>
+            <b>City</b><br/><input className="form-control" onChange={this.handleChange} name="city" type="text" value={this.state.city}/><br/>
+            <b>State</b><br/><input className="form-control" onChange={this.handleChange} name="state" type="text" value={this.state.state}/><br/>
+            <b>Zipcode</b><br/><input className="form-control" onChange={this.handleChange} name="zipcode" type="text" value={this.state.zipcode}/><br/>
             <button onClick={this.handleProfileEditSubmit} className="btn btn-deep-orange login">Submit Changes</button>
           </div>
       </div>:
@@ -147,7 +154,7 @@ class Login extends Component {
       '/users/edit-profile', {
         email: this.state.profileEmail,
         newPhoneNumber: this.formatPhoneNumber(this.state.profilePhoneNumber),
-        newAddress: this.state.profileAddress,
+        newAddress: [this.state.address, this.state.city, this.state.state, this.state.zipcode].join(','),
         file: this.state.file
     })
       .then(res => {
@@ -159,7 +166,11 @@ class Login extends Component {
           this.setState({
             isEditing: false,
             profilePhoneNumber: phoneNumber,
-            profileAddress: address
+            profileAddress: address,
+            address: address.split(",")[0],
+            city: address.split(",")[1],
+            state: address.split(",")[2],
+            zipcode: address.split(",")[3]
           });
         }
       })
