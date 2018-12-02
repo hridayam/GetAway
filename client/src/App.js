@@ -13,6 +13,7 @@ import AboutUs from './components/AboutUs';
 import Register from './components/Register';
 import GuestRoute from './components/Routes/GuestRoute';
 import UserRoute from './components/Routes/UserRoute';
+import AdminPanel from './components/AdminPanel';
 
 import { connect } from 'react-redux';
 import { userLoggedIn } from './actions/auth';
@@ -73,6 +74,7 @@ class App extends Component {
               <Route exact path = '/reservation' component ={Reservation}/>
               <Route exact path = '/aboutus' component ={AboutUs}/>
               <GuestRoute exact path = '/register' component ={Register}/>
+              <Route exact path = '/admin' component ={AdminPanel}/>
             </div>
         </BrowserRouter>
 

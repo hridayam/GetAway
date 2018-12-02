@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Table } from 'reactstrap';
-import { Fa} from 'mdbreact';
-import { Container, Row, Col,Modal,ModalBody,ModalHeader,ModalFooter } from 'reactstrap';
+import { Table, Input } from 'reactstrap';
+import { 
+            View, CardImage, CardText, CardBody, Card, Fa, CardTitle, 
+            Modal, ModalHeader, ModalFooter, ModalBody } from 'mdbreact';
+import { Container, Row, Col, } from 'reactstrap';
 import {TabContent, TabPane, div, a, Button} from 'reactstrap';
 import Scroll from '../ScrollUp';
 import moment from 'moment';
@@ -20,8 +22,6 @@ class MyReservation extends Component{
     constructor(props) {
         super(props);
 
-
-
         this.state = {
             activeTab: '1',
             active: 1,
@@ -33,13 +33,14 @@ class MyReservation extends Component{
             modal: false,
             selectedReservation: {},
             isCancelling: false,
-            cancelledData: null
-
+            cancelledData: null,
+            isEditing: false,
+            number_of_guests: 1,
+            special_accomodations: ''
         };
     }
 
     componentDidMount() {
-
         this.props.getAllReservations(this.state.user.email);
     }
 
@@ -57,22 +58,6 @@ class MyReservation extends Component{
             });
         }
     }
-
-
-    // renderAllReservations(){
-    //     if(this.state.reservations && this.state.reservations !== undefined){
-    //         return this.state.reservations.map((reservation, index) =>
-    //         <tr key={reservation._id}>
-    //             <th scope="row">{index}</th>
-    //             <td>{reservation.start_date}</td>
-    //             <td>Los Angeles</td>
-    //             <td>Single</td>
-    //             <td>1</td>
-    //             <td>Active</td>
-    //         </tr>
-    //         )
-    //     }
-    // }
 
     renderAllRewards = () => 
         this.state.reservations.length ? 
@@ -171,7 +156,8 @@ class MyReservation extends Component{
             this.setState({
                 modal: !this.state.modal,
                 isCancelling: false,
-                cancelled: false
+                cancelled: false,
+                isEditing: false
             }) :
             this.setState({
                 modal: !this.state.modal
@@ -255,41 +241,120 @@ class MyReservation extends Component{
         )
     }
 
+    renderModalData = data => 
+        <div>
+            {console.log(data)}
+            <ModalBody>
+                <h3>{data.hotel_name} in {data.city}</h3>
+                <small className="text-center">This reservation {data.cancelled ? 'is cancelled' : 'is active'}</small><br/><br/>
+                <div className="text-center">
+                <b>Starts On: </b>{moment(data.start_date).format('DD MMM YYYY')}<br/>
+                <b>Ends On: </b>{moment(data.end_date).format('DD MMM YYYY')}<br/>
+                <b>Number of Guests: </b>{data.number_of_guests}<br/>
+                <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
+                <hr/>
+                <b>Special Accomodations</b>
+                <p>{data.special_accomodations}</p>
+                <hr/>
+                <b>Rewards Points Earned: </b>{data.rewardsPoints}<br/>
+                <b>Subtotal: </b>${data.subtotal}<br/>
+                <b>Tax: </b>${data.tax}<br/>
+                <b>Total: </b>${data.total}<br/>
+                </div>
+            </ModalBody>
+            { data.cancelled  ? 
+                <div style={{ marginTop: '2em' }}></div> :
+                <ModalFooter>
+                        <div>
+                            <Button color="info" onClick={() => this.setState({ isEditing: true, editData: data })}>Edit Reservation</Button>
+                            <Button color="danger" onClick={() => this.setState({ isCancelling: true })}>Cancel Reservation</Button>
+                        </div>
+                </ModalFooter>
+            }
+        </div>
+    
+    handleChange = event => {
+        let { name, value } = event.target;
+        this.setState({ [name]: value });
+    }
+    
+    renderEditingBody = () => {
+        let data = { ...this.state.editData };
+
+        return (
+            <div>
+                <ModalBody>
+                    <h3>{data.hotel_name} in {data.city}</h3>
+                    <small className="text-center">This reservation {data.cancelled ? 'is cancelled' : 'is active'}</small><br/><br/>
+                    <div className="text-center">
+                    <b>Starts On: </b>{moment(data.start_date).format('DD MMM YYYY')}<br/>
+                    <b>Ends On: </b>{moment(data.end_date).format('DD MMM YYYY')}<br/>
+                    <div style={{ marginBottom: '-54px' }}></div>
+                    <b>Number of Guests: </b><Input style={{ marginTop: 0 }} value={this.state.number_of_guests} className='guestPicker' onChange={this.handleChange} name="number_of_guests" type="select" id="exampleSelect">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </Input><br/>
+                    <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
+                    <hr/>
+                    <label style={{ marginTop: 0 }}><b>Special Accomodations</b></label>
+                    <Input type="textarea" placeholder={data.special_accomodations} value={this.state.special_accomodations} name="special_accomodations" onChange={this.handleChange}></Input>
+                    <hr/>
+                    <b>Rewards Points Earned: </b>{data.rewardsPoints}<br/>
+                    <b>Subtotal: </b>${data.subtotal}<br/>
+                    <b>Tax: </b>${data.tax}<br/>
+                    <b>Total: </b>${data.total}<br/>
+                    </div>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="danger" onClick={() => this.setState({ isEditing: false })}>Cancel Edit</Button>
+                    <Button color="info" onClick={this.handleEditSubmit}>Submit</Button>
+                </ModalFooter>
+            </div>
+        );
+    }
+
+    handleEditSubmit = () => {
+        let { special_accomodations, number_of_guests, selectedReservation } = this.state;
+        axios.post('http://localhost:3001/reservations/edit', {
+            special_accomodations,
+            number_of_guests,
+            _id: selectedReservation._id
+        })
+            .then(() => {
+                alert('Successfully edited reservation data!');
+                window.location.reload();
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     renderModal = () => {
         let data = { ...this.state.selectedReservation };
 
         return (
             <Modal size="large" isOpen={this.state.modal} toggle={this.toggleModal}>
-                <ModalHeader toggle={this.toggleModal}>{ this.state.isCancelling ? 'Reservation Cancellation': 'Reservation Details' }</ModalHeader>
-                { this.state.isCancelling ? 
-                    this.renderCancellationBody(data)
-                : 
-                <div>
-                    <ModalBody>
-                        <h3>{data.hotel_name} in {data.city}</h3>
-                        <small className="text-center">This reservation {data.cancelled ? 'is cancelled' : 'is active'}</small><br/><br/>
-                        <div className="text-center">
-                        <b>Starts On: </b>{moment(data.start_date).format('DD MMM YYYY')}<br/>
-                        <b>Ends On: </b>{moment(data.end_date).format('DD MMM YYYY')}<br/>
-                        <b>Number of Guests: </b>{data.number_of_guests}<br/>
-                        <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
-                        <hr/>
-                        <b>Rewards Points Earned: </b>{data.rewardsPoints}<br/>
-                        <b>Subtotal: </b>${data.subtotal}<br/>
-                        <b>Tax: </b>${data.tax}<br/>
-                        <b>Total: </b>${data.total}<br/>
-                        </div>
-                    </ModalBody>
-                    { data.cancelled  ? 
-                        <div style={{ marginTop: '2em' }}></div> :
-                        <ModalFooter>
-                                <div>
-                                    <Button color="info">Edit Reservation</Button>
-                                    <Button color="danger" onClick={() => this.setState({ isCancelling: true })}>Cancel Reservation</Button>
-                                </div>
-                        </ModalFooter>
-                    }
-                </div>
+                <ModalHeader toggle={this.toggleModal}>
+                    { this.state.isCancelling ? 'Reservation Cancellation': null }
+                    { this.state.isEditing ? 'Reservation Edit': null }
+                    { !this.state.isEditing && !this.state.isCancelling ? 'Reservation Details': null }
+                </ModalHeader>{ 
+                    this.state.isCancelling ? 
+                        this.renderCancellationBody(data) : null
+                } {
+                    this.state.isEditing ? 
+                        this.renderEditingBody(data) : null
+                } {
+                    !this.state.isEditing && !this.state.isCancelling ?
+                        this.renderModalData(data) : null
                 }
             </Modal>
         );

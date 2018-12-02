@@ -11,13 +11,13 @@ const validateEmail = function(email) {
 };
 
 const ReservationSchema = new mongoose.Schema({
+    _id: mongoose.SchemaTypes.ObjectId,
     user: {
         id: mongoose.SchemaTypes.ObjectId,
         email: {
             type: String,
             trim: true,
             lowercase: true,
-            required: true,
             validate: [validateEmail, 'Please fill a valid email address'],
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
         },
@@ -95,7 +95,7 @@ module.exports.getAllReservationsByOneUser = function(user_id, callback) {
                     hotel_name: name,
                     city: address.city
                 }
-                console.log('data', data);
+                
                 hotels.push(data);
                 if (hotels.length === reservations.length) {
                     return callback(null, hotels);

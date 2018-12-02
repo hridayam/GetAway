@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import { Container } from 'mdbreact';
-import moment from 'moment';
-import {CardElement, CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
+import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
-import {Button} from 'mdbreact'
-import {Form, FormGroup, Col, Row, Input, Label, Card, CardTitle} from 'reactstrap';
+import { Button } from 'mdbreact'
+import { Form, FormGroup, Col, Row, Input, Label } from 'reactstrap';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import { Card, CardBody, CardTitle, MDBInput  } from 'mdbreact';
 import classnames from 'classnames';
-
 
 import '../css/Home.css';
 import {connect} from 'react-redux';
@@ -23,14 +21,15 @@ class Payment extends Component{
             rooms: null,
             city: '',
             startDate: {}, endDate: {},
-            numGuests: 0,
+            numGuests: 1,
             card: null,
             name: '',
             address: '', userCity: '', state: '', zip: '',
             cardholderName: '',
             subtotal: 0, total: 0, tax: 0, rewardsPoints: 0,
             activeTab: '1',
-            usingRewards: true
+            usingRewards: true,
+            special_accomodations: ''
         };
     }
 
@@ -79,7 +78,8 @@ class Payment extends Component{
             address, userCity, state, zip,
             cardholderName,
             subtotal, total, tax, rewardsPoints,
-            usingRewards
+            usingRewards,
+            special_accomodations
         } = this.state;
 
         if (!usingRewards) {
@@ -112,7 +112,8 @@ class Payment extends Component{
                         charge: res.data.charge,
                         usingRewards,
                         city: hotel.address.city,
-                        hotel_name: hotel.name
+                        hotel_name: hotel.name,
+                        special_accomodations
                     })
                         .then(() => {
                             this.props.jumpToStep(3);
@@ -139,7 +140,8 @@ class Payment extends Component{
                 subtotal, total, tax,
                 charge: {},
                 usingRewards,
-                city, hotel_name: hotel.name
+                city, hotel_name: hotel.name,
+                special_accomodations
             })
                 .then(() => {
                     this.props.jumpToStep(3);
@@ -148,7 +150,6 @@ class Payment extends Component{
                     console.log(err);
                 });
         }
-
 
         this.setState({complete: true});
     }
@@ -214,7 +215,7 @@ class Payment extends Component{
                             <Col s="9">
                                 <b style={{fontSize:20}}>{this.state.hotel.name}</b>
                                 <br/>
-                                <small>{this.state.hotel.city}, {this.state.hotel.state}</small>
+                                <small>{this.state.hotel.address.city}</small>
                                 <br/><br/>
                                 Subtotal: ${this.state.subtotal}
                                 <br/>
@@ -230,21 +231,20 @@ class Payment extends Component{
                     <Card body outline color="info" style={styles.panel}>
                         <CardTitle>BILLING ADDRESS</CardTitle>
                         <Row>
-                            <Col >
+                            <Col sm="12">
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                                    <Label for="exampleDate">Full Name:  </Label>
+                                    <Label for="exampleDate">Full Name </Label>
                                     <Input name="name" value={this.state.name} onChange={this.handleChange} placeholder="Jane Fonda" />
-
-
                                 </FormGroup>
-                            </Col> */}
+                            </Col>
+                            <Col sm="12">
+                                <FormGroup>
+                                    <Label for="exampleAddress">Address</Label>
+                                    <Input onChange={this.handleChange} value={this.state.address} type="text" name="address" id="exampleAddress" placeholder="1234 Main St"/>
+                                </FormGroup>
+                            </Col>
                         </Row>
-                        <FormGroup>
-                            <Label for="exampleAddress">Address</Label>
-                            <Input onChange={this.handleChange} value={this.state.address} type="text" name="address" id="exampleAddress" placeholder="1234 Main St"/>
-                        </FormGroup>
-
-                        <Row form>
+                        <Row>
                             <Col md={6}>
                                 <FormGroup>
                                 <Label for="exampleCity">City</Label>
@@ -259,31 +259,34 @@ class Payment extends Component{
                             </Col>
                             <Col md={2}>
                                 <FormGroup>
-                                <Label for="exampleZip">Zip</Label>
+                                <Label for="exampleZip">Zip Code</Label>
                                 <Input onChange={this.handleChange} value={this.state.zip} type="text" name="zip" placeholder="12345" id="exampleZip"/>
                                 </FormGroup>
                             </Col>
                         </Row>
                     </Card >
 
+                    <Card body outline color="info" style={styles.panel}>
+                        <CardTitle>SPECIAL ACCOMMODATIONS</CardTitle>
+                        <CardBody>
+                            <Input type="textarea" onChange={this.handleChange} value={this.state.special_accomodations} name="special_accomodations" placeholder="If you need any special accommodations in place that the hotel could provide for you, let them know here."/>
+                        </CardBody>
+                    </Card>
+
                     <Card body outline color="info" style={styles.panel} >
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
-
                                     className={classnames({ active: this.state.activeTab === '1' })}
                                     onClick={() => { this.toggle('1'); this.setState({ usingRewards: true })}}
-
                                 >
                                     Rewards Points Checkout
                                 </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink
-
                                     className={classnames({ active: this.state.activeTab === '2' })}
                                     onClick={() => { this.toggle('2'); this.setState({ usingRewards: false })}}
-
                                 >
                                     Card Checkout
                                 </NavLink>

@@ -11,7 +11,6 @@ import moment from 'moment';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {
     geocodeByAddress,
-
     getLatLng,
   } from 'react-places-autocomplete';
 
@@ -117,7 +116,7 @@ class SearchForm extends Component {
                                             />
                                             <div className="autocomplete-dropdown-container">
                                                 {loading && <div>Loading...</div>}
-                                                {Array.prototype.slice.call(suggestions,0,1).map(suggestion => {
+                                                {Array.prototype.slice.call(suggestions).map(suggestion => {
                                                     const className = suggestion.active
                                                         ? 'suggestion-item--active'
                                                         : 'suggestion-item';
@@ -142,7 +141,6 @@ class SearchForm extends Component {
                                 </PlacesAutocomplete>
                             </Col>
                         </Row>
-
                         <Row className="search-date">
                             <Col sm="12">
                                 <DateRangePicker
