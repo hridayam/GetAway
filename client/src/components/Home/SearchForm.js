@@ -11,7 +11,6 @@ import moment from 'moment';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import {
     geocodeByAddress,
-    geocodeByPlaceId,
     getLatLng,
   } from 'react-places-autocomplete';
 
@@ -34,7 +33,7 @@ class SearchForm extends Component {
    handleChange = event => {
         let { name, value } = event.target;
         this.setState({ [name]: value });
-   } 
+   }
 
    handleChangeAuto = city => {
     this.setState({ city });
@@ -46,7 +45,7 @@ class SearchForm extends Component {
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error));
    };
-    
+
    onSubmit = event => {
         event.preventDefault();
         let { city, numGuests } = this.state;
@@ -54,6 +53,7 @@ class SearchForm extends Component {
         let citySplit = city.split(',');
 
         // take only the first slice before comma, only submit city name
+
         if (citySplit.length > 1 && citySplit.length < 4){
             city = citySplit[0];
         } else if (citySplit.length > 3){
@@ -61,7 +61,7 @@ class SearchForm extends Component {
         }
 
         this.props.search(
-            city, 
+            city,
             numGuests,
             this.state.startDate,
             this.state.endDate);
@@ -105,8 +105,9 @@ class SearchForm extends Component {
                                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                         <div>
                                             <input
+
                                                 required
-                                                {...getInputProps({
+                                                 {...getInputProps({
                                                 placeholder: 'Search Places ...',
                                                 className: 'location-search-input',
                                                 })}
@@ -115,7 +116,7 @@ class SearchForm extends Component {
                                             />
                                             <div className="autocomplete-dropdown-container">
                                                 {loading && <div>Loading...</div>}
-                                                {Array.prototype.slice.call(suggestions,0,1).map(suggestion => {
+                                                {Array.prototype.slice.call(suggestions).map(suggestion => {
                                                     const className = suggestion.active
                                                         ? 'suggestion-item--active'
                                                         : 'suggestion-item';
@@ -140,7 +141,6 @@ class SearchForm extends Component {
                                 </PlacesAutocomplete>
                             </Col>
                         </Row>
-                        
                         <Row className="search-date">
                             <Col sm="12">
                                 <DateRangePicker
@@ -153,12 +153,15 @@ class SearchForm extends Component {
                                     required={true}
                                     startDatePlaceholderText= "Check In"
                                     endDatePlaceholderText= "Check Out"
+
                                     startDateId="startDateId"
                                     endDateId="endDateId"
+
                                 />
                             </Col>
                         </Row>
                         <Row>
+
                             <Col className="offset-sm-2" sm="4" style={{ marginTop: '-20px'}}>
                                 <Row>
                                     <Col sm="6" className="offset-sm-1">
@@ -184,10 +187,11 @@ class SearchForm extends Component {
                             </Col>
                             <Col sm="4" className="offset-sm-1 text-right">
                                 <Button type="submit" className="search-button">Search</Button>
+
                             </Col>
                         </Row>
                     </form>
-                    
+
                 </Container>
         );
     }

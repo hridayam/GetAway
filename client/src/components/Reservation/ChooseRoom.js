@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import {
-    Container, DropdownMenu, 
-    DropdownItem, Dropdown, DropdownToggle, 
+    Container, DropdownMenu,
+    DropdownItem, Dropdown, DropdownToggle,
     FormGroup, Label, Input
 } from 'reactstrap';
 import {Button} from 'mdbreact'
 
-import {Carousel} from 'react-responsive-carousel';
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+
+
 import './selectHotel.css'
-import Scroll from '../ScrollUp';
+
 import {connect} from 'react-redux';
 import {selectRooms} from '../../actions';
 
@@ -72,7 +72,7 @@ class ChooseRoom extends Component{
                         <h3 className="reservation-price">${hotel.price[k]} per night</h3>
                         <FormGroup>
                             <Label for="exampleSelect">How many rooms do you need?</Label>
-                            <Input 
+                            <Input
                                 onChange={e => this.setState({ selectedRooms: {[k]: e.target.value }})}
                                 type="select"
                                 name="select">
@@ -87,10 +87,10 @@ class ChooseRoom extends Component{
                                 <option>9</option>
                             </Input>
                         </FormGroup>
-                        <Button 
-                            style={cssStyles.buttonRoom}  
-                            size="lg" 
-                            onClick={() => { 
+                        <Button
+                            style={cssStyles.buttonRoom}
+                            size="lg"
+                            onClick={() => {
                                 if (Object.keys(this.state.selectedRooms).length)
                                     this.props.selectRooms(hotel, this.state.selectedRooms);
                                 else

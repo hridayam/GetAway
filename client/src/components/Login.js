@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col,
-   Popover, PopoverBody, PopoverHeader, Table} from 'mdbreact';
+import { Button, Modal, ModalHeader, ModalBody, Container, Row, Col,
+  } from 'mdbreact';
 import { NavLink } from 'reactstrap';
 import axios from 'axios';
 import FileBase64 from 'react-file-base64';
@@ -44,7 +44,6 @@ class Login extends Component {
       profilePic: '',
       file: ''
     };
-
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -106,7 +105,7 @@ class Login extends Component {
     });
 
   }
-  
+
   toggleLogged(nr) {
     let modalNumber = 'modal' + nr
     this.setState({
@@ -118,13 +117,13 @@ class Login extends Component {
     var stripped = ('' + str).replace(/\D/g, '');
     var match = stripped.match(/^(\d{3})(\d{3})(\d{4})$/);
 
-    if (match) 
+    if (match)
       return '(' + match[1] + ') ' + match[2] + '-' + match[3];
     return '';
   }
 
   renderProfileInfo() {
-    return this.state.isEditing ? 
+    return this.state.isEditing ?
       <div className="container">
           <div className="form-control">
             <b>Upload New Image</b><br/><FileBase64 onDone={file => this.setState({ file: file.base64 })}/><br/><br/>
@@ -151,20 +150,20 @@ class Login extends Component {
         newAddress: this.state.profileAddress,
         file: this.state.file
     })
-      .then(res => { 
+      .then(res => {
         if (res.data.success) {
           localStorage.setItem('data', JSON.stringify(res.data.user));
           this.props.userLoggedIn({token: this.props.token, user: res.data.user});
 
           let { phoneNumber, address } = res.data.user;
-          this.setState({ 
+          this.setState({
             isEditing: false,
             profilePhoneNumber: phoneNumber,
             profileAddress: address
           });
         }
       })
-      .catch(err => { 
+      .catch(err => {
         alert(err);
       });
   }
@@ -178,7 +177,7 @@ class Login extends Component {
               <ModalHeader className="profileHeader" toggle={() => this.toggleLogged(8)}>
                 <div>Profile overview</div>
               </ModalHeader>
-              <ModalBody>         
+              <ModalBody>
                   <img alt="" src={this.state.user.profilePic} style={styles.imageStyles}/>
                 <Row>
                   {this.renderProfileInfo()}
@@ -192,7 +191,9 @@ class Login extends Component {
                   {/* <Col>
                     <Button color="btn btn-deep-orange logout" onClick={() => this.toggleLogged(8)}>Close</Button>
                   </Col> */}
+
                   <Col sm="12">
+
                     <Button color="btn btn-deep-orange logout" onClick={this.userLogout.bind(this)}>Logout</Button>
                   </Col>
                 </Row>
@@ -205,10 +206,11 @@ class Login extends Component {
       return (
         <div >
           <Container>
-            <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle.bind(this)}>Log In</NavLink> 
+            <NavLink style={{ cursor: 'pointer' }} onClick={this.toggle.bind(this)}>Log In</NavLink>
             <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)}>
               <ModalHeader toggle={this.toggle.bind(this)}>Welcome Back!</ModalHeader>
               <ModalBody>
+                {this.state.error? <div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i> Either username or password is incorrect</div>: <p></p>}
                 <Row className="mt-6">
                   <Col>
                     <form className='needs-validation' onSubmit={this.submitHandler}>
@@ -230,7 +232,6 @@ class Login extends Component {
                         <GoogleButton />
                       </a>
                     </Row>
-                    {this.state.error? <div style={{color: 'red'}}>Either username or password is incorrect</div>: <p></p>}
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
                       <button className="btn btn-deep-orange logout" onClick={this.toggle.bind(this)}>Cancel</button>
                     </form>
@@ -252,6 +253,7 @@ const mapStateToProps = state => {
             token: state.auth.token
         };
     }
+    return {};
 }
 
 const styles ={

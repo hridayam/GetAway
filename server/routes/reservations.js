@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const moment = require('moment');
+const mongoose = require('mongoose');
 const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey('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');
@@ -13,10 +14,12 @@ const User = require('../models/users');
 // gets all the reservations made by user
 // front end makes request with user id
 // back end sends back array of reservations
+
 router.post('/all', async (req,res) => {
     let { email }   = req.body;
 
     Reservation.getAllReservationsByOneUser(email, (err, data) => {
+
         if(err) {
             return res.status(422).json({
                 success: false,
@@ -33,7 +36,6 @@ router.post('/all', async (req,res) => {
 
     });
 });
-
 
 //get one reservation based on ID
 router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
@@ -78,7 +80,7 @@ router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), a
 // update a reservation made by the user
 // front end makes a request with the user id in the parameter and put reservation object inside the request
 // backend responds with 200 for successful update or 400 for unsuccessful update
-router.post('/update', async (req,res) => {
+router.post('/edit', async (req,res) => {
     try {
         let { 
             _id,
@@ -86,11 +88,12 @@ router.post('/update', async (req,res) => {
             number_of_guests
         } = req.body;
 
-        await Reservation.findOneAndUpdate({ _id }, { $set: { special_accomodations, number_of_guests }});
+        let reservation = await Reservation.findOneAndUpdate({ _id }, { $set: { special_accomodations, number_of_guests }});
 
         return res.status(200).json({
             success: true,
-            msg: 'Successfully updated the reservation'
+            msg: 'Successfully updated the reservation',
+            reservation
         });
     }
     catch(err) {
@@ -146,9 +149,9 @@ router.post('/create', async (req,res) => {
         hotel_id, time_created, start_date, end_date,
         charge, room_number, number_of_guests,
         user, total, subtotal, tax, rewardsPoints,
-        usingRewards, city, hotel_name
+        usingRewards, city, hotel_name, special_accomodations
     } = req.body;
-        
+       
     let reservation = new Reservation(data);
     Reservation.createReservation(reservation, (err, reservation) => {
         if(err) {

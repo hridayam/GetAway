@@ -27,7 +27,7 @@ const loginUser = (data, dispatch, cb) => {
         .catch(err => {
             console.log(err.response);
             cb(err);
-        })
+        });
 };
 
 export const logout =() => {
@@ -40,14 +40,17 @@ export const logout =() => {
     }
 }
 
-export const register = data => {
+export const register = (data, cb) => {
     return dispatch => {
-        axios.post('/users/register', data)
-        .then(res => {
-            loginUser({ email: data.email, password: data.password }, dispatch);
-        })
-        .catch(err => {
-            console.log(err);
-        });
+        axios.post('http://localhost:3001/users/register', data)
+            .then(res => {
+                console.log(res);
+                loginUser({ email: data.email, password: data.password }, dispatch);
+                cb();
+            })
+            .catch(err => {
+                console.log(err);
+                cb(err);
+            });
     }
 }

@@ -34,14 +34,16 @@ router.post('/register', function(req, res) {
     const address = req.body.address;
     const phoneNumber = req.body.phoneNumber;
 
+    console.log(req.body)
+
     // Validation
-    req.checkBody('name', 'First Name is Required').notEmpty();
-    req.checkBody('email', 'email is Required').notEmpty();
+    req.checkBody('name', 'first name is required').notEmpty();
+    req.checkBody('email', 'email is required').notEmpty();
     req.checkBody('email', 'email is not valid').isEmail();
-    req.checkBody('password', 'password is Required').notEmpty();
+    req.checkBody('password', 'password is required').notEmpty();
     req.checkBody('confirmPassword', 'passwords do not match').equals(req.body.password);
-    req.checkBody('address', 'address is Required').notEmpty();
-    req.checkBody('phoneNumber', 'phone number is Required').notEmpty();
+    req.checkBody('address', 'address is required').notEmpty();
+    req.checkBody('phoneNumber', 'phone number is required').notEmpty();
 
     const errors = req.validationErrors();
     if(errors) {
@@ -59,9 +61,9 @@ router.post('/register', function(req, res) {
         User.createUser(newUser, function(err, user){
             if(err) {
                 res.status(500).json({success: false, msg: 'Failed to register User', errors: err});
-                console.log(err)
+                console.log(err);
             } else {
-                res.status(200).json({success: true, msg: 'User Registered'});
+                res.status(200).json({success: true, msg: 'User Registered', user});
             }
         });
     }

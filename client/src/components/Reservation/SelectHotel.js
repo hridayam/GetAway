@@ -3,14 +3,11 @@ import {
         Container, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
 import {Button} from 'mdbreact'
-
 import { Carousel } from 'react-responsive-carousel';
 import Loader from 'react-loader-spinner';
+import Weather from '../Weather';
 
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
-import './selectHotel.css'
-import Scroll from '../ScrollUp';
-import Spinner from 'react-loader-spinner';
+import './selectHotel.css';
 
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
@@ -38,18 +35,17 @@ class SelectHotel extends Component{
             laundry: false,
             free_parking: false
         };
-        this.toggleDropdown = this. toggleDropdown.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
     }
 
     setSort(e) {
         this.setState({sortOption: e});
     }
 
-
     static getDerivedStateFromProps(props, state){
         if(props.reservation !== state.reservation){
             let { city, startDate, endDate, numGuests, hotels, isLoading } = props.reservation;
-            return{
+            return {
                 ...state,
                 reservation: props.reservation,
                 hotels,
@@ -77,10 +73,11 @@ class SelectHotel extends Component{
                     <div className="row ">
                         <div className="col-md-4">
                             { hotel.images && hotel.images.length ?
-                            <Carousel autoPlay infiniteLoop>
+                            <Carousel dynamicHeight={true}
+                            autoPlay infiniteLoop>
                                 {hotel.images.map((v,i) =>
                                     <div key={i}>
-                                        <img src={v} alt="" className="w-100"/>
+                                        <img src={v} alt="" className="w-100" />
                                     </div>
                                 )}
                             </Carousel> : <div className="align-middle" style={{height:'100%', width:'100%'}}><br/><br/><br/>No Images Available</div> }
@@ -104,7 +101,7 @@ class SelectHotel extends Component{
                             </div>
                         </div>
                         <div className="col-md-3 price">
-                            Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
+                            Starting from<h3 className="reservation-price">${hotel.price.twin} per night</h3>
                             <Button
                                 style={cssStyles.buttonRoom}
                                 onClick={() => {
@@ -131,12 +128,11 @@ class SelectHotel extends Component{
     }
 
     render() {
-        console.log(this.state.hotels)
         if (this.state.sortOption === "low") {
-            this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
+            this.state.hotels.sort((a,b) => ((a.price.twin) - (b.price.twin)));
         }
         else if (this.state.sortOption === "high"){
-            this.state.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
+            this.state.hotels.sort((a,b) => ((b.price.twin) - (a.price.twin)));
         }
         else if(this.state.sortOption === 'rating'){
             this.state.hotels.sort((a,b) => ((b.stars - a.stars)))
@@ -195,7 +191,9 @@ class SelectHotel extends Component{
                    </DropdownMenu>
                    </Dropdown>
                </div>
-                    { this.renderHotels()}
+               <br/><br/>
+                <Weather city={this.state.city}/>
+                { this.renderHotels() }
                 <br></br>
                 </Container>
             </div>

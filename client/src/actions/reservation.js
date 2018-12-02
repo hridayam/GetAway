@@ -1,8 +1,6 @@
 import axios from 'axios';
-import moment from 'moment';
-
-import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL, 
-    SELECT_ROOMS, ALL_RESERVATIONS, URL, START_LOADING, END_LOADING
+import { SEARCH_HOTELS, CHOOSE_ROOM, SELECT_HOTEL,
+    SELECT_ROOMS, ALL_RESERVATIONS, START_LOADING, END_LOADING, EDIT_RESERVATION
 } from './types';
 
 export const search = (city, numGuests, startDateMoment, endDateMoment) => {
@@ -17,13 +15,7 @@ export const search = (city, numGuests, startDateMoment, endDateMoment) => {
         axios.post('http://localhost:3001/hotels/search', { city, numGuests })
             .then(res => {
                 dispatch({
-                    type: END_LOADING,
-                    payload: {
-                        isLoading: false
-                    }
-                });
-                dispatch({ 
-                    type: SEARCH_HOTELS , 
+                    type: SEARCH_HOTELS ,
                     payload: {
                         city,
                         numGuests,
@@ -31,6 +23,12 @@ export const search = (city, numGuests, startDateMoment, endDateMoment) => {
                         startDateMoment,
                         endDateMoment
                 }});
+                dispatch({
+                    type: END_LOADING,
+                    payload: {
+                        isLoading: false
+                    }
+                });
             })
             .catch(err => {
                 console.log(err.response);
@@ -67,13 +65,29 @@ export const selectHotel = hotel => {
     };
 }
 
+
 export const getAllReservations = email => {
     return dispatch => {
         axios.post(`http://localhost:3001/reservations/all`, { email })
             .then(res => {
                 dispatch({
-                    type: ALL_RESERVATIONS, 
+                    type: ALL_RESERVATIONS,
                     payload: res.data.reservations
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
+
+export const editReservation = data => {
+    return dispatch => {
+        axios.post('http://localhost:3001/reservations/edit', data)
+            .then(res => {
+                dispatch({
+                    type: EDIT_RESERVATION,
+                    payload: res.data.reservation
                 });
             })
             .catch(err => {

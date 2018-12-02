@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Table } from 'reactstrap';
+import { Table, Input } from 'reactstrap';
 import { 
             View, CardImage, CardText, CardBody, Card, Fa, CardTitle, 
             Modal, ModalHeader, ModalFooter, ModalBody } from 'mdbreact';
 import { Container, Row, Col, } from 'reactstrap';
-import {TabContent, TabPane, Nav, div, a, Button} from 'reactstrap';
+import {TabContent, TabPane, div, a, Button} from 'reactstrap';
 import Scroll from '../ScrollUp';
 import moment from 'moment';
 import { Animated } from 'react-animated-css';
 import axios from 'axios';
+
 
 import {connect} from 'react-redux';
 import { getAllReservations } from '../../actions';
@@ -25,19 +26,24 @@ class MyReservation extends Component{
             activeTab: '1',
             active: 1,
             oldActive: 1,
+
             reservations: [],
             tabStyles: [ styles.activeTabStyle, styles.inactiveTabStyle ],
             user: {},
             modal: false,
             selectedReservation: {},
             isCancelling: false,
-            cancelledData: null
+            cancelledData: null,
+            isEditing: false,
+            number_of_guests: 1,
+            special_accomodations: ''
         };
     }
 
     componentDidMount() {
         this.props.getAllReservations(this.state.user.email);
     }
+
 
     toggle(tab) {
         if (this.state.activeTab !== tab) {
@@ -66,19 +72,22 @@ class MyReservation extends Component{
                 </thead>
                 <tbody>
                     { this.state.reservations.map((v,i) => 
+
                         <tr key={v._id}>
                             <td>{v._id}</td>
                             <td>{moment(v.time_created).format("DD MMM YYYY HH:MM")}</td>
+
                             <td>$ {v.total}</td>
                             <td>{v.rewardsPoints}</td>
                         </tr>
                     )}
-                    
+
                 </tbody>
             </Table>
-        : 
+        :
             <div style={{ margin: '10% 0 10% 0'}}>
                 <h5>No Rewards Awarded Yet!</h5>
+
                 <p>Go book a reservation!</p>
             </div>
 
@@ -97,12 +106,14 @@ class MyReservation extends Component{
                 </thead>
                 <tbody>{
                     this.state.reservations.map((v,i) => 
+
                         <tr key={v._id}>
                             <td style={{ paddingTop: 25 }}>{v._id}</td>
                             <td style={{ paddingTop: 25 }}>{moment(v.start_date).format("DD MMM YYYY")} - {moment(v.end_date).format("DD MMM YYYY")}</td>
                             <td style={{ paddingTop: 25 }}>{v.city && v.city.length ? v.city : 'N/A'}</td>
                             <td style={{ paddingTop: 25 }}>{v.hotel_name && v.hotel_name.length ? v.hotel_name : 'N/A'}</td>
                             <td style={{ paddingTop: 25 }}>{v.cancelled ?  'Cancelled' : 'Active' }</td>
+
                             <td>
                                 <Button 
                                     onClick={() => {
@@ -115,16 +126,19 @@ class MyReservation extends Component{
                                         <Fa icon="eye"></Fa>
                                 </Button>
                             </td>
+
                         </tr>
                     )}
                 </tbody>
-            </Table> 
-            : 
+            </Table>
+            :
                 <div style={{ margin: '10% 0 10% 0'}}>
                     <h5>No Reservations Yet!</h5>
+
                     <p>Go book a reservation!</p>
+
                 </div>
-    
+
 
     static getDerivedStateFromProps(props, state) {
         if (state.user !== props.user || state.reservations !== props.reservations){
@@ -136,12 +150,14 @@ class MyReservation extends Component{
         return null;
     }
 
+
     toggleModal = () => {
         this.state.modal ?
             this.setState({
                 modal: !this.state.modal,
                 isCancelling: false,
-                cancelled: false
+                cancelled: false,
+                isEditing: false
             }) :
             this.setState({
                 modal: !this.state.modal
@@ -225,41 +241,120 @@ class MyReservation extends Component{
         )
     }
 
+    renderModalData = data => 
+        <div>
+            {console.log(data)}
+            <ModalBody>
+                <h3>{data.hotel_name} in {data.city}</h3>
+                <small className="text-center">This reservation {data.cancelled ? 'is cancelled' : 'is active'}</small><br/><br/>
+                <div className="text-center">
+                <b>Starts On: </b>{moment(data.start_date).format('DD MMM YYYY')}<br/>
+                <b>Ends On: </b>{moment(data.end_date).format('DD MMM YYYY')}<br/>
+                <b>Number of Guests: </b>{data.number_of_guests}<br/>
+                <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
+                <hr/>
+                <b>Special Accomodations</b>
+                <p>{data.special_accomodations}</p>
+                <hr/>
+                <b>Rewards Points Earned: </b>{data.rewardsPoints}<br/>
+                <b>Subtotal: </b>${data.subtotal}<br/>
+                <b>Tax: </b>${data.tax}<br/>
+                <b>Total: </b>${data.total}<br/>
+                </div>
+            </ModalBody>
+            { data.cancelled  ? 
+                <div style={{ marginTop: '2em' }}></div> :
+                <ModalFooter>
+                        <div>
+                            <Button color="info" onClick={() => this.setState({ isEditing: true, editData: data })}>Edit Reservation</Button>
+                            <Button color="danger" onClick={() => this.setState({ isCancelling: true })}>Cancel Reservation</Button>
+                        </div>
+                </ModalFooter>
+            }
+        </div>
+    
+    handleChange = event => {
+        let { name, value } = event.target;
+        this.setState({ [name]: value });
+    }
+    
+    renderEditingBody = () => {
+        let data = { ...this.state.editData };
+
+        return (
+            <div>
+                <ModalBody>
+                    <h3>{data.hotel_name} in {data.city}</h3>
+                    <small className="text-center">This reservation {data.cancelled ? 'is cancelled' : 'is active'}</small><br/><br/>
+                    <div className="text-center">
+                    <b>Starts On: </b>{moment(data.start_date).format('DD MMM YYYY')}<br/>
+                    <b>Ends On: </b>{moment(data.end_date).format('DD MMM YYYY')}<br/>
+                    <div style={{ marginBottom: '-54px' }}></div>
+                    <b>Number of Guests: </b><Input style={{ marginTop: 0 }} value={this.state.number_of_guests} className='guestPicker' onChange={this.handleChange} name="number_of_guests" type="select" id="exampleSelect">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </Input><br/>
+                    <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
+                    <hr/>
+                    <label style={{ marginTop: 0 }}><b>Special Accomodations</b></label>
+                    <Input type="textarea" placeholder={data.special_accomodations} value={this.state.special_accomodations} name="special_accomodations" onChange={this.handleChange}></Input>
+                    <hr/>
+                    <b>Rewards Points Earned: </b>{data.rewardsPoints}<br/>
+                    <b>Subtotal: </b>${data.subtotal}<br/>
+                    <b>Tax: </b>${data.tax}<br/>
+                    <b>Total: </b>${data.total}<br/>
+                    </div>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="danger" onClick={() => this.setState({ isEditing: false })}>Cancel Edit</Button>
+                    <Button color="info" onClick={this.handleEditSubmit}>Submit</Button>
+                </ModalFooter>
+            </div>
+        );
+    }
+
+    handleEditSubmit = () => {
+        let { special_accomodations, number_of_guests, selectedReservation } = this.state;
+        axios.post('http://localhost:3001/reservations/edit', {
+            special_accomodations,
+            number_of_guests,
+            _id: selectedReservation._id
+        })
+            .then(() => {
+                alert('Successfully edited reservation data!');
+                window.location.reload();
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     renderModal = () => {
         let data = { ...this.state.selectedReservation };
 
         return (
             <Modal size="large" isOpen={this.state.modal} toggle={this.toggleModal}>
-                <ModalHeader toggle={this.toggleModal}>{ this.state.isCancelling ? 'Reservation Cancellation': 'Reservation Details' }</ModalHeader>
-                { this.state.isCancelling ? 
-                    this.renderCancellationBody(data)
-                : 
-                <div>
-                    <ModalBody>
-                        <h3>{data.hotel_name} in {data.city}</h3>
-                        <small className="text-center">This reservation {data.cancelled ? 'is cancelled' : 'is active'}</small><br/><br/>
-                        <div className="text-center">
-                        <b>Starts On: </b>{moment(data.start_date).format('DD MMM YYYY')}<br/>
-                        <b>Ends On: </b>{moment(data.end_date).format('DD MMM YYYY')}<br/>
-                        <b>Number of Guests: </b>{data.number_of_guests}<br/>
-                        <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
-                        <hr/>
-                        <b>Rewards Points Earned: </b>{data.rewardsPoints}<br/>
-                        <b>Subtotal: </b>${data.subtotal}<br/>
-                        <b>Tax: </b>${data.tax}<br/>
-                        <b>Total: </b>${data.total}<br/>
-                        </div>
-                    </ModalBody>
-                    { data.cancelled  ? 
-                        <div style={{ marginTop: '2em' }}></div> :
-                        <ModalFooter>
-                                <div>
-                                    <Button color="info">Edit Reservation</Button>
-                                    <Button color="danger" onClick={() => this.setState({ isCancelling: true })}>Cancel Reservation</Button>
-                                </div>
-                        </ModalFooter>
-                    }
-                </div>
+                <ModalHeader toggle={this.toggleModal}>
+                    { this.state.isCancelling ? 'Reservation Cancellation': null }
+                    { this.state.isEditing ? 'Reservation Edit': null }
+                    { !this.state.isEditing && !this.state.isCancelling ? 'Reservation Details': null }
+                </ModalHeader>{ 
+                    this.state.isCancelling ? 
+                        this.renderCancellationBody(data) : null
+                } {
+                    this.state.isEditing ? 
+                        this.renderEditingBody(data) : null
+                } {
+                    !this.state.isEditing && !this.state.isCancelling ?
+                        this.renderModalData(data) : null
                 }
             </Modal>
         );
@@ -270,6 +365,7 @@ class MyReservation extends Component{
             <div className="background-image2">
                 <Scroll/>
                 {this.renderModal()}
+
                 <Animated animationIn="fadeInDown" animationOut="fadeOut" isVisible={true}>
                     <Container style={{ marginTop: '10em' }}>
                         <Row style = {styles.textBlock}>
@@ -286,16 +382,18 @@ class MyReservation extends Component{
                                         </a>
                                     </div>
                                 </div>
-                                
+
                                 <TabContent activeTab={this.state.activeTab}>
                                     <TabPane tabId="1">
                                         {this.renderAllReservations()}
                                     </TabPane>
                                     <TabPane tabId="2">
+
                                         <hr/>
                                         <h4>Your Rewards Points: {this.state.user.rewardsPoints} </h4>
                                         <hr/>
                                         {this.renderAllRewards()}
+
                                     </TabPane>
                                 </TabContent>
                             </Col>
@@ -370,8 +468,8 @@ const styles = {
         position: 'relative',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: '20px',
-        textAlign: 'center', 
-        marginTop: '20px', 
+        textAlign: 'center',
+        marginTop: '20px',
         color: 'white',
         minHeight: '50vh'
     },
