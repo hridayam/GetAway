@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const User = require('./users');
 const Hotel = require('./hotels');
@@ -44,24 +45,54 @@ const Reservation = module.exports = mongoose.model('Reservation', ReservationSc
 
 //TODO: protect it to only let users and hotels with valid user id sign up
 module.exports.createReservation = function (newReservation, callback) {
-    newReservation.save((err, reservation) => {
-        if (err) return callback(err);
+    Reservation.getAllReservationsByOneUser(newReservation.user.email, (err, reservations) => {
+        if (err) {
+            console.log(err);
+            return callback(err);
+        }
+        let booked = false;
+        reservations.forEach((reservation, index) => {
+            const { start_date, end_date } = reservation;
+            if(
+                moment(newReservation.start_date).isSame(start_date, 'day') ||
+                (moment(newReservation.start_date).isAfter(start_date, 'day') || 
+                moment(newReservation.start_date).isBefore(end_date, 'day')) ||
+                (moment(newReservation.end_date).isAfter(start_date, 'day') || 
+                moment(newReservation.end_date).isBefore(end_date, 'day')) || 
+                (moment(start_date).isAfter(newReservation.start_date, 'day') &&
+                moment(end_date).isBefore(newReservation.end_date, 'day'))
+            ) {
+                if(!reservation.cancelled) {
+                    booked = true;
+                }
+            }
 
-        // if user is registered, add points
-        User.getUserByEmail(reservation.user.email, (err, user) => {
-            if (err) return callback(null, reservation);
-            user.rewardsPoints += reservation.rewardsPoints;
-            user.save(() => {
-                return callback(null, reservation)
-            });
+            if(index === reservations.length - 1) {
+                console.log('booked:', booked)
+                if (booked) return callback(new Error('already booked for those days'))
+
+                newReservation.save((err, reservation) => {
+                    if (err) return callback(err);
+                    console.log('saving user');
+                    Hotel.getHotelById(reservation.hotel_id, (err, hotel) => {
+                        if (err) callback(err);
+                        reservation = {
+                            ...reservation._doc,
+                            hotel
+                        }
+                    })
+                    // if user is registered, add points
+                    User.getUserByEmail(reservation.user.email, (err, user) => {
+                        if (err) return callback(null, reservation);
+                        user.rewardsPoints += reservation.rewardsPoints;
+                        user.save(() => {
+                            return callback(null, reservation)
+                        });
+                    })
+                });
+            }
         })
-        //return callback(null, reservation);
-        // const { hotel_id, room_number, start_date, end_date } = reservation;
-        // Hotel.bookRoom({ id: hotel_id, room_number, start_date, end_date }, (err, res) => {
-        //     if (err) callback(err);
-        //     return callback(null, reservation);
-        // });
-    });
+    })
 }
 
 module.exports.getReservationById = function(id, callback) {
@@ -95,7 +126,6 @@ module.exports.getAllReservationsByOneUser = function(user_id, callback) {
                     hotel_name: name,
                     city: address.city
                 }
-                console.log('data', data);
                 hotels.push(data);
                 if (hotels.length === reservations.length) {
                     return callback(null, hotels);
