@@ -235,7 +235,7 @@ class Login extends Component {
                       </Col>
                     </Row>
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
-                      <button className="btn btn-deep-orange logout" onClick={this.toggle.bind(this)}>Cancel</button>
+                      <button className="btn btn-deep-orange logout" type='button' onClick={() => {this.setState({ modal: false })}}>Cancel</button>
                     </form>
                   </Col>
                 </Row>
