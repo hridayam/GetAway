@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {
         Container, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
-import {Button} from 'mdbreact'
+import { MDBBtn, Button } from 'mdbreact'
 import { Carousel } from 'react-responsive-carousel';
 import Loader from 'react-loader-spinner';
 import Weather from '../Weather';
 
 import './selectHotel.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
@@ -69,23 +70,27 @@ class SelectHotel extends Component{
             &&(!this.state.free_parking || (this.state.free_parking && hotel.amenities.free_parking))
             )
             .map((hotel, index) =>
-                <div key={hotel._id} className="card">
+                <div key={hotel._id} className="form-control" style={{ margin: '2em 0px 2em 0px', padding: '2em', height: '300px' }}>
                     <div className="row ">
                         <div className="col-md-4">
                             { hotel.images && hotel.images.length ?
-                            <Carousel dynamicHeight={true}
-                            autoPlay infiniteLoop>
+                            <Carousel dynamicHeight autoPlay infiniteLoop
+                                showArrows={true}
+                                showIndicators={false}
+                                showStatus={false}
+                                showThumbs={false}
+                            >
                                 {hotel.images.map((v,i) =>
-                                    <div key={i}>
+                                    <div key={v}>
                                         <img src={v} alt="" className="w-100" />
                                     </div>
                                 )}
                             </Carousel> : <div className="align-middle" style={{height:'100%', width:'100%'}}><br/><br/><br/>No Images Available</div> }
                         </div>
                         <div className="col-md-5 px-3">
-                            <div className="card-block px-3">
-                                <h3 className="card-title">{hotel.name}</h3>
-                                <p className="card-text">{hotel.stars === 5? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                            <div className=" px-3">
+                                <h3 className="">{hotel.name}</h3>
+                                <p className="">{hotel.stars === 5? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
                                 {hotel.stars === 4? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
                                 {hotel.stars ===3? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>  </div> : ""}
                                 {hotel.stars ===2? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
@@ -102,13 +107,12 @@ class SelectHotel extends Component{
                         </div>
                         <div className="col-md-3 price">
                             Starting from<h3 className="reservation-price">${hotel.price.twin} per night</h3>
-                            <Button
-                                style={cssStyles.buttonRoom}
+                            <MDBBtn
                                 onClick={() => {
                                     this.props.selectHotel(hotel);
                                     this.props.jumpToStep(1);
                                 }}
-                                >Choose Hotel</Button>
+                                >Choose Hotel</MDBBtn>
                         </div>
                     </div>
                 </div>
@@ -140,62 +144,62 @@ class SelectHotel extends Component{
 
         return(
             <div>
-            <div>
-             <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({wifi: !this.state.wifi})}>
-             <i className="fas fa-wifi"></i>  Free Wifi</Button>
-             <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({gym: !this.state.gym})}>
-             <i className="fas fa-dumbbell"></i>     Gym</Button>
-             <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({pool: !this.state.pool})}>
-             <i class="fas fa-swimmer"></i>     Pool</Button>
-             <Button style={this.state.complimentary_breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({complimentary_breakfast: !this.state.complimentary_breakfast})}>
-             <i class="fas fa-utensils"></i>      Breakfast Included</Button>
-             <Button style={this.state.laundry?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({laundry: !this.state.laundry})}>
-             <i class="fas fa-tshirt"></i>      Laundry</Button>
-             <Button style={this.state.coffee?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({coffee: !this.state.coffee})}>
-             <i class="fas fa-coffee"></i>     Coffee Maker</Button>
-             <Button style={this.state.free_parking?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({free_parking: !this.state.free_parking})} >
-             <i class="fas fa-car"></i>    Free Parking</Button>
-           </div>
+                <div>
+                    <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({wifi: !this.state.wifi})}>
+                    <i className="fas fa-wifi"></i>  Free Wifi</Button>
+                    <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({gym: !this.state.gym})}>
+                    <i className="fas fa-dumbbell"></i>     Gym</Button>
+                    <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({pool: !this.state.pool})}>
+                    <i class="fas fa-swimmer"></i>     Pool</Button>
+                    <Button style={this.state.complimentary_breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({complimentary_breakfast: !this.state.complimentary_breakfast})}>
+                    <i class="fas fa-utensils"></i>      Breakfast Included</Button>
+                    <Button style={this.state.laundry?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({laundry: !this.state.laundry})}>
+                    <i class="fas fa-tshirt"></i>      Laundry</Button>
+                    <Button style={this.state.coffee?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({coffee: !this.state.coffee})}>
+                    <i class="fas fa-coffee"></i>     Coffee Maker</Button>
+                    <Button style={this.state.free_parking?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({free_parking: !this.state.free_parking})} >
+                    <i class="fas fa-car"></i>    Free Parking</Button>
+                </div>
 
-           <Container>
-               <div style={{display: 'flex'}}>
-                   <Dropdown className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                   <DropdownToggle outline color = 'default'  caret>
-                       Sort By:
-                   </DropdownToggle>
+            <Container>
+                <div style={{display: 'flex'}}>
+                    <Dropdown className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                    <DropdownToggle outline color = 'default'  caret>
+                        Sort By:
+                    </DropdownToggle>
 
-                   <DropdownMenu>
-                       <DropdownItem onClick={()=>{this.setSort("low");}}>
-                       Price: Low to High
-                       </DropdownItem>
+                    <DropdownMenu>
+                        <DropdownItem onClick={()=>{this.setSort("low");}}>
+                        Price: Low to High
+                        </DropdownItem>
 
-                       <DropdownItem divider />
+                        <DropdownItem divider />
 
-                       <DropdownItem onClick={()=>{this.setSort("high");}}>
-                       Price: High to Low
-                       </DropdownItem>
+                        <DropdownItem onClick={()=>{this.setSort("high");}}>
+                        Price: High to Low
+                        </DropdownItem>
 
-                       <DropdownItem divider />
+                        <DropdownItem divider />
 
-                       <DropdownItem onClick={()=>{this.setSort("rating");}}>
-                       Highest Rating
-                       </DropdownItem>
+                        <DropdownItem onClick={()=>{this.setSort("rating");}}>
+                        Highest Rating
+                        </DropdownItem>
 
-                   </DropdownMenu>
-                   </Dropdown>
-               </div>
-               <br/><br/>
+                    </DropdownMenu>
+                    </Dropdown>
+                </div>
+                <br/><br/>
                 <Weather city={this.state.city}/>
                 { this.renderHotels() }
                 <br></br>
-                </Container>
+            </Container>
             </div>
         );
     }

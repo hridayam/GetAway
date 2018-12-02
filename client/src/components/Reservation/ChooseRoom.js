@@ -4,9 +4,7 @@ import {
     DropdownItem, Dropdown, DropdownToggle,
     FormGroup, Label, Input
 } from 'reactstrap';
-import {Button} from 'mdbreact'
-
-
+import { MDBBtn } from 'mdbreact'
 
 import './selectHotel.css'
 
@@ -55,84 +53,99 @@ class ChooseRoom extends Component{
         return Object.keys(hotel.room_images).map((k,i) => {
             let roomName = `${k.replace(/^\w/, c => c.toUpperCase())} Bed Room`;
             return (
-            <div key={i}className="card">
-                <div className="row ">
-                    <div className="col-md-4">
-                        <img key={i + '-' + hotel.room_images[k]} src={hotel.room_images[k]} alt="" className="w-100"/>
-                    </div>
-                    <div className="col-md-5 px-3">
-                        <div className="card-block px-3">
-                            <h3 className="card-title">{roomName}</h3>
-                            <div className="card-text">
-                                This {roomName} is cool!
+                <div key={hotel._id} className="" style={{ margin: '2em 0px 2em 0px', padding: '2em', maxHeight: '340px' }}>
+                    <div className="row ">
+                        <div className="col-md-4">
+                            <img key={i + '-' + hotel.room_images[k]} src={hotel.room_images[k]} alt="" className="w-100"/>
+                        </div>
+                        <div className="col-md-5 px-3">
+                            <div className="card-block px-3">
+                                <h3 className="card-title">{roomName}</h3>
+                                <div className="card-text">
+                                    { roomName === 'Queen Bed Room' 
+                                        ? 'This queen bedroom is a bit smaller than the king bedroom, but definitely bigger than the twin bedroom'
+                                        : null
+                                    } 
+                                    { roomName === 'King Bed Room' 
+                                        ? 'This king bedroom is the biggest room out of all the room types'
+                                        : null
+                                    }
+                                    { roomName === 'Twin Bed Room' 
+                                        ? 'This twin bedroom is a bit smaller than the queen bedroom, definitely alot smaller than the king bedroom'
+                                        : null
+                                    }
+                                </div>
                             </div>
                         </div>
+                        <div className="col-md-3 price">
+                            <h3 className="reservation-price">${hotel.price[k]} per night</h3>
+                            <FormGroup>
+                                <Label for="exampleSelect">How many rooms do you need?</Label>
+                                <Input
+                                    onChange={e => this.setState({ selectedRooms: {[k]: e.target.value }})}
+                                    type="select"
+                                    name="select">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                </Input>
+                            </FormGroup>
+                        </div>
                     </div>
-                    <div className="col-md-3 price">
-                        <h3 className="reservation-price">${hotel.price[k]} per night</h3>
-                        <FormGroup>
-                            <Label for="exampleSelect">How many rooms do you need?</Label>
-                            <Input
-                                onChange={e => this.setState({ selectedRooms: {[k]: e.target.value }})}
-                                type="select"
-                                name="select">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                            </Input>
-                        </FormGroup>
-                        <Button
-                            style={cssStyles.buttonRoom}
-                            size="lg"
-                            onClick={() => {
-                                if (Object.keys(this.state.selectedRooms).length)
-                                    this.props.selectRooms(hotel, this.state.selectedRooms);
-                                else
-                                    this.props.selectRooms(hotel, { [k]: 1});
-                                this.props.jumpToStep(2);
-                            }}
-                            >
-                            Choose Room
-                        </Button>
-                    </div>
+                    <br/><br/>
+                    <hr/>
                 </div>
-            </div>
             );
         });
     }
 
     render(){
-        console.log(this.props);
         return(
             <div>
                 <Container>
-                <div>
-                <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                <DropdownToggle outline color = 'default' caret>
-                    Sort By:
-                </DropdownToggle>
+                    <div>
+                        <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                        <DropdownToggle outline color = 'default' caret>
+                            Sort By:
+                        </DropdownToggle>
 
-                <DropdownMenu>
-                    <DropdownItem onClick={()=>{this.setSort("low");}}>
-                    Price: Low to High
-                    </DropdownItem>
+                        <DropdownMenu>
+                            <DropdownItem onClick={()=>{this.setSort("low");}}>
+                            Price: Low to High
+                            </DropdownItem>
 
-                    <DropdownItem divider />
+                            <DropdownItem divider />
 
-                    <DropdownItem onClick={()=>{this.setSort("high");}}>
-                    Price: High to Low
-                    </DropdownItem>
-                </DropdownMenu>
-                </Dropdown>
-                </div>
-                {this.renderRooms(this.state.hotel)}
-                <br></br>
+                            <DropdownItem onClick={()=>{this.setSort("high");}}>
+                            Price: High to Low
+                            </DropdownItem>
+                        </DropdownMenu>
+                        </Dropdown>
+                    </div>
+                    <div className="form-control" style={{ marginTop: '2em' }}>
+                        {this.renderRooms(this.state.hotel)}
+                        <div className="text-right" style={{ padding: '0px 2em 1em 0px '}}>
+                            <MDBBtn
+                                onClick={() => {
+                                    if (Object.keys(this.state.selectedRooms).length)
+                                        this.props.selectRooms(this.state.hotel, this.state.selectedRooms);
+                                    else
+                                        alert('You must select at least one room to proceed.')
+                                    this.props.jumpToStep(2);
+                                }}
+                                >
+                                Choose Room(s)
+                            </MDBBtn>
+                        </div>
+                    </div>
+                    <div style={{ margin: '2em 0px 2em 0px' }}></div>
                 </Container>
             </div>
         );

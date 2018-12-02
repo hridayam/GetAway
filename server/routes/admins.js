@@ -1,6 +1,8 @@
 const Admin = require('../models/admins');
 const jwt = require('jsonwebtoken');
 const router = require('express').Router();
+const Reservation = require('../models/reservation');
+const User = require('../models/users');
 
 router.post('/login', async (req, res) => {
     let { username, password } = req.body;
@@ -62,5 +64,31 @@ router.post('/create', async (req,res) => {
         });
     }
 });
+
+router.get('/data', (req,res) => {
+    try {
+        Reservation.find({}, (err, reservations) => {
+            if (err) throw new Error(err);
+            if (reservations) {
+                User.find({}, (err, users) => {
+                    if (err) throw new Error(err);
+                    if (users)
+                        return res.status(200).json({
+                            success: true,
+                            msg: 'Got all data',
+                            reservations,
+                            users
+                        });
+                });
+            }
+        });
+    }
+    catch(err) {
+        return res.status(403).json({
+            success: false,
+            msg: 'Server error'
+        });
+    }
+})
 
 module.exports = router;

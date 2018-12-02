@@ -228,9 +228,11 @@ class Login extends Component {
                     </Row>
                     <hr/>
                     <Row>
-                      <a href="http://localhost:3001/auth/google">
-                        <GoogleButton />
-                      </a>
+                      <Col sm="12" md="6">
+                        <a href="http://localhost:3001/auth/google">
+                          <GoogleButton />
+                        </a>
+                      </Col>
                     </Row>
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
                       <button className="btn btn-deep-orange logout" onClick={this.toggle.bind(this)}>Cancel</button>
