@@ -44,7 +44,7 @@ export const register = (data, cb) => {
     return dispatch => {
         axios.post('http://localhost:3001/users/register', data)
             .then(res => {
-                loginUser({ email: data.email, password: data.password }, dispatch);
+                loginUser({ email: data.email, password: data.password }, dispatch, cb);
                 cb();
             })
             .catch(err => {
@@ -56,7 +56,7 @@ export const register = (data, cb) => {
 
 export const adminLogin = data => {
     return dispatch => {
-        axios.post('http://localhost:3001/admin/login', data)
+        axios.post('http://localhost:3001/admins/login', data)
             .then(res => {
                 let { token, admin } = res.data;
                 localStorage.setItem('adminToken', token);

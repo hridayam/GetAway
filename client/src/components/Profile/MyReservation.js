@@ -18,7 +18,6 @@ import '../picture/slide/2.jpg';
 import '../css/Home.css';
 
 class MyReservation extends Component{
-
     constructor(props) {
         super(props);
 
@@ -162,7 +161,7 @@ class MyReservation extends Component{
             this.setState({
                 modal: !this.state.modal
             });
-      }
+    }
 
     renderCancellationBody(data) {
         let { cancelledData } = this.state;
@@ -243,7 +242,6 @@ class MyReservation extends Component{
 
     renderModalData = data => 
         <div>
-            {console.log(data)}
             <ModalBody>
                 <h3>{data.hotel_name} in {data.city}</h3>
                 <small className="text-center">This reservation {data.cancelled ? 'is cancelled' : 'is active'}</small><br/><br/>
@@ -251,10 +249,14 @@ class MyReservation extends Component{
                 <b>Starts On: </b>{moment(data.start_date).format('DD MMM YYYY')}<br/>
                 <b>Ends On: </b>{moment(data.end_date).format('DD MMM YYYY')}<br/>
                 <b>Number of Guests: </b>{data.number_of_guests}<br/>
+                <hr/>
                 <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
+                <b>Reserved by: </b>{data.user && data.user.name.length ? data.user.name : 'N/A'}<br/>
+                <b>Contact Email: </b>{data.user && data.user.email.length ? data.user.email : 'N/A'}<br/>
+                <b>User ID: </b>{data.user && data.user.id && data.user.id.length ? data.user.id : 'N/A'}
                 <hr/>
                 <b>Special Accomodations</b>
-                <p>{data.special_accomodations}</p>
+                <p>{data.special_accomodations && data.special_accomodations.length ? data.special_accomodations : 'None specified'}</p>
                 <hr/>
                 <b>Rewards Points Earned: </b>{data.rewardsPoints}<br/>
                 <b>Subtotal: </b>${data.subtotal}<br/>
@@ -302,7 +304,11 @@ class MyReservation extends Component{
                                                 <option>9</option>
                                                 <option>10</option>
                                             </Input><br/>
+                    <hr/>
                     <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
+                    <b>Reserved by: </b>{data.user && data.user.name.length ? data.user.name : 'N/A'}<br/>
+                    <b>Contact Email: </b>{data.user && data.user.email.length ? data.user.email : 'N/A'}<br/>
+                    <b>User ID: </b>{data.user && data.user.id && data.user.id.length ? data.user.id : 'N/A, guest reservation'}
                     <hr/>
                     <label style={{ marginTop: 0 }}><b>Special Accomodations</b></label>
                     <Input type="textarea" placeholder={data.special_accomodations} value={this.state.special_accomodations} name="special_accomodations" onChange={this.handleChange}></Input>

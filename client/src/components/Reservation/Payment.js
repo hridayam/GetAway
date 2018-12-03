@@ -115,7 +115,8 @@ class Payment extends Component{
                         usingRewards,
                         city: hotel.address.city,
                         hotel_name: hotel.name,
-                        special_accomodations
+                        special_accomodations,
+                        hotel_image: hotel.images[0]
                     })
                         .then(() => {
                             this.props.jumpToStep(3);
@@ -143,7 +144,8 @@ class Payment extends Component{
                 charge: {},
                 usingRewards,
                 city, hotel_name: hotel.name,
-                special_accomodations
+                special_accomodations,
+                hotel_image: hotel.images[0]
             })
                 .then(() => {
                     this.props.jumpToStep(3);
@@ -214,23 +216,7 @@ class Payment extends Component{
                             <Col s="3">
                             {
                                 this.state.hotel.images && this.state.hotel.room_images
-                                ?   <Carousel dynamicHeight autoPlay infiniteLoop
-                                        showArrows={true}
-                                        showIndicators={false}
-                                        showStatus={false}
-                                        showThumbs={false}
-                                    >{
-                                        this.state.hotel.images.map(v =>
-                                            <div key={v}>
-                                                <img src={v} alt="" className="w-100" />
-                                            </div>
-                                        )}{
-                                        Array.prototype.slice.call(this.state.hotel.room_images).map(v =>
-                                            <div key={this.state.hotel.room_images[v]}>
-                                                <img src={this.state.hotel.room_images[v]} alt="" className="w-100" />
-                                            </div>
-                                        )}
-                                    </Carousel>
+                                ?   <img src={this.state.hotel.images[0]} alt="" className="w-100"/>
                                 : null
                             }
                             </Col>

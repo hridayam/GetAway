@@ -38,7 +38,8 @@ const ReservationSchema = new mongoose.Schema({
     rooms: Object,
     special_accomodations: String,
     city: String,
-    hotel_name: String
+    hotel_name: String,
+    hotel_image: String
 });
 
 const Reservation = module.exports = mongoose.model('Reservation', ReservationSchema);
