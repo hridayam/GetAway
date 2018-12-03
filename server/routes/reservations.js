@@ -155,6 +155,7 @@ router.post('/create', async (req,res) => {
     let reservation = new Reservation(data);
     Reservation.createReservation(reservation, (err, reservation) => {
         if(err) {
+            console.log(err);
             return res.status(422).json({
                 success: false,
                 message: err

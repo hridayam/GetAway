@@ -129,13 +129,12 @@ class Payment extends Component{
                             this.props.jumpToStep(3);
                         })
                         .catch(err => {
-                            console.log(Object.keys(err));
-                            console.log(err);
+                            console.log(err.response)
+                            alert(err.response.msg);
                         });
                 })
                 .catch(err => {
-                    console.log(Object.keys(err));
-                    console.log(err);
+                    alert('Unable to book! You have another active reservation on that date!');
                 });
         } else {
             axios.post('http://localhost:3001/reservations/create', {
@@ -145,7 +144,7 @@ class Payment extends Component{
                 number_of_guests: numGuests,
                 user: {
                     name,
-                    email: this.state.user.email,
+                    email: this.state.email,
                     id: this.state.user.id || this.state.user._id
                 },
                 rewardsPoints,
@@ -159,12 +158,10 @@ class Payment extends Component{
 
             })
                 .then(() => {
-                    console.log('sucessful')
                     this.props.jumpToStep(3);
                 })
                 .catch(err => {
-                    console.log(Object.keys(err));
-                    console.log(err);
+                    alert('Unable to book! You have another active reservation on that date!');
                 });
         }
 
