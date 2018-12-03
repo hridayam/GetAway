@@ -40,40 +40,25 @@ class Register extends React.Component {
     
     handleSubmit = e => {
         e.preventDefault();
-        // if(this.formReady()){
-        //     this.props.register({
-        //         email: this.state.registerEmail,
-        //         password: this.state.registerPassword,
-        //         name: this.state.firstName + ' ' + this.state.lastName,
-        //         address:this.state.address + ', ' + this.state.city + ', ' + this.state.state + ', ' + this.state.zipcode,
-        //         confirmPassword: this.state.confirmPassword,
-        //         phoneNumber: this.formatPhoneNumber(this.state.phoneNumber)
-        //     }, err => {
-        //         if (err)
-        //             console.log(err);
-        //         else
-        //             console.log('Register success!')
-        //     });
-        //    this.setState({
-        //         modal: !this.state.modal,
-        //    });
-        // }
-        this.props.register({
-            email: this.state.registerEmail,
-            password: this.state.registerPassword,
-            name: this.state.firstName + ' ' + this.state.lastName,
-            address:this.state.address + ', ' + this.state.city + ', ' + this.state.state + ', ' + this.state.zipcode,
-            confirmPassword: this.state.confirmPassword,
-            phoneNumber: this.formatPhoneNumber(this.state.phoneNumber)
-        }, err => {
-            if (err)
-                console.log(err);
-            else
-                console.log('Register success!')
-        });
-        this.setState({
-            modal: !this.state.modal,
-        });
+        e.target.className += ' was-validated';
+        if(this.formReady()){
+            this.props.register({
+                email: this.state.registerEmail,
+                password: this.state.registerPassword,
+                name: this.state.firstName + ' ' + this.state.lastName,
+                address:this.state.address + ', ' + this.state.city + ', ' + this.state.state + ', ' + this.state.zipcode,
+                confirmPassword: this.state.confirmPassword,
+                phoneNumber: this.formatPhoneNumber(this.state.phoneNumber)
+            }, err => {
+                if (err)
+                    console.log(err);
+                else
+                    console.log('Register success!')
+            });
+           this.setState({
+                modal: !this.state.modal,
+           });
+        }
     }
 
     //needed to check the form before register and taking down modal
@@ -82,7 +67,7 @@ class Register extends React.Component {
         const check = document.getElementsByClassName('form-check-input');
         for(var i = 0; i < elements.length; i++){
             //console.log(elements[i].validity.valid + ',' + elements[i])
-            if(elements[i].validity.valid !== true){
+            if(elements[i].validity.valid !== true && (i !== 10)){
                 return false;
             }
         }
