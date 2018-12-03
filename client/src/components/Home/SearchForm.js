@@ -51,18 +51,19 @@ class SearchForm extends Component {
         let { city, numGuests } = this.state;
 
         let citySplit = city.split(',');
+        let tempCity = '';
 
         // take only the first slice before comma, only submit city name
 
         if (citySplit.length > 1 && citySplit.length < 4){
-            city = citySplit[0];
+            tempCity = citySplit[0];
         } else if (citySplit.length > 3){
-            city = citySplit[citySplit.length - 3].trim();
+            tempCity = citySplit[citySplit.length - 3].trim();
         }
 
         this.props.search(
-            city,
-            numGuests,
+            tempCity,
+            numGuests ? numGuests : 1,
             this.state.startDate,
             this.state.endDate);
         this.setState({ submitted: true });
@@ -113,6 +114,7 @@ class SearchForm extends Component {
                                                 })}
                                                 className="form-control text-center col-sm-8 offset-sm-2"
                                                 style={{ height: '3em' }}
+                                                required
                                             />
                                             <div className="autocomplete-dropdown-container">
                                                 {loading && <div>Loading...</div>}

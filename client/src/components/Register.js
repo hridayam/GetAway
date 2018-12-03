@@ -113,7 +113,7 @@ class Register extends React.Component {
                         <Row>
                             <div className="col-md-12 mb-12">
                                 <label htmlFor="defaultFormRegisterConfirmEx3" className="grey-text">Email</label>
-                                <input value={this.state.registerEmail} onChange={this.changeHandler} type="email" id="email" className="form-control" name='registerEmail' placeholder="Your Email address" required/>
+                                <input value={this.state.registerEmail} onChange={this.changeHandler} type="email" id="email" className="form-control" name='registerEmail' placeholder="Your Email Address" required/>
                                 <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                                 <div className="invalid-feedback">Please provide a valid email address</div>
                             </div>
@@ -140,14 +140,14 @@ class Register extends React.Component {
                         </Row>
                         <Row>
                             <div className="col-md-6 mb-6">
-                                <label htmlFor="defaultFormRegisterNameEx" className="grey-text">First name</label>
-                                <input value={this.state.firstName} name='firstName' onChange={this.changeHandler} type="text" id="firstName" className="form-control" placeholder="First name" required/>
+                                <label htmlFor="defaultFormRegisterNameEx" className="grey-text">First Name</label>
+                                <input value={this.state.firstName} name='firstName' onChange={this.changeHandler} type="text" id="firstName" className="form-control" placeholder="Your First Name" required/>
                                 <div className="valid-feedback">Looks good!</div>
                                 <div className="invalid-feedback">Please provide your first name.</div>
                             </div>
                             <div className="col-md-6 mb-6">
-                                <label htmlFor="defaultFormRegisterEmailEx2" className="grey-text">Last name</label>
-                                <input value={this.state.lastName} name='lastName' onChange={this.changeHandler} type="text" id="lastName" className="form-control" placeholder="Last name" required/>
+                                <label htmlFor="defaultFormRegisterEmailEx2" className="grey-text">Last Name</label>
+                                <input value={this.state.lastName} name='lastName' onChange={this.changeHandler} type="text" id="lastName" className="form-control" placeholder="Your Last Name" required/>
                                 <div className="valid-feedback">Looks good!</div>
                                 <div className="invalid-feedback">Please provide your last name.</div>
                             </div>
@@ -155,7 +155,7 @@ class Register extends React.Component {
                         <Row>
                             <div className="col-md-12 mb-12">
                                 <label htmlFor="defaultFormRegisterPasswordEx4" className="grey-text">Address</label>
-                                <input value={this.state.address} onChange={this.changeHandler} type="text" id="address" className="form-control" name='address' placeholder="Address" required/>
+                                <input value={this.state.address} onChange={this.changeHandler} type="text" id="address" className="form-control" name='Address' placeholder="Your Address" required/>
                                 <div className="invalid-feedback">Please provide a valid city.</div>
                                 <div className="valid-feedback">Looks good!</div>
                             </div>
@@ -163,19 +163,19 @@ class Register extends React.Component {
                         <Row>
                             <div className="col-md-4 mb-4">
                                 <label htmlFor="defaultFormRegisterPasswordEx4" className="grey-text">City</label>
-                                <input value={this.state.city} onChange={this.changeHandler} type="text" id="city" className="form-control" name='city' placeholder="City" required/>
+                                <input value={this.state.city} onChange={this.changeHandler} type="text" id="city" className="form-control" name='city' placeholder="Your City" required/>
                                 <div className="invalid-feedback">Please provide a valid city.</div>
                                 <div className="valid-feedback">Looks good!</div>
                             </div>
                             <div className="col-md-4 mb-4">
                                 <label htmlFor="defaultFormRegisterPasswordEx4" className="grey-text">State</label>
-                                <input value={this.state.state} onChange={this.changeHandler} type="text" id="state" className="form-control" name='state' placeholder="State" required/>
+                                <input value={this.state.state} onChange={this.changeHandler} type="text" id="state" className="form-control" name='state' placeholder="Your State" required/>
                                 <div className="invalid-feedback">Please provide a valid state.</div>
                                 <div className="valid-feedback">Looks good!</div>
                             </div>
                             <div className="col-md-4 mb-4">
-                                <label htmlFor="defaultFormRegisterPasswordEx4" className="grey-text">Zip</label>
-                                <input value={this.state.zipcode} onChange={this.changeHandler} type="number" id="zipcode" className="form-control" name='zipcode' placeholder="zipcode" required/>
+                                <label htmlFor="defaultFormRegisterPasswordEx4" className="grey-text">ZIP Code</label>
+                                <input value={this.state.zipcode} onChange={this.changeHandler} type="number" id="zipcode" className="form-control" name='zipcode' placeholder="Your ZIP Code" required/>
                                 <div className="invalid-feedback">Please provide a valid zip.</div>
                                 <div className="valid-feedback">Looks good!</div>
                             </div>
