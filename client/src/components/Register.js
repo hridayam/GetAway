@@ -164,7 +164,7 @@ class Register extends React.Component {
                             <div className="col-md-12 mb-12">
                                 <label htmlFor="defaultFormRegisterPasswordEx4" className="grey-text">Address</label>
 
-                                <input value={this.state.address} onChange={this.changeHandler} type="text" id="address" className="form-control" name='Address' placeholder="Your Address" required/>
+                                <input value={this.state.address} onChange={this.changeHandler} type="text" id="address" className="form-control" name='address' placeholder="Your Address" required/>
 
                                 <div className="invalid-feedback">Please provide a valid city.</div>
                                 <div className="valid-feedback">Looks good!</div>
