@@ -220,7 +220,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped6}>
                     <Card onClick={this.handleClick6}
                     key="front">
-                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://static1.squarespace.com/static/5697a3ff2399a3bb2ba89073/t/56eaccf32b8dde3a9952b73c/1458228472215/DSC_2521.JPG?format=1500w" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://files.slack.com/files-pri/TCESXV1DL-FEK7B3ZGX/image_from_ios.jpg" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Truc Vo</CardTitle>
                             <CardText>Product Owner</CardText>
@@ -296,7 +296,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped9}>
                     <Card onClick={this.handleClick9}
                     key="front">
-                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Operations/Our%20Insights/The%20expanding%20role%20of%20design%20in%20creating%20an%20end%20to%20end%20customer%20experience/Expanding-role-of-design-1536x1536-400_Standard.ashx" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://files.slack.com/files-pri/TCESXV1DL-FEJM1GUCX/screen_shot_2018-12-03_at_12.44.39_am.png" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Luis Reyes</CardTitle>
                             <CardText>Assistant Tester</CardText>

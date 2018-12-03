@@ -13,9 +13,11 @@ import AboutUs from './components/AboutUs';
 import Register from './components/Register';
 import GuestRoute from './components/Routes/GuestRoute';
 import UserRoute from './components/Routes/UserRoute';
+
 import NotFoundRoute from './components/Routes/NotFoundRoute';
 import AdminPanel from './components/AdminPanel';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+
 
 import { connect } from 'react-redux';
 import { userLoggedIn } from './actions/auth';
@@ -73,11 +75,13 @@ class App extends Component {
             <div id='routes' style={ styles.routeStyle }>
               <Route exact path='/' component={Home} />
               <UserRoute exact path='/myreservation' component={MyReservation}/>
+
               <Route exact path='/reservation' component ={Reservation}/>
               <Route exact path='/aboutus' component ={AboutUs}/>
               <GuestRoute exact path='/register' component ={Register}/>
               <Route exact path='/admin' component ={AdminPanel}/>
               <GuestRoute exact path='/resetPassword/:token' component={ForgotPassword} />
+
             </div>
         </BrowserRouter>
 

@@ -12,6 +12,7 @@ const validateEmail = function(email) {
 };
 
 const ReservationSchema = new mongoose.Schema({
+    _id: mongoose.SchemaTypes.ObjectId,
     user: {
         id: mongoose.SchemaTypes.ObjectId,
         email: {
@@ -51,6 +52,7 @@ module.exports.createReservation = function (newReservation, callback) {
             return callback(err);
         }
         let booked = false;
+
         if (reservations.length === 0) {
             return reserve(newReservation, callback, true);
         } else {
@@ -134,6 +136,7 @@ const reserve = function(reservation, callback, firstTime) {
             });
         })
     });
+
 }
 
 module.exports.getReservationById = function(id, callback) {

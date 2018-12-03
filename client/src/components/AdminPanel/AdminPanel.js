@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
+
 import { Input } from 'reactstrap';
 import { 
     Modal, ModalHeader, ModalBody, ModalFooter, Button,
     Row, Col,
+
     MDBContainer, MDBRow, MDBCol, MDBBtn
 } from 'mdbreact';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+
 import moment from 'moment';
 import { Fa, Table } from 'mdbreact';
 import DatePicker from "react-datepicker";
  
 import "react-datepicker/dist/react-datepicker.css";
+
 
 import { connect } from 'react-redux';
 import { adminLogin, adminLogout } from '../../actions';
@@ -20,6 +24,7 @@ class AdminPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
             loginModal: true,
             redirect: false,
             username: '', password: '',
@@ -30,11 +35,13 @@ class AdminPanel extends Component {
             isCancelling: false, cancelledData: null, isEditing: false,
             number_of_guests: 1, special_accomodations: '', end_date: new Date(Date.now().valueOf() + 172800000),
             filterBy: '', filterQuery: ''
+
         };
     }
 
     handleChange = e => {
         let { name, value } = e.target;
+
         
         if (name === 'filterQuery' && String(value).includes('@')) {
             this.setState({ 
@@ -54,6 +61,7 @@ class AdminPanel extends Component {
         } else {
             this.setState({ [name]: value });
         }
+
     }
 
     handleLogin = () => {
@@ -64,18 +72,24 @@ class AdminPanel extends Component {
         if (props.admin !== state.admin) {
             return {
                 admin: props.admin,
+
                 loginModal: props.admin ? false : true
+
             };
         }
         return null;
     }
 
+
     renderLoginForm() {
+
         return (
             <MDBContainer>
                 <MDBRow>
                     <MDBCol md="10" className="offset-md-1">
                     <div>
+
+
                         <label htmlFor="defaultFormLoginEmailEx" className="grey-text">
                         Admin Username
                         </label>
@@ -106,15 +120,19 @@ class AdminPanel extends Component {
         );
     }
 
+
     initializeData = () => {
+
         this.state.admin
             ? axios.get('/admins/data')
                 .then(res => {
                     let { reservations, users } = res.data;
                     this.setState({
                         reservations,
+
                         users,
                         initialized: true
+
                     });
                 })
                 .catch(err => {
@@ -122,6 +140,9 @@ class AdminPanel extends Component {
                 })
             : this.setState({ redirect: true });
     }
+
+
+
 
     renderAdminPanel() {
         this.state.initialized ? null : this.initializeData();
@@ -445,6 +466,7 @@ class AdminPanel extends Component {
             this.setState({
                 modal: !this.state.modal
             });
+
     }
 
     render() {
@@ -455,8 +477,10 @@ class AdminPanel extends Component {
 
         return (
             <div style={styles.rootContainer}>
+
                 {this.renderModal()}
                 <Modal isOpen={this.state.loginModal}>
+
                     <ModalHeader>Admin Login</ModalHeader>
                     <ModalBody>
                         {this.renderLoginForm()}
@@ -476,6 +500,7 @@ class AdminPanel extends Component {
 
 const styles = {
     rootContainer: {
+
         minHeight: '100vh'
     },
     panelContainer: {
@@ -485,6 +510,7 @@ const styles = {
         height: '30em',
         overflowY: 'scroll',
         marginTop: '2em'
+
     }
 };
 

@@ -7,7 +7,9 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { Card, CardBody, CardTitle, MDBInput  } from 'mdbreact';
 import classnames from 'classnames';
 import { Carousel } from 'react-responsive-carousel';
+
 import moment  from  'moment';
+
 
 import '../css/Home.css';
 import {connect} from 'react-redux';
@@ -116,8 +118,10 @@ class Payment extends Component{
                         usingRewards,
                         city: hotel.address.city,
                         hotel_name: hotel.name,
+
                         special_accomodations,
                         hotel_image: hotel.images[0]
+
                     })
                         .then(() => {
                             this.props.jumpToStep(3);
@@ -147,8 +151,10 @@ class Payment extends Component{
                 charge: {},
                 usingRewards,
                 city, hotel_name: hotel.name,
+
                 special_accomodations,
                 hotel_image: hotel.images[0]
+
             })
                 .then(() => {
                     console.log('sucessful')
@@ -209,13 +215,16 @@ class Payment extends Component{
     render() {
         return(
             <Form className="container" style={styles.body}>
+
                 <Row>
                     <div className="form-control col-sm-12" style={{ marginTop: '2em' }}>
                         <CardTitle>RESERVATION DETAILS</CardTitle>
+
                         <Row className="text-right">
                             <Col s="3">
                             {
                                 this.state.hotel.images && this.state.hotel.room_images
+
                                 ?   <img src={this.state.hotel.images[0]} alt="" className="w-100"/>
                                 : null
                             }
@@ -223,6 +232,7 @@ class Payment extends Component{
                             </Col>
                             <Col s="9">
                                 <b style={{fontSize:22}}>{this.state.hotel.name} of {this.state.hotel.address.city}</b>
+
                                 <br/><br/>
                                 <p>
                                     {this.state.hotel.stars === 5? <div> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
@@ -298,7 +308,9 @@ class Payment extends Component{
                         </CardBody>
                     </div>
 
+
                     <div className="form-control col-sm-12" style={{ marginTop: '2em', marginBottom: '2em' }}>
+
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
@@ -362,6 +374,7 @@ class Payment extends Component{
                                 <h3>Card Checkout</h3>
                                 <br/>
                                 <Row >
+
                                     <Col sm="12" className="text-center">
                                         <b>Subtotal: </b>${this.state.subtotal}<br/>
                                         <b>Tax: </b>${this.state.tax}<br/>
@@ -376,6 +389,7 @@ class Payment extends Component{
                                         <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
                                         borderRadius: '4px', padding: '10px 14px', fontSize: '16px', marginRight: '14px'}}/>
                                     </Col>
+
                                     <Col className="text-center" sm="12" md={{ size: 4, offset: 4 }} >
 
                                         <CardElement style={styles.cardpanel}/>

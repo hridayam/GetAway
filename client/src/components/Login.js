@@ -257,11 +257,13 @@ class Login extends Component {
                           <GoogleButton />
                         </a>
                       </Col>
+
                     </Row>
                     <Row>
                       <Col style={{justifyContent:'center'}} sm='12' md='6'>
                           <Button className="btn btn-deep-orange" type='button' onClick={this.sendResetLink.bind(this)}>forgot password</Button>
                       </Col>
+
                     </Row>
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
                       <button className="btn btn-deep-orange logout" type='button' onClick={() => {this.setState({ modal: false })}}>Cancel</button>

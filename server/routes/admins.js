@@ -1,7 +1,9 @@
 const Admin = require('../models/admins');
 const jwt = require('jsonwebtoken');
 const router = require('express').Router();
+
 const config = require('../config/database');
+
 const Reservation = require('../models/reservation');
 const User = require('../models/users');
 
@@ -9,12 +11,16 @@ router.post('/login', async (req, res) => {
     let { username, password } = req.body;
 
     try {
+
         let admin = await Admin.findOne({ username }).exec();
+
 
         Admin.comparePassword(password, admin.password, (err, isMatch) => {
             if (err) {
                 throw new Error(err);
+
             } else if (isMatch) {
+
                 const adminToken = jwt.sign({data: {
                     _id: admin._id,
                     username: admin.username
@@ -90,6 +96,7 @@ router.get('/data', (req,res) => {
             msg: 'Server error'
         });
     }
+
 });
 
 router.post('/edit-reservation', async (req,res) => {
@@ -154,5 +161,6 @@ router.post('/cancel-reservation/:id', (req,res) => {
         
     })
 });
+
 
 module.exports = router;
