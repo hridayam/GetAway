@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Col, Container, Row } from "mdbreact";
+import { NavLink } from 'react-router-dom';
 import '../components/css/Home.css';
 
 export default class Foot extends Component{
@@ -13,8 +14,9 @@ export default class Foot extends Component{
                 <p>As one of the world’s top hospitality companies,
                 <strong> GetAway</strong> remains committed to caring
                 for people so they can be their best.
-                <a href='/aboutus'> Learn more</a>
+                <a href="/aboutus"> Learn more</a>
                 </p>
+                
             </Col>
             <br/>
             <Col sm="12" md="4" style={{textAlign:'center'}}>

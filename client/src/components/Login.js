@@ -44,7 +44,6 @@ class Login extends Component {
       profilePic: '',
       file: ''
     };
-
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -211,6 +210,7 @@ class Login extends Component {
             <Modal isOpen={this.state.modal} toggle={this.toggle.bind(this)}>
               <ModalHeader toggle={this.toggle.bind(this)}>Welcome Back!</ModalHeader>
               <ModalBody>
+                {this.state.error? <div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i> Either username or password is incorrect</div>: <p></p>}
                 <Row className="mt-6">
                   <Col>
                     <form className='needs-validation' onSubmit={this.submitHandler}>
@@ -228,11 +228,12 @@ class Login extends Component {
                     </Row>
                     <hr/>
                     <Row>
-                      <a href="http://localhost:3001/auth/google">
-                        <GoogleButton />
-                      </a>
+                      <Col sm="12" md="6">
+                        <a href="http://localhost:3001/auth/google">
+                          <GoogleButton />
+                        </a>
+                      </Col>
                     </Row>
-                    {this.state.error? <div style={{color: 'red'}}>Either username or password is incorrect</div>: <p></p>}
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
                       <button className="btn btn-deep-orange logout" onClick={this.toggle.bind(this)}>Cancel</button>
                     </form>
@@ -254,6 +255,7 @@ const mapStateToProps = state => {
             token: state.auth.token
         };
     }
+    return {};
 }
 
 const styles ={
