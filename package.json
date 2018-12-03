@@ -10,14 +10,13 @@
     "nodemon-server": "nodemon --watch ./server/",
     "initial-start": "npm install && npm run install-client && npm run install-server && npm run start",
     "start": "concurrently \"npm run client\" \"npm run server\"",
-    "start-with-nodemon": "concurrently \"npm run client\" \"npm run nodemon-server\""
+    "start-with-nodemon": "concurrently \"npm run client\" \"npm run nodemon-server\"",
+    "initial-start-with-nodemon": "npm run initial-start && npm run start-with-nodemon"
   },
   "author": "",
   "license": "ISC",
   "private": true,
   "dependencies": {
-
     "concurrently": "*"
-
   }
 }

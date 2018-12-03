@@ -2,21 +2,17 @@ import React, { Component } from 'react';
 import {
         Container, DropdownMenu,
         DropdownItem, Dropdown, DropdownToggle } from 'reactstrap';
-import {Button} from 'mdbreact'
-
+import { MDBBtn, Button } from 'mdbreact'
 import { Carousel } from 'react-responsive-carousel';
 import Loader from 'react-loader-spinner';
+import Weather from '../Weather';
 
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
-import './selectHotel.css'
-import Scroll from '../ScrollUp';
-import Spinner from 'react-loader-spinner';
+import './selectHotel.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import { search, selectHotel } from '../../actions/';
 import { connect } from 'react-redux';
-import ReactWeather from 'react-open-weather';
-//Optional include of the default css styles 
-import 'react-open-weather/lib/css/ReactWeather.css';
+
 class SelectHotel extends Component{
     constructor(props){
         super(props);
@@ -40,18 +36,17 @@ class SelectHotel extends Component{
             laundry: false,
             free_parking: false
         };
-        this.toggleDropdown = this. toggleDropdown.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
     }
 
     setSort(e) {
         this.setState({sortOption: e});
     }
 
-
     static getDerivedStateFromProps(props, state){
         if(props.reservation !== state.reservation){
             let { city, startDate, endDate, numGuests, hotels, isLoading } = props.reservation;
-            return{
+            return {
                 ...state,
                 reservation: props.reservation,
                 hotels,
@@ -75,23 +70,27 @@ class SelectHotel extends Component{
             &&(!this.state.free_parking || (this.state.free_parking && hotel.amenities.free_parking))
             )
             .map((hotel, index) =>
-                <div key={hotel._id} className="card">
+                <div key={hotel._id} className="form-control" style={{ margin: '2em 0px 2em 0px', padding: '2em', height: '300px' }}>
                     <div className="row ">
                         <div className="col-md-4">
                             { hotel.images && hotel.images.length ?
-                            <Carousel dynamicHeight={true}
-                            autoPlay infiniteLoop>
+                            <Carousel dynamicHeight autoPlay infiniteLoop
+                                showArrows={true}
+                                showIndicators={false}
+                                showStatus={false}
+                                showThumbs={false}
+                            >
                                 {hotel.images.map((v,i) =>
-                                    <div key={i}>
+                                    <div key={v}>
                                         <img src={v} alt="" className="w-100" />
                                     </div>
                                 )}
                             </Carousel> : <div className="align-middle" style={{height:'100%', width:'100%'}}><br/><br/><br/>No Images Available</div> }
                         </div>
                         <div className="col-md-5 px-3">
-                            <div className="card-block px-3">
-                                <h3 className="card-title">{hotel.name}</h3>
-                                <p className="card-text">{hotel.stars === 5? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                            <div className=" px-3">
+                                <h3 className="">{hotel.name}</h3>
+                                <p className="">{hotel.stars === 5? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
                                 {hotel.stars === 4? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
                                 {hotel.stars ===3? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>  </div> : ""}
                                 {hotel.stars ===2? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
@@ -107,14 +106,13 @@ class SelectHotel extends Component{
                             </div>
                         </div>
                         <div className="col-md-3 price">
-                            Starting from<h3 className="reservation-price">${hotel.price.extra_bed} per night</h3>
-                            <Button
-                                style={cssStyles.buttonRoom}
+                            Starting from<h3 className="reservation-price">${hotel.price.twin} per night</h3>
+                            <MDBBtn
                                 onClick={() => {
                                     this.props.selectHotel(hotel);
                                     this.props.jumpToStep(1);
                                 }}
-                                >Choose Hotel</Button>
+                                >Choose Hotel</MDBBtn>
                         </div>
                     </div>
                 </div>
@@ -134,12 +132,11 @@ class SelectHotel extends Component{
     }
 
     render() {
-        console.log(this.state.hotels)
         if (this.state.sortOption === "low") {
-            this.state.hotels.sort((a,b) => ((a.price.extra_bed) - (b.price.extra_bed)));
+            this.state.hotels.sort((a,b) => ((a.price.twin) - (b.price.twin)));
         }
         else if (this.state.sortOption === "high"){
-            this.state.hotels.sort((a,b) => ((b.price.extra_bed) - (a.price.extra_bed)));
+            this.state.hotels.sort((a,b) => ((b.price.twin) - (a.price.twin)));
         }
         else if(this.state.sortOption === 'rating'){
             this.state.hotels.sort((a,b) => ((b.stars - a.stars)))
@@ -147,60 +144,62 @@ class SelectHotel extends Component{
 
         return(
             <div>
-            <div>
-             <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({wifi: !this.state.wifi})}>
-             <i className="fas fa-wifi"></i>  Free Wifi</Button>
-             <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({gym: !this.state.gym})}>
-             <i className="fas fa-dumbbell"></i>     Gym</Button>
-             <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({pool: !this.state.pool})}>
-             <i class="fas fa-swimmer"></i>     Pool</Button>
-             <Button style={this.state.complimentary_breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({complimentary_breakfast: !this.state.complimentary_breakfast})}>
-             <i class="fas fa-utensils"></i>      Breakfast Included</Button>
-             <Button style={this.state.laundry?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({laundry: !this.state.laundry})}>
-             <i class="fas fa-tshirt"></i>      Laundry</Button>
-             <Button style={this.state.coffee?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({coffee: !this.state.coffee})}>
-             <i class="fas fa-coffee"></i>     Coffee Maker</Button>
-             <Button style={this.state.free_parking?  cssStyles.activeStyle: cssStyles.inactiveStyle}
-             onClick={() => this.setState({free_parking: !this.state.free_parking})} >
-             <i class="fas fa-car"></i>    Free Parking</Button>
-           </div>
+                <div>
+                    <Button   style={this.state.wifi?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({wifi: !this.state.wifi})}>
+                    <i className="fas fa-wifi"></i>  Free Wifi</Button>
+                    <Button style={this.state.gym ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({gym: !this.state.gym})}>
+                    <i className="fas fa-dumbbell"></i>     Gym</Button>
+                    <Button style={this.state.pool?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({pool: !this.state.pool})}>
+                    <i class="fas fa-swimmer"></i>     Pool</Button>
+                    <Button style={this.state.complimentary_breakfast ?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({complimentary_breakfast: !this.state.complimentary_breakfast})}>
+                    <i class="fas fa-utensils"></i>      Breakfast Included</Button>
+                    <Button style={this.state.laundry?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({laundry: !this.state.laundry})}>
+                    <i class="fas fa-tshirt"></i>      Laundry</Button>
+                    <Button style={this.state.coffee?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({coffee: !this.state.coffee})}>
+                    <i class="fas fa-coffee"></i>     Coffee Maker</Button>
+                    <Button style={this.state.free_parking?  cssStyles.activeStyle: cssStyles.inactiveStyle}
+                    onClick={() => this.setState({free_parking: !this.state.free_parking})} >
+                    <i class="fas fa-car"></i>    Free Parking</Button>
+                </div>
 
-           <Container>
-               <div style={{display: 'flex'}}>
-                   <Dropdown className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                   <DropdownToggle outline color = 'default'  caret>
-                       Sort By:
-                   </DropdownToggle>
+            <Container>
+                <div style={{display: 'flex'}}>
+                    <Dropdown className = 'sortbutton' isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+                    <DropdownToggle outline color = 'default'  caret>
+                        Sort By:
+                    </DropdownToggle>
 
-                   <DropdownMenu>
-                       <DropdownItem onClick={()=>{this.setSort("low");}}>
-                       Price: Low to High
-                       </DropdownItem>
+                    <DropdownMenu>
+                        <DropdownItem onClick={()=>{this.setSort("low");}}>
+                        Price: Low to High
+                        </DropdownItem>
 
-                       <DropdownItem divider />
+                        <DropdownItem divider />
 
-                       <DropdownItem onClick={()=>{this.setSort("high");}}>
-                       Price: High to Low
-                       </DropdownItem>
+                        <DropdownItem onClick={()=>{this.setSort("high");}}>
+                        Price: High to Low
+                        </DropdownItem>
 
-                       <DropdownItem divider />
+                        <DropdownItem divider />
 
-                       <DropdownItem onClick={()=>{this.setSort("rating");}}>
-                       Highest Rating
-                       </DropdownItem>
+                        <DropdownItem onClick={()=>{this.setSort("rating");}}>
+                        Highest Rating
+                        </DropdownItem>
 
-                   </DropdownMenu>
-                   </Dropdown>
-               </div>
-                    { this.renderHotels()}
+                    </DropdownMenu>
+                    </Dropdown>
+                </div>
+                <br/><br/>
+                <Weather city={this.state.city}/>
+                { this.renderHotels() }
                 <br></br>
-                </Container>
+            </Container>
             </div>
         );
     }

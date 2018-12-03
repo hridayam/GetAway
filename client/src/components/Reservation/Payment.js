@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
-import { Container } from 'mdbreact';
-import moment from 'moment';
-import {CardElement, CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe} from 'react-stripe-elements';
+import { CardElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
-import {Button} from 'mdbreact'
-import {Form, FormGroup, Col, Row, Input, Label, Card, CardTitle} from 'reactstrap';
+import { Button } from 'mdbreact'
+import { Form, FormGroup, Col, Row, Input, Label } from 'reactstrap';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import { Card, CardBody, CardTitle, MDBInput  } from 'mdbreact';
 import classnames from 'classnames';
+import { Carousel } from 'react-responsive-carousel';
 
-import Scroll from '../ScrollUp';
 import '../css/Home.css';
 import {connect} from 'react-redux';
 import {payment} from '../../actions/payment';
@@ -23,21 +22,23 @@ class Payment extends Component{
             rooms: null,
             city: '',
             startDate: {}, endDate: {},
-            numGuests: 0,
+            numGuests: 1,
             card: null,
             name: '',
             address: '', userCity: '', state: '', zip: '',
             cardholderName: '',
             subtotal: 0, total: 0, tax: 0, rewardsPoints: 0,
             activeTab: '1',
-            usingRewards: true
+            usingRewards: true,
+            special_accomodations: ''
         };
     }
 
     static getDerivedStateFromProps(props, state){
-        let { hotel, rooms, city, startDate, endDate, numGuests, user } = props; 
+        let { hotel, rooms, city, startDate, endDate, numGuests, user } = props;
         if(props.hotel !== state.hotel && user !== null && user !== undefined){
-            let addressSplit = props.user.address.split(',');
+            let addressSplit = props.user.address.split(',').map(v =>  v.charAt(0) === ' ' ? String(v).substr(1, v.length - 1) : v);
+
             return{
                 ...state,
                 hotel,
@@ -47,7 +48,7 @@ class Payment extends Component{
                 endDate,
                 numGuests,
                 user,
-                name: user.name.length ? 
+                name: user.name.length ?
                     user.name.split(' ')
                         .map(s => s.charAt(0).toUpperCase() + s.substring(1))
                         .join(' ') : '',
@@ -73,13 +74,14 @@ class Payment extends Component{
     }
 
     handleSubmit = async () => {
-        let { 
-            hotel, city, startDate, endDate, numGuests, 
+        let {
+            hotel, city, startDate, endDate, numGuests,
             name,
             address, userCity, state, zip,
             cardholderName,
             subtotal, total, tax, rewardsPoints,
-            usingRewards
+            usingRewards,
+            special_accomodations
         } = this.state;
 
         if (!usingRewards) {
@@ -97,10 +99,10 @@ class Payment extends Component{
                 .then(res => {
                     console.log(res);
                     axios.post('http://localhost:3001/reservations/create', {
-                        hotel_id: hotel._id, 
-                        start_date: startDate.valueOf(), 
-                        end_date: endDate.valueOf(), 
-                        number_of_guests: numGuests, 
+                        hotel_id: hotel._id,
+                        start_date: startDate.valueOf(),
+                        end_date: endDate.valueOf(),
+                        number_of_guests: numGuests,
                         user: {
                             name,
                             email: this.state.user.email,
@@ -112,7 +114,8 @@ class Payment extends Component{
                         charge: res.data.charge,
                         usingRewards,
                         city: hotel.address.city,
-                        hotel_name: hotel.name
+                        hotel_name: hotel.name,
+                        special_accomodations
                     })
                         .then(() => {
                             this.props.jumpToStep(3);
@@ -126,10 +129,10 @@ class Payment extends Component{
                 });
         } else {
             axios.post('http://localhost:3001/reservations/create', {
-                hotel_id: hotel._id, 
-                start_date: startDate.valueOf(), 
-                end_date: endDate.valueOf(), 
-                number_of_guests: numGuests, 
+                hotel_id: hotel._id,
+                start_date: startDate.valueOf(),
+                end_date: endDate.valueOf(),
+                number_of_guests: numGuests,
                 user: {
                     name,
                     email: this.state.user.email,
@@ -139,7 +142,8 @@ class Payment extends Component{
                 subtotal, total, tax,
                 charge: {},
                 usingRewards,
-                city, hotel_name: hotel.name
+                city, hotel_name: hotel.name,
+                special_accomodations
             })
                 .then(() => {
                     this.props.jumpToStep(3);
@@ -148,8 +152,7 @@ class Payment extends Component{
                     console.log(err);
                 });
         }
-            
-            
+
         this.setState({complete: true});
     }
 
@@ -202,19 +205,39 @@ class Payment extends Component{
 
 
         return(
-            <Form style = {styles.body}>
+            <Form className="container" style={styles.body}>
                 <FormGroup >
                     <h2 >Checkout</h2>
                     <Card body outline color="info" style={styles.panel} >
                         <CardTitle>REVIEW ORDER</CardTitle>
                         <Row className="text-right">
                             <Col s="3">
-                                {this.state.hotel.images[0] ? <img src={this.state.hotel.images[0]} alt="" style={{width:350}}/> : <div><br/><br/>No Images Available</div>}
+                            {
+                                this.state.hotel.images && this.state.hotel.room_images
+                                ?   <Carousel dynamicHeight autoPlay infiniteLoop
+                                        showArrows={true}
+                                        showIndicators={false}
+                                        showStatus={false}
+                                        showThumbs={false}
+                                    >{
+                                        this.state.hotel.images.map(v =>
+                                            <div key={v}>
+                                                <img src={v} alt="" className="w-100" />
+                                            </div>
+                                        )}{
+                                        Array.prototype.slice.call(this.state.hotel.room_images).map(v =>
+                                            <div key={this.state.hotel.room_images[v]}>
+                                                <img src={this.state.hotel.room_images[v]} alt="" className="w-100" />
+                                            </div>
+                                        )}
+                                    </Carousel>
+                                : null
+                            }
                             </Col>
                             <Col s="9">
                                 <b style={{fontSize:20}}>{this.state.hotel.name}</b>
                                 <br/>
-                                <small>{this.state.hotel.city}, {this.state.hotel.state}</small>
+                                <small>{this.state.hotel.address.city}</small>
                                 <br/><br/>
                                 Subtotal: ${this.state.subtotal}
                                 <br/>
@@ -230,21 +253,20 @@ class Payment extends Component{
                     <Card body outline color="info" style={styles.panel}>
                         <CardTitle>BILLING ADDRESS</CardTitle>
                         <Row>
-                            <Col >
+                            <Col sm="12">
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                                    <Label for="exampleDate">Full Name:  </Label>
+                                    <Label for="exampleDate">Full Name </Label>
                                     <Input name="name" value={this.state.name} onChange={this.handleChange} placeholder="Jane Fonda" />
-
-
                                 </FormGroup>
-                            </Col> */}
+                            </Col>
+                            <Col sm="12">
+                                <FormGroup>
+                                    <Label for="exampleAddress">Address</Label>
+                                    <Input onChange={this.handleChange} value={this.state.address} type="text" name="address" id="exampleAddress" placeholder="1234 Main St"/>
+                                </FormGroup>
+                            </Col>
                         </Row>
-                        <FormGroup>
-                            <Label for="exampleAddress">Address</Label>
-                            <Input onChange={this.handleChange} value={this.state.address} type="text" name="address" id="exampleAddress" placeholder="1234 Main St"/>
-                        </FormGroup>
-
-                        <Row form>
+                        <Row>
                             <Col md={6}>
                                 <FormGroup>
                                 <Label for="exampleCity">City</Label>
@@ -259,31 +281,34 @@ class Payment extends Component{
                             </Col>
                             <Col md={2}>
                                 <FormGroup>
-                                <Label for="exampleZip">Zip</Label>
-                                <Input onChange={this.handleChange} value={this.state.zip} name="zip" type="text" name="zip" placeholder="12345" id="exampleZip"/>
+                                <Label for="exampleZip">Zip Code</Label>
+                                <Input onChange={this.handleChange} value={this.state.zip} type="text" name="zip" placeholder="12345" id="exampleZip"/>
                                 </FormGroup>
                             </Col>
                         </Row>
                     </Card >
 
+                    <Card body outline color="info" style={styles.panel}>
+                        <CardTitle>SPECIAL ACCOMMODATIONS</CardTitle>
+                        <CardBody>
+                            <Input type="textarea" onChange={this.handleChange} value={this.state.special_accomodations} name="special_accomodations" placeholder="If you need any special accommodations in place that the hotel could provide for you, let them know here."/>
+                        </CardBody>
+                    </Card>
+
                     <Card body outline color="info" style={styles.panel} >
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
-
                                     className={classnames({ active: this.state.activeTab === '1' })}
                                     onClick={() => { this.toggle('1'); this.setState({ usingRewards: true })}}
-
                                 >
                                     Rewards Points Checkout
                                 </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink
-
                                     className={classnames({ active: this.state.activeTab === '2' })}
                                     onClick={() => { this.toggle('2'); this.setState({ usingRewards: false })}}
-
                                 >
                                     Card Checkout
                                 </NavLink>
@@ -304,9 +329,9 @@ class Payment extends Component{
                                                 <h5>Oops! You do not have enough rewards points to cover your current reservation.</h5>
                                                 <p>You can still check out with your credit/debit card :)</p>
                                                 <Button onClick={
-                                                    () => { 
-                                                        this.toggle('2'); 
-                                                        this.setState({ usingRewards: false 
+                                                    () => {
+                                                        this.toggle('2');
+                                                        this.setState({ usingRewards: false
                                                         })}}>
                                                     Checkout with Card</Button>
                                             </div>
@@ -317,14 +342,11 @@ class Payment extends Component{
                             <TabPane tabId="2">
                                 <br/>
                                 <Row >
-                                    <Col sm="12" md={{ size: 8, offset: 2 }}>
-                                        <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" bsSize="sm" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
-                                        borderRadius: '4px', padding: '10px 14px', fontSize: '16px'}}/>
+                                    <Col className="text-center" sm="12" md={{ size: 4, offset: 4 }}>
+                                        <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
+                                        borderRadius: '4px', padding: '10px 14px', fontSize: '16px', marginRight: '14px'}}/>
                                     </Col>
-                                </Row>
-
-                                <Row>
-                                    <Col sm="12" md={{ size: 8, offset: 2 }} >
+                                    <Col className="text-center" sm="12" md={{ size: 4, offset: 4 }} >
 
                                         <CardElement style={styles.cardpanel}/>
 

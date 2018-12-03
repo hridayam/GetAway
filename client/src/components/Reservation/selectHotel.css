@@ -33,12 +33,12 @@
 }
 @media(min-width: 768px){
     .col-md-3.price{
-        border-left: 3px solid rgba(158, 155, 155, 0.637);
+        border-left: 1px solid rgba(158, 155, 155, 0.637);
     }
 }
 @media(max-width: 767px){
     .col-md-3.price{
-        border-top: 3px solid rgba(158, 155, 155, 0.637);
+        border-top: 1px solid rgba(158, 155, 155, 0.637);
     }
 }
 .reservation-price{

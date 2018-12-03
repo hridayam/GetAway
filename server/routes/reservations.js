@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const moment = require('moment');
+const mongoose = require('mongoose');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+sgMail.setApiKey('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');
+sgMail.setSubstitutionWrappers("{{", "}}");
 
 const Reservation = require('../models/reservation');
 const User = require('../models/users');
@@ -32,35 +36,6 @@ router.post('/all', async (req,res) => {
 
     });
 });
-
-router.post('/reservation/confirmation', (req, res) => {
-    const { email } = req.body;
-    const msg = {
-        to: email,
-        from: 'no-reply@getaway.io',
-        subject: 'Sending with SendGrid is Fun',
-        text: 'and easy to do anywhere, even with Node.js',
-        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-    };
-
-    sgMail.send(msg)
-    .then( () => {
-        res.status(400).json({
-            success: true,
-
-            message: 'email delivered'
-        })
-    })
-    .catch(
-        (err) => {
-            res.status(422).json({
-                success: false,
-                error: err,
-                message: 'email delivery failed'
-            })
-
-    });
-})
 
 //get one reservation based on ID
 router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
@@ -105,7 +80,7 @@ router.get('/reservation/:id', passport.authenticate('jwt', {session: false}), a
 // update a reservation made by the user
 // front end makes a request with the user id in the parameter and put reservation object inside the request
 // backend responds with 200 for successful update or 400 for unsuccessful update
-router.post('/update', async (req,res) => {
+router.post('/edit', async (req,res) => {
     try {
         let { 
             _id,
@@ -113,11 +88,12 @@ router.post('/update', async (req,res) => {
             number_of_guests
         } = req.body;
 
-        await Reservation.findOneAndUpdate({ _id }, { $set: { special_accomodations, number_of_guests }});
+        let reservation = await Reservation.findOneAndUpdate({ _id }, { $set: { special_accomodations, number_of_guests }});
 
         return res.status(200).json({
             success: true,
-            msg: 'Successfully updated the reservation'
+            msg: 'Successfully updated the reservation',
+            reservation
         });
     }
     catch(err) {
@@ -173,48 +149,66 @@ router.post('/create', async (req,res) => {
         hotel_id, time_created, start_date, end_date,
         charge, room_number, number_of_guests,
         user, total, subtotal, tax, rewardsPoints,
-        usingRewards, city, hotel_name
+        usingRewards, city, hotel_name, special_accomodations
     } = req.body;
-    
-
-    try {
-        let reservation = new Reservation(data);
-
-        // modify user's rewards points and reservation create time
-        await User.findOneAndUpdate({ _id: data.user.id }, {
-            $set: {
-                latest_reservation_created: Date.now().valueOf()
-            },
-            $inc: {
-                rewardsPoints: data.usingRewards ? -Number(data.subtotal) : data.rewardsPoints
-            },
-            
-        },{ upsert: true }).exec();
-
-
-        Reservation.createReservation(reservation, (err, reservation) => {
-            if(err) {
-                return res.status(422).json({
-                    success: false,
-                    message: err
-                });
-            }
-            else if (reservation) {
-                return res.status(200).json({
-                    success: true,
-                    reservation,
-                    msg: 'Successfully created the reservation.'
-                });
-            }
-        });
-    }
-    catch(err) {
-        console.log(err);
-        res.status(422).json({
-            success: false,
-            msg: 'Could not create reservation'
-        });
-    }
+       
+    let reservation = new Reservation(data);
+    Reservation.createReservation(reservation, (err, reservation) => {
+        if(err) {
+            return res.status(422).json({
+                success: false,
+                message: err
+            });
+        }
+        else if (reservation) {
+            //sendEmail(reservation)
+            delete reservation.hotel;
+            return res.status(200).json({
+                success: true,
+                reservation,
+                msg: 'Successfully created the reservation.'
+            });
+        }
+    });
 });
+
+const sendEmail = (reservation) => {
+    const { user, hotel, start_date, end_date } = reservation;
+    const { address } = hotel;
+    const msg = {
+        to: user.email,
+        from: 'no-reply@getaway.io',
+        templateId: 'd-3c9da0db51ca4d699872c31d46a0a1e1',
+        personalizations: [
+            {
+                to: [
+                    {
+                        email: user.email
+                    }
+                ],
+                dynamic_template_data: {
+                    username: user.name,
+                    hotelName: hotel.name,
+                    street: address.streetName,
+                    city: address.city,
+                    state: address.state,
+                    zip: address.zipcode,
+                    date: `${moment(start_date).format('MMM Do YYYY')} - ${moment(end_date).format('MMM Do YYYY')}`,
+                    subject: 'Reservation Confirmation',
+                }
+            }
+        ]
+    };
+
+    sgMail.send(msg)
+    .then( () => {
+        console.log('email sent')
+    })
+    .catch(
+        (err) => {
+            console.log(err);
+    });
+}
+
 
 module.exports = router;
