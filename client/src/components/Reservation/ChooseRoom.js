@@ -110,27 +110,10 @@ class ChooseRoom extends Component{
         return(
             <div>
                 <Container>
-                    <div>
-                        <Dropdown className = 'sortbutton' size="lg" isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                        <DropdownToggle outline color = 'default' caret>
-                            Sort By:
-                        </DropdownToggle>
 
-                        <DropdownMenu>
-                            <DropdownItem onClick={()=>{this.setSort("low");}}>
-                            Price: Low to High
-                            </DropdownItem>
+                    <div className="form-control" style={{ marginTop: '2em', paddingTop: '2em' }}>
 
-                            <DropdownItem divider />
-
-                            <DropdownItem onClick={()=>{this.setSort("high");}}>
-                            Price: High to Low
-                            </DropdownItem>
-                        </DropdownMenu>
-                        </Dropdown>
-                    </div>
-                    <div className="form-control" style={{ marginTop: '2em' }}>
-                        {this.renderRooms(this.state.hotel)}
+          {this.renderRooms(this.state.hotel)}
                         <div className="text-right" style={{ padding: '0px 2em 1em 0px '}}>
                             <MDBBtn
                                 onClick={() => {

@@ -27,28 +27,59 @@ const hotelSchema = new Schema({
         required: true
     },
     images: [
-        {type: String}
-    ],
-    rooms: [{
-        beds: {
-            type: Number,
-            default: 1
-        },
-        bed_type: {
+        {
             type: String,
             required: true
-        },
-        room_number: {
-            type: Number,
+        }
+    ],
+    descriptions: [
+        {
+            type: String,
             required: true
-        },
-        images: {
-            type: String
-        },
-        dates_booked: [{
-            type: Number
-        }]
-    }]
+        }
+    ],
+    amenities: {
+        wifi: {
+            type: Boolean,
+            required: true, 
+            default: false
+        },     
+        gym: {
+            type: Boolean,
+            required: true,
+            default: false
+        }, 
+        pool: {
+            type: Boolean,
+            required: true,
+            default: false
+        }, 
+        complimentary_breakfast: {
+            type: Boolean,
+            required: true,
+            default: false
+        }, 
+        coffee: {
+            type: Boolean,
+            required: true,
+            default: false
+        }, 
+        laundry: {
+            type: Boolean,
+            required: true,
+            default: false
+        }, 
+        free_parking: {
+            type: Boolean,
+            required: true,
+            default: false
+        }
+    },
+    room_images: {
+        king: String,
+        queen: String,
+        twin: String
+    }
 });
 
 const Hotel = module.exports = mongoose.model('Hotel', hotelSchema);
@@ -97,65 +128,46 @@ module.exports.createHotels = function(newHotel, callBack) {
     const maxNum = cities.length;
     //const num = Math.floor(Math.random() * 11) * maxNum / 10;
     let hotelsList = []
-    
-    for (let i = 5000; i < maxNum; i++) {
+    for (let i = 0; i < maxNum; i++) {
         console.log(i);
-        for (let j = 0; j < 4; j++) {
-            //let zipcode = Math.random(10000, 100000);
-            let numOfRooms = Math.floor((Math.random() * 11) + 20);
-            
-            let rooms = [];
-            
-            // let zipcode = Math.floor((Math.random() * 90000) + 10000);
 
-            for (let r = 1; r <= numOfRooms; r++) {
-                let bedTypes = Math.floor((Math.random() * 3));;
-                
-                
-                let room = { "room_number": r }
-
-                const numOfBeds =  Math.floor((Math.random() * 3) + 1);
-                
-                if (bedTypes == 0){
-                    room = {
-                        ...room, 
-                        "bed_type": "queen",
-                        "beds": numOfBeds,
-                        "images": queen[Math.floor(Math.random()*(queen.length + 1))]
-                    };
-                }
-                else if (bedTypes == 1){
-                    room = {
-                        ...room, 
-                        "bed_type": "king",
-                        "beds": numOfBeds,
-                        "images": king[Math.floor(Math.random()*(king.length + 1))]
-                    };
-                    // room.push({"bed_type": "king",
-                    //             "beds": 1,
-                    //             "images": king[Math.floor(Math.random()*king.length)]});
-                }
-                else if (bedTypes == 2){
-                    room = {
-                        ...room, 
-                        "bed_type": "twin",
-                        "beds": numOfBeds,
-                        "images": twin[Math.floor(Math.random()*twin.length)]
-                    };
-                    // rooms.push({"bed_type": "twin",
-                    //             "beds": 1,
-                    //             "images": twin[Math.floor(Math.random()*twin.length)]});
-                }
-
-                rooms.push(room);
-            }
+        let closed = []
+        
+        for (let j = 0; j < 2; j++) {
+        
             let ranHotels = Math.floor((Math.random() * 20))
+            
+            while (closed.includes(ranHotels)) {
+                ranHotels = Math.floor((Math.random() * 20))
+            }
+
+            closed.push(ranHotels)
+
+            let ranDes = Math.floor((Math.random() * 20))
+            
             let hotelAddress = {
                 ...cities[i],
                 streetName: addresses[Math.floor((Math.random() * 20))],
                 zipcode: Math.floor((Math.random() * 90000) + 10000) 
             };
-            let hotel = new Hotel({ ...hotels[ranHotels], address: hotelAddress, rooms });
+            
+            let amenity = {
+                wifi: boolean[Math.floor(Math.random() * 2)],     
+                gym: boolean[Math.floor(Math.random() * 2)], 
+                pool: boolean[Math.floor(Math.random() * 2)],
+                complimentary_breakfast: boolean[Math.floor(Math.random() * 2)],
+                coffee: boolean[Math.floor(Math.random() * 2)],
+                laundry: boolean[Math.floor(Math.random() * 2)],
+                free_parking: boolean[Math.floor(Math.random() * 2)],
+            }
+
+            let room_images = {
+                king: king[Math.floor((Math.random() * king.length))],
+                queen: queen[Math.floor(Math.random()*queen.length)],
+                twin: twin[Math.floor(Math.random()*twin.length)]
+            }
+            
+            let hotel = new Hotel({ ...hotels[ranHotels], address: hotelAddress, ...descriptions[ranDes], amenities: amenity, room_images});
             //console.log(hotel)
             //hotel.save()
             hotelsList.push(hotel);
@@ -164,12 +176,109 @@ module.exports.createHotels = function(newHotel, callBack) {
     Hotel.insertMany(hotelsList, callBack)
 }
 
+/*  //let zipcode = Math.random(10000, 100000);
+    let numOfRooms = Math.floor((Math.random() * 11) + 20);
+    
+    let rooms = [];
+    
+    // let zipcode = Math.floor((Math.random() * 90000) + 10000);
+
+    for (let r = 1; r <= numOfRooms; r++) {
+        let bedTypes = Math.floor((Math.random() * 3));;
+        
+        
+        let room = { "room_number": r }
+
+        const numOfBeds =  Math.floor((Math.random() * 3) + 1);
+        
+        if (bedTypes == 0){
+            room = {
+                ...room, 
+                "bed_type": "queen",
+                "beds": numOfBeds,
+                "images": queen[Math.floor(Math.random()*(queen.length + 1))]
+            };
+        }
+        else if (bedTypes == 1){
+            room = {
+                ...room, 
+                "bed_type": "king",
+                "beds": numOfBeds,
+                "images": king[Math.floor(Math.random()*(king.length + 1))]
+            };
+            // room.push({"bed_type": "king",
+            //             "beds": 1,
+            //             "images": king[Math.floor(Math.random()*king.length)]});
+        }
+        else if (bedTypes == 2){
+            room = {
+                ...room, 
+                "bed_type": "twin",
+                "beds": numOfBeds,
+                "images": twin[Math.floor(Math.random()*twin.length)]
+            };
+            // rooms.push({"bed_type": "twin",
+            //             "beds": 1,
+            //             "images": twin[Math.floor(Math.random()*twin.length)]});
+        }
+
+        rooms.push(room);
+    }
+*/
+
 // get the user with an id
 module.exports.getHotelById = function(id, callback) {
     Hotel.findById(id, callback);
 }
 
-let addresses= [
+const boolean = [true, false];
+
+const descriptions = [
+
+    "On entering our gorgeous hotel, you will immediately sense its special atmosphere that makes you feel like being at home. Our spacious and comfortable bedrooms will give you the relaxation you deserve. Come and enjoy your stay",
+     
+    "Our beautiful and spacious bedrooms provide our guest with the comfort they need. We count with broad varieties of food for our diverse customers traveling from all around the world. Visit our hotel to enjoy of a great vacation and to get the break you need",
+     
+    "Beautiful hotel with wonderful views. Our focus is to provide our customers with the service they deserve. We count with more than 200 hundred bedrooms to provide our customers with a broad list of options. We make sure you feel like being at home",
+    
+    "Wonderful hotel provides ultimate comfort and luxury. This 5-star hotel is a beautiful combination of traditional grandeur and modern facilities. Every exclusive guest room is furnished with a range of modern a range of modern amenities",
+    
+    "Our hotel has a quiet and comfortable environment that provides our guest with a relaxing environment.  It is located close to many popular restaurants in the area ideal to try the best tastes of our country",
+    
+    "Beautiful hotel offers our guest a unique hospitality experience, based on individual attention and value for their money. It’s beautiful country setting makes every morning a bird watching experience. Enjoy tranquility and nature while being in a safe, private and comfort environment",
+    
+    "Our gorgeous hotel focuses to offer our guest with extraordinary experiences. Our clean and clean and modern environment is our guest’s favorites. The hotel counts with excellent breakfast, lunch and dinner brunch to all guest at any time. Our focus is to deliver great service and individual attention.",
+    
+    "Our hotel is set in the heart of the city, a few steps away from a broad variety of restaurants, bars and nightclubs. Located to many area highways, providing instant and easy access to a number of area attraction. This comfortable hotel offers a convenient location, ideal whether in town for business or for pleasure.",
+    
+    "Modern hotel offers our guest a great experience and a comfortable environment. All of our rooms count with free WiFi and air conditioning. The hotel serves a buffet breakfast daily and room service is also available. Our facilities include dry cleaning and a ticket booking service.",
+    
+    "Our luxury hotel offers 120 comfortably furnished guest rooms.  All rooms have cable TV and wireless internet access. International direct-dial phone and safe are also available. Our hotel is set in the heart of the city. It is 2 minutes away from popular bars and restaurants.",
+    
+    "Come enjoy a stay at our hotel and sink your teeth into a luxurious experience. Our Buffet is highly rated and our staff is very friendly. Enjoy our fast Wi-Fi and great room service to make your stay that much better.",
+    
+    "See the city like you’ve never seen it before! We have one-of-a-kind views of the area with a top notch selection of wines to choose from. Enjoy our amenities during your stay with us and make the most out of your trip!",
+    
+    "Rated the Best in Town by various magazines and Hotel of the Year by Time Magazine. Our hotel is more than a place to stay, it is an experience. When you stay with us, the world is yours.",
+    
+    "The weather in this city cannot be beat and our hotel takes full advantage of that!  When you’re staying with us you’ll feel right at home with our eco-friendly common areas that allow you to experience this beautiful place to the fullest.",
+    
+    "Beautiful weather, awe-inspiring views, and countless of things to do. In our hotel you have a plethora of experiences to choose from. We guarantee that at the end of the stay, you’ll be asking to stay one more night.",
+    
+    "The comfort of our hotel cannot be beat. We have a full size pool with a bar right next to it that you can get drinks from to relax by our unbeatable pool. You’ve seen other hotel’s posting about them having the best pool? Well they’re wrong! We have the best pool.",
+    
+    "Our hotel will blow your mind away. Our 5 star restaurant will make you want to stay here forever, it’s that good! Our restaurant also does room service so you can even eat in the comfort of your own room. GIve us a shot, you won’t regret it!",
+    
+    "The best customer experience! -The Verge. Our customer service is unbeatable as we strive to do everything we can to make your experience that much better. Once you’ve stayed with us, other hotels will no longer make you feel fulfilled.",
+    
+    "Extravagant rooms for extravagant guests. Our rooms cannot be beat, when you’re here, you’re royalty and you can literally do anything that you want!** Come stay with us and enjoy the beautiful city and spend time in downtown which is just one block away! **Note: Guests are subject to the rules and regulations for the hotel. Please visit our website to view all rules and regulations.",
+    
+    "Unbeatable prices for unbeatable views. Our hotel offers guests the best views in the area and we have the best catering service in town. Stay for the view, but enjoy the spa and other amenities offered by our hotel and staff."
+    
+    ];
+    
+
+let addresses = [
     "1600 Pennsylvania Avenue", 
     "11 Wall Street", 
     "350 Fifth Avenue", 

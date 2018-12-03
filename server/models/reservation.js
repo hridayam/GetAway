@@ -38,7 +38,8 @@ const ReservationSchema = new mongoose.Schema({
     rooms: Object,
     special_accomodations: String,
     city: String,
-    hotel_name: String
+    hotel_name: String,
+    hotel_image: String
 });
 
 const Reservation = module.exports = mongoose.model('Reservation', ReservationSchema);
@@ -51,48 +52,91 @@ module.exports.createReservation = function (newReservation, callback) {
             return callback(err);
         }
         let booked = false;
-        reservations.forEach((reservation, index) => {
-            const { start_date, end_date } = reservation;
-            if(
-                moment(newReservation.start_date).isSame(start_date, 'day') ||
-                (moment(newReservation.start_date).isAfter(start_date, 'day') || 
-                moment(newReservation.start_date).isBefore(end_date, 'day')) ||
-                (moment(newReservation.end_date).isAfter(start_date, 'day') || 
-                moment(newReservation.end_date).isBefore(end_date, 'day')) || 
-                (moment(start_date).isAfter(newReservation.start_date, 'day') &&
-                moment(end_date).isBefore(newReservation.end_date, 'day'))
-            ) {
-                if(!reservation.cancelled) {
+
+        if (reservations.length === 0) {
+            return reserve(newReservation, callback, true);
+        } else {
+            reservations.forEach((reservation, index) => {
+                const { start_date, end_date } = reservation;
+                // if(
+                //     moment(newReservation.start_date).isSame(start_date, 'day') ||
+                //     (moment(newReservation.start_date).isAfter(start_date, 'day') || 
+                //     moment(newReservation.start_date).isBefore(end_date, 'day')) ||
+                //     (moment(newReservation.end_date).isAfter(start_date, 'day') || 
+                //     moment(newReservation.end_date).isBefore(end_date, 'day')) || 
+                //     (moment(start_date).isAfter(newReservation.start_date, 'day') &&
+                //     moment(end_date).isBefore(newReservation.end_date, 'day'))
+                // ) {
+                //     if(!reservation.cancelled) {
+                //         booked = true;
+                //     }
+                // }
+
+                if (moment(newReservation.start_date).isSame(start_date, 'day')) {
+                    booked = true;  
+                } 
+                if (
+                    moment(newReservation.start_date).isAfter(start_date, 'day') &&
+                    moment(newReservation.start_date).isBefore(end_date, 'day')
+                ) {
                     booked = true;
                 }
+                if (
+                    moment(newReservation.end_date).isAfter(start_date, 'day') &&
+                    moment(newReservation.end_date).isBefore(end_date, 'day')
+                ) {
+                    booked = true;
+                }
+                if (
+                    moment(start_date).isAfter(newReservation.start_date, 'day') &&
+                    moment(end_date).isBefore(newReservation.end_date, 'day')
+                ) {
+                    booked = true;
+                }
+                if (reservation.cancelled) {
+                    booked = false;
+                }
+    
+                if(index === reservations.length - 1) {
+                    console.log('booked:', booked)
+                    if (booked) return callback(new Error('already booked for those days'))
+    
+                    reserve(newReservation, callback);
+                }
+            })
+        }
+    })
+}
+
+const reserve = function(reservation, callback, firstTime) {
+    reservation.save((err, reservation) => {
+        if (err) {
+            console.log(err);
+            return callback(err);
+        }
+        Hotel.getHotelById(reservation.hotel_id, (err, hotel) => {
+            if (err) callback(err);
+            let reservationData;
+            if (firstTime) {
+                reservationData = reservation
+            } else {
+                reservationData = reservation._doc;
             }
-
-            if(index === reservations.length - 1) {
-                console.log('booked:', booked)
-                if (booked) return callback(new Error('already booked for those days'))
-
-                newReservation.save((err, reservation) => {
-                    if (err) return callback(err);
-                    console.log('saving user');
-                    Hotel.getHotelById(reservation.hotel_id, (err, hotel) => {
-                        if (err) callback(err);
-                        reservation = {
-                            ...reservation._doc,
-                            hotel
-                        }
-                    })
-                    // if user is registered, add points
-                    User.getUserByEmail(reservation.user.email, (err, user) => {
-                        if (err) return callback(null, reservation);
-                        user.rewardsPoints += reservation.rewardsPoints;
-                        user.save(() => {
-                            return callback(null, reservation)
-                        });
-                    })
-                });
+            reservation = {
+                ...reservationData,
+                hotel
             }
         })
-    })
+        // if user is registered, add points
+        User.getUserByEmail(reservation.user.email, (err, user) => {
+            if (err) return callback(null, reservation);
+            user.rewardsPoints += reservation.rewardsPoints;
+            user.save(() => {
+                return callback(null, reservation)
+            });
+        })
+    });
+
 }
 
 module.exports.getReservationById = function(id, callback) {
@@ -113,10 +157,16 @@ module.exports.getReservationById = function(id, callback) {
     });
 }
 
-module.exports.getAllReservationsByOneUser = function(user_id, callback) {
-    Reservation.find({ 'user.email': user_id }, function(err, reservations) {
-        if(err) return callback(err);
+module.exports.getAllReservationsByOneUser = function(email, callback) {
+    Reservation.find({ 'user.email': email }, function(err, reservations) {
+        if(err) {
+            console.log(err);
+            return callback(err);
+        }
         const hotels = [];
+        if (reservations.length === 0) {
+            return callback(null, []);
+        }
         reservations.forEach((reservation) => {
             Hotel.getHotelById(reservation.hotel_id, (err, hotel) => {
                 if (err) return callback(err);
