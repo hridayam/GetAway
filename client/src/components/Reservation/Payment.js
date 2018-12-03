@@ -33,7 +33,8 @@ class Payment extends Component{
             subtotal: 0, total: 0, tax: 0, rewardsPoints: 0,
             activeTab: '1',
             usingRewards: true,
-            special_accomodations: ''
+            special_accomodations: '',
+            email: ''
         };
     }
 
@@ -59,8 +60,9 @@ class Payment extends Component{
                 userCity: addressSplit.length > 1 ? addressSplit[1] : '',
                 state: addressSplit.length > 2 ? addressSplit[2] : '',
                 zip: addressSplit.length > 3 ? addressSplit[3] : '',
+                email: user.email.length ? user.email : ''
             };
-        } else if (props.hotel !== state.hotel && (user === null || user !== undefined)){
+        } else if (props.hotel !== state.hotel && (user === null || user === undefined)){
             return {
                 ...state,
                 hotel,
@@ -94,7 +96,7 @@ class Payment extends Component{
                 amount: parseInt(this.calculateTotal()),
                 currency: 'usd',
                 source: token.id,
-                description: this.state.user.id
+                description: this.state.user && this.state.user.id ? this.state.user.id : ''
             };
 
             // Nhat switched back to old promise handling for testing
@@ -108,9 +110,9 @@ class Payment extends Component{
                         number_of_guests: numGuests,
                         user: {
                             name,
-                            email: this.state.user.email,
-                            id: this.state.user.id || this.state.user._id,
-                            phoneNumber: this.state.user.phoneNumber
+                            email: this.state.email,
+                            id: this.state.user ? this.state.user.id || this.state.user._id : null,
+                            phoneNumber: this.state.user ? this.state.user.phoneNumber : ''
                         },
                         rewardsPoints,
                         subtotal, total, tax,
@@ -264,7 +266,7 @@ class Payment extends Component{
                     </div>
 
                     <div className="form-control col-sm-12" style={{ marginTop: '2em' }}>
-                        <CardTitle>BILLING ADDRESS</CardTitle>
+                        <CardTitle>USER INFORMATION</CardTitle>
                         <Row>
                             <Col sm="12">
                                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -296,6 +298,12 @@ class Payment extends Component{
                                 <FormGroup>
                                 <Label for="exampleZip">Zip Code</Label>
                                 <Input onChange={this.handleChange} value={this.state.zip} type="text" name="zip" placeholder="12345" id="exampleZip"/>
+                                </FormGroup>
+                            </Col>
+                            <Col md={12}>
+                                <FormGroup>
+                                <Label for="exampleZip">Email Address</Label>
+                                <Input onChange={this.handleChange} value={this.state.email} type="text" name="email" placeholder="user@gmail.com"/>
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -334,7 +342,7 @@ class Payment extends Component{
                                 <br/>
                                 <Row>
                                     <Col sm="12">
-                                        {this.state.user.rewardsPoints > this.state.total ?
+                                        {this.state.user && this.state.user.rewardsPoints > this.state.total ?
                                             <div>
                                                 <h3>Congratulations!</h3>
                                                 <p>You have enough rewards points for a free stay!</p>
@@ -355,8 +363,7 @@ class Payment extends Component{
                                             </div> :
                                             <div>
                                                 <h5>Oh no!</h5>
-                                                <p>You need {Math.floor(this.state.subtotal)} reward points to get a free stay</p>
-                                                <p>But you only have {this.state.user.rewardsPoints} reward points in your balance</p>
+                                                <p>You either are not logged in, or do not have sufficient rewards points for a free stay</p>
                                                 <p>You can still check out with your credit/debit card :)</p>
                                                 <Button onClick={
                                                     () => {
@@ -379,10 +386,12 @@ class Payment extends Component{
                                         <b>Subtotal: </b>${this.state.subtotal}<br/>
                                         <b>Tax: </b>${this.state.tax}<br/>
                                         <b>Total: </b>${this.state.total}<br/><br/>
+                                        { this.state.user ? 
+                                        <div>
                                         <b>Rewards Points Balance Currently: </b> {this.state.user.rewardsPoints}<br/>
                                         <b>Rewards Points Earned: </b> {this.state.rewardsPoints}<br/>
                                         <b>Rewards Points Balance After: {this.state.user.rewardsPoints + this.state.rewardsPoints}</b>
-                                        
+                                        </div> : null }
                                     </Col>
                                     <Col className="text-center" sm="12" md={{ size: 4, offset: 4 }}>
                                         <hr/>

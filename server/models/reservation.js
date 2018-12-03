@@ -12,7 +12,6 @@ const validateEmail = function(email) {
 };
 
 const ReservationSchema = new mongoose.Schema({
-    _id: mongoose.SchemaTypes.ObjectId,
     user: {
         id: mongoose.SchemaTypes.ObjectId,
         email: {

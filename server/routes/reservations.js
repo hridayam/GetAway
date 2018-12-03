@@ -161,7 +161,7 @@ router.post('/create', async (req,res) => {
             });
         }
         else if (reservation) {
-            //sendEmail(reservation)
+            sendEmail(reservation)
             delete reservation.hotel;
             return res.status(200).json({
                 success: true,
