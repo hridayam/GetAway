@@ -1,5 +1,7 @@
 const mongoose  = require ('mongoose');
 const bcrypt = require ('bcryptjs');
+const crypto = require('crypto');
+const moment = require('moment');
 
 const Reservation = require('./reservation');
 
@@ -52,7 +54,9 @@ const userSchema = new Schema({
     latest_reservation_created: {
         type: Number,
         default: 0
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 });
 
 const User = module.exports = mongoose.model('User', userSchema);
@@ -67,6 +71,20 @@ module.exports.createUser = function(newUser, callBack){
             newUser.save(callBack); 
         });
     });
+}
+
+module.exports.generateResetPasswordToken = function(email, callBack) {
+    User.getUserByEmail(email, (err, user) => {
+        if (err) return callBack(err);
+        crypto.randomBytes(20, (err, buf) => {
+            if (err) return callBack(err);
+            var token = buf.toString('hex');
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = moment().add(1, 'h').toDate();
+            user.save();
+            return callBack(null, token);
+        })
+    })
 }
 
 // get a user query with an email
