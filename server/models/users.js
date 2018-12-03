@@ -87,6 +87,20 @@ module.exports.generateResetPasswordToken = function(email, callBack) {
     })
 }
 
+module.exports.resetPassword = function (data, callBack) {
+    const { token, password } = data
+    User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() }}, (err, user) => {
+        if (err) return callBack(err);
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, salt, function(err, hash) {
+                if (err) return callBack(err);
+                user.password = hash;
+                user.save(callBack); 
+            });
+        });
+    })
+}
+
 // get a user query with an email
 module.exports.getUserByEmail = function(email, callback) {
     const query = { email };

@@ -117,7 +117,13 @@ const sendEmail = (email, token, res) => {
 
 router.post('/resetPassword', function(req, res) {
     const { token, confirmPassword, password } = req.body;
-
+    if (password !== confirmPassword) {
+        return res.status(422).json({success: false, message: 'password and confirm password don\'t match'})
+    }
+    User.resetPassword({token, password}, (err, user) => {
+        if(err) return res.status(422).json({success: false, error: err})
+        res.status(200).json({success: true, user, message: 'password changed'});
+    });
     
 });
 
