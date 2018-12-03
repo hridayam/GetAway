@@ -72,6 +72,19 @@ class Login extends Component {
     return null;
   }
 
+  sendResetLink() {
+    if (this.state.email.length === 0) {
+      return alert('please fill in the email field before clicking submit')
+    }
+    axios.post('http://localhost:3001/users/forgotPassword', { email: this.state.email })
+    .then(() => {
+      alert('please check your inbox for password reset link');
+    })
+    .catch(err => {
+      alert('verify email address and retry');
+    })
+  }
+
   toggle() {
     this.setState({
       modal: !this.state.modal,
@@ -154,7 +167,7 @@ class Login extends Component {
       '/users/edit-profile', {
         email: this.state.profileEmail,
         newPhoneNumber: this.formatPhoneNumber(this.state.profilePhoneNumber),
-        newAddress: [this.state.address, this.state.city, this.state.state, this.state.zipcode].join(','),
+        newAddress: [this.state.address, this.state.city, this.state.state, this.state.zipcode].join(', '),
         file: this.state.file
     })
       .then(res => {
@@ -243,6 +256,11 @@ class Login extends Component {
                         <a href="http://localhost:3001/auth/google">
                           <GoogleButton />
                         </a>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col style={{justifyContent:'center'}} sm='12' md='6'>
+                          <Button className="btn btn-deep-orange" type='button' onClick={this.sendResetLink.bind(this)}>forgot password</Button>
                       </Col>
                     </Row>
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>

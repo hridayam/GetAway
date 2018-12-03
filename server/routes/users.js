@@ -8,6 +8,10 @@ const jwt =  require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary');
 const axios = require('axios');
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey('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');
+sgMail.setSubstitutionWrappers("{{", "}}");
 
 const config = require('../config/database');
 const User = require('../models/users');
@@ -22,7 +26,8 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), function(
         phoneNumber:        req.user.phoneNumber,
         address:            req.user.address,
         rewardsPoints:      req.user.rewardsPoints,
-        profilePic:         req.user.profilePic
+        profilePic:         req.user.profilePic,
+        google_id:          req.user.google_id
     }});
 });
 
@@ -69,7 +74,59 @@ router.post('/register', function(req, res) {
     }
 });
 
+router.post('/forgotPassword', function(req, res, next){
+    const { email } = req.body;
 
+    User.generateResetPasswordToken(email, (err, token) => {
+        if (err) {
+            console.log(err)
+            return res.status(422).json({ success: false, error: err })
+        }
+
+        sendEmail(email, token, res);
+    })
+});
+
+const sendEmail = (email, token, res) => {
+    const msg = {
+        to: email,
+        from: 'no-reply@getaway.io',
+        templateId: 'd-4853abfeec304587bf0637296a6bbed3',
+        personalizations: [
+            {
+                to: [
+                    {
+                        email: email
+                    }
+                ],
+                dynamic_template_data: {
+                    link: `http://localhost:3000/resetPassword/${token}`,
+                    subject: 'Reset Password',
+                }
+            }
+        ]
+    };
+
+    sgMail.send(msg)
+    .then( () => {
+        res.status(200).json({success: true, message: 'email sent'});
+    })
+    .catch((err) => {
+        res.status(422).json({success: false, error: err});
+    });
+}
+
+router.post('/resetPassword', function(req, res) {
+    const { token, confirmPassword, password } = req.body;
+    if (!(password === confirmPassword && password.length > 7 && confirmPassword.length > 7)) {
+        return res.status(422).json({success: false, message: 'invalid credentials'})
+    }
+    User.resetPassword({token, password}, (err, user) => {
+        if(err) return res.status(422).json({success: false, error: err})
+        res.status(200).json({success: true, user, message: 'password changed'});
+    });
+    
+});
 
 router.post('/login', (req, res, next) => {
     console.log(req.body);
