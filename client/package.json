@@ -26,7 +26,7 @@
     "react-scroll-up": "*",
     "react-stepzilla": "^4.7.2",
     "react-stripe-elements": "^2.0.1",
-    "react-toastify": "^4.4.2",
+    "react-toastify": "^4.4.3",
     "reactstrap": "^6.4.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",

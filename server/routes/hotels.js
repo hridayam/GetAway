@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Hotels = require('../models/hotel').Hotels;
+const Hotels = require('../models/hotels');
 const express = require('express');
 const router = express.Router();
 
@@ -37,7 +37,7 @@ router.get('/generate_random_hotel', async(req,res) => {
     catch(err) {
         console.log(err);
     }
-});
+}); 
 
 const findHotels = (params,res) => {
     Hotels.find(params, (err,hotels) => {
