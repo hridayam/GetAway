@@ -55,18 +55,43 @@ module.exports.createReservation = function (newReservation, callback) {
         } else {
             reservations.forEach((reservation, index) => {
                 const { start_date, end_date } = reservation;
-                if(
-                    moment(newReservation.start_date).isSame(start_date, 'day') ||
-                    (moment(newReservation.start_date).isAfter(start_date, 'day') || 
-                    moment(newReservation.start_date).isBefore(end_date, 'day')) ||
-                    (moment(newReservation.end_date).isAfter(start_date, 'day') || 
-                    moment(newReservation.end_date).isBefore(end_date, 'day')) || 
-                    (moment(start_date).isAfter(newReservation.start_date, 'day') &&
-                    moment(end_date).isBefore(newReservation.end_date, 'day'))
+                // if(
+                //     moment(newReservation.start_date).isSame(start_date, 'day') ||
+                //     (moment(newReservation.start_date).isAfter(start_date, 'day') || 
+                //     moment(newReservation.start_date).isBefore(end_date, 'day')) ||
+                //     (moment(newReservation.end_date).isAfter(start_date, 'day') || 
+                //     moment(newReservation.end_date).isBefore(end_date, 'day')) || 
+                //     (moment(start_date).isAfter(newReservation.start_date, 'day') &&
+                //     moment(end_date).isBefore(newReservation.end_date, 'day'))
+                // ) {
+                //     if(!reservation.cancelled) {
+                //         booked = true;
+                //     }
+                // }
+
+                if (moment(newReservation.start_date).isSame(start_date, 'day')) {
+                    booked = true;  
+                } 
+                if (
+                    moment(newReservation.start_date).isAfter(start_date, 'day') &&
+                    moment(newReservation.start_date).isBefore(end_date, 'day')
                 ) {
-                    if(!reservation.cancelled) {
-                        booked = true;
-                    }
+                    booked = true;
+                }
+                if (
+                    moment(newReservation.end_date).isAfter(start_date, 'day') &&
+                    moment(newReservation.end_date).isBefore(end_date, 'day')
+                ) {
+                    booked = true;
+                }
+                if (
+                    moment(start_date).isAfter(newReservation.start_date, 'day') &&
+                    moment(end_date).isBefore(newReservation.end_date, 'day')
+                ) {
+                    booked = true;
+                }
+                if (reservation.cancelled) {
+                    booked = false;
                 }
     
                 if(index === reservations.length - 1) {
