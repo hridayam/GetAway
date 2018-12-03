@@ -130,11 +130,19 @@ module.exports.createHotels = function(newHotel, callBack) {
     let hotelsList = []
     for (let i = 0; i < maxNum; i++) {
         console.log(i);
+
+        let closed = []
         
-        for (let j = 0; j < 10; j++) {
+        for (let j = 0; j < 2; j++) {
         
             let ranHotels = Math.floor((Math.random() * 20))
             
+            while (closed.includes(ranHotels)) {
+                ranHotels = Math.floor((Math.random() * 20))
+            }
+
+            closed.push(ranHotels)
+
             let ranDes = Math.floor((Math.random() * 20))
             
             let hotelAddress = {
@@ -162,7 +170,6 @@ module.exports.createHotels = function(newHotel, callBack) {
             let hotel = new Hotel({ ...hotels[ranHotels], address: hotelAddress, ...descriptions[ranDes], amenities: amenity, room_images});
             //console.log(hotel)
             //hotel.save()
-            
             hotelsList.push(hotel);
         }
     }
