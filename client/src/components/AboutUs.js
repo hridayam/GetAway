@@ -123,7 +123,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped2}>
                     <Card onClick={this.handleClick2}
                     key="front">
-                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9017084ac611b76fb7506ccc54d854ac&w=1000&q=80" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://files.slack.com/files-pri/TCESXV1DL-FEGTCHY9X/img_20180327_152354.jpg" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Hridayam</CardTitle>
                             <CardText>Technical Lead</CardText>
@@ -170,7 +170,7 @@ export default class aboutUs extends Component {
                     isFlipped={this.state.isFlipped4}>
                     <Card onClick={this.handleClick4}
                     key="front">
-                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://bnetproduct-a.akamaihd.net//70/dfdccc3712ed263d4903fa18806adab7-sc2-carbot-feature-003.jpg" alt="Card image cap" />
+                        <CardImage className="img-fluid" style = {styles.imgFluid} src="https://files.slack.com/files-pri/TCESXV1DL-FEJGMH2KH/0.jpg" alt="Card image cap" />
                         <CardBody >
                             <CardTitle>Alejandro Lopez</CardTitle>
                             <CardText>Documentation</CardText>
@@ -188,7 +188,7 @@ export default class aboutUs extends Component {
                        
                    
                 </Col>
-                <div style ={{marginBottom:400}}></div>
+                <div style ={{marginBottom:450}}></div>
                 <Col xs={12} md={4} lg={3}>
                 
                     <ReactCardFlip  style = {styles.card}
@@ -289,7 +289,7 @@ export default class aboutUs extends Component {
                       
                     
                 </Col> 
-                <div style ={{marginBottom:400}}></div>
+                <div style ={{marginBottom:450}}></div>
                 <Col xs={12} md={4} lg={3}>
               
                     <ReactCardFlip  style = {styles.card}
@@ -377,7 +377,7 @@ const styles = {
         marginBottom:'30px',
     },
     imgFluid:{
-        height: '150px',
-        width: '318px'
+        height: '190px',
+        width: '250px'
     }
 }
