@@ -72,6 +72,19 @@ class Login extends Component {
     return null;
   }
 
+  sendResetLink() {
+    if (this.state.email.length === 0) {
+      return alert('please fill in the email field before clicking submit')
+    }
+    axios.post('http://localhost:3001/users/forgotPassword', { email: this.state.email })
+    .then(() => {
+      alert('please check your inbox for password reset link');
+    })
+    .catch(err => {
+      alert('verify email address and retry');
+    })
+  }
+
   toggle() {
     this.setState({
       modal: !this.state.modal,
@@ -245,8 +258,13 @@ class Login extends Component {
                         </a>
                       </Col>
                     </Row>
+                    <Row>
+                      <Col style={{justifyContent:'center'}} sm='12' md='6'>
+                          <Button className="btn btn-deep-orange" type='button' onClick={this.sendResetLink.bind(this)}>forgot password</Button>
+                      </Col>
+                    </Row>
                       <button className="btn btn-deep-orange login" type='submit'>Log In</button>
-                      <button className="btn btn-deep-orange logout" onClick={this.toggle.bind(this)}>Cancel</button>
+                      <Button className="btn btn-deep-orange logout" type='button' onClick={this.toggle.bind(this)}>Cancel</Button>
                     </form>
                   </Col>
                 </Row>

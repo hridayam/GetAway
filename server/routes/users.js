@@ -26,7 +26,8 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), function(
         phoneNumber:        req.user.phoneNumber,
         address:            req.user.address,
         rewardsPoints:      req.user.rewardsPoints,
-        profilePic:         req.user.profilePic
+        profilePic:         req.user.profilePic,
+        google_id:          req.user.google_id
     }});
 });
 
@@ -117,8 +118,8 @@ const sendEmail = (email, token, res) => {
 
 router.post('/resetPassword', function(req, res) {
     const { token, confirmPassword, password } = req.body;
-    if (password !== confirmPassword) {
-        return res.status(422).json({success: false, message: 'password and confirm password don\'t match'})
+    if (!(password === confirmPassword && password.length > 7 && confirmPassword.length > 7)) {
+        return res.status(422).json({success: false, message: 'invalid credentials'})
     }
     User.resetPassword({token, password}, (err, user) => {
         if(err) return res.status(422).json({success: false, error: err})
