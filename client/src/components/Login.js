@@ -149,7 +149,7 @@ class Login extends Component {
             <b>Address</b><br/><input className="form-control" onChange={this.handleChange} name="address" type="text" value={this.state.address}/><br/>
             <b>City</b><br/><input className="form-control" onChange={this.handleChange} name="city" type="text" value={this.state.city}/><br/>
             <b>State</b><br/><input className="form-control" onChange={this.handleChange} name="state" type="text" value={this.state.state}/><br/>
-            <b>Zipcode</b><br/><input className="form-control" onChange={this.handleChange} name="zipcode" type="text" value={this.state.zipcode}/><br/>
+            <b>ZIP Code</b><br/><input className="form-control" onChange={this.handleChange} name="zipcode" type="text" value={this.state.zipcode}/><br/>
             <button onClick={this.handleProfileEditSubmit} className="btn btn-deep-orange login">Submit Changes</button>
           </div>
       </div>:

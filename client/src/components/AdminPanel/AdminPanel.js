@@ -325,7 +325,7 @@ class AdminPanel extends Component {
                 <b>Reserved on: </b>{moment(data.time_created).format('DD MMM YYYY HH:MM')}<br/>
                 <b>Reserved by: </b>{data.user && data.user.name.length ? data.user.name : 'N/A'}<br/>
                 <b>Contact Email: </b>{data.user && data.user.email.length ? data.user.email : 'N/A'}<br/>
-                <b>User ID: </b>{data.user && data.user.id.length ? data.user.id : 'N/A, guest reservation'}
+                <b>User ID: </b>{data.user && data.user.id && data.user.id.length ? data.user.id : 'N/A, guest reservation'}
                 <hr/>
                 <b>Special Accomodations</b>
                 <p>{data.special_accomodations && data.special_accomodations.length ? data.special_accomodations : 'None specified'}</p>

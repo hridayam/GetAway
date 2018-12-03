@@ -140,7 +140,7 @@ class Payment extends Component{
                 user: {
                     name,
                     email: this.state.user.email,
-                    id: this.state.user.id
+                    id: this.state.user.id || this.state.user._id
                 },
                 rewardsPoints,
                 subtotal, total, tax,
@@ -240,9 +240,9 @@ class Payment extends Component{
                                 {this.state.hotel.amenities.free_parking? <i class="fas fa-car" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}</p>
                                 <br/>
                                 <p>
-                                    Booked from {moment(this.state.startDate).format('MM DD YYYY').split(' ').join('/')} to {moment(this.state.endDate).format('MM DD YYYY').split(' ').join('/')}
+                                    <b>Booked from:</b> <br/>{moment(this.state.startDate).format('MM DD YYYY').split(' ').join('/')} to {moment(this.state.endDate).format('MM DD YYYY').split(' ').join('/')}
                                 </p>
-                                <p> Rooms Booked: <br/>
+                                <p> <b>Rooms Booked:</b> <br/>
                                 {
                                     Object.keys(this.state.rooms).map((v,i) => {
                                         return <p>{this.state.rooms[v]} {String(v).replace(/\w\S*/g, words => words.charAt(0).toUpperCase() + words.substr(1).toLowerCase()) + ` Bed Room${this.state.rooms[v] > 1 ? 's' : ''}`} for ${this.state.hotel.price[v]} {this.state.rooms[v] > 1 ? 'each' : ''}</p>

@@ -66,18 +66,18 @@ class Reservation extends Component{
     onSubmit = () => {
         let { city, numGuests } = this.state;
 
-        //getting only city
-        let tempCity = city;
+        let citySplit = city.split(',');
+        let tempCity = '';
 
-        let getCity = tempCity.split(',');
-
-        let newCity = new String(
-                        getCity[0]
-        )
+        if (citySplit.length > 1 && citySplit.length < 4){
+            tempCity = citySplit[0];
+        } else if (citySplit.length > 3){
+            tempCity = citySplit[citySplit.length - 3].trim();
+        }
 
         this.props.search(
-            newCity,
-            numGuests,
+            tempCity,
+            numGuests ? numGuests : 1,
             this.state.startDate,
             this.state.endDate);
         this.setState({ submitted: true });
@@ -103,6 +103,8 @@ class Reservation extends Component{
                                  startDatePlaceholderText= {this.state.startDate}
                                  endDatePlaceholderText= {this.state.endDate}
                                  style={{textAlign:'center'}}
+                                 startDateId="startDateId"
+                                 endDateId="endDateId"
                             />
                     </Col>
                 </Row>
@@ -124,6 +126,7 @@ class Reservation extends Component{
                                                 })}
                                                 className="form-control text-center col-sm-8 offset-sm-2"
                                                 style={{ height: '3em' }}
+                                                required
                                             />
                                             <div className="autocomplete-dropdown-container">
                                                 {loading && <div>Loading...</div>}
