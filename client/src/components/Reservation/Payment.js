@@ -7,6 +7,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { Card, CardBody, CardTitle, MDBInput  } from 'mdbreact';
 import classnames from 'classnames';
 import { Carousel } from 'react-responsive-carousel';
+import moment  from  'moment';
 
 import '../css/Home.css';
 import {connect} from 'react-redux';
@@ -122,10 +123,12 @@ class Payment extends Component{
                             this.props.jumpToStep(3);
                         })
                         .catch(err => {
+                            console.log(Object.keys(err));
                             console.log(err);
                         });
                 })
                 .catch(err => {
+                    console.log(Object.keys(err));
                     console.log(err);
                 });
         } else {
@@ -148,9 +151,11 @@ class Payment extends Component{
                 hotel_image: hotel.images[0]
             })
                 .then(() => {
+                    console.log('sucessful')
                     this.props.jumpToStep(3);
                 })
                 .catch(err => {
+                    console.log(Object.keys(err));
                     console.log(err);
                 });
         }
@@ -202,16 +207,11 @@ class Payment extends Component{
 
 
     render() {
-        if (this.state.complete)
-            return <h1 style={{ margin: '20em 0px 20em 0px' }}>Purchase Complete</h1>
-
-
         return(
             <Form className="container" style={styles.body}>
-                <FormGroup >
-                    <h2 >Checkout</h2>
-                    <Card body outline color="info" style={styles.panel} >
-                        <CardTitle>REVIEW ORDER</CardTitle>
+                <Row>
+                    <div className="form-control col-sm-12" style={{ marginTop: '2em' }}>
+                        <CardTitle>RESERVATION DETAILS</CardTitle>
                         <Row className="text-right">
                             <Col s="3">
                             {
@@ -219,24 +219,41 @@ class Payment extends Component{
                                 ?   <img src={this.state.hotel.images[0]} alt="" className="w-100"/>
                                 : null
                             }
+                            <br/>
                             </Col>
                             <Col s="9">
-                                <b style={{fontSize:20}}>{this.state.hotel.name}</b>
-                                <br/>
-                                <small>{this.state.hotel.address.city}</small>
+                                <b style={{fontSize:22}}>{this.state.hotel.name} of {this.state.hotel.address.city}</b>
                                 <br/><br/>
-                                Subtotal: ${this.state.subtotal}
+                                <p>
+                                    {this.state.hotel.stars === 5? <div> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                    {this.state.hotel.stars === 4? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                    {this.state.hotel.stars === 3? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i>  </div> : ""}
+                                    {this.state.hotel.stars === 2? <div><i class="fas fa-star"></i> <i class="fas fa-star"></i> </div>: ""}
+                                    {this.state.hotel.stars === 1? <i class="fas fa-star"></i> : ""}
+                                </p>
+                                <p>{this.state.hotel.amenities.wifi? <i class="fas fa-wifi"></i> : ""}
+                                {this.state.hotel.amenities.gym? <i class="fas fa-dumbbell" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                {this.state.hotel.amenities.pool?  <i class="fas fa-swimmer" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                {this.state.hotel.amenities.complimentary_breakfast? <i class="fas fa-utensils" style={{marginLeft: "14px", color: '#484848'}}></i>  : ""}
+                                {this.state.hotel.amenities.coffee? <i class="fas fa-coffee" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}
+                                {this.state.hotel.amenities.laundry? <i class="fas fa-tshirt" style={{marginLeft: "14px", color: '#484848'}}></i>  : ""}
+                                {this.state.hotel.amenities.free_parking? <i class="fas fa-car" style={{marginLeft: "14px", color: '#484848'}}></i> : ""}</p>
                                 <br/>
-                                Tax: ${this.state.tax}
-                                <br/><br/>
-                                Total: ${this.state.total}
-                                <br/>
-                                Rewards Points Earned: {this.state.rewardsPoints}
+                                <p>
+                                    Booked from {moment(this.state.startDate).format('MM DD YYYY').split(' ').join('/')} to {moment(this.state.endDate).format('MM DD YYYY').split(' ').join('/')}
+                                </p>
+                                <p> Rooms Booked: <br/>
+                                {
+                                    Object.keys(this.state.rooms).map((v,i) => {
+                                        return <p>{this.state.rooms[v]} {String(v).replace(/\w\S*/g, words => words.charAt(0).toUpperCase() + words.substr(1).toLowerCase()) + ` Bed Room${this.state.rooms[v] > 1 ? 's' : ''}`} for ${this.state.hotel.price[v]} {this.state.rooms[v] > 1 ? 'each' : ''}</p>
+                                    })
+                                }
+                                </p>
                             </Col>
                         </Row>
-                    </Card>
+                    </div>
 
-                    <Card body outline color="info" style={styles.panel}>
+                    <div className="form-control col-sm-12" style={{ marginTop: '2em' }}>
                         <CardTitle>BILLING ADDRESS</CardTitle>
                         <Row>
                             <Col sm="12">
@@ -272,16 +289,16 @@ class Payment extends Component{
                                 </FormGroup>
                             </Col>
                         </Row>
-                    </Card >
+                    </div>
 
-                    <Card body outline color="info" style={styles.panel}>
+                    <div className="form-control col-sm-12" style={{ marginTop: '2em' }}>
                         <CardTitle>SPECIAL ACCOMMODATIONS</CardTitle>
                         <CardBody>
                             <Input type="textarea" onChange={this.handleChange} value={this.state.special_accomodations} name="special_accomodations" placeholder="If you need any special accommodations in place that the hotel could provide for you, let them know here."/>
                         </CardBody>
-                    </Card>
+                    </div>
 
-                    <Card body outline color="info" style={styles.panel} >
+                    <div className="form-control col-sm-12" style={{ marginTop: '2em', marginBottom: '2em' }}>
                         <Nav tabs>
                             <NavItem>
                                 <NavLink
@@ -307,12 +324,27 @@ class Payment extends Component{
                                     <Col sm="12">
                                         {this.state.user.rewardsPoints > this.state.total ?
                                             <div>
-                                                <h5>Congrats you have enough rewards points to cover your current reservation!</h5>
-                                                <p>You will have {this.state.user.rewardsPoints - this.state.total} after this reservation is made</p>
-                                                <Button color="info" onClick={this.handleSubmit}>Finish Checkout</Button>
+                                                <h3>Congratulations!</h3>
+                                                <p>You have enough rewards points for a free stay!</p>
+                                                
+                                                <Row>
+                                                    <Col sm="12" className="text-center">
+                                                        <b>Subtotal: </b>${this.state.subtotal}<br/>
+                                                        <b>Tax: </b>${this.state.tax}<br/>
+                                                        <b>Total: </b>${this.state.total}<br/><br/>
+                                                        
+                                                        <b>Rewards Points Balance: </b>{this.state.user.rewardsPoints}<br/>
+                                                        <b>Rewards Points Needed: </b>{Math.floor(this.state.subtotal)}<br/>
+                                                        <b>Rewards Points Balance After: </b>{Math.floor(this.state.user.rewardsPoints - this.state.subtotal)}
+                                                        <hr/>
+                                                    </Col>
+                                                </Row>
+                                                <Button color="info" onClick={this.handleSubmit}>Get My Free Stay</Button>
                                             </div> :
                                             <div>
-                                                <h5>Oops! You do not have enough rewards points to cover your current reservation.</h5>
+                                                <h5>Oh no!</h5>
+                                                <p>You need {Math.floor(this.state.subtotal)} reward points to get a free stay</p>
+                                                <p>But you only have {this.state.user.rewardsPoints} reward points in your balance</p>
                                                 <p>You can still check out with your credit/debit card :)</p>
                                                 <Button onClick={
                                                     () => {
@@ -325,10 +357,22 @@ class Payment extends Component{
                                     </Col>
                                 </Row>
                             </TabPane>
-                            <TabPane tabId="2">
+                            <TabPane className="text-center" tabId="2">
+                                <br/>
+                                <h3>Card Checkout</h3>
                                 <br/>
                                 <Row >
+                                    <Col sm="12" className="text-center">
+                                        <b>Subtotal: </b>${this.state.subtotal}<br/>
+                                        <b>Tax: </b>${this.state.tax}<br/>
+                                        <b>Total: </b>${this.state.total}<br/><br/>
+                                        <b>Rewards Points Balance Currently: </b> {this.state.user.rewardsPoints}<br/>
+                                        <b>Rewards Points Earned: </b> {this.state.rewardsPoints}<br/>
+                                        <b>Rewards Points Balance After: {this.state.user.rewardsPoints + this.state.rewardsPoints}</b>
+                                        
+                                    </Col>
                                     <Col className="text-center" sm="12" md={{ size: 4, offset: 4 }}>
+                                        <hr/>
                                         <Input onChange={this.handleChange} value={this.state.cardholderName} type="text" id="cardholder" name="cardholderName" placeholder="Cardholder's Name" style={{boxShadow: 'rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px',
                                         borderRadius: '4px', padding: '10px 14px', fontSize: '16px', marginRight: '14px'}}/>
                                     </Col>
@@ -342,8 +386,8 @@ class Payment extends Component{
                                 </Row>
                             </TabPane>
                         </TabContent>
-                    </Card>
-                </FormGroup>
+                    </div>
+                </Row>
             </Form>
         );
     }
