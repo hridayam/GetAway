@@ -167,7 +167,7 @@ class Login extends Component {
       '/users/edit-profile', {
         email: this.state.profileEmail,
         newPhoneNumber: this.formatPhoneNumber(this.state.profilePhoneNumber),
-        newAddress: [this.state.address, this.state.city, this.state.state, this.state.zipcode].join(','),
+        newAddress: [this.state.address, this.state.city, this.state.state, this.state.zipcode].join(', '),
         file: this.state.file
     })
       .then(res => {
